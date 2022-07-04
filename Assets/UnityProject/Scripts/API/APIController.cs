@@ -24,6 +24,8 @@ using Windows.Graphics.Imaging;
 using Windows.Security.Cryptography;
 #endif
 
+using TMPro;
+
 
 public class APIController : MonoBehaviour
 {
@@ -37,11 +39,12 @@ public class APIController : MonoBehaviour
 
     private FrameGrabber frameGrabber;
 
+    public TextMeshPro debugText;
+
     async void Start()
     {
         frameCapture = FindObjectOfType<FrameCapture>();
 
-        ObjectPrediction();
 
 #if ENABLE_WINMD_SUPPORT
         frameGrabber = await FrameGrabber.CreateAsync(1504, 846);
@@ -50,8 +53,11 @@ public class APIController : MonoBehaviour
 
     private void ConnectWebsocker()
     {
-        ws = new WebSocket("ws://192.168.56.1:8000/ws");
+        debugText.text += "Connect Websocket \n";
+        ws = new WebSocket("ws://193.137.107.130:8000/ws");
+        debugText.text += "Var \n";
         ws.Connect();
+        debugText.text += "Connected \n";
         ws.OnMessage += (sender, e) =>
         {
             Debug.Log("Message Received from " + ((WebSocket)sender).Url + ", Data : " + e.Data);
@@ -62,10 +68,15 @@ public class APIController : MonoBehaviour
 
     public async void ObjectPrediction()
     {
-        if (ws == null || !ws.IsAlive)
+        debugText.text += "Object Prediction Call \n";
+        if (ws == null || !ws.IsAlive) { 
+            debugText.text += "Func Call \n";
             ConnectWebsocker();
+        }
         //frameCapture.CaptureFrame(ws);
+        debugText.text += "Send \n";
         ws.Send("CHECKINF");
+        debugText.text += "Sended \n";
 
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = frameGrabber.LastFrame;
