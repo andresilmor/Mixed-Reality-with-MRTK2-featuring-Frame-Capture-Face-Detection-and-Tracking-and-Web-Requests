@@ -54,14 +54,20 @@ public class APIController : MonoBehaviour
     private void ConnectWebsocker()
     {
         debugText.text += "Connect Websocket \n";
-        ws = new WebSocket("ws://193.137.107.130:8000/ws");
+        Debug.Log("Connect Websocket ");
+        ws = new WebSocket("ws://193.137.107.7:8000/test");
         debugText.text += "Var \n";
+        Debug.Log("Connect Websocket ");
         ws.Connect();
         debugText.text += "Connected \n";
+        Debug.Log("Connected  ");
+        
+        ws.Send("Connected");
         ws.OnMessage += (sender, e) =>
         {
             Debug.Log("Message Received from " + ((WebSocket)sender).Url + ", Data : " + e.Data);
         };
+        ws.Send("Connected 2");
 
     }
 
@@ -69,14 +75,18 @@ public class APIController : MonoBehaviour
     public async void ObjectPrediction()
     {
         debugText.text += "Object Prediction Call \n";
+        Debug.Log("Object Prediction Call ");
         if (ws == null || !ws.IsAlive) { 
             debugText.text += "Func Call \n";
+            Debug.Log("Func Call  ");
             ConnectWebsocker();
         }
         //frameCapture.CaptureFrame(ws);
         debugText.text += "Send \n";
+        Debug.Log("Send");
         ws.Send("CHECKINF");
         debugText.text += "Sended \n";
+        Debug.Log("Sended");
 
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = frameGrabber.LastFrame;
