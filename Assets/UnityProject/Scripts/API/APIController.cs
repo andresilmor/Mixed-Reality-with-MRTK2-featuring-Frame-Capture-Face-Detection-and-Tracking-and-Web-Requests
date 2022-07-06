@@ -15,6 +15,9 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.Graphics.Imaging;
 using Windows.Security.Cryptography;
+
+using Windows.Media.Capture.Frames;
+using Windows.Perception.Spatial;
 #endif
 
 
@@ -75,13 +78,14 @@ public class APIController : MonoBehaviour
         ws.Open();
         ws.Send("CHECKINF 64");
 
-        
 
         debugText.text = debugText.text + "\nWS Created/Opened";
-      
+
 
 #if ENABLE_WINMD_SUPPORT
         frameGrabber = await FrameGrabber.CreateAsync(1504, 846);
+
+        debugText.text = "One:" + (SpatialLocator.GetDefault().CreateStationaryFrameOfReferenceAtCurrentLocation().CoordinateSystem).ToString() + "\n";
 #endif
     }
 
@@ -138,16 +142,6 @@ public class APIController : MonoBehaviour
         */
 
 
-        if (ws.IsOpen) { 
-           debugText.text = debugText.text + "\nSend Called";
-           ws.Send("CHECKINF 83");
-           debugText.text = debugText.text + "\nSend Done";
-       } else
-       {
-           ws.Open();
-           debugText.text = debugText.text + "\nWS Second Try";
-       }
-
 
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = frameGrabber.LastFrame;
@@ -162,18 +156,20 @@ public class APIController : MonoBehaviour
                     {
                         byte[] byteArray = await toByteArray(videoFrame.SoftwareBitmap);
                         Debug.Log($"[### DEBUG ###] byteArray Size = {byteArray.Length}");
-                        //ws.Send(Convert.ToBase64String(byteArray));
+                        
                         //ws.Send(Convert.ToBase64String(byteArray));
 
-                        if (ws.IsOpen) { 
-                               debugText.text = debugText.text + "\nSend Called";
-                               ws.Send("Im good");
-                               debugText.text = debugText.text + "\nSend Done";
-                           } else
-                           {
-                               ws.Open();
-                               debugText.text = debugText.text + "\nWS Second Try";
-                           }
+
+
+                        //  Danger Zone  //
+
+                  
+                        debugText.text = "Two:" +   (lastFrame.mediaFrameReference.CoordinateSystem).ToString() + "\n";
+
+                        //  You're safe now :3  //
+
+
+
 
                     }
                     else
