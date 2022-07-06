@@ -211,9 +211,9 @@ public class APIController : MonoBehaviour
                         FrameCapture frame = new FrameCapture();
                         frame.data = Convert.ToBase64String(byteArray);
 
-
-                        ws.Send(Convert.ToBase64String(byteArray));
-
+                        ws.Send("Sending");
+                        ws.Send(frame.data);
+                        ws.Send("Sended");
 
                         //  You're safe now :3  //
 
