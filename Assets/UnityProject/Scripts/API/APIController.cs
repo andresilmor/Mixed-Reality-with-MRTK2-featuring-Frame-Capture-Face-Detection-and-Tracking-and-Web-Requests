@@ -38,6 +38,8 @@ public class APIController : MonoBehaviour
 
     private byte[] recvBuffer = new byte[(int)1e5];
 
+
+    private int testNum = 0;
     
 
     string address = "ws://192.168.1.238:8000/ws";
@@ -104,11 +106,13 @@ public class APIController : MonoBehaviour
         ws.OnOpen += (WebSocket ws) =>
         {
             debugText.text = debugText.text + "\nOpen (Inside)";
-            ws.Send("CHECKINF 60");
+
+
         };
 
         ws.Open();
-        ws.Send("CHECKINF 64");
+
+        
 
 
         debugText.text = debugText.text + "\nWS Created/Opened";
@@ -177,7 +181,7 @@ public class APIController : MonoBehaviour
 
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = frameGrabber.LastFrame;
-        ws.Send("Im Inside");
+        ws.Send("inside");
         if (lastFrame.mediaFrameReference != null)
         {
             try
@@ -195,12 +199,21 @@ public class APIController : MonoBehaviour
 
                         //  Danger Zone  //
 
+
                         CameraExtrinsic extrinsic = new CameraExtrinsic(lastFrame.mediaFrameReference.CoordinateSystem, WorldOrigin);
                         CameraIntrinsic intrinsic = new CameraIntrinsic(lastFrame.mediaFrameReference.VideoMediaFrame.CameraIntrinsics);
 
 
-                        debugText.text = "Two:" +   (lastFrame.mediaFrameReference.VideoMediaFrame.CameraIntrinsics).ToString() + "\n";
-                        debugText.text = "Two:" + intrinsic.ToString() +"\n";
+                        debugText.text = "(" + (testNum).ToString() + ") intrinsic:" + intrinsic.ToString() +"\n \n";
+                        debugText.text = debugText.text + "(" + (testNum++).ToString() + ") extrinsic:" + extrinsic.ToString() +"\n \n";
+
+
+                        FrameCapture frame = new FrameCapture();
+                        frame.data = Convert.ToBase64String(byteArray);
+
+
+                        ws.Send(Convert.ToBase64String(byteArray));
+
 
                         //  You're safe now :3  //
 
