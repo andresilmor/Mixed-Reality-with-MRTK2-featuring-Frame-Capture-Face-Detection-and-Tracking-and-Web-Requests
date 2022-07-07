@@ -1,9 +1,10 @@
 using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 using TMPro;
 using BestHTTP.WebSocket;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 
 //These are needed, trust me ^-^ 
 using System.Threading.Tasks;
@@ -114,7 +115,6 @@ public class APIController : MonoBehaviour
 
         
 
-
         debugText.text = debugText.text + "\nWS Created/Opened";
 
 
@@ -128,10 +128,17 @@ public class APIController : MonoBehaviour
 
     private async void DefinePredictions(string predictions)
     {
-        List<DetectionsList> results = 
-            JsonConvert.DeserializeObject<List<DetectionsList>>(
-                JsonConvert.DeserializeObject(predictions).ToString()
-                );
+        //List<DetectionsList> results = 
+        //    JsonConvert.DeserializeObject<List<DetectionsList>>(
+        //        JsonConvert.DeserializeObject(predictions).ToString()
+        //        );
+
+
+
+        DetectionsList results = JsonUtility.FromJson<DetectionsList>(predictions);
+
+
+
         
         /*CameraExtrinsic Extrinsic = new CameraExtrinsic(trackedObject.Extrinsic);
         Vector3 cameraPosition = Extrinsic.Position;
@@ -209,11 +216,23 @@ public class APIController : MonoBehaviour
 
 
                         FrameCapture frame = new FrameCapture();
+                        
+                        
+                        //frame.data = "I am but a test";
+                        //ws.Send(JsonUtility.ToJson(frame));
+
+
                         frame.data = Convert.ToBase64String(byteArray);
 
+                        Regex.Replace(frame.data, @"/\=+$/", "");
+                        Regex.Replace(frame.data, @"/\//g", "_");
+                        Regex.Replace(frame.data, @"/\+/g", "-");
+
                         ws.Send("Sending");
-                        ws.Send(frame.data);
+                        //ws.Send(frame.data);
+                        ws.Send(JsonUtility.ToJson(frame));
                         ws.Send("Sended");
+
 
                         //  You're safe now :3  //
 

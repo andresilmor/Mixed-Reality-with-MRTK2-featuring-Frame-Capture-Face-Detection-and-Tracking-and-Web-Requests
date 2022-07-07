@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FrameCapture
+public class CameraPosition
 {
 
     public string data;
-    public CameraPosition cameraPosition;
+
 
 }
