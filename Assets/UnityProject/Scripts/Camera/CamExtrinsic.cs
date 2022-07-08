@@ -9,13 +9,14 @@
 using System;
 using JetBrains.Annotations;
 using UnityEngine;
+using Newtonsoft.Json;
 
 
 /// <summary>
 /// Provides the extrinsic, including the view from the world, of the camera.
 /// </summary>
 [Serializable]
-public class CameraExtrinsic
+public class CamExtrinsic
 {
 
     /// <summary>
@@ -43,18 +44,18 @@ public class CameraExtrinsic
     /// </summary>
     public Vector3 Position => viewFromWorld.GetColumn(3);
 
-    public CameraExtrinsic(Matrix4x4 viewFromWorld)
+    public CamExtrinsic(Matrix4x4 viewFromWorld)
     {
         this.viewFromWorld = viewFromWorld;
     }
 
-    public CameraExtrinsic(CameraExtrinsic extrinsic)
+    public CamExtrinsic(CamExtrinsic extrinsic)
     {
         viewFromWorld = extrinsic.viewFromWorld;
     }
 
 #if ENABLE_WINMD_SUPPORT
-        public CameraExtrinsic([NotNull] Windows.Perception.Spatial.SpatialCoordinateSystem cameraCoordinateSystem, [NotNull] Windows.Perception.Spatial.SpatialCoordinateSystem worldOrigin)
+        public CamExtrinsic([NotNull] Windows.Perception.Spatial.SpatialCoordinateSystem cameraCoordinateSystem, [NotNull] Windows.Perception.Spatial.SpatialCoordinateSystem worldOrigin)
         {
             if (cameraCoordinateSystem == null) throw new ArgumentNullException(nameof(cameraCoordinateSystem));
             if (cameraCoordinateSystem == null) throw new ArgumentNullException(nameof(worldOrigin));
@@ -76,5 +77,15 @@ public class CameraExtrinsic
         Vector4 upwards = viewFromWorld.GetColumn(1);
         Quaternion rotation = Quaternion.LookRotation(forward, upwards);
         return $"Position: {position.ToString("G4")}, Rotation: {rotation.eulerAngles.ToString("G4")}";
+    }
+
+    public string GetSerializePosition()
+    {
+        return JsonConvert.SerializeObject(viewFromWorld.GetColumn(3));
+    }
+
+    public string GetSerializeRotation()
+    {
+        return JsonConvert.SerializeObject(Quaternion.LookRotation(viewFromWorld.GetColumn(2), viewFromWorld.GetColumn(1)));
     }
 }

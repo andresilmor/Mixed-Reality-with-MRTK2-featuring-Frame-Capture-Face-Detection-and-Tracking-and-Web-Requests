@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraPosition
+public class CameraLocation
 {
 
-    public string data;
-
+    public string position;
+    public string rotation;
 
 }
