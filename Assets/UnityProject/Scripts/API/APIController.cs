@@ -30,7 +30,7 @@ public class APIController : MonoBehaviour
 
 
 
-    private FrameGrabber frameGrabber;
+    private FrameHandler frameHandler;
 
     public TextMeshPro debugText;
 
@@ -95,7 +95,7 @@ public class APIController : MonoBehaviour
 
 
 #if ENABLE_WINMD_SUPPORT
-        frameGrabber = await FrameGrabber.CreateAsync(1504, 846);
+        frameHandler = await FrameHandler.CreateAsync(1504, 846);
 
 #endif
     }
@@ -151,8 +151,7 @@ public class APIController : MonoBehaviour
     {
 
 #if ENABLE_WINMD_SUPPORT
-        var lastFrame = frameGrabber.LastFrame;
-        ws.Send("inside");
+        var lastFrame = frameHandler.LastFrame;
         if (lastFrame.mediaFrameReference != null)
         {
             try

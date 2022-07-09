@@ -11,7 +11,7 @@ using Windows.Media.Capture.Frames;
 using Windows.Media.MediaProperties;
 #endif
 
-public class FrameGrabber
+public class FrameHandler
 {
 	public struct Frame
 	{
@@ -68,7 +68,7 @@ public class FrameGrabber
 		}
 	}
 
-	private FrameGrabber(MediaCapture mediaCapture = null, MediaFrameSource mediaFrameSource = null, MediaFrameReader mediaFrameReader = null)
+	private FrameHandler(MediaCapture mediaCapture = null, MediaFrameSource mediaFrameSource = null, MediaFrameReader mediaFrameReader = null)
 	{
 		this.mediaCapture = mediaCapture;
 		this.mediaFrameSource = mediaFrameSource;
@@ -81,7 +81,7 @@ public class FrameGrabber
 		}
 	}
 
-	public static async Task<FrameGrabber> CreateAsync(uint width, uint height)
+	public static async Task<FrameHandler> CreateAsync(uint width, uint height)
 	{
 		MediaCapture mediaCapture = null;
 		MediaFrameReader mediaFrameReader = null;
@@ -114,7 +114,7 @@ public class FrameGrabber
 		if (selectedGroup == null || selectedSourceInfo == null)
 		{
 			Debug.Log("Failed to find Group and SourceInfo");
-			return new FrameGrabber();
+			return new FrameHandler();
 		}
 
 		// Create settings 
@@ -143,7 +143,7 @@ public class FrameGrabber
 		catch (Exception e)
 		{
 			Debug.Log($"Failed to initilise mediacaptrue {e.ToString()}");
-			return new FrameGrabber();
+			return new FrameHandler();
 		}
 
 		
@@ -169,12 +169,12 @@ public class FrameGrabber
 		if (status == MediaFrameReaderStartStatus.Success)
 		{
 			Debug.Log("MediaFrameReaderStartStatus == Success");
-			return new FrameGrabber(mediaCapture, selectedSource, mediaFrameReader);
+			return new FrameHandler(mediaCapture, selectedSource, mediaFrameReader);
 		}
 		else
 		{
 			Debug.Log($"MediaFrameReaderStartStatus != Success; {status}");
-			return new FrameGrabber();
+			return new FrameHandler();
 		}
 	}
 
