@@ -18,6 +18,7 @@ public class FrameGrabber
 #if ENABLE_WINMD_SUPPORT
 		public MediaFrameReference mediaFrameReference;
 #endif
+		public CameraExtrinsic extrinsic;
 	}
 
 #if ENABLE_WINMD_SUPPORT
@@ -33,6 +34,7 @@ public class FrameGrabber
 		{
 			lock (this)
 			{
+				_lastFrame.extrinsic = new CameraExtrinsic(_lastFrame.mediaFrameReference.CoordinateSystem, WorldOrigin.coordinate);
 				return _lastFrame;
 			}
 		}
@@ -44,6 +46,9 @@ public class FrameGrabber
 			}
 		}
 	}
+
+
+
 
 	private DateTime _lastFrameCapturedTimestamp = DateTime.MaxValue;
 
@@ -190,8 +195,9 @@ public class FrameGrabber
 		MediaFrameReference frame = sender.TryAcquireLatestFrame();
 		if (frame != null){
 			LastFrame = new Frame
-			{mediaFrameReference = frame};
+			{mediaFrameReference = frame, extrinsic = null};
 			_lastFrameCapturedTimestamp = DateTime.Now;
+			
 		}
 	}
 #endif

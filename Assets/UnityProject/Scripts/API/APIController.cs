@@ -19,7 +19,6 @@ using Windows.Graphics.Imaging;
 using Windows.Security.Cryptography;
 
 using Windows.Media.Capture.Frames;
-using Windows.Perception.Spatial;
 #endif
 
 
@@ -46,36 +45,6 @@ public class APIController : MonoBehaviour
     string address = "ws://192.168.1.238:8000/ws";
 
 
-#if ENABLE_WINMD_SUPPORT
-    private SpatialCoordinateSystem _worldOrigin;
-        private SpatialCoordinateSystem WorldOrigin
-        {
-            get
-            {
-                if (_worldOrigin == null)
-                {
-                    _worldOrigin = CreateWorldOrigin();
-                }
-                return _worldOrigin;
-            }
-        }
-
-    private static SpatialCoordinateSystem CreateWorldOrigin()
-        {
-            //IntPtr worldOriginPtr = Microsoft.MixedReality.Toolkit.WindowsMixedReality.WindowsMixedRealityUtilities.UtilitiesProvider.ISpatialCoordinateSystemPtr;
-            //WinRTExtensions.GetSpatialCoordinateSystem(coordinateSystemPtr); // https://github.com/microsoft/MixedReality-SpectatorView/blob/7796da6acb0ae41bed1b9e0e9d1c5c683b4b8374/src/SpectatorView.Unity/Assets/PhotoCapture/Scripts/WinRTExtensions.cs#L20
-            var worldOriginPtr = SpatialLocator.GetDefault().CreateStationaryFrameOfReferenceAtCurrentLocation().CoordinateSystem;
-            return RetrieveWorldOriginFromPointer(worldOriginPtr);
-        }
-
-    private static SpatialCoordinateSystem RetrieveWorldOriginFromPointer(SpatialCoordinateSystem worldOriginPtr)
-        {
-            
-            if (worldOriginPtr == null) throw new InvalidCastException("Failed to retrieve world origin from pointer");
-            return worldOriginPtr;
-        }
-
-#endif
 
     async void Start()
     {
@@ -128,7 +97,6 @@ public class APIController : MonoBehaviour
 #if ENABLE_WINMD_SUPPORT
         frameGrabber = await FrameGrabber.CreateAsync(1504, 846);
 
-        debugText.text = "One:" + (SpatialLocator.GetDefault().CreateStationaryFrameOfReferenceAtCurrentLocation().CoordinateSystem).ToString() + "\n";
 #endif
     }
 
@@ -181,16 +149,6 @@ public class APIController : MonoBehaviour
 
     public async void ObjectPrediction()
     {
-        /*
-       var request = new HTTPRequest(new Uri("http://193.137.107.8:8000/"), OnRequestFinished);
-       request.Send();
-       void OnRequestFinished(HTTPRequest request, HTTPResponse response)
-       {
-           Debug.Log("Request Finished! Text received: " + response.DataAsText);
-           debugText.text = debugText.text + "\n" + response.DataAsText;
-       }
-        */
-
 
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = frameGrabber.LastFrame;
@@ -213,16 +171,15 @@ public class APIController : MonoBehaviour
                         //  Danger Zone  //
 
 
-                        CameraExtrinsic extrinsic = new CameraExtrinsic(lastFrame.mediaFrameReference.CoordinateSystem, WorldOrigin);
-                        CameraIntrinsic intrinsic = new CameraIntrinsic(lastFrame.mediaFrameReference.VideoMediaFrame.CameraIntrinsics);
-
-
-                        debugText.text = "(" + (testNum).ToString() + ") intrinsic:" + intrinsic.ToString() +"\n \n";
-                        debugText.text = debugText.text + "(" + (testNum++).ToString() + ") extrinsic:" + extrinsic.ToString() +"\n \n";
+                        //CameraExtrinsic extrinsic = new CameraExtrinsic(lastFrame.mediaFrameReference.CoordinateSystem, WorldOrigin);
+                        
+                        
+                        //debugText.text = "(" + (testNum).ToString() + ") intrinsic:" + intrinsic.ToString() +"\n \n";
+                        //debugText.text = debugText.text + "(" + (testNum++).ToString() + ") extrinsic:" + extrinsic.ToString() +"\n \n";
 
 
                         FrameCapture frame = new FrameCapture(Convert.ToBase64String(byteArray), 
-                                                                new CameraLocation(extrinsic.GetPosition(),extrinsic.GetRotation()));
+                                                                new CameraLocation(lastFrame.extrinsic.GetPosition(),lastFrame.extrinsic.GetRotation()));
 
 
                         Regex.Replace(frame.bytes, @"/\=+$/", "");
