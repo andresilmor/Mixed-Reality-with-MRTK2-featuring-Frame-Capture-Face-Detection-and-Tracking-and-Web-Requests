@@ -5,7 +5,7 @@ using UnityEngine;
 public class FrameCapture
 {
 
-    public string bytes;
-    public CameraLocation cameraLocation;
+    public string data;
+    public CameraPosition cameraPosition;
 
 }

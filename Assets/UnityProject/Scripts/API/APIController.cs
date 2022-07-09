@@ -18,6 +18,8 @@ using Windows.Storage.Streams;
 using Windows.Graphics.Imaging;
 using Windows.Security.Cryptography;
 
+using Windows.Media.Capture.Frames;
+using Windows.Perception.Spatial;
 #endif
 
 
@@ -29,7 +31,7 @@ public class APIController : MonoBehaviour
 
 
 
-    private FrameHandler frameHandler;
+    private FrameGrabber frameGrabber;
 
     public TextMeshPro debugText;
 
@@ -44,6 +46,36 @@ public class APIController : MonoBehaviour
     string address = "ws://192.168.1.238:8000/ws";
 
 
+#if ENABLE_WINMD_SUPPORT
+    private SpatialCoordinateSystem _worldOrigin;
+        private SpatialCoordinateSystem WorldOrigin
+        {
+            get
+            {
+                if (_worldOrigin == null)
+                {
+                    _worldOrigin = CreateWorldOrigin();
+                }
+                return _worldOrigin;
+            }
+        }
+
+    private static SpatialCoordinateSystem CreateWorldOrigin()
+        {
+            //IntPtr worldOriginPtr = Microsoft.MixedReality.Toolkit.WindowsMixedReality.WindowsMixedRealityUtilities.UtilitiesProvider.ISpatialCoordinateSystemPtr;
+            //WinRTExtensions.GetSpatialCoordinateSystem(coordinateSystemPtr); // https://github.com/microsoft/MixedReality-SpectatorView/blob/7796da6acb0ae41bed1b9e0e9d1c5c683b4b8374/src/SpectatorView.Unity/Assets/PhotoCapture/Scripts/WinRTExtensions.cs#L20
+            var worldOriginPtr = SpatialLocator.GetDefault().CreateStationaryFrameOfReferenceAtCurrentLocation().CoordinateSystem;
+            return RetrieveWorldOriginFromPointer(worldOriginPtr);
+        }
+
+    private static SpatialCoordinateSystem RetrieveWorldOriginFromPointer(SpatialCoordinateSystem worldOriginPtr)
+        {
+            
+            if (worldOriginPtr == null) throw new InvalidCastException("Failed to retrieve world origin from pointer");
+            return worldOriginPtr;
+        }
+
+#endif
 
     async void Start()
     {
@@ -87,8 +119,9 @@ public class APIController : MonoBehaviour
 
 
 #if ENABLE_WINMD_SUPPORT
-        frameHandler = await FrameHandler.CreateAsync(1504, 846);
+        frameGrabber = await FrameGrabber.CreateAsync(1504, 846);
 
+        debugText.text = "One:" + (SpatialLocator.GetDefault().CreateStationaryFrameOfReferenceAtCurrentLocation().CoordinateSystem).ToString() + "\n";
 #endif
     }
 
@@ -107,7 +140,7 @@ public class APIController : MonoBehaviour
 
 
         
-        /*CamExtrinsic Extrinsic = new CamExtrinsic(trackedObject.Extrinsic);
+        /*CameraExtrinsic Extrinsic = new CameraExtrinsic(trackedObject.Extrinsic);
         Vector3 cameraPosition = Extrinsic.Position;
         if (cameraPosition == Vector3.forward) Debug.LogWarning("Camera position is forward vector.");
         if (cameraPosition == Vector3.zero) Debug.LogWarning("Camera position is zero vector.");
@@ -152,8 +185,9 @@ public class APIController : MonoBehaviour
         */
 
 
+
 #if ENABLE_WINMD_SUPPORT
-        var lastFrame = frameHandler.LastFrame;
+        var lastFrame = frameGrabber.LastFrame;
         ws.Send("inside");
         if (lastFrame.mediaFrameReference != null)
         {
@@ -173,12 +207,12 @@ public class APIController : MonoBehaviour
                         //  Danger Zone  //
 
 
-                        //CameraExtrinsic extrinsic = new CameraExtrinsic(lastFrame.mediaFrameReference.CoordinateSystem, WorldOrigin);
-                        //CameraIntrinsic intrinsic = new CameraIntrinsic(lastFrame.mediaFrameReference.VideoMediaFrame.CameraIntrinsics);
+                        CameraExtrinsic extrinsic = new CameraExtrinsic(lastFrame.mediaFrameReference.CoordinateSystem, WorldOrigin);
+                        CameraIntrinsic intrinsic = new CameraIntrinsic(lastFrame.mediaFrameReference.VideoMediaFrame.CameraIntrinsics);
 
 
-                        debugText.text = "(" + (testNum).ToString() + ") intrinsic:" + lastFrame.intrinsic.ToString() +"\n \n";
-                        debugText.text = debugText.text + "(" + (testNum++).ToString() + ") extrinsic:" + lastFrame.extrinsic.ToString() +"\n \n";
+                        debugText.text = "(" + (testNum).ToString() + ") intrinsic:" + intrinsic.ToString() +"\n \n";
+                        debugText.text = debugText.text + "(" + (testNum++).ToString() + ") extrinsic:" + extrinsic.ToString() +"\n \n";
 
 
                         FrameCapture frame = new FrameCapture();
@@ -188,14 +222,11 @@ public class APIController : MonoBehaviour
                         //ws.Send(JsonUtility.ToJson(frame));
 
 
-                        frame.bytes = Convert.ToBase64String(byteArray);
+                        frame.data = Convert.ToBase64String(byteArray);
 
-                        Regex.Replace(frame.bytes, @"/\=+$/", "");
-                        Regex.Replace(frame.bytes, @"/\//g", "_");
-                        Regex.Replace(frame.bytes, @"/\+/g", "-");
-
-                        frame.cameraLocation.position = lastFrame.extrinsic.GetSerializePosition();
-                        frame.cameraLocation.rotation = lastFrame.extrinsic.GetSerializeRotation();
+                        Regex.Replace(frame.data, @"/\=+$/", "");
+                        Regex.Replace(frame.data, @"/\//g", "_");
+                        Regex.Replace(frame.data, @"/\+/g", "-");
 
                         ws.Send("Sending");
                         //ws.Send(frame.data);

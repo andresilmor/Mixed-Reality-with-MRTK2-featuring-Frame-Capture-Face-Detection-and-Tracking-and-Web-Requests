@@ -16,7 +16,7 @@ using UnityEngine;
 /// Note: This class wraps logic from Windows.Media.Devices.Core.CameraIntrinsics to use in Unity.
 /// </summary>
 [Serializable]
-public class CamIntrinsic
+public class CameraIntrinsic
 {
 #if ENABLE_WINMD_SUPPORT
         /// <summary>
@@ -73,7 +73,7 @@ public class CamIntrinsic
     /// <param name="radialDistortion">radial distortion for the camera</param>
     /// <param name="tangentialDistortion">tangential distortion for the camera</param>
     /// <param name="undistortedProjectionTransform">Undistorted projection transform for the camera</param>
-    public CamIntrinsic(
+    public CameraIntrinsic(
         Vector2 focalLength,
         uint imageWidth,
         uint imageHeight,
@@ -95,7 +95,7 @@ public class CamIntrinsic
     /// Constructor using default values.
     /// </summary>
     [Obsolete]
-    public CamIntrinsic()
+    public CameraIntrinsic()
     {
         FocalLength = Vector2.zero;
         ImageWidth = 0;
@@ -110,7 +110,7 @@ public class CamIntrinsic
     /// Constructor using default values except the project transformation.
     /// </summary>
     /// <param name="undistortedProjectionTransform">Undistorted projection transform for the camera</param>
-    public CamIntrinsic(Matrix4x4 undistortedProjectionTransform)
+    public CameraIntrinsic(Matrix4x4 undistortedProjectionTransform)
     {
         FocalLength = Vector2.zero;
         ImageWidth = 0;
@@ -124,7 +124,7 @@ public class CamIntrinsic
     /// <summary>
     /// Copy Constructor (shallow). On Windows UWP, values of the original camera intrinsics are used.
     /// </summary>
-    public CamIntrinsic([NotNull] CamIntrinsic intrinsic)
+    public CameraIntrinsic([NotNull] CameraIntrinsic intrinsic)
     {
         if (intrinsic == null) throw new ArgumentNullException(nameof(intrinsic));
 #if ENABLE_WINMD_SUPPORT
@@ -149,7 +149,7 @@ public class CamIntrinsic
     }
 
 #if ENABLE_WINMD_SUPPORT
-        public CamIntrinsic([NotNull] Windows.Media.Devices.Core.CameraIntrinsics cameraIntrinsics)
+        public CameraIntrinsic([NotNull] Windows.Media.Devices.Core.CameraIntrinsics cameraIntrinsics)
         {
             if (cameraIntrinsics == null) throw new ArgumentNullException(nameof(cameraIntrinsics));
             FocalLength = new Vector2(cameraIntrinsics.FocalLength.X, cameraIntrinsics.FocalLength.Y);

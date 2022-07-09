@@ -9,61 +9,16 @@ using Windows.Graphics.Imaging;
 using Windows.Media.Devices.Core;
 using Windows.Media.Capture.Frames;
 using Windows.Media.MediaProperties;
-using Windows.Perception.Spatial;
 #endif
 
-public class FrameHandler
+public class FrameGrabber
 {
-
-
 	public struct Frame
 	{
 #if ENABLE_WINMD_SUPPORT
 		public MediaFrameReference mediaFrameReference;
 #endif
-		public CamExtrinsic extrinsic;
-		public CamIntrinsic intrinsic;
 	}
-
-	public void test()
-    {
-		Frame frame = new Frame();	
-
-	}
-
-
-
-#if ENABLE_WINMD_SUPPORT
-    private SpatialCoordinateSystem _worldOrigin;
-        private SpatialCoordinateSystem WorldOrigin
-        {
-            get
-            {
-                if (_worldOrigin == null)
-                {
-                    _worldOrigin = CreateWorldOrigin();
-                }
-                return _worldOrigin;
-            }
-        }
-
-    private static SpatialCoordinateSystem CreateWorldOrigin()
-        {
-            //IntPtr worldOriginPtr = Microsoft.MixedReality.Toolkit.WindowsMixedReality.WindowsMixedRealityUtilities.UtilitiesProvider.ISpatialCoordinateSystemPtr;
-            //WinRTExtensions.GetSpatialCoordinateSystem(coordinateSystemPtr); // https://github.com/microsoft/MixedReality-SpectatorView/blob/7796da6acb0ae41bed1b9e0e9d1c5c683b4b8374/src/SpectatorView.Unity/Assets/PhotoCapture/Scripts/WinRTExtensions.cs#L20
-            var worldOriginPtr = SpatialLocator.GetDefault().CreateStationaryFrameOfReferenceAtCurrentLocation().CoordinateSystem;
-            return RetrieveWorldOriginFromPointer(worldOriginPtr);
-        }
-
-    private static SpatialCoordinateSystem RetrieveWorldOriginFromPointer(SpatialCoordinateSystem worldOriginPtr)
-        {
-            
-            if (worldOriginPtr == null) throw new InvalidCastException("Failed to retrieve world origin from pointer");
-            return worldOriginPtr;
-        }
-
-#endif
-
 
 #if ENABLE_WINMD_SUPPORT
 	MediaCapture mediaCapture;
@@ -108,7 +63,7 @@ public class FrameHandler
 		}
 	}
 
-	private FrameHandler(MediaCapture mediaCapture = null, MediaFrameSource mediaFrameSource = null, MediaFrameReader mediaFrameReader = null)
+	private FrameGrabber(MediaCapture mediaCapture = null, MediaFrameSource mediaFrameSource = null, MediaFrameReader mediaFrameReader = null)
 	{
 		this.mediaCapture = mediaCapture;
 		this.mediaFrameSource = mediaFrameSource;
@@ -121,7 +76,7 @@ public class FrameHandler
 		}
 	}
 
-	public static async Task<FrameHandler> CreateAsync(uint width, uint height)
+	public static async Task<FrameGrabber> CreateAsync(uint width, uint height)
 	{
 		MediaCapture mediaCapture = null;
 		MediaFrameReader mediaFrameReader = null;
@@ -154,7 +109,7 @@ public class FrameHandler
 		if (selectedGroup == null || selectedSourceInfo == null)
 		{
 			Debug.Log("Failed to find Group and SourceInfo");
-			return new FrameHandler();
+			return new FrameGrabber();
 		}
 
 		// Create settings 
@@ -183,7 +138,7 @@ public class FrameHandler
 		catch (Exception e)
 		{
 			Debug.Log($"Failed to initilise mediacaptrue {e.ToString()}");
-			return new FrameHandler();
+			return new FrameGrabber();
 		}
 
 		
@@ -209,12 +164,12 @@ public class FrameHandler
 		if (status == MediaFrameReaderStartStatus.Success)
 		{
 			Debug.Log("MediaFrameReaderStartStatus == Success");
-			return new FrameHandler(mediaCapture, selectedSource, mediaFrameReader);
+			return new FrameGrabber(mediaCapture, selectedSource, mediaFrameReader);
 		}
 		else
 		{
 			Debug.Log($"MediaFrameReaderStartStatus != Success; {status}");
-			return new FrameHandler();
+			return new FrameGrabber();
 		}
 	}
 
@@ -237,8 +192,6 @@ public class FrameHandler
 			LastFrame = new Frame
 			{mediaFrameReference = frame};
 			_lastFrameCapturedTimestamp = DateTime.Now;
-			_lastFrame.extrinsic = new CamExtrinsic(frame.CoordinateSystem, WorldOrigin);
-			_lastFrame.intrinsic = new CamIntrinsic(frame.VideoMediaFrame.CameraIntrinsics);
 		}
 	}
 #endif
