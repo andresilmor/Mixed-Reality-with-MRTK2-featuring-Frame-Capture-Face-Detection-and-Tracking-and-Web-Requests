@@ -1,0 +1,342 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.35f1 (18e4db7a9996) revision 1631451'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19044) 64bit Core' Language: 'en' Physical Memory: 32678 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files (x86)\ProjetoIntegrado_Multimedia_AndreMoreira\Unity Editors\2020.3.35f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+D:/PC/Desktop/IP/UnityProject
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+65173
+Successfully changed project path to: D:/PC/Desktop/IP/UnityProject
+D:/PC/Desktop/IP/UnityProject
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 76.65 ms, found 12 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.35f1 (18e4db7a9996)
+[Subsystems] Discovering subsystems at path C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.35f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/PC/Desktop/IP/UnityProject/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 2070 SUPER (ID=0x1e84)
+    Vendor:   
+    VRAM:     8011 MB
+    Driver:   27.21.14.6192
+Initialize mono
+Mono path[0] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.35f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.35f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.35f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56372
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.35f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001800 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 67.88 ms, found 12 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.494 seconds
+Domain Reload Profiling:
+	ReloadAssembly (494ms)
+		BeginReloadAssembly (52ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (384ms)
+			LoadAssemblies (50ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (110ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (22ms)
+			SetupLoadedEditorAssemblies (169ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (3ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (68ms)
+				BeforeProcessingInitializeOnLoad (11ms)
+				ProcessInitializeOnLoadAttributes (65ms)
+				ProcessInitializeOnLoadMethodAttributes (21ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.005648 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 70.55 ms, found 12 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+DisplayProgressbar: Restoring NuGet Packages
+Mono: successfully reloaded assembly
+- Completed reload, in  1.806 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1807ms)
+		BeginReloadAssembly (119ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (14ms)
+		EndReloadAssembly (1640ms)
+			LoadAssemblies (90ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (283ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (60ms)
+			SetupLoadedEditorAssemblies (1121ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (3ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (71ms)
+				BeforeProcessingInitializeOnLoad (98ms)
+				ProcessInitializeOnLoadAttributes (927ms)
+				ProcessInitializeOnLoadMethodAttributes (16ms)
+				AfterProcessingInitializeOnLoad (6ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (1ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.05 ms, found 12 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5693 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 201.3 MB.
+System memory in use after: 201.8 MB.
+
+Unloading 52 unused Assets to reduce memory usage. Loaded Objects now: 6103.
+Total: 3.333200 ms (FindLiveObjects: 0.372900 ms CreateObjectMapping: 0.297300 ms MarkObjects: 2.604600 ms  DeleteObjects: 0.057500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  path: Assets/NuGet/Resources/defaultIcon.png
+  artifactKey: Guid(eec19781926cd2248b7c9abfde8db555) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/NuGet/Resources/defaultIcon.png using Guid(eec19781926cd2248b7c9abfde8db555) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a01d2aa6c5ee0f04be1a03adaf4559f2') in 0.104833 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1145.045282 seconds.
+  path: Assets/UnityProject/Raw/FCT Logo.png
+  artifactKey: Guid(b13c09332f7f2854cbb4c4610d284d41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/FCT Logo.png using Guid(b13c09332f7f2854cbb4c4610d284d41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '557471e6d060fbd89ef03df146e11eee') in 0.022875 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000267 seconds.
+  path: Assets/UnityProject/Raw/UNIAG Logo.png
+  artifactKey: Guid(93eabb68225575e47aa2746c481d3a57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/UNIAG Logo.png using Guid(93eabb68225575e47aa2746c481d3a57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '07fedeb3ce2fea101bb49ee3e1751bd1') in 0.024005 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000258 seconds.
+  path: Assets/UnityProject/Raw/IPB Logo.png
+  artifactKey: Guid(27d7d7b7f638b7c45b7c37ecea64caad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/IPB Logo.png using Guid(27d7d7b7f638b7c45b7c37ecea64caad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0a51a6603f5a550b9432d12dc39369f1') in 0.021163 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 14.125856 seconds.
+  path: Assets/UnityProject/Raw/FCT Logo.png
+  artifactKey: Guid(b13c09332f7f2854cbb4c4610d284d41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/FCT Logo.png using Guid(b13c09332f7f2854cbb4c4610d284d41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de0cfe3f3049e2729b6d2f51744540b8') in 0.024272 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.316847 seconds.
+  path: Assets/UnityProject/Raw/IPB Logo.png
+  artifactKey: Guid(27d7d7b7f638b7c45b7c37ecea64caad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/IPB Logo.png using Guid(27d7d7b7f638b7c45b7c37ecea64caad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ff48658076e574d98091599df8b377e') in 0.022361 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.480818 seconds.
+  path: Assets/UnityProject/Raw/UNIAG Logo.png
+  artifactKey: Guid(93eabb68225575e47aa2746c481d3a57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/UNIAG Logo.png using Guid(93eabb68225575e47aa2746c481d3a57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '26f876552166437b55bdcf1d89e4bce8') in 0.026371 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 254.779445 seconds.
+  path: Assets/UnityProject/Raw/IPB Logo.png
+  artifactKey: Guid(27d7d7b7f638b7c45b7c37ecea64caad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/IPB Logo.png using Guid(27d7d7b7f638b7c45b7c37ecea64caad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '387479ff2fbcd3309cb964b0f356e7f3') in 0.016234 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000163 seconds.
+  path: Assets/UnityProject/Raw/UNIAG Logo.png
+  artifactKey: Guid(93eabb68225575e47aa2746c481d3a57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/UNIAG Logo.png using Guid(93eabb68225575e47aa2746c481d3a57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8847af45cde7347f12a9e63f350d5ec1') in 0.016617 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.886969 seconds.
+  path: Assets/UnityProject/Raw/UNIAG Logo.png
+  artifactKey: Guid(93eabb68225575e47aa2746c481d3a57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/UNIAG Logo.png using Guid(93eabb68225575e47aa2746c481d3a57) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b647d5165de72add5666a8aa9d1d9356') in 0.023947 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.221177 seconds.
+  path: Assets/UnityProject/Raw/IPB Logo.png
+  artifactKey: Guid(27d7d7b7f638b7c45b7c37ecea64caad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/IPB Logo.png using Guid(27d7d7b7f638b7c45b7c37ecea64caad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5620d8e1aea6488ba1b8707733596708') in 0.025032 seconds 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 8.43 ms, found 12 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 42 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 89.9 MB.
+System memory in use after: 90.4 MB.
+
+Unloading 42 unused Assets to reduce memory usage. Loaded Objects now: 6115.
+Total: 4.240700 ms (FindLiveObjects: 0.379600 ms CreateObjectMapping: 0.292800 ms MarkObjects: 3.533400 ms  DeleteObjects: 0.034200 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 1255.230385 seconds.
+  path: Assets/DNA/Textures/Colba_AlbedoTransparency.png
+  artifactKey: Guid(5aa68c5bde7e7428f8a8077b79d2c05a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DNA/Textures/Colba_AlbedoTransparency.png using Guid(5aa68c5bde7e7428f8a8077b79d2c05a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '713a1d900eb4e9ca96d07bc6ba020ac4') in 0.025427 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000186 seconds.
+  path: Assets/DNA/Textures/Colba_part_Normal.png
+  artifactKey: Guid(a2800c0bd79f14783bb2585c7b271a2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DNA/Textures/Colba_part_Normal.png using Guid(a2800c0bd79f14783bb2585c7b271a2d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e642dcf0047c54ea34b0b773457323c9') in 0.023553 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000239 seconds.
+  path: Assets/DNA/Textures/DNA_Normal.png
+  artifactKey: Guid(0828b5872dac4484ebdd0ba082d52188) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DNA/Textures/DNA_Normal.png using Guid(0828b5872dac4484ebdd0ba082d52188) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ffd0b6025bc929dfadf3b1f0c6aa298') in 0.024772 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000190 seconds.
+  path: Assets/DNA/Textures/Label_Normal.png
+  artifactKey: Guid(2e9141ad46c134c9399a5a689ca8f727) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DNA/Textures/Label_Normal.png using Guid(2e9141ad46c134c9399a5a689ca8f727) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3f91b970adae7a64fde158f3b797c9ca') in 0.017654 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000216 seconds.
+  path: Assets/TextMesh Pro/Sprites/EmojiOne.png
+  artifactKey: Guid(dffef66376be4fa480fb02b19edbe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/TextMesh Pro/Sprites/EmojiOne.png using Guid(dffef66376be4fa480fb02b19edbe903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c6fde4a0f92eec815f04bb08a9db927c') in 0.019505 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000183 seconds.
+  path: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
+  artifactKey: Guid(2e498d1c8094910479dc3e1b768306a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset using Guid(2e498d1c8094910479dc3e1b768306a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '73c4f4f2da4d2ab57d901e0f40ae3f2f') in 0.099220 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000180 seconds.
+  path: Assets/DNA/Textures/Colba_part_MetallicSmoothness.png
+  artifactKey: Guid(39ef88bf68bb94bcc9f76429d5a5e5a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DNA/Textures/Colba_part_MetallicSmoothness.png using Guid(39ef88bf68bb94bcc9f76429d5a5e5a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '12aa3deb202be9bcd770588ed3764a0f') in 0.023816 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000191 seconds.
+  path: Assets/DNA/Textures/DNA_MetallicSmoothness.png
+  artifactKey: Guid(7fa1176dd6eba44358c67c938ae568a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DNA/Textures/DNA_MetallicSmoothness.png using Guid(7fa1176dd6eba44358c67c938ae568a7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b8a4d4670888ce373446daf995fd3f79') in 0.020600 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000274 seconds.
+  path: Assets/DNA/Textures/Label_MetallicSmoothness.png
+  artifactKey: Guid(dcdd3303c6a154707862c2ce32bface6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DNA/Textures/Label_MetallicSmoothness.png using Guid(dcdd3303c6a154707862c2ce32bface6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f83de382c8423a5e3877a5a4c058513') in 0.018925 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000207 seconds.
+  path: Assets/DNA/Textures/Colba_part_Emission.png
+  artifactKey: Guid(be4178624a67e4621b9a0fd93434ceb8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DNA/Textures/Colba_part_Emission.png using Guid(be4178624a67e4621b9a0fd93434ceb8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f87f3e4d94c9f2c4efab9075b943591') in 0.019638 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000140 seconds.
+  path: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset
+  artifactKey: Guid(8f586378b4e144a9851e7b34d9b748ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset using Guid(8f586378b4e144a9851e7b34d9b748ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f8b7c8c3e3c9a45adbdca63c88707d17') in 0.043904 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000244 seconds.
+  path: Assets/DNA/Textures/Label_AlbedoTransparency.png
+  artifactKey: Guid(238a4a171bb704822be8415156277712) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DNA/Textures/Label_AlbedoTransparency.png using Guid(238a4a171bb704822be8415156277712) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '13f04afc3d9c86f287b3f735a083572a') in 0.020034 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000257 seconds.
+  path: Assets/DNA/Textures/Colba_part_AlbedoTransparency.png
+  artifactKey: Guid(0783bc023f1c04cf0b88a2b6b01e346c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DNA/Textures/Colba_part_AlbedoTransparency.png using Guid(0783bc023f1c04cf0b88a2b6b01e346c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '24f4d2bd8dd6e9077480f2ec5b0fb417') in 0.022127 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000241 seconds.
+  path: Assets/Best HTTP/Examples/Helpers/LinkSelect.png
+  artifactKey: Guid(bcfb03f220265ea4e9fd88ae5af90176) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Best HTTP/Examples/Helpers/LinkSelect.png using Guid(bcfb03f220265ea4e9fd88ae5af90176) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b8be48a2d59fdc11c01cc5dd359fa9fd') in 0.036464 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000126 seconds.
+  path: Assets/DNA/Textures/DNA_AlbedoTransparency.png
+  artifactKey: Guid(93c797e474cc2457eaf7a5f2ffb39ce3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DNA/Textures/DNA_AlbedoTransparency.png using Guid(93c797e474cc2457eaf7a5f2ffb39ce3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa2abe5c89c70c611e8c030a0c942c78') in 0.018897 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 358.460946 seconds.
+  path: Assets/UnityProject/Raw/Logos/Logos.png
+  artifactKey: Guid(6f5822c92d0e14f4c9e95c86a3afa2b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/Logos/Logos.png using Guid(6f5822c92d0e14f4c9e95c86a3afa2b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f4f952ec88dd81b672be5aee1bc8c7b8') in 0.019240 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.054468 seconds.
+  path: Assets/UnityProject/Raw/Logos/Logos.png
+  artifactKey: Guid(6f5822c92d0e14f4c9e95c86a3afa2b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Raw/Logos/Logos.png using Guid(6f5822c92d0e14f4c9e95c86a3afa2b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5c4d48988fce06f1f215f02a6cdb9128') in 0.026037 seconds 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 7.89 ms, found 12 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 42 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 90.7 MB.
+System memory in use after: 91.2 MB.
+
+Unloading 42 unused Assets to reduce memory usage. Loaded Objects now: 6157.
+Total: 4.295700 ms (FindLiveObjects: 0.371500 ms CreateObjectMapping: 0.326700 ms MarkObjects: 3.579200 ms  DeleteObjects: 0.017600 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
