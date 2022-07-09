@@ -89,7 +89,8 @@ public class APIController : MonoBehaviour
             debugText.text = debugText.text + "\nMessage: " + message;
             //Debug.Log("Text Message received from server: " + message);
             // JObject results = JObject.Parse(@message);
-            DefinePredictions(message);
+            if (message.Length > 0)
+                DefinePredictions(message);
         
         };
 
@@ -113,7 +114,13 @@ public class APIController : MonoBehaviour
 
         ws.Open();
 
-        
+
+        FrameCapture f = new FrameCapture("bytes", new CameraLocation(new Vector4(3, 3, 3, 3), new Quaternion()));
+
+        Debug.Log(JsonUtility.ToJson(f));
+
+        Debug.Log(JsonUtility.FromJson<FrameCapture>(JsonUtility.ToJson(f)).cameraLocation.position);
+   
 
         debugText.text = debugText.text + "\nWS Created/Opened";
 
@@ -141,15 +148,15 @@ public class APIController : MonoBehaviour
 
         
         /*CameraExtrinsic Extrinsic = new CameraExtrinsic(trackedObject.Extrinsic);
-        Vector3 cameraPosition = Extrinsic.Position;
-        if (cameraPosition == Vector3.forward) Debug.LogWarning("Camera position is forward vector.");
-        if (cameraPosition == Vector3.zero) Debug.LogWarning("Camera position is zero vector.");
+        Vector3 cameraLocation = Extrinsic.Position;
+        if (cameraLocation == Vector3.forward) Debug.LogWarning("Camera position is forward vector.");
+        if (cameraLocation == Vector3.zero) Debug.LogWarning("Camera position is zero vector.");
 
-        Debug.Log(GetPosition(cameraPosition,));
+        Debug.Log(GetPosition(cameraLocation,));
         */
     }
     /*
-    public Vector3 GetPosition(Vector3 cameraPosition, Vector3 layForward)
+    public Vector3 GetPosition(Vector3 cameraLocation, Vector3 layForward)
     {
         if (!Microsoft.MixedReality.Toolkit.Utilities.SyncContextUtility.IsMainThread)
         {
@@ -157,7 +164,7 @@ public class APIController : MonoBehaviour
         }
 
         RaycastHit hit;
-        if (!Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, 1 << 31)) // TODO: Check -1
+        if (!Physics.Raycast(cameraLocation, layForward * -1f, out hit, Mathf.Infinity, 1 << 31)) // TODO: Check -1
         {
 #if ENABLE_WINMD_SUPPORT
                 Debug.LogWarning("Raycast failed. Probably no spatial mesh provided.");
@@ -183,7 +190,6 @@ public class APIController : MonoBehaviour
            debugText.text = debugText.text + "\n" + response.DataAsText;
        }
         */
-
 
 
 #if ENABLE_WINMD_SUPPORT
@@ -215,21 +221,16 @@ public class APIController : MonoBehaviour
                         debugText.text = debugText.text + "(" + (testNum++).ToString() + ") extrinsic:" + extrinsic.ToString() +"\n \n";
 
 
-                        FrameCapture frame = new FrameCapture();
-                        
-                        
-                        //frame.data = "I am but a test";
-                        //ws.Send(JsonUtility.ToJson(frame));
+                        FrameCapture frame = new FrameCapture(Convert.ToBase64String(byteArray), 
+                                                                new CameraLocation(extrinsic.GetPosition(),extrinsic.GetRotation()));
 
 
-                        frame.data = Convert.ToBase64String(byteArray);
+                        Regex.Replace(frame.bytes, @"/\=+$/", "");
+                        Regex.Replace(frame.bytes, @"/\//g", "_");
+                        Regex.Replace(frame.bytes, @"/\+/g", "-");
 
-                        Regex.Replace(frame.data, @"/\=+$/", "");
-                        Regex.Replace(frame.data, @"/\//g", "_");
-                        Regex.Replace(frame.data, @"/\+/g", "-");
 
                         ws.Send("Sending");
-                        //ws.Send(frame.data);
                         ws.Send(JsonUtility.ToJson(frame));
                         ws.Send("Sended");
 
