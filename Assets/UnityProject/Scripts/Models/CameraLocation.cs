@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+
 public class CameraLocation
 {
 
     public Vector4 position;
-    public Quaternion rotation;
+    public Vector4 upwards;
+    public Vector4 forward;
 
-    public CameraLocation(Vector4 position, Quaternion rotation)
+    public CameraLocation(Vector4 position, Vector4 upwards, Vector4 forward)
     {
         this.position = position;
-        this.rotation = rotation;
+        this.upwards = upwards;
+        this.forward = forward;
+        
     }
 
 }

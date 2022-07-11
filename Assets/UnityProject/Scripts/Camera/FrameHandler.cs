@@ -19,6 +19,7 @@ public class FrameHandler
 		public MediaFrameReference mediaFrameReference;
 #endif
 		public CameraExtrinsic extrinsic;
+		public CameraIntrinsic intrinsic;
 	}
 
 #if ENABLE_WINMD_SUPPORT
@@ -35,6 +36,7 @@ public class FrameHandler
 			lock (this)
 			{
 				_lastFrame.extrinsic = new CameraExtrinsic(_lastFrame.mediaFrameReference.CoordinateSystem, WorldOrigin.coordinate);
+				_lastFrame.intrinsic = new CameraIntrinsic(_lastFrame.mediaFrameReference.VideoMediaFrame.CameraIntrinsics);
 				return _lastFrame;
 			}
 		}

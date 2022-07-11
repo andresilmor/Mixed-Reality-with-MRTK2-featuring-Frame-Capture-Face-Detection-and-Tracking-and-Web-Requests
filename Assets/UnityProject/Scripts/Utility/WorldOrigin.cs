@@ -1,3 +1,4 @@
+using OpenCVForUnity.CoreModule;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,6 +49,23 @@ public static class WorldOrigin
             
             if (worldOriginPtr == null) throw new InvalidCastException("Failed to retrieve world origin from pointer");
             return worldOriginPtr;
+        }
+
+
+        /// <summary>
+        /// Algorithm to approximate the vertical point in the bounding box regarding the user's position.
+        /// </summary>
+        public static Windows.Foundation.Point GetBoundingBoxTarget(Rect2d rect, Vector4 cameraForward)
+        {
+            var cameraToGroundAngle = Vector3.Angle(cameraForward, Vector3.down);
+            var offsetFactor = 0f;
+            if (cameraToGroundAngle <= 90)
+            {
+                offsetFactor = 0.5f + cameraToGroundAngle / 180;
+            }
+
+            Point point = new Point(rect.x + rect.width / 2, rect.y + rect.height * offsetFactor);
+            return new Windows.Foundation.Point(point.x, 1080 - point.y);
         }
 
 #endif

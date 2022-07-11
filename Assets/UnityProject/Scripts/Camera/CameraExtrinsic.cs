@@ -77,13 +77,5 @@ public class CameraExtrinsic
         Quaternion rotation = Quaternion.LookRotation(forward, upwards);
         return $"Position: {position.ToString("G4")}, Rotation: {rotation.eulerAngles.ToString("G4")}";
     }
-    public Vector4 GetPosition()
-    {
-        return viewFromWorld.GetColumn(3);
-    }
 
-    public Quaternion GetRotation()
-    {
-        return Quaternion.LookRotation(viewFromWorld.GetColumn(2), viewFromWorld.GetColumn(1));
-    }
 }

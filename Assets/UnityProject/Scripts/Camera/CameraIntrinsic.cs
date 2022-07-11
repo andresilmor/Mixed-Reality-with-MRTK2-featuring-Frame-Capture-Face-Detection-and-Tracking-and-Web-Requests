@@ -10,6 +10,10 @@ using System;
 using JetBrains.Annotations;
 using UnityEngine;
 
+#if ENABLE_WINMD_SUPPORT
+using Windows.Perception.Spatial;
+#endif
+
 
 /// <summary>
 /// Contains information on camera intrinsic parameters.
@@ -23,7 +27,7 @@ public class CameraIntrinsic
         /// Holds the <see cref="CameraIntrinsic"/> of Windows UWP to use at <see cref="UnprojectAtUnitDepth"/>.
         /// </summary>
         // TODO: https://stackoverflow.com/questions/51272055/opencv-unproject-2d-points-to-3d-with-known-depth-z
-        [CanBeNull] public readonly Windows.Media.Devices.Core.CameraIntrinsics WindowsCameraIntrinsics;
+    [CanBeNull] public readonly Windows.Media.Devices.Core.CameraIntrinsics WindowsCameraIntrinsics;
 #endif
 
     /// <summary>
@@ -65,6 +69,8 @@ public class CameraIntrinsic
     /// using UndistortPoint, which uses the CPU to compute the distortion compensation.
     /// </summary>
     public readonly Matrix4x4 UndistortedProjectionTransform;
+
+ 
 
     /// <param name="focalLength">focal length for the camera</param>
     /// <param name="imageWidth">image width in pixels</param>
@@ -166,13 +172,13 @@ public class CameraIntrinsic
         /// Unprojects pixel coordinates into a camera space ray from the camera origin, expressed as a X, Y coordinates on a plane one meter from the camera.
         /// </summary>
         /// <param name="pixelCoordinate">The point to unproject. Points in Windows UWP use a different coordinate system than OpenCV</param>
-        public Vector2 UnprojectAtUnitDepth(Windows.Foundation.Point pixelCoordinate)
+         public static Vector2 UnprojectAtUnitDepth(Windows.Foundation.Point pixelCoordinate, CameraIntrinsic intrinsic)
         {
-            if (WindowsCameraIntrinsics == null) throw new NotImplementedException("Unprojection without UWP is not implemented yet.");
-            System.Numerics.Vector2 unprojected = WindowsCameraIntrinsics.UnprojectAtUnitDepth(pixelCoordinate);
+             System.Numerics.Vector2 unprojected = intrinsic.WindowsCameraIntrinsics.UnprojectAtUnitDepth(pixelCoordinate);
             return unprojected.ToUnity();
         }
 #endif
+
 
     public override string ToString()
     {

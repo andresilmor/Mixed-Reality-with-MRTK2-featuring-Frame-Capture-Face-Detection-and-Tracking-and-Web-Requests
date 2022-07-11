@@ -1,5 +1,4 @@
 using System;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 using TMPro;
@@ -10,12 +9,10 @@ using BestHTTP.WebSocket;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Media;
-using Windows.Storage;
-using Windows.Storage.Streams;
-using Windows.Graphics.Imaging;
 using Windows.Security.Cryptography;
 
 using Windows.Media.Capture.Frames;
@@ -55,12 +52,17 @@ public class APIController : MonoBehaviour
 
         ws.OnMessage += (WebSocket webSocket, string message) =>
         {
-            debugText.text = debugText.text + "\nMessage: " + message;
             //Debug.Log("Text Message received from server: " + message);
             // JObject results = JObject.Parse(@message);
-            if (message.Length > 0)
+
+
+            if(message.Length > 0) {
+                debugText.text = debugText.text + "\nJsonText";
                 DefinePredictions(message);
-        
+                
+            } else
+                debugText.text = debugText.text + "\nOnMessage";
+
         };
 
         ws.OnClosed += (WebSocket webSocket, UInt16 code, string message) =>
@@ -83,16 +85,7 @@ public class APIController : MonoBehaviour
 
         ws.Open();
 
-
-        FrameCapture f = new FrameCapture("bytes", new CameraLocation(new Vector4(3, 3, 3, 3), new Quaternion()));
-
-        Debug.Log(JsonUtility.ToJson(f));
-
-        Debug.Log(JsonUtility.FromJson<FrameCapture>(JsonUtility.ToJson(f)).cameraLocation.position);
-   
-
-        debugText.text = debugText.text + "\nWS Created/Opened";
-
+  
 
 #if ENABLE_WINMD_SUPPORT
         frameHandler = await FrameHandler.CreateAsync(1504, 846);
@@ -100,31 +93,7 @@ public class APIController : MonoBehaviour
 #endif
     }
 
-
-    private async void DefinePredictions(string predictions)
-    {
-        //List<DetectionsList> results = 
-        //    JsonConvert.DeserializeObject<List<DetectionsList>>(
-        //        JsonConvert.DeserializeObject(predictions).ToString()
-        //        );
-
-
-
-        DetectionsList results = JsonUtility.FromJson<DetectionsList>(predictions);
-
-
-
-        
-        /*CameraExtrinsic Extrinsic = new CameraExtrinsic(trackedObject.Extrinsic);
-        Vector3 cameraLocation = Extrinsic.Position;
-        if (cameraLocation == Vector3.forward) Debug.LogWarning("Camera position is forward vector.");
-        if (cameraLocation == Vector3.zero) Debug.LogWarning("Camera position is zero vector.");
-
-        Debug.Log(GetPosition(cameraLocation,));
-        */
-    }
-    /*
-    public Vector3 GetPosition(Vector3 cameraLocation, Vector3 layForward)
+    public Vector3 GetPosition(Vector3 cameraPosition, Vector3 layForward)
     {
         if (!Microsoft.MixedReality.Toolkit.Utilities.SyncContextUtility.IsMainThread)
         {
@@ -132,10 +101,11 @@ public class APIController : MonoBehaviour
         }
 
         RaycastHit hit;
-        if (!Physics.Raycast(cameraLocation, layForward * -1f, out hit, Mathf.Infinity, 1 << 31)) // TODO: Check -1
+        if (!Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, 1 << 31)) // TODO: Check -1
         {
 #if ENABLE_WINMD_SUPPORT
                 Debug.LogWarning("Raycast failed. Probably no spatial mesh provided.");
+                debugText.text = debugText.text + "\nRaycast failed. Probably no spatial mesh provided.";
                 return Vector3.positiveInfinity;
 #else
             Debug.LogWarning("Raycast failed. Probably no spatial mesh provided. Use Holographic Remoting or HoloLens."); // TODO: Check mesh simulation
@@ -145,7 +115,52 @@ public class APIController : MonoBehaviour
         return hit.point;
     }
 
-    */
+
+
+    private async void DefinePredictions(string predictions)
+    {
+        debugText.text = debugText.text + "\nInside Definition";
+
+        List<DetectionsList> results = JsonConvert.DeserializeObject<List<DetectionsList>>(predictions);
+
+        debugText.text = debugText.text + "\nDataObject";
+        if (results[0].list.Count <= 0)
+        {
+            debugText.text = debugText.text + "\nExiting Definition";
+            return;
+        }
+
+        debugText.text = debugText.text + "\nMessage: " + results[0].cameraLocation.position.ToString();
+
+        //  Danger Zone  //
+       
+
+        BoundingBox b = results[0].list[0].box;
+        
+        debugText.text = debugText.text + "\nBoundingBox: " + b.x1.ToString();
+        OpenCVForUnity.CoreModule.Rect2d rect = new OpenCVForUnity.CoreModule.Rect2d(b.x1, b.y1, b.x2 - b.x1, b.x2 - b.y1);
+
+
+#if ENABLE_WINMD_SUPPORT
+debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
+        Windows.Foundation.Point target = WorldOrigin.GetBoundingBoxTarget(rect, results[0].cameraLocation.forward);
+        Vector2 unprojection = CameraIntrinsic.UnprojectAtUnitDepth(target, frameHandler.LastFrame.intrinsic);
+        Vector3 correctedUnprojection = new Vector3(unprojection.x, unprojection.y, 1.0f);
+        debugText.text = debugText.text + "\n correctedUnprojection: " + correctedUnprojection.y.ToString();
+
+        Quaternion rotation = Quaternion.LookRotation(-results[0].cameraLocation.forward, results[0].cameraLocation.upwards);
+        Vector3 v = GetPosition(results[0].cameraLocation.position, Vector3.Normalize(rotation * correctedUnprojection));
+
+        
+        debugText.text = debugText.text + "\n GetPosition: " + v.y.ToString();
+#endif
+
+
+        //  You're safe now :3  //
+
+    }
+
+
 
     public async void ObjectPrediction()
     {
@@ -160,41 +175,14 @@ public class APIController : MonoBehaviour
                 {
                     if (videoFrame != null && videoFrame.SoftwareBitmap != null)
                     {
-                        byte[] byteArray = await toByteArray(videoFrame.SoftwareBitmap);
+                        byte[] byteArray = await Parser.ToByteArray(videoFrame.SoftwareBitmap);
                         Debug.Log($"[### DEBUG ###] byteArray Size = {byteArray.Length}");
-                        
-                        //ws.Send(Convert.ToBase64String(byteArray));
-
-
-
-                        //  Danger Zone  //
-
-
-                        //CameraExtrinsic extrinsic = new CameraExtrinsic(lastFrame.mediaFrameReference.CoordinateSystem, WorldOrigin);
-                        
-                        
-                        //debugText.text = "(" + (testNum).ToString() + ") intrinsic:" + intrinsic.ToString() +"\n \n";
-                        //debugText.text = debugText.text + "(" + (testNum++).ToString() + ") extrinsic:" + extrinsic.ToString() +"\n \n";
-
-
-                        FrameCapture frame = new FrameCapture(Convert.ToBase64String(byteArray), 
-                                                                new CameraLocation(lastFrame.extrinsic.GetPosition(),lastFrame.extrinsic.GetRotation()));
-
-
-                        Regex.Replace(frame.bytes, @"/\=+$/", "");
-                        Regex.Replace(frame.bytes, @"/\//g", "_");
-                        Regex.Replace(frame.bytes, @"/\+/g", "-");
-
+                      
+                        FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(lastFrame.extrinsic.Position,lastFrame.extrinsic.Upwards,lastFrame.extrinsic.Forward));
 
                         ws.Send("Sending");
                         ws.Send(JsonUtility.ToJson(frame));
                         ws.Send("Sended");
-
-
-                        //  You're safe now :3  //
-
-
-
 
                     }
                     else
@@ -211,27 +199,6 @@ public class APIController : MonoBehaviour
 #endif
 
     }
-
-#if ENABLE_WINMD_SUPPORT
-    public async Task<byte[]> toByteArray(SoftwareBitmap sftBitmap_c)
-    {
-        SoftwareBitmap sftBitmap = SoftwareBitmap.Convert(sftBitmap_c, BitmapPixelFormat.Bgra8);
-        InMemoryRandomAccessStream mss = new InMemoryRandomAccessStream();
-        Windows.Graphics.Imaging.BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, mss);
-
-        encoder.SetSoftwareBitmap(sftBitmap);
-        await encoder.FlushAsync();
-
-        IBuffer bufferr = new Windows.Storage.Streams.Buffer((uint)mss.Size);
-        await mss.ReadAsync(bufferr, (uint)mss.Size, InputStreamOptions.None);
-
-        DataReader dataReader = DataReader.FromBuffer(bufferr);
-        byte[] bytes = new byte[bufferr.Length];
-        dataReader.ReadBytes(bytes);
-        return bytes;
-    }
-#endif
-
 
     void OnDestroy()
     {
