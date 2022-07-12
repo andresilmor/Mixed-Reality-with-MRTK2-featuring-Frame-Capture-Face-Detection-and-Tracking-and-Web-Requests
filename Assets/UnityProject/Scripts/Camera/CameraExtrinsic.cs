@@ -78,4 +78,17 @@ public class CameraExtrinsic
         return $"Position: {position.ToString("G4")}, Rotation: {rotation.eulerAngles.ToString("G4")}";
     }
 
+    public Vector3 GetPosition()
+    {
+        return viewFromWorld.GetColumn(3);
+    }
+    public Vector4 GetForward()
+    {
+        return viewFromWorld.GetColumn(2);
+    }
+    public Vector4 GetUpwards()
+    {
+        return viewFromWorld.GetColumn(1);
+    }
+
 }

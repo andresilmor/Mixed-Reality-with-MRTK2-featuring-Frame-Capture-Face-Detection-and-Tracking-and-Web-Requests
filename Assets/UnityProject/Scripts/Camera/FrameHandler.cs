@@ -21,6 +21,12 @@ public class FrameHandler
 		public CameraExtrinsic extrinsic;
 		public CameraIntrinsic intrinsic;
 	}
+	
+	void tet()
+    {
+		Frame d = new Frame() {extrinsic = null };
+
+    }
 
 #if ENABLE_WINMD_SUPPORT
 	MediaCapture mediaCapture;
@@ -197,7 +203,7 @@ public class FrameHandler
 		MediaFrameReference frame = sender.TryAcquireLatestFrame();
 		if (frame != null){
 			LastFrame = new Frame
-			{mediaFrameReference = frame, extrinsic = null};
+			{mediaFrameReference = frame, extrinsic = null, intrinsic = null};
 			_lastFrameCapturedTimestamp = DateTime.Now;
 			
 		}

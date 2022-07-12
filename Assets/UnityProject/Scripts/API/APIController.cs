@@ -85,7 +85,6 @@ public class APIController : MonoBehaviour
 
         ws.Open();
 
-  
 
 #if ENABLE_WINMD_SUPPORT
         frameHandler = await FrameHandler.CreateAsync(1504, 846);
@@ -99,7 +98,7 @@ public class APIController : MonoBehaviour
         {
             return Vector3.zero;
         }
-
+        debugText.text = debugText.text + "\nCHOCKED";
         RaycastHit hit;
         if (!Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, 1 << 31)) // TODO: Check -1
         {
@@ -178,7 +177,12 @@ debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
                         byte[] byteArray = await Parser.ToByteArray(videoFrame.SoftwareBitmap);
                         Debug.Log($"[### DEBUG ###] byteArray Size = {byteArray.Length}");
                       
-                        FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(lastFrame.extrinsic.Position,lastFrame.extrinsic.Upwards,lastFrame.extrinsic.Forward));
+                        //FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(lastFrame.extrinsic.Position,lastFrame.extrinsic.Upwards,lastFrame.extrinsic.Forward));
+                        FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(lastFrame.extrinsic.Position, lastFrame.extrinsic.Upwards, lastFrame.extrinsic.Forward));
+
+                        debugText.text = debugText.text + "\n extrinsic: " + lastFrame.extrinsic.ToString();
+                        debugText.text = debugText.text + "\n intrinsic: " + lastFrame.intrinsic.ToString();
+
 
                         ws.Send("Sending");
                         ws.Send(JsonUtility.ToJson(frame));
