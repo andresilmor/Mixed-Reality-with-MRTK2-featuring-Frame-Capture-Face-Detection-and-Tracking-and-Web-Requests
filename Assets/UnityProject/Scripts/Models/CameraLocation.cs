@@ -17,5 +17,4 @@ public class CameraLocation
         this.forward = forward;
         
     }
-
 }

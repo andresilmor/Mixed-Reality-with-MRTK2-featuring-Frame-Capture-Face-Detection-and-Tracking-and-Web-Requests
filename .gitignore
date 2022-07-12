@@ -44,7 +44,11 @@ sysinfo.txt
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Unity Asset Store
 Assets/Best HTTP.meta
 Assets/Best HTTP/
 Assets/OpenCVForUnity/
 Assets/OpenCVForUnity.meta
+Assets/JsonDotNet/
+Assets/JsonDotNet.meta

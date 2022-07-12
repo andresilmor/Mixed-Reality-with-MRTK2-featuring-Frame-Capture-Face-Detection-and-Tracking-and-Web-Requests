@@ -82,7 +82,9 @@ public class APIController : MonoBehaviour
 
 
         };
-
+        var test = JsonConvert.DeserializeObject<List<DetectionsList>>(
+                    JsonConvert.DeserializeObject("[{'type': 'Person', 'cameraLocation': {'position': {'x': 0.003953032195568085, 'y': 0.02950960397720337, 'z': 0.18702639639377594}, 'upwards': {'x': 0.012771094217896461, 'y': 0.8554727435112, 'z': 0.5176918506622314, 'w': 0.0}, 'forward': {'x': -0.002206910401582718, 'y': -0.517708957195282, 'z': 0.8555571436882019, 'w': 0.0}}, 'list': [{'name': 'Abel Ferraz', 'box': {'y1': 596, 'x2': 956, 'y2': 844, 'x1': 704}}]}]").ToString());
+        debugText.text = debugText.text + "\n" + test[0].type;
         ws.Open();
 
 
@@ -120,7 +122,10 @@ public class APIController : MonoBehaviour
     {
         debugText.text = debugText.text + "\nInside Definition";
 
-        List<DetectionsList> results = JsonConvert.DeserializeObject<List<DetectionsList>>(predictions);
+        //List<DetectionsList> results = JsonConvert.DeserializeObject<List<DetectionsList>>(predictions);
+        debugText.text = debugText.text + "\n" + predictions;
+        var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
+                JsonConvert.DeserializeObject(predictions).ToString());
 
         debugText.text = debugText.text + "\nDataObject";
         if (results[0].list.Count <= 0)
@@ -177,12 +182,10 @@ debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
                         byte[] byteArray = await Parser.ToByteArray(videoFrame.SoftwareBitmap);
                         Debug.Log($"[### DEBUG ###] byteArray Size = {byteArray.Length}");
                       
-                        //FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(lastFrame.extrinsic.Position,lastFrame.extrinsic.Upwards,lastFrame.extrinsic.Forward));
                         FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(lastFrame.extrinsic.Position, lastFrame.extrinsic.Upwards, lastFrame.extrinsic.Forward));
 
                         debugText.text = debugText.text + "\n extrinsic: " + lastFrame.extrinsic.ToString();
                         debugText.text = debugText.text + "\n intrinsic: " + lastFrame.intrinsic.ToString();
-
 
                         ws.Send("Sending");
                         ws.Send(JsonUtility.ToJson(frame));
