@@ -8,7 +8,7 @@ using UnityEngine;
 using Windows.Perception.Spatial;
 #endif
 
-public static class WorldOrigin
+public static class WorldOrigin //TODO: Change for something more general, like MRWorld, and save Intrinsics info also, since that dont change a lot
 {
     private static string _test;
     public static string test
@@ -55,6 +55,8 @@ public static class WorldOrigin
         /// <summary>
         /// Algorithm to approximate the vertical point in the bounding box regarding the user's position.
         /// </summary>
+        /// OpenCV uses Row-major order (top-left is 0,0).
+        /// Windows UWP uses Cartesian coordinate system (bottom left is 0,0).
         public static Windows.Foundation.Point GetBoundingBoxTarget(Rect2d rect, Vector4 cameraForward)
         {
             var cameraToGroundAngle = Vector3.Angle(cameraForward, Vector3.down);
@@ -65,7 +67,7 @@ public static class WorldOrigin
             }
 
             Point point = new Point(rect.x + rect.width / 2, rect.y + rect.height * offsetFactor);
-            return new Windows.Foundation.Point(point.x, 1080 - point.y);
+            return new Windows.Foundation.Point(point.x, 846 - point.y); //846 = Frame Height, static now but we can turn dynamic and get from Intrinsics
         }
 
 #endif

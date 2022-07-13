@@ -14151,6 +14151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IP: 127.0.0.1
   debugText: {fileID: 1520693231}
+  cubeForTest: {fileID: 6925652982330892784, guid: f5439ff4138eb2e4e98cb39677737bc0, type: 3}
 --- !u!4 &1226567736
 Transform:
   m_ObjectHideFlags: 0

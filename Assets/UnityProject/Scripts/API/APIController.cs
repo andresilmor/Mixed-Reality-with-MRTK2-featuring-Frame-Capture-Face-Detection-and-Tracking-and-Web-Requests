@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 
+using Microsoft.MixedReality.Toolkit.Extensions;
+using Microsoft.MixedReality.Toolkit;
+
 #if ENABLE_WINMD_SUPPORT
 using Windows.Media;
 using Windows.Security.Cryptography;
@@ -40,8 +43,7 @@ public class APIController : MonoBehaviour
     
 
     string address = "ws://192.168.1.238:8000/ws";
-
-
+    public GameObject cubeForTest;
 
     async void Start()
     {
@@ -82,12 +84,9 @@ public class APIController : MonoBehaviour
 
 
         };
-        var test = JsonConvert.DeserializeObject<List<DetectionsList>>(
-                    JsonConvert.DeserializeObject("[{'type': 'Person', 'cameraLocation': {'position': {'x': 0.003953032195568085, 'y': 0.02950960397720337, 'z': 0.18702639639377594}, 'upwards': {'x': 0.012771094217896461, 'y': 0.8554727435112, 'z': 0.5176918506622314, 'w': 0.0}, 'forward': {'x': -0.002206910401582718, 'y': -0.517708957195282, 'z': 0.8555571436882019, 'w': 0.0}}, 'list': [{'name': 'Abel Ferraz', 'box': {'y1': 596, 'x2': 956, 'y2': 844, 'x1': 704}}]}]").ToString());
-        debugText.text = debugText.text + "\n" + test[0].type;
+        
         ws.Open();
-
-
+        
 #if ENABLE_WINMD_SUPPORT
         frameHandler = await FrameHandler.CreateAsync(1504, 846);
 
@@ -142,7 +141,7 @@ public class APIController : MonoBehaviour
         BoundingBox b = results[0].list[0].box;
         
         debugText.text = debugText.text + "\nBoundingBox: " + b.x1.ToString();
-        OpenCVForUnity.CoreModule.Rect2d rect = new OpenCVForUnity.CoreModule.Rect2d(b.x1, b.y1, b.x2 - b.x1, b.x2 - b.y1);
+        OpenCVForUnity.CoreModule.Rect2d rect = new OpenCVForUnity.CoreModule.Rect2d(b.x1, b.y1, b.x2 - b.x1, b.y2 - b.y1);
 
 
 #if ENABLE_WINMD_SUPPORT
@@ -156,9 +155,16 @@ debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
         Vector3 v = GetPosition(results[0].cameraLocation.position, Vector3.Normalize(rotation * correctedUnprojection));
 
         
-        debugText.text = debugText.text + "\n GetPosition: " + v.y.ToString();
-#endif
+        debugText.text = debugText.text + "\n GetPosition X: " + v.x.ToString();
+        debugText.text = debugText.text + "\n GetPosition Y: " + v.y.ToString();
+        debugText.text = debugText.text + "\n GetPosition Z: " + v.z.ToString();
 
+        GameObject obj = Instantiate(cubeForTest, v, Quaternion.identity);
+        
+        debugText.text = debugText.text + "\n obj X: " + obj.transform.position.x.ToString();
+        debugText.text = debugText.text + "\n obj Y: " + obj.transform.position.y.ToString();
+        debugText.text = debugText.text + "\n obj Z: " + obj.transform.position.z.ToString();
+#endif
 
         //  You're safe now :3  //
 
@@ -168,7 +174,6 @@ debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
 
     public async void ObjectPrediction()
     {
-
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = frameHandler.LastFrame;
         if (lastFrame.mediaFrameReference != null)

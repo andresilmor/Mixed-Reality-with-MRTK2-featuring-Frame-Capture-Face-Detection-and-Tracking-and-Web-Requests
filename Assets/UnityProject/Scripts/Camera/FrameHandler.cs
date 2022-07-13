@@ -21,12 +21,7 @@ public class FrameHandler
 		public CameraExtrinsic extrinsic;
 		public CameraIntrinsic intrinsic;
 	}
-	
-	void tet()
-    {
-		Frame d = new Frame() {extrinsic = null };
 
-    }
 
 #if ENABLE_WINMD_SUPPORT
 	MediaCapture mediaCapture;
@@ -186,7 +181,7 @@ public class FrameHandler
 		}
 	}
 
-	public async Task StopFrameGrabberAsync()
+	public async Task StopFrameHandlerAsync()
 	{
         if (mediaCapture != null && mediaCapture.CameraStreamState != Windows.Media.Devices.CameraStreamState.Shutdown)
         {
