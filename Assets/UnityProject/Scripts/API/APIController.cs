@@ -86,11 +86,23 @@ public class APIController : MonoBehaviour
         };
         
         ws.Open();
-        
+
+
+        Camera cam = Camera.main;
+
+        debugText.text = debugText.text + "\nCamera Height: " + cam.pixelHeight + " Width: " + cam.pixelWidth;
+
+        float ortho = cam.orthographicSize;
+        float pixelH = cam.pixelHeight;
+        // (pixels * ortho * 2) / pixelH
+
+
 #if ENABLE_WINMD_SUPPORT
         frameHandler = await FrameHandler.CreateAsync(1504, 846);
 
 #endif
+
+        debugText.text = debugText.text + "\nCamera After Height: " + cam.pixelHeight + " Width: " + cam.pixelWidth;
     }
 
     public Vector3 GetPosition(Vector3 cameraPosition, Vector3 layForward)
@@ -143,7 +155,6 @@ public class APIController : MonoBehaviour
         debugText.text = debugText.text + "\nBoundingBox: " + b.x1.ToString();
         OpenCVForUnity.CoreModule.Rect2d rect = new OpenCVForUnity.CoreModule.Rect2d(b.x1, b.y1, b.x2 - b.x1, b.y2 - b.y1);
 
-
 #if ENABLE_WINMD_SUPPORT
 debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
         Windows.Foundation.Point target = WorldOrigin.GetBoundingBoxTarget(rect, results[0].cameraLocation.forward);
@@ -154,16 +165,29 @@ debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
         Quaternion rotation = Quaternion.LookRotation(-results[0].cameraLocation.forward, results[0].cameraLocation.upwards);
         Vector3 v = GetPosition(results[0].cameraLocation.position, Vector3.Normalize(rotation * correctedUnprojection));
 
-        
-        debugText.text = debugText.text + "\n GetPosition X: " + v.x.ToString();
-        debugText.text = debugText.text + "\n GetPosition Y: " + v.y.ToString();
-        debugText.text = debugText.text + "\n GetPosition Z: " + v.z.ToString();
+        GameObject obj = Instantiate(cubeForTest, results[0].cameraLocation.position , Quaternion.identity);
+        RaycastHit hit;
+        obj.transform.rotation = Quaternion.LookRotation(results[0].cameraLocation.forward, results[0].cameraLocation.upwards);
+        if (Physics.Raycast(obj.transform.position, obj.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, 1 << 31)) {
+         debugText.text = debugText.text + "\n hit X: " + hit.point.x.ToString();
+        debugText.text = debugText.text + "\n hit Y: " + hit.point.y.ToString();
+        debugText.text = debugText.text + "\n hit Z: " + hit.point.z.ToString();
+        }
 
-        GameObject obj = Instantiate(cubeForTest, v, Quaternion.identity);
-        
         debugText.text = debugText.text + "\n obj X: " + obj.transform.position.x.ToString();
         debugText.text = debugText.text + "\n obj Y: " + obj.transform.position.y.ToString();
         debugText.text = debugText.text + "\n obj Z: " + obj.transform.position.z.ToString();
+        //debugText.text = debugText.text + "\n GetPosition X: " + v.x.ToString();
+        //debugText.text = debugText.text + "\n GetPosition Y: " + v.y.ToString();
+        //debugText.text = debugText.text + "\n GetPosition Z: " + v.z.ToString();
+
+         Vector3 pos = PixelConverter.ToWorldUnits(new Vector2(720, 468), results[0].cameraLocation.position); 
+
+         obj = Instantiate(cubeForTest, pos, Quaternion.identity);
+        
+        debugText.text = debugText.text + "\n obj2 X: " + obj.transform.position.x.ToString();
+        debugText.text = debugText.text + "\n obj2 Y: " + obj.transform.position.y.ToString();
+        debugText.text = debugText.text + "\n obj2 Z: " + obj.transform.position.z.ToString();
 #endif
 
         //  You're safe now :3  //
