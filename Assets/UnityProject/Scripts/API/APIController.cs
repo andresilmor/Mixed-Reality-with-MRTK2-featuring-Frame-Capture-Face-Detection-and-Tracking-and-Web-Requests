@@ -156,16 +156,21 @@ public class APIController : MonoBehaviour
         OpenCVForUnity.CoreModule.Rect2d rect = new OpenCVForUnity.CoreModule.Rect2d(b.x1, b.y1, b.x2 - b.x1, b.y2 - b.y1);
 
 #if ENABLE_WINMD_SUPPORT
+
+     debugText.text = debugText.text + "\n TRACK ONE";
 debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
-        Windows.Foundation.Point target = WorldOrigin.GetBoundingBoxTarget(rect, results[0].cameraLocation.forward);
-        Vector2 unprojection = CameraIntrinsic.UnprojectAtUnitDepth(target, frameHandler.LastFrame.intrinsic);
-        Vector3 correctedUnprojection = new Vector3(unprojection.x, unprojection.y, 1.0f);
-        debugText.text = debugText.text + "\n correctedUnprojection: " + correctedUnprojection.y.ToString();
+        //Windows.Foundation.Point target = WorldOrigin.GetBoundingBoxTarget(rect, results[0].cameraLocation.forward);
+        //Vector2 unprojection = CameraIntrinsic.UnprojectAtUnitDepth(target, frameHandler.LastFrame.intrinsic);
+        //Vector3 correctedUnprojection = new Vector3(unprojection.x, unprojection.y, 1.0f);
+       // debugText.text = debugText.text + "\n correctedUnprojection: " + correctedUnprojection.y.ToString();
 
-        Quaternion rotation = Quaternion.LookRotation(-results[0].cameraLocation.forward, results[0].cameraLocation.upwards);
-        Vector3 v = GetPosition(results[0].cameraLocation.position, Vector3.Normalize(rotation * correctedUnprojection));
-
+        //Quaternion rotation = Quaternion.LookRotation(-results[0].cameraLocation.forward, results[0].cameraLocation.upwards);
+        //Vector3 v = GetPosition(results[0].cameraLocation.position, Vector3.Normalize(rotation));
+        debugText.text = debugText.text + "\n TRACK TWO";
         GameObject obj = Instantiate(cubeForTest, results[0].cameraLocation.position , Quaternion.identity);
+        //GameObject obj = Instantiate(cubeForTest, v , Quaternion.identity);
+        debugText.text = debugText.text + "\n TRACK THREE";
+        /*
         RaycastHit hit;
         obj.transform.rotation = Quaternion.LookRotation(results[0].cameraLocation.forward, results[0].cameraLocation.upwards);
         if (Physics.Raycast(obj.transform.position, obj.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, 1 << 31)) {
@@ -188,7 +193,9 @@ debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
         debugText.text = debugText.text + "\n obj2 X: " + obj.transform.position.x.ToString();
         debugText.text = debugText.text + "\n obj2 Y: " + obj.transform.position.y.ToString();
         debugText.text = debugText.text + "\n obj2 Z: " + obj.transform.position.z.ToString();
+        */
 #endif
+        debugText.text = debugText.text + "\n TRACK FOUR";
 
         //  You're safe now :3  //
 
