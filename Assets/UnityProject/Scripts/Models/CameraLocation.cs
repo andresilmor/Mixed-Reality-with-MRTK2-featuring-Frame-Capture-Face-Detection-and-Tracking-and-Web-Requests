@@ -7,14 +7,12 @@ public class CameraLocation
 {
 
     public Vector3 position;
-    public Vector4 upwards;
-    public Vector4 forward;
+    public Quaternion rotation;
 
-    public CameraLocation(Vector3 position, Vector4 upwards, Vector4 forward)
+    public CameraLocation(Vector3 position, Quaternion rotation)
     {
         this.position = position;
-        this.upwards = upwards;
-        this.forward = forward;
-        
+        this.rotation = rotation;   
+
     }
 }

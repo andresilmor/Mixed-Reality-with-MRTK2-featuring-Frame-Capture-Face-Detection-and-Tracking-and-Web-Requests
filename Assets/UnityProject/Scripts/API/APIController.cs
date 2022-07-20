@@ -44,13 +44,15 @@ public class APIController : MonoBehaviour
 
     string address = "ws://192.168.1.238:8000/ws";
     public GameObject cubeForTest;
-
+    private DetectionsMapping detectionsMapping;
     async void Start()
     {
 
         ws = new WebSocket(new Uri(address));
         debugText.text = debugText.text + address;
 
+        detectionsMapping = new DetectionsMapping(cubeForTest);
+        
 
         ws.OnMessage += (WebSocket webSocket, string message) =>
         {
@@ -92,18 +94,91 @@ public class APIController : MonoBehaviour
 
         debugText.text = debugText.text + "\nCamera Height: " + cam.pixelHeight + " Width: " + cam.pixelWidth;
 
-        float ortho = cam.orthographicSize;
-        float pixelH = cam.pixelHeight;
-        // (pixels * ortho * 2) / pixelH
+        //detectionsMapping.MapDetection(new Vector2(Camera.main.pixelWidth / 2, Camera.main.pixelHeight / 2), Camera.main.transform.position, Camera.main.transform.rotation, debugText);
 
 
 #if ENABLE_WINMD_SUPPORT
+        
         frameHandler = await FrameHandler.CreateAsync(1504, 846);
 
 #endif
 
         debugText.text = debugText.text + "\nCamera After Height: " + cam.pixelHeight + " Width: " + cam.pixelWidth;
+
+        /*
+       var camera = GameObject.FindGameObjectWithTag("Terminator").GetComponent<Camera>();
+       Vector3[] frustumCorners = new Vector3[4];
+
+       camera.CalculateFrustumCorners(new Rect(0, 0, 1, 1), camera.nearClipPlane, Camera.MonoOrStereoscopicEye.Mono, frustumCorners);
+
+       GameObject topLeft = null;
+       GameObject bottomRight = null;
+
+
+       for (int i = 0; i < 4; i++)
+       {
+           var worldSpaceCorner = camera.transform.TransformVector(frustumCorners[i]);
+
+           if (i == 1)
+               topLeft = Instantiate(cubeForTest, worldSpaceCorner, Quaternion.identity);
+           else if (i == 3)
+               bottomRight = Instantiate(cubeForTest, worldSpaceCorner, Quaternion.identity);
+           else
+               Instantiate(cubeForTest, worldSpaceCorner, Quaternion.identity);
+
+           Debug.Log(worldSpaceCorner);
+           Debug.DrawRay(camera.transform.position, worldSpaceCorner, Color.blue);
+
+   }
+
+       //Instantiate(cubeForTest, new Vector3(topLeft.transform.position.x + (bottomRight.transform.position.x - topLeft.transform.position.x) / 2, topLeft.transform.position.y + (bottomRight.transform.position.y - topLeft.transform.position.y) / 2, camera.nearClipPlane), Quaternion.identity);
+       
+
+        trial = Instantiate(cubeForTest, camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth / 2, camera.pixelHeight / 2, cam.nearClipPlane)), Quaternion.identity);
+
+        Debug.Log(camera.pixelWidth / 2);
+        Debug.Log(camera.pixelHeight / 2);
+
+        trial.transform.rotation = camera.transform.rotation;
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth / 2, camera.pixelHeight / 2, cam.nearClipPlane)), camera.transform.forward, out hit, Mathf.Infinity, 1 << 31)) // TODO: Check -1
+        {
+            Instantiate(cubeForTest, hit.point, Quaternion.identity);
+        }
+
+
+        Instantiate(cubeForTest, camera.ScreenToWorldPoint(new Vector3(0, camera.pixelHeight, cam.nearClipPlane)), Quaternion.identity);
+        Instantiate(cubeForTest, camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, camera.pixelHeight, cam.nearClipPlane)), Quaternion.identity);
+
+        Instantiate(cubeForTest, camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, 0, cam.nearClipPlane)), Quaternion.identity);
+
+        Instantiate(cubeForTest, camera.ScreenToWorldPoint(new Vector3(0, 0, cam.nearClipPlane)), Quaternion.identity);
+        /*
+       float piX = 566;
+       float piY = 377;
+
+       Instantiate(cubeForTest, PixelConverter.ToWorldUnits(new Vector2(1133, 0), camera.transform.position), Quaternion.identity);
+       Instantiate(cubeForTest, PixelConverter.ToWorldUnits(new Vector2(0, 755), camera.transform.position), Quaternion.identity);
+       Instantiate(cubeForTest, PixelConverter.ToWorldUnits(new Vector2(1133, 755), camera.transform.position), Quaternion.identity);
+       Instantiate(cubeForTest, PixelConverter.ToWorldUnits(new Vector2(0, 0), camera.transform.position), Quaternion.identity);
+       Instantiate(cubeForTest, PixelConverter.ToWorldUnits(new Vector2(566, 377), camera.transform.position), Quaternion.identity);
+
+       piX = piX >  camera.pixelWidth * 0.5f ? piX : (camera.pixelWidth * 0.5f) + (piX - camera.pixelWidth * 0.5f);
+        piY = 0;
+       
+        Instantiate(cubeForTest, camera.ScreenToWorldPoint(new Vector3(/*piX >= camera.pixelWidth / 2 ? camera.pixelWidth / 2 + piX : camera.pixelWidth / 2 - piX piX,
+            piY >= camera.pixelHeight / 2 ? camera.pixelHeight / 2 + piY : camera.pixelHeight / 2 - piY
+            , cam.nearClipPlane)), Quaternion.identity); */
+
     }
+
+    private void Update()
+    {
+
+    }
+
 
     public Vector3 GetPosition(Vector3 cameraPosition, Vector3 layForward)
     {
@@ -134,7 +209,7 @@ public class APIController : MonoBehaviour
         debugText.text = debugText.text + "\nInside Definition";
 
         //List<DetectionsList> results = JsonConvert.DeserializeObject<List<DetectionsList>>(predictions);
-        debugText.text = debugText.text + "\n" + predictions;
+        //debugText.text = debugText.text + "\n" + predictions;
         var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
                 JsonConvert.DeserializeObject(predictions).ToString());
 
@@ -152,27 +227,58 @@ public class APIController : MonoBehaviour
 
         BoundingBox b = results[0].list[0].box;
         
-        debugText.text = debugText.text + "\nBoundingBox: " + b.x1.ToString();
+        debugText.text = debugText.text + "\nBoundingBox Center X: " + b.centerX.ToString() + " Y: " + b.centerY.ToString();
         OpenCVForUnity.CoreModule.Rect2d rect = new OpenCVForUnity.CoreModule.Rect2d(b.x1, b.y1, b.x2 - b.x1, b.y2 - b.y1);
+        Vector3 unprojectionOffset = Vector3.zero;
 
+
+        detectionsMapping.MapDetection(new Vector2(b.centerX, b.centerY), results[0].cameraLocation.position, results[0].cameraLocation.rotation, debugText);
+        debugText.text = debugText.text + "\nThis is but a test";
+        return;
 #if ENABLE_WINMD_SUPPORT
+        /*
+        debugText.text = debugText.text + "\n TRACK ONE";
 
-     debugText.text = debugText.text + "\n TRACK ONE";
-debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
-        //Windows.Foundation.Point target = WorldOrigin.GetBoundingBoxTarget(rect, results[0].cameraLocation.forward);
-        //Vector2 unprojection = CameraIntrinsic.UnprojectAtUnitDepth(target, frameHandler.LastFrame.intrinsic);
-        //Vector3 correctedUnprojection = new Vector3(unprojection.x, unprojection.y, 1.0f);
-       // debugText.text = debugText.text + "\n correctedUnprojection: " + correctedUnprojection.y.ToString();
+        Windows.Foundation.Point target = WorldOrigin.GetBoundingBoxTarget(rect, results[0].cameraLocation.forward);
+        Vector2 unprojection = CameraIntrinsic.UnprojectAtUnitDepth(target, frameHandler.LastFrame.intrinsic);
+        unprojection = CameraIntrinsic.UnprojectAtUnitDepth(new Windows.Foundation.Point(b.centerX, 936 - b.centerY), frameHandler.LastFrame.intrinsic);
+        Vector3 correctedUnprojection = new Vector3(unprojection.x * 0.50f, unprojection.y * 0.50f, 1.0f);
+        // debugText.text = debugText.text + "\n correctedUnprojection: " + correctedUnprojection.y.ToString();
 
-        //Quaternion rotation = Quaternion.LookRotation(-results[0].cameraLocation.forward, results[0].cameraLocation.upwards);
-        //Vector3 v = GetPosition(results[0].cameraLocation.position, Vector3.Normalize(rotation));
+        Quaternion rotation = Quaternion.LookRotation(-results[0].cameraLocation.forward, results[0].cameraLocation.upwards);
+        Vector3 v = GetPosition(results[0].cameraLocation.position, Vector3.Normalize(rotation * correctedUnprojection));
         debugText.text = debugText.text + "\n TRACK TWO";
-        GameObject obj = Instantiate(cubeForTest, results[0].cameraLocation.position , Quaternion.identity);
+        // = Instantiate(cubeForTest, results[0].cameraLocation.position , Quaternion.identity);
+
+        //Vector3 pos = PixelConverter.ToWorldUnits(new Vector2(720, 468), results[0].cameraLocation.position); 
+        
+        GameObject obj = Instantiate(cubeForTest, v, Quaternion.identity);
+        */
+        /*
+        unprojection = CameraIntrinsic.UnprojectAtUnitDepth(new Windows.Foundation.Point(b.centerX, 936 - b.centerY), frameHandler.LastFrame.intrinsic);
+        correctedUnprojection = new Vector3(unprojection.x, unprojection.y, 1.0f);
+        v = GetPosition(results[0].cameraLocation.position, Vector3.Normalize(rotation * correctedUnprojection));
+         obj = Instantiate(cubeForTest, v, Quaternion.identity);
+
+*/
+
+
+        /*
+
+        foreach (Detection d in results[0].list)
+        {
+            debugText.text = debugText.text + "\n Detection " + d.name + " | Center X: " + d.box.centerX + " Center Y: " + d.box.centerY;
+            obj = Instantiate(cubeForTest, new Vector3(d.box.centerX, d.box.centerY, results[0].cameraLocation.position.z) , Quaternion.identity);
+        }
+        */
         //GameObject obj = Instantiate(cubeForTest, v , Quaternion.identity);
         debugText.text = debugText.text + "\n TRACK THREE";
+         
+
+
         /*
         RaycastHit hit;
-        obj.transform.rotation = Quaternion.LookRotation(results[0].cameraLocation.forward, results[0].cameraLocation.upwards);
+        //obj.transform.rotation = Quaternion.LookRotation(results[0].cameraLocation.forward, results[0].cameraLocation.upwards);
         if (Physics.Raycast(obj.transform.position, obj.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, 1 << 31)) {
          debugText.text = debugText.text + "\n hit X: " + hit.point.x.ToString();
         debugText.text = debugText.text + "\n hit Y: " + hit.point.y.ToString();
@@ -199,12 +305,17 @@ debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
 
         //  You're safe now :3  //
 
-    }
+    }   
 
 
 
     public async void ObjectPrediction()
     {
+
+        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(0, 846, Camera.main.nearClipPlane)), Quaternion.identity);
+        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(1504, 846, Camera.main.nearClipPlane)), Quaternion.identity);
+        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(1504, 0, Camera.main.nearClipPlane)), Quaternion.identity);
+        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane)), Quaternion.identity);
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = frameHandler.LastFrame;
         if (lastFrame.mediaFrameReference != null)
@@ -218,9 +329,16 @@ debugText.text = debugText.text + "\n rect: " + rect.x.ToString();
                         byte[] byteArray = await Parser.ToByteArray(videoFrame.SoftwareBitmap);
                         Debug.Log($"[### DEBUG ###] byteArray Size = {byteArray.Length}");
                       
-                        FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(lastFrame.extrinsic.Position, lastFrame.extrinsic.Upwards, lastFrame.extrinsic.Forward));
+                        
+                        /*
+                        FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(lastFrame.extrinsic.Position, Quaternion.LookRotation(lastFrame.extrinsic.Forward, lastFrame.extrinsic.Upwards)));
+                        */
+
+                        FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(Camera.main.transform.position, Camera.main.transform.rotation));
 
                         debugText.text = debugText.text + "\n extrinsic: " + lastFrame.extrinsic.ToString();
+                        debugText.text = debugText.text + "\n raw Position: " + Camera.main.transform.position.ToString("f9");
+                        debugText.text = debugText.text + "\n raw Rotation: " + Camera.main.transform.rotation.ToString("f9");
                         debugText.text = debugText.text + "\n intrinsic: " + lastFrame.intrinsic.ToString();
 
                         ws.Send("Sending");

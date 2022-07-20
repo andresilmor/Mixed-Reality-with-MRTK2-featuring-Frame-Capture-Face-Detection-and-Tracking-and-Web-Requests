@@ -167,6 +167,10 @@ public class CameraIntrinsic
             UndistortedProjectionTransform = cameraIntrinsics.UndistortedProjectionTransform.ToUnity();
             WindowsCameraIntrinsics = cameraIntrinsics;
         }
+
+
+
+
         
         /// <summary>
         /// Unprojects pixel coordinates into a camera space ray from the camera origin, expressed as a X, Y coordinates on a plane one meter from the camera.
