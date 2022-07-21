@@ -67,7 +67,7 @@ public static class WorldOrigin //TODO: Change for something more general, like 
             }
 
             Point point = new Point(rect.x + rect.width / 2, rect.y + rect.height * offsetFactor);
-            return new Windows.Foundation.Point(point.x, 936 - point.y); //846 = Frame Height, static now but we can turn dynamic and get from Intrinsics
+            return new Windows.Foundation.Point(point.x, Camera.main.pixelHeight - point.y); //846 = Frame Height, static now but we can turn dynamic and get from Intrinsics
         }
 
 #endif

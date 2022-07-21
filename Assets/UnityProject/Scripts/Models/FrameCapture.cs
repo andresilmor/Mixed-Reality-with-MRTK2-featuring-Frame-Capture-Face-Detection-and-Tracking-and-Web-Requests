@@ -7,11 +7,9 @@ public class FrameCapture
 {
 
     public string bytes;
-    public CameraLocation cameraLocation;
 
-    public FrameCapture(string bytes, CameraLocation cameraLocation)
+    public FrameCapture(string bytes)
     {
         this.bytes = bytes;
-        this.cameraLocation = cameraLocation;
     }
 }

@@ -14,7 +14,7 @@ using UnityEngine;
 /// <summary>
 /// Provides the extrinsic, including the view from the world, of the camera.
 /// </summary>
-[Serializable]
+[System.Serializable]
 public class CameraExtrinsic
 {
 

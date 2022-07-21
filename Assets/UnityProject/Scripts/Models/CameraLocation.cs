@@ -6,13 +6,13 @@ using UnityEngine;
 public class CameraLocation
 {
 
-    public Vector3 position;
-    public Quaternion rotation;
+    public CameraExtrinsic extrinsic;
+    public CameraIntrinsic intrinsic;
 
-    public CameraLocation(Vector3 position, Quaternion rotation)
+    public CameraLocation(CameraExtrinsic extrinsic, CameraIntrinsic intrinsic)
     {
-        this.position = position;
-        this.rotation = rotation;   
+        this.extrinsic = extrinsic;
+        this.intrinsic = intrinsic;   
 
     }
 }

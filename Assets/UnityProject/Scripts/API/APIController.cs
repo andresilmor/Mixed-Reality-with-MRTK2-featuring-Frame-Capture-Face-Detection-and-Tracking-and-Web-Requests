@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 
 using Microsoft.MixedReality.Toolkit.Extensions;
 using Microsoft.MixedReality.Toolkit;
+using OpenCVForUnity.CoreModule;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Media;
@@ -38,6 +39,9 @@ public class APIController : MonoBehaviour
 
     private byte[] recvBuffer = new byte[(int)1e5];
 
+
+    private CameraExtrinsic tempExtrinsic = null;
+    private CameraIntrinsic tempIntrinsic = null;
 
     private int testNum = 0;
     
@@ -89,6 +93,7 @@ public class APIController : MonoBehaviour
         
         ws.Open();
 
+        
 
         Camera cam = Camera.main;
 
@@ -176,7 +181,6 @@ public class APIController : MonoBehaviour
 
     private void Update()
     {
-
     }
 
 
@@ -202,10 +206,70 @@ public class APIController : MonoBehaviour
         return hit.point;
     }
 
+    /// <summary>
+    /// Algorithm to approximate the vertical point in the bounding box regarding the user's position.
+    /// </summary>
+    public Point GetBoundingBoxTarget(CameraExtrinsic extrinsic, BoundingBox boundingBox)
+    {
+        var cameraForward = extrinsic.viewFromWorld.GetColumn(2);
+        var cameraToGroundAngle = Vector3.Angle(cameraForward, Vector3.down);
+        var offsetFactor = 0f;
+        if (cameraToGroundAngle <= 90)
+        {
+            offsetFactor = 0.5f + cameraToGroundAngle / 180;
+        }
+
+        debugText.text = debugText.text + "\nBoundingBox Width: " + (boundingBox.x2 - boundingBox.x1) + " Height: " + (boundingBox.y2 - boundingBox.y1);
+        debugText.text = debugText.text + "\nBoundingBox Center X : " + (boundingBox.x1 + ((boundingBox.x2 - boundingBox.x1) / 2)) + " Y: " + (boundingBox.y1 + ((boundingBox.y2 - boundingBox.y1))) + " Y w Offset: " + (boundingBox.y1 + ((boundingBox.y2 - boundingBox.y1) * offsetFactor));
+        return new Point(boundingBox.x1 + ((boundingBox.x2 - boundingBox.x1) / 2), boundingBox.y1 + ((boundingBox.y2 - boundingBox.y1) * offsetFactor));
+    }
+
+
+#if ENABLE_WINMD_SUPPORT
+        /// <summary>
+        /// OpenCV uses Row-major order (top-left is 0,0).
+        /// Windows UWP uses Cartesian coordinate system (bottom left is 0,0).
+        /// </summary>
+        private Windows.Foundation.Point ToWinPoint(Point point)
+        {
+            return new Windows.Foundation.Point(point.x, 846 - point.y);
+        }
+#endif
+
+
+    /// <summary>
+    /// Returns the unprojected forward vector. Fallback to default forward vector if UWP is not available.
+    /// <see cref="VisualizationManager"/> may override fallback if main camera is available (only available on main thread).
+    /// Adapted from https://github.com/abist-co-ltd/hololens-opencv-laserpointer/blob/master/Assets/Script/HololensLaserPointerDetection.cs.
+    /// </summary>
+    public Vector3 GetLayForward(Vector2 unprojectionOffset, BoundingBox boundingBox, CameraExtrinsic extrinsic, CameraIntrinsic intrinsic)
+    {
+#if ENABLE_WINMD_SUPPORT
+            Windows.Foundation.Point target = ToWinPoint(GetBoundingBoxTarget(extrinsic, boundingBox));
+            Vector2 unprojection = intrinsic.UnprojectAtUnitDepth(target);
+            Vector3 correctedUnprojection = new Vector3(unprojection.x + unprojectionOffset.x, unprojection.y + unprojectionOffset.y, 1.0f);
+            Vector4 forward = -extrinsic.Forward;
+            Vector4 upwards = extrinsic.Upwards;
+            Quaternion rotation = Quaternion.LookRotation(forward, upwards);
+            Vector3 layForward = Vector3.Normalize(rotation * correctedUnprojection);
+#else
+        // Fallback if using Mono. Main camera needs to be executed on main thread.
+        Vector3 layForward = Camera.main.transform.forward * -1f;
+#endif
+        if (layForward == Vector3.forward) Debug.LogWarning("Lay forward is forward vector.");
+        if (layForward == Vector3.zero) Debug.LogWarning("Lay forward is zero vector.");
+        return layForward;
+
+    }
+
+
+
+
 
 
     private async void DefinePredictions(string predictions)
     {
+        /*
         debugText.text = debugText.text + "\nInside Definition";
 
         //List<DetectionsList> results = JsonConvert.DeserializeObject<List<DetectionsList>>(predictions);
@@ -232,8 +296,57 @@ public class APIController : MonoBehaviour
         Vector3 unprojectionOffset = Vector3.zero;
 
 
-        detectionsMapping.MapDetection(new Vector2(b.centerX, b.centerY), results[0].cameraLocation.position, results[0].cameraLocation.rotation, debugText);
+        detectionsMapping.MapDetection(new Vector2(b.centerX, Camera.main.pixelHeight - b.centerY), results[0].cameraLocation.position, results[0].cameraLocation.rotation, debugText, gameObject.GetComponent<LineDrawer>());
         debugText.text = debugText.text + "\nThis is but a test";
+        */
+
+
+        debugText.text = debugText.text + "\n Whats your name?";
+        var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
+                JsonConvert.DeserializeObject(predictions).ToString());
+
+
+#if ENABLE_WINMD_SUPPORT
+
+
+
+;
+        debugText.text = debugText.text + "\n WHAT?";
+        Vector3 cameraPosition = this.tempExtrinsic.Position;
+
+        
+        debugText.text = debugText.text + "\n Whats is your name?";
+        Vector3 layForward = GetLayForward(new Vector2(1,1), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic);
+        
+        debugText.text = debugText.text + "\n Tony!";
+        Vector3 position = GetPosition(cameraPosition, layForward);
+
+        
+        debugText.text = debugText.text + "\n FUCK YOU TONY!";
+        GameObject one = Instantiate(cubeForTest, cameraPosition, Quaternion.identity);
+
+        debugText.text = debugText.text + "\n Whats your name?";
+        GameObject two = Instantiate(cubeForTest, position, Quaternion.identity);
+        
+        
+        debugText.text = debugText.text + "\n EZEKIEL!";
+        gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position);
+        
+        debugText.text = debugText.text + "\n FUCK YOU EZEKIEL!";
+
+        this.tempExtrinsic = null;
+
+        this.tempIntrinsic = null;
+
+
+
+
+
+
+        
+
+#endif
+
         return;
 #if ENABLE_WINMD_SUPPORT
         /*
@@ -246,7 +359,7 @@ public class APIController : MonoBehaviour
         // debugText.text = debugText.text + "\n correctedUnprojection: " + correctedUnprojection.y.ToString();
 
         Quaternion rotation = Quaternion.LookRotation(-results[0].cameraLocation.forward, results[0].cameraLocation.upwards);
-        Vector3 v = GetPosition(results[0].cameraLocation.position, Vector3.Normalize(rotation * correctedUnprojection));
+        Vector3 pos = GetPosition(results[0].cameraLocation.position, Vector3.Normalize(rotation * correctedUnprojection));
         debugText.text = debugText.text + "\n TRACK TWO";
         // = Instantiate(cubeForTest, results[0].cameraLocation.position , Quaternion.identity);
 
@@ -312,10 +425,17 @@ public class APIController : MonoBehaviour
     public async void ObjectPrediction()
     {
 
-        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(0, 846, Camera.main.nearClipPlane)), Quaternion.identity);
-        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(1504, 846, Camera.main.nearClipPlane)), Quaternion.identity);
-        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(1504, 0, Camera.main.nearClipPlane)), Quaternion.identity);
+        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane)), Quaternion.identity);
+        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, Camera.main.nearClipPlane)), Quaternion.identity);
+        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Camera.main.nearClipPlane)), Quaternion.identity);
         Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane)), Quaternion.identity);
+
+        if (tempIntrinsic != null || tempExtrinsic != null)
+        {
+            debugText.text = debugText.text + "\n FUUUCCCCCKKKKKK";
+            return;
+        }
+
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = frameHandler.LastFrame;
         if (lastFrame.mediaFrameReference != null)
@@ -333,8 +453,12 @@ public class APIController : MonoBehaviour
                         /*
                         FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(lastFrame.extrinsic.Position, Quaternion.LookRotation(lastFrame.extrinsic.Forward, lastFrame.extrinsic.Upwards)));
                         */
+                       Instantiate(cubeForTest, Camera.main.transform.position, Quaternion.identity);
+                        Instantiate(cubeForTest, lastFrame.extrinsic.Position, Quaternion.identity);
+                        this.tempExtrinsic = lastFrame.extrinsic;
+                        this.tempIntrinsic = lastFrame.intrinsic;
+                        FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)));
 
-                        FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(Camera.main.transform.position, Camera.main.transform.rotation));
 
                         debugText.text = debugText.text + "\n extrinsic: " + lastFrame.extrinsic.ToString();
                         debugText.text = debugText.text + "\n raw Position: " + Camera.main.transform.position.ToString("f9");

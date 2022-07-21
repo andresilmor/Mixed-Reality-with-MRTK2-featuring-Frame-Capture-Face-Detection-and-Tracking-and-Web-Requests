@@ -19,7 +19,7 @@ using Windows.Perception.Spatial;
 /// Contains information on camera intrinsic parameters.
 /// Note: This class wraps logic from Windows.Media.Devices.Core.CameraIntrinsics to use in Unity.
 /// </summary>
-[Serializable]
+[System.Serializable]
 public class CameraIntrinsic
 {
 #if ENABLE_WINMD_SUPPORT
@@ -176,9 +176,10 @@ public class CameraIntrinsic
         /// Unprojects pixel coordinates into a camera space ray from the camera origin, expressed as a X, Y coordinates on a plane one meter from the camera.
         /// </summary>
         /// <param name="pixelCoordinate">The point to unproject. Points in Windows UWP use a different coordinate system than OpenCV</param>
-         public static Vector2 UnprojectAtUnitDepth(Windows.Foundation.Point pixelCoordinate, CameraIntrinsic intrinsic)
+        public Vector2 UnprojectAtUnitDepth(Windows.Foundation.Point pixelCoordinate)
         {
-             System.Numerics.Vector2 unprojected = intrinsic.WindowsCameraIntrinsics.UnprojectAtUnitDepth(pixelCoordinate);
+            if (WindowsCameraIntrinsics == null) throw new NotImplementedException("Unprojection without UWP is not implemented yet.");
+            System.Numerics.Vector2 unprojected = WindowsCameraIntrinsics.UnprojectAtUnitDepth(pixelCoordinate);
             return unprojected.ToUnity();
         }
 #endif
