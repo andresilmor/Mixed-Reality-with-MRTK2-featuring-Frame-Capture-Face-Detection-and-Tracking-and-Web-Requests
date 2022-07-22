@@ -48,6 +48,7 @@ public class APIController : MonoBehaviour
 
     string address = "ws://192.168.1.238:8000/ws";
     public GameObject cubeForTest;
+    public GameObject sphereForTest;
     private DetectionsMapping detectionsMapping;
     async void Start()
     {
@@ -313,11 +314,12 @@ public class APIController : MonoBehaviour
 ;
         debugText.text = debugText.text + "\n WHAT?";
         Vector3 cameraPosition = this.tempExtrinsic.Position;
-
+        debugText.text = debugText.text + "\n raw Position: " + cameraPosition.ToString("f9");
         
         debugText.text = debugText.text + "\n Whats is your name?";
         Vector3 layForward = GetLayForward(new Vector2(1,1), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic);
-        
+        debugText.text = debugText.text + "\n raw layForward: " + layForward.ToString("f9");
+
         debugText.text = debugText.text + "\n Tony!";
         Vector3 position = GetPosition(cameraPosition, layForward);
 
@@ -333,6 +335,18 @@ public class APIController : MonoBehaviour
         gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position);
         
         debugText.text = debugText.text + "\n FUCK YOU EZEKIEL!";
+
+
+
+
+
+
+
+
+
+
+
+
 
         this.tempExtrinsic = null;
 
@@ -453,17 +467,24 @@ public class APIController : MonoBehaviour
                         /*
                         FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)), new CameraLocation(lastFrame.extrinsic.Position, Quaternion.LookRotation(lastFrame.extrinsic.Forward, lastFrame.extrinsic.Upwards)));
                         */
-                       Instantiate(cubeForTest, Camera.main.transform.position, Quaternion.identity);
+                       Instantiate(sphereForTest, Camera.main.transform.position, Quaternion.identity);
                         Instantiate(cubeForTest, lastFrame.extrinsic.Position, Quaternion.identity);
                         this.tempExtrinsic = lastFrame.extrinsic;
                         this.tempIntrinsic = lastFrame.intrinsic;
-                        FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)));
-
-
                         debugText.text = debugText.text + "\n extrinsic: " + lastFrame.extrinsic.ToString();
+                        debugText.text = debugText.text + "\n extrinsic 2: " + lastFrame.extrinsic.Position.ToString("f9");
+                        debugText.text = debugText.text + "\n extrinsic rotation -f: " + Quaternion.LookRotation(-lastFrame.extrinsic.Forward, lastFrame.extrinsic.Upwards).ToString("f9");
+                        debugText.text = debugText.text + "\n extrinsic rotation: " + Quaternion.LookRotation(lastFrame.extrinsic.Forward, lastFrame.extrinsic.Upwards).ToString("f9");
+                        debugText.text = debugText.text + "\n extrinsic rotation -u: " + Quaternion.LookRotation(lastFrame.extrinsic.Forward, -lastFrame.extrinsic.Upwards).ToString("f9");
+                        debugText.text = debugText.text + "\n extrinsic Forward: " + lastFrame.extrinsic.Forward.ToString("f9");
+                        debugText.text = debugText.text + "\n extrinsic Upwards: " + lastFrame.extrinsic.Upwards.ToString("f9");
                         debugText.text = debugText.text + "\n raw Position: " + Camera.main.transform.position.ToString("f9");
                         debugText.text = debugText.text + "\n raw Rotation: " + Camera.main.transform.rotation.ToString("f9");
                         debugText.text = debugText.text + "\n intrinsic: " + lastFrame.intrinsic.ToString();
+                        FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)));
+
+
+                        
 
                         ws.Send("Sending");
                         ws.Send(JsonUtility.ToJson(frame));

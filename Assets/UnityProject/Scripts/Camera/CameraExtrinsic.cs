@@ -14,7 +14,7 @@ using UnityEngine;
 /// <summary>
 /// Provides the extrinsic, including the view from the world, of the camera.
 /// </summary>
-[System.Serializable]
+[Serializable]
 public class CameraExtrinsic
 {
 
@@ -77,5 +77,4 @@ public class CameraExtrinsic
         Quaternion rotation = Quaternion.LookRotation(forward, upwards);
         return $"Position: {position.ToString("G4")}, Rotation: {rotation.eulerAngles.ToString("G4")}";
     }
-
 }

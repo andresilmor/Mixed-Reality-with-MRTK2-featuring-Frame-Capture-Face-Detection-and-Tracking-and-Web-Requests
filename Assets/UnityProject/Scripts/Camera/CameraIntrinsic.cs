@@ -19,7 +19,7 @@ using Windows.Perception.Spatial;
 /// Contains information on camera intrinsic parameters.
 /// Note: This class wraps logic from Windows.Media.Devices.Core.CameraIntrinsics to use in Unity.
 /// </summary>
-[System.Serializable]
+[Serializable]
 public class CameraIntrinsic
 {
 #if ENABLE_WINMD_SUPPORT
@@ -27,7 +27,7 @@ public class CameraIntrinsic
         /// Holds the <see cref="CameraIntrinsic"/> of Windows UWP to use at <see cref="UnprojectAtUnitDepth"/>.
         /// </summary>
         // TODO: https://stackoverflow.com/questions/51272055/opencv-unproject-2d-points-to-3d-with-known-depth-z
-    [CanBeNull] public readonly Windows.Media.Devices.Core.CameraIntrinsics WindowsCameraIntrinsics;
+        [CanBeNull] public readonly Windows.Media.Devices.Core.CameraIntrinsics WindowsCameraIntrinsics;
 #endif
 
     /// <summary>
@@ -69,8 +69,6 @@ public class CameraIntrinsic
     /// using UndistortPoint, which uses the CPU to compute the distortion compensation.
     /// </summary>
     public readonly Matrix4x4 UndistortedProjectionTransform;
-
- 
 
     /// <param name="focalLength">focal length for the camera</param>
     /// <param name="imageWidth">image width in pixels</param>
@@ -167,10 +165,6 @@ public class CameraIntrinsic
             UndistortedProjectionTransform = cameraIntrinsics.UndistortedProjectionTransform.ToUnity();
             WindowsCameraIntrinsics = cameraIntrinsics;
         }
-
-
-
-
         
         /// <summary>
         /// Unprojects pixel coordinates into a camera space ray from the camera origin, expressed as a X, Y coordinates on a plane one meter from the camera.
@@ -183,7 +177,6 @@ public class CameraIntrinsic
             return unprojected.ToUnity();
         }
 #endif
-
 
     public override string ToString()
     {
