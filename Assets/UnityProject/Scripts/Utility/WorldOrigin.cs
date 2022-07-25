@@ -6,6 +6,8 @@ using UnityEngine;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Perception.Spatial;
+using Microsoft.MixedReality.OpenXR;
+
 #endif
 
 public static class WorldOrigin //TODO: Change for something more general, like MRWorld, and save Intrinsics info also, since that dont change a lot
@@ -41,7 +43,9 @@ public static class WorldOrigin //TODO: Change for something more general, like 
             //IntPtr worldOriginPtr = Microsoft.MixedReality.Toolkit.WindowsMixedReality.WindowsMixedRealityUtilities.UtilitiesProvider.ISpatialCoordinateSystemPtr;
             //WinRTExtensions.GetSpatialCoordinateSystem(coordinateSystemPtr); // https://github.com/microsoft/MixedReality-SpectatorView/blob/7796da6acb0ae41bed1b9e0e9d1c5c683b4b8374/src/SpectatorView.Unity/Assets/PhotoCapture/Scripts/WinRTExtensions.cs#L20
             var worldOriginPtr = SpatialLocator.GetDefault().CreateStationaryFrameOfReferenceAtCurrentLocation().CoordinateSystem;
-            return RetrieveWorldOriginFromPointer(worldOriginPtr);
+            SpatialCoordinateSystem origin = PerceptionInterop.GetSceneCoordinateSystem(UnityEngine.Pose.identity) as SpatialCoordinateSystem;
+
+            return origin;
         }
 
     private static SpatialCoordinateSystem RetrieveWorldOriginFromPointer(SpatialCoordinateSystem worldOriginPtr)

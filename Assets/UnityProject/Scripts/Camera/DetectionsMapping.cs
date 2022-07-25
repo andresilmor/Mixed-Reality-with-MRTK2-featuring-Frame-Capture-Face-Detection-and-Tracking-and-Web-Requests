@@ -38,12 +38,12 @@ public class DetectionsMapping : MonoBehaviour
 
         if (debugLine != null)
         {
-            debugLine.Draw(one.transform.position, center.transform.position);
-            debugLine.Draw(two.transform.position, center.transform.position);
-            debugLine.Draw(three.transform.position, center.transform.position);
-            debugLine.Draw(four.transform.position, center.transform.position);
+            debugLine.Draw(one.transform.position, center.transform.position, Color.white);
+            debugLine.Draw(two.transform.position, center.transform.position, Color.white);
+            debugLine.Draw(three.transform.position, center.transform.position, Color.white);
+            debugLine.Draw(four.transform.position, center.transform.position, Color.white);
             if (hitPoint != null)
-                debugLine.Draw(center.transform.position, hitPoint.transform.position);
+                debugLine.Draw(center.transform.position, hitPoint.transform.position, Color.white);
         }
 
     }

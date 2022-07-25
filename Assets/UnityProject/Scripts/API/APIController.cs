@@ -243,14 +243,35 @@ public class APIController : MonoBehaviour
     /// <see cref="VisualizationManager"/> may override fallback if main camera is available (only available on main thread).
     /// Adapted from https://github.com/abist-co-ltd/hololens-opencv-laserpointer/blob/master/Assets/Script/HololensLaserPointerDetection.cs.
     /// </summary>
-    public Vector3 GetLayForward(Vector2 unprojectionOffset, BoundingBox boundingBox, CameraExtrinsic extrinsic, CameraIntrinsic intrinsic)
+    public Vector3 GetLayForward(Vector2 unprojectionOffset, BoundingBox boundingBox, CameraExtrinsic extrinsic, CameraIntrinsic intrinsic, byte debug)
     {
+        Vector4 forward = Vector4.one;
+        Vector4 upwards = Vector4.one;
+        if (debug == 0) {
+             forward = -extrinsic.Forward;
+             upwards = extrinsic.Upwards;
+        }
+        else if (debug == 1)
+        {
+             forward = -extrinsic.Forward;
+             upwards = -extrinsic.Upwards;
+        }
+        else if (debug == 2)
+        {
+             forward = extrinsic.Forward;
+             upwards = -extrinsic.Upwards;
+        }
+        else if (debug == 3)
+        {
+             forward = extrinsic.Forward;
+             upwards = extrinsic.Upwards;
+        }
+
+
 #if ENABLE_WINMD_SUPPORT
             Windows.Foundation.Point target = ToWinPoint(GetBoundingBoxTarget(extrinsic, boundingBox));
             Vector2 unprojection = intrinsic.UnprojectAtUnitDepth(target);
             Vector3 correctedUnprojection = new Vector3(unprojection.x + unprojectionOffset.x, unprojection.y + unprojectionOffset.y, 1.0f);
-            Vector4 forward = -extrinsic.Forward;
-            Vector4 upwards = extrinsic.Upwards;
             Quaternion rotation = Quaternion.LookRotation(forward, upwards);
             Vector3 layForward = Vector3.Normalize(rotation * correctedUnprojection);
 #else
@@ -306,7 +327,6 @@ public class APIController : MonoBehaviour
         var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
                 JsonConvert.DeserializeObject(predictions).ToString());
 
-
 #if ENABLE_WINMD_SUPPORT
 
 
@@ -317,7 +337,7 @@ public class APIController : MonoBehaviour
         debugText.text = debugText.text + "\n raw Position: " + cameraPosition.ToString("f9");
         
         debugText.text = debugText.text + "\n Whats is your name?";
-        Vector3 layForward = GetLayForward(new Vector2(1,1), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic);
+        Vector3 layForward = GetLayForward(new Vector2(0,0), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
         debugText.text = debugText.text + "\n raw layForward: " + layForward.ToString("f9");
 
         debugText.text = debugText.text + "\n Tony!";
@@ -332,21 +352,29 @@ public class APIController : MonoBehaviour
         
         
         debugText.text = debugText.text + "\n EZEKIEL!";
-        gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position);
+        gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.blue);
         
         debugText.text = debugText.text + "\n FUCK YOU EZEKIEL!";
 
+        
+        if (results[0].list[0].box.centerY > Camera.main.pixelHeight / 2) {
+            layForward = GetLayForward(new Vector2(0,-0.5f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
+            position = GetPosition(cameraPosition, layForward);
+            two = Instantiate(cubeForTest, position, Quaternion.identity);
+            gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.red);
 
+            layForward = GetLayForward(new Vector2(0,-0.10f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
+            position = GetPosition(cameraPosition, layForward);
+            two = Instantiate(cubeForTest, position, Quaternion.identity);
+            gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.green);
 
+        } else {
 
-
-
-
-
-
-
-
-
+            layForward = GetLayForward(new Vector2(0,0.08f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
+            position = GetPosition(cameraPosition, layForward);
+            two = Instantiate(cubeForTest, position, Quaternion.identity);
+            gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.red);
+        }
 
         this.tempExtrinsic = null;
 
@@ -430,7 +458,7 @@ public class APIController : MonoBehaviour
 #endif
         debugText.text = debugText.text + "\n TRACK FOUR";
 
-        //  You're safe now :3  //
+        //  Theres no safe place D:  //
 
     }   
 
@@ -438,11 +466,25 @@ public class APIController : MonoBehaviour
 
     public async void ObjectPrediction()
     {
+        GameObject te = null;
+        te = Instantiate(sphereForTest, Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane)), Quaternion.identity);
+        RaycastHit hit;
+        Physics.Raycast(te.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
+        GameObject two = Instantiate(cubeForTest, hit.point, Quaternion.identity);
+        gameObject.GetComponent<LineDrawer>().Draw(te.transform.position, two.transform.position, Color.yellow);
+        te = Instantiate(sphereForTest, Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, Camera.main.nearClipPlane)), Quaternion.identity);
 
-        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelHeight, Camera.main.nearClipPlane)), Quaternion.identity);
-        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, Camera.main.nearClipPlane)), Quaternion.identity);
-        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Camera.main.nearClipPlane)), Quaternion.identity);
-        Instantiate(cubeForTest, Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane)), Quaternion.identity);
+        Physics.Raycast(te.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, Camera.main.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
+        two = Instantiate(cubeForTest, hit.point, Quaternion.identity);
+        gameObject.GetComponent<LineDrawer>().Draw(te.transform.position, two.transform.position, Color.yellow);
+        te = Instantiate(sphereForTest, Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Camera.main.nearClipPlane)), Quaternion.identity);
+        Physics.Raycast(te.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, Camera.main.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
+        two = Instantiate(cubeForTest, hit.point, Quaternion.identity);
+        gameObject.GetComponent<LineDrawer>().Draw(te.transform.position, two.transform.position, Color.yellow);
+        te = Instantiate(sphereForTest, Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.nearClipPlane)), Quaternion.identity);
+        Physics.Raycast(te.transform.position, Camera.main.ScreenToWorldPoint(new Vector3(0, 0, Camera.main.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
+        two = Instantiate(cubeForTest, hit.point, Quaternion.identity);
+        gameObject.GetComponent<LineDrawer>().Draw(te.transform.position, two.transform.position, Color.yellow);
 
         if (tempIntrinsic != null || tempExtrinsic != null)
         {
@@ -478,6 +520,7 @@ public class APIController : MonoBehaviour
                         debugText.text = debugText.text + "\n extrinsic rotation -u: " + Quaternion.LookRotation(lastFrame.extrinsic.Forward, -lastFrame.extrinsic.Upwards).ToString("f9");
                         debugText.text = debugText.text + "\n extrinsic Forward: " + lastFrame.extrinsic.Forward.ToString("f9");
                         debugText.text = debugText.text + "\n extrinsic Upwards: " + lastFrame.extrinsic.Upwards.ToString("f9");
+                        debugText.text = debugText.text + "\n extrinsic Right: " + lastFrame.extrinsic.Right.ToString("f9");
                         debugText.text = debugText.text + "\n raw Position: " + Camera.main.transform.position.ToString("f9");
                         debugText.text = debugText.text + "\n raw Rotation: " + Camera.main.transform.rotation.ToString("f9");
                         debugText.text = debugText.text + "\n intrinsic: " + lastFrame.intrinsic.ToString();
