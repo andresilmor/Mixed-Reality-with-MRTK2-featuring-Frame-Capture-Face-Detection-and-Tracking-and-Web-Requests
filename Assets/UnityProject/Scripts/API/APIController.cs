@@ -105,7 +105,8 @@ public class APIController : MonoBehaviour
 
 #if ENABLE_WINMD_SUPPORT
         
-        frameHandler = await FrameHandler.CreateAsync(1504, 846);
+        //frameHandler = await FrameHandler.CreateAsync(1504, 846);
+        frameHandler = await FrameHandler.CreateAsync();
 
 #endif
 

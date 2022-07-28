@@ -84,7 +84,7 @@ public class FrameHandler
 		}
 	}
 
-	public static async Task<FrameHandler> CreateAsync(uint width, uint height)
+	public static async Task<FrameHandler> CreateAsync(uint width = 1504, uint height = 846) //Default values anyway, if not defined the "outputSize" in "mediaCapture.CreateFrameReaderAsync"
 	{
 		MediaCapture mediaCapture = null;
 		MediaFrameReader mediaFrameReader = null;
