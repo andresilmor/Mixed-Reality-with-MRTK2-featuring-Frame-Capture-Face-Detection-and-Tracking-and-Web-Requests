@@ -362,7 +362,7 @@ public class APIController : MonoBehaviour
         if (results[0].list[0].box.centerY > Camera.main.pixelHeight / 2) {
 
 
-            layForward = GetLayForward(new Vector2(0,-0.5f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
+            layForward = GetLayForward(new Vector2(0,-0.6f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
             position = GetPosition(cameraPosition, layForward);
             two = Instantiate(cubeForTest, position, Quaternion.identity);
             gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.red);
@@ -371,6 +371,11 @@ public class APIController : MonoBehaviour
             position = GetPosition(cameraPosition, layForward);
             two = Instantiate(cubeForTest, position, Quaternion.identity);
             gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.green);
+
+            layForward = GetLayForward(new Vector2(0,-0.07f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
+            position = GetPosition(cameraPosition, layForward);
+            two = Instantiate(cubeForTest, position, Quaternion.identity);
+            gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.black);
     
 
         } else {
