@@ -19,9 +19,15 @@ public class CameraExtrinsic
 {
 
     /// <summary>
-    /// Camera's view from world matrix
+    /// Camera's view from world matrix (Unity Format)
     /// </summary>
     public Matrix4x4 viewFromWorld;
+
+
+    /// <summary>
+    /// Extrinsic Matrix4x4 (Raw Format)
+    /// </summary>
+    public System.Numerics.Matrix4x4? cameraToWorld;
 
     /// <summary>
     /// The right vector of the camera.
@@ -65,6 +71,7 @@ public class CameraExtrinsic
                 this.viewFromWorld = Matrix4x4.identity;
                 return;
             }
+            this.cameraToWorld = viewFromWorld;
             this.viewFromWorld = viewFromWorld.Value.ToUnity();
         }
 #endif
