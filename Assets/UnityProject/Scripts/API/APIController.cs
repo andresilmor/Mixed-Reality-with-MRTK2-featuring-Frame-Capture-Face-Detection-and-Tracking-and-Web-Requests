@@ -352,39 +352,40 @@ public class APIController : MonoBehaviour
         debugText.text = debugText.text + "\n Whats your name?";
         GameObject two = Instantiate(cubeForTest, position, Quaternion.identity);
         
-        
+        /*
         debugText.text = debugText.text + "\n EZEKIEL!";
         gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.blue);
-        
+        */
         debugText.text = debugText.text + "\n FUCK YOU EZEKIEL!";
+
+
+
+
+
 
         
         if (results[0].list[0].box.centerY > Camera.main.pixelHeight / 2) {
 
 
-            layForward = GetLayForward(new Vector2(0,-0.6f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
-            position = GetPosition(cameraPosition, layForward);
-            two = Instantiate(cubeForTest, position, Quaternion.identity);
-            gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.red);
 
             layForward = GetLayForward(new Vector2(0,-0.10f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
             position = GetPosition(cameraPosition, layForward);
             two = Instantiate(cubeForTest, position, Quaternion.identity);
             gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.green);
 
-            layForward = GetLayForward(new Vector2(0,-0.07f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
+            layForward = GetLayForward(new Vector2(0,-0.08f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
             position = GetPosition(cameraPosition, layForward);
             two = Instantiate(cubeForTest, position, Quaternion.identity);
             gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.black);
     
 
         } else {
-
+            /*
             layForward = GetLayForward(new Vector2(0,0.08f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
             position = GetPosition(cameraPosition, layForward);
             two = Instantiate(cubeForTest, position, Quaternion.identity);
             gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.red);
-
+            */
 
             layForward = GetLayForward(new Vector2(0,-0.05f), results[0].list[0].box, this.tempExtrinsic, this.tempIntrinsic, 0);
             position = GetPosition(cameraPosition, layForward);
@@ -394,8 +395,13 @@ public class APIController : MonoBehaviour
 
 
 
-        //Second method test
 
+
+
+
+
+        //Second method test FOLLOWING THE METHOD FROM FACE TRACKIN UNITY IT MAY BE NEEDED IN THE FUTURE, SO LETS KEEP ....
+        /*
         debugText.text = "";
 
         debugText.text = debugText.text + "\nPrev Position X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
@@ -472,6 +478,7 @@ public class APIController : MonoBehaviour
 
 
         // tEST END
+        */
 
 
         this.tempExtrinsic = null;
