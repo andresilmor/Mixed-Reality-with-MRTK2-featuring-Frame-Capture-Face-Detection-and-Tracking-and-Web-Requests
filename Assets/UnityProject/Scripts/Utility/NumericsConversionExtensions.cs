@@ -4,11 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 // from https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/unity-xrdevice-advanced
 // Unity uses a left-handed coordinate system, while the Windows Perception APIs use right-handed coordinate systems.
 // To convert between these two conventions, you can use this helper.
 public static class NumericsConversionExtensions
 {
+#if ENABLE_WINMD_SUPPORT
+    /// <summary>
+    /// OpenCV uses Row-major order (top-left is 0,0).
+    /// Windows UWP uses Cartesian coordinate system (bottom left is 0,0).
+    /// </summary>
+    public static Windows.Foundation.Point ToWindowsPoint(this OpenCVForUnity.CoreModule.Point point) => new Windows.Foundation.Point(point.x, 846 - point.y);
+#endif
+
+
     public static UnityEngine.Vector2 ToUnity(this System.Numerics.Vector2 v) => new UnityEngine.Vector2(v.X, v.Y);
     public static UnityEngine.Vector3 ToUnity(this System.Numerics.Vector3 v) => new UnityEngine.Vector3(v.X, v.Y, -v.Z);
     public static UnityEngine.Quaternion ToUnity(this System.Numerics.Quaternion q) => new UnityEngine.Quaternion(-q.X, -q.Y, q.Z, q.W);

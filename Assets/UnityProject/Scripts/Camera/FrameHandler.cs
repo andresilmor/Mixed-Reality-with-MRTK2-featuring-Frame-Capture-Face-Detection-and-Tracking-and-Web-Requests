@@ -36,7 +36,7 @@ public class FrameHandler
 		{
 			lock (this)
 			{
-				_lastFrame.extrinsic = new CameraExtrinsic(_lastFrame.mediaFrameReference.CoordinateSystem, WorldOrigin.coordinate);
+				_lastFrame.extrinsic = new CameraExtrinsic(_lastFrame.mediaFrameReference.CoordinateSystem, MRWorld.worldOrigin);
 				_lastFrame.intrinsic = new CameraIntrinsic(_lastFrame.mediaFrameReference.VideoMediaFrame.CameraIntrinsics);
 				return _lastFrame;
 			}

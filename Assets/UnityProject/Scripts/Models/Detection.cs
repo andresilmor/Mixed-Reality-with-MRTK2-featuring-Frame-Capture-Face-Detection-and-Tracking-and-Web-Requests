@@ -5,12 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class Detection
 {
-    public string name;
-    public BoundingBox box;
+    public string id;
+    public BodyCenter bodyCenter;
+    public FaceRect faceRect;
 
-    public Detection(string name, BoundingBox box)
+    public Detection(string id, BodyCenter bodyCenter, FaceRect faceRect)
     {
-        this.name = name;
-        this.box = box;
+        this.id = id;
+        this.bodyCenter = bodyCenter;
+        this.faceRect = faceRect;
     }
 }
