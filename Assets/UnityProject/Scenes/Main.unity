@@ -14110,6 +14110,7 @@ GameObject:
   - component: {fileID: 1226567736}
   - component: {fileID: 1226567735}
   - component: {fileID: 1226567737}
+  - component: {fileID: 1226567738}
   m_Layer: 0
   m_Name: Tester
   m_TagString: Untagged
@@ -14129,8 +14130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb6e46f3ba404f4db4e519d628f7084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IP: 127.0.0.1
-  debugText: {fileID: 1520693231}
+  detectionName: {fileID: 7846235075062323456, guid: 5c5fcddbea03ecb439f9ce040d8c16ae, type: 3}
   cubeForTest: {fileID: 5166614015768655864, guid: f5439ff4138eb2e4e98cb39677737bc0, type: 3}
   sphereForTest: {fileID: 7747253093464675002, guid: 256969b470d89c441bd75fb2c6b0a3ba, type: 3}
 --- !u!4 &1226567736
@@ -14160,6 +14160,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   line: {fileID: 7438048857545862999, guid: 7c129ff77fddcb3458036b064d83fe08, type: 3}
+--- !u!114 &1226567738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226567734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820a418c67041b0469c9124d644cb470, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugText: {fileID: 1520693231}
 --- !u!1 &1245756343
 GameObject:
   m_ObjectHideFlags: 0
