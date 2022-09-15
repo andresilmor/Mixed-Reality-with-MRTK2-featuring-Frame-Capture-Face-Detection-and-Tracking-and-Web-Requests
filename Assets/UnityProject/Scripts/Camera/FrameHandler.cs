@@ -30,7 +30,6 @@ public class FrameHandler
 		public CameraIntrinsic intrinsic;
 	}
 
-	private Mat _bitmap = new Mat(846, 1504, CvType.CV_8UC1);
 
 
 #if ENABLE_WINMD_SUPPORT
@@ -48,6 +47,7 @@ public class FrameHandler
 			{
 				_lastFrame.extrinsic = new CameraExtrinsic(_lastFrame.mediaFrameReference.CoordinateSystem, MRWorld.worldOrigin);
 				_lastFrame.intrinsic = new CameraIntrinsic(_lastFrame.mediaFrameReference.VideoMediaFrame.CameraIntrinsics);
+				_lastFrame.frameMat = GenerateCVMat(_lastFrame.mediaFrameReference);
 				return _lastFrame;
 			}
 		}
@@ -206,11 +206,11 @@ public class FrameHandler
 	}
 #endif
 
-        /// <summary>
-        /// In order to do pixel manipulation on SoftwareBitmap images, the native memory buffer is accessed using <see cref="IMemoryBufferByteAccess"/> COM interface.
-        /// The project needs to be configured to allow compilation of unsafe code. <see href="https://docs.microsoft.com/en-us/windows/uwp/audio-video-camera/process-media-frames-with-mediaframereader"/>.
-        /// </summary>
-        [ComImport]
+    /// <summary>
+    /// In order to do pixel manipulation on SoftwareBitmap images, the native memory buffer is accessed using <see cref="IMemoryBufferByteAccess"/> COM interface.
+    /// The project needs to be configured to allow compilation of unsafe code. <see href="https://docs.microsoft.com/en-us/windows/uwp/audio-video-camera/process-media-frames-with-mediaframereader"/>.
+    /// </summary>
+    [ComImport]
         [Guid("5B0D3235-4DBA-4D44-865E-8F1D0E4FD04D")]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         private unsafe interface IMemoryBufferByteAccess
@@ -220,45 +220,62 @@ public class FrameHandler
             /// </summary>
             /// <param name="value">A pointer to a byte array containing the buffer data</param>
             /// <param name="capacity">The number of bytes in the returned array</param>
+			
             void GetBuffer(out byte* value, out uint capacity);
         }
 
 #if ENABLE_WINMD_SUPPORT
-
     /// <summary>
-    /// Invoked on each received video frame. Extracts the image according to the <see cref="ColorFormat"/> and invokes the <see cref="FrameArrived"/> event containing a <see cref="CameraFrame"/>.
+    /// Extracts the image according to the <see cref="ColorFormat"/> and invokes the <see cref="FrameArrived"/> event containing a <see cref="CameraFrame"/>.
     /// </summary>
-    unsafe void onFrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
+    public unsafe Mat GenerateCVMat(MediaFrameReference frameReference, bool toDispose = false, int frameWidth = 1504, int frameHeight = 846) {
+        Debugger debugger = GameObject.FindObjectOfType<Debugger>();
+        debugger.AddText("Called");
+        SoftwareBitmap softwareBitmap = frameReference.VideoMediaFrame?.GetVideoFrame().SoftwareBitmap;
+        debugger.AddText("A.1");
+
+        Mat _bitmap = new Mat(frameHeight, frameWidth, CvType.CV_8UC1);
+        if (softwareBitmap != null)
+        {
+            debugger.AddText("A.2");
+            using (var input = softwareBitmap.LockBuffer(BitmapBufferAccessMode.Read))
+            using (var inputReference = input.CreateReference())
+            {
+                debugger.AddText("A.3");
+                byte* inputBytes;
+                uint inputCapacity;
+                debugger.AddText("A.4");
+                ((IMemoryBufferByteAccess)inputReference).GetBuffer(out inputBytes, out inputCapacity);
+                debugger.AddText("A.5");
+                MatUtils.copyToMat((IntPtr)inputBytes, _bitmap); // Copies Pixel Data Array to OpenCV Mat data.
+                                                                 //int thisFrameCount = Interlocked.Increment(ref FrameCount);
+                debugger.AddText("A.6");
+                //CameraFrame cameraFrame = new CameraFrame(_bitmap, intrinsic, extrinsic, FrameWidth, FrameHeight, (uint)thisFrameCount, _format);
+                //FrameArrivedEventArgs eventArgs = new FrameArrivedEventArgs(cameraFrame);
+                //FrameArrived?.Invoke(this, eventArgs);
+            }
+            debugger.AddText("A.7");
+			
+			if (toDispose)
+				softwareBitmap.Dispose();
+
+        }
+        debugger.AddText("A.8");
+        debugger.AddText(_bitmap.GetType().ToString());
+        debugger.AddText((_bitmap == null).ToString());
+        return _bitmap;
+    }
+
+
+    void onFrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
 	{
 		MediaFrameReference frame = sender.TryAcquireLatestFrame();
         if (frame != null){
-                SoftwareBitmap softwareBitmap = frame.VideoMediaFrame?.GetVideoFrame().SoftwareBitmap;
-
-				if (softwareBitmap != null) 
-				{
-                    using (var input = softwareBitmap.LockBuffer(BitmapBufferAccessMode.Read))
-					using (var inputReference = input.CreateReference())
-					{
-                        byte* inputBytes;
-						uint inputCapacity;
-						((IMemoryBufferByteAccess)inputReference).GetBuffer(out inputBytes, out inputCapacity);
-					
-						MatUtils.copyToMat((IntPtr)inputBytes, _bitmap); // Copies Pixel Data Array to OpenCV Mat data.
-                        //int thisFrameCount = Interlocked.Increment(ref FrameCount);
-
-                        //CameraFrame cameraFrame = new CameraFrame(_bitmap, intrinsic, extrinsic, FrameWidth, FrameHeight, (uint)thisFrameCount, _format);
-                        //FrameArrivedEventArgs eventArgs = new FrameArrivedEventArgs(cameraFrame);
-                        //FrameArrived?.Invoke(this, eventArgs);
-                    }
-                }
-
 				LastFrame = new Frame
 				{mediaFrameReference = frame, extrinsic = null, intrinsic = null, frameMat = null};
 				_lastFrameCapturedTimestamp = DateTime.Now;
 
-
             }
-		
 	}
 	
 #endif

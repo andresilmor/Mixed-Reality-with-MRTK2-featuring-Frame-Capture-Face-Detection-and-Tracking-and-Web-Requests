@@ -69,8 +69,10 @@ public class APIController : MonoBehaviour
 
         ws.OnOpen += (WebSocket ws) =>
         {
-
-
+            Debugger debugger = GameObject.FindObjectOfType<Debugger>();
+            debugger.AddText("Connection Opened");
+            ws.Send("Connection Opened");
+            debugger.AddText("Warning Sended");
         };
         
         ws.Open();
@@ -190,8 +192,8 @@ public class APIController : MonoBehaviour
     {
         if (this.ws != null)
         {
-            this.ws.Close();
-            this.ws = null;
+            //this.ws.Close();
+            //this.ws = null;
         }
     }
 }
