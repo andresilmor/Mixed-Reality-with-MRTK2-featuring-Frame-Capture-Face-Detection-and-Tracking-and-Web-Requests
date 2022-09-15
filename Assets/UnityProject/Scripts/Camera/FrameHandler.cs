@@ -230,39 +230,36 @@ public class FrameHandler
     /// </summary>
     public unsafe Mat GenerateCVMat(MediaFrameReference frameReference, bool toDispose = false, int frameWidth = 1504, int frameHeight = 846) {
         Debugger debugger = GameObject.FindObjectOfType<Debugger>();
-        debugger.AddText("Called");
+        
         SoftwareBitmap softwareBitmap = frameReference.VideoMediaFrame?.GetVideoFrame().SoftwareBitmap;
-        debugger.AddText("A.1");
+        
 
         Mat _bitmap = new Mat(frameHeight, frameWidth, CvType.CV_8UC1);
         if (softwareBitmap != null)
         {
-            debugger.AddText("A.2");
+            
             using (var input = softwareBitmap.LockBuffer(BitmapBufferAccessMode.Read))
             using (var inputReference = input.CreateReference())
             {
-                debugger.AddText("A.3");
+                
                 byte* inputBytes;
                 uint inputCapacity;
-                debugger.AddText("A.4");
                 ((IMemoryBufferByteAccess)inputReference).GetBuffer(out inputBytes, out inputCapacity);
-                debugger.AddText("A.5");
+                
                 MatUtils.copyToMat((IntPtr)inputBytes, _bitmap); // Copies Pixel Data Array to OpenCV Mat data.
-                                                                 //int thisFrameCount = Interlocked.Increment(ref FrameCount);
-                debugger.AddText("A.6");
+                //int thisFrameCount = Interlocked.Increment(ref FrameCount);
+                
                 //CameraFrame cameraFrame = new CameraFrame(_bitmap, intrinsic, extrinsic, FrameWidth, FrameHeight, (uint)thisFrameCount, _format);
                 //FrameArrivedEventArgs eventArgs = new FrameArrivedEventArgs(cameraFrame);
                 //FrameArrived?.Invoke(this, eventArgs);
             }
-            debugger.AddText("A.7");
+            
 			
 			if (toDispose)
 				softwareBitmap.Dispose();
 
         }
-        debugger.AddText("A.8");
-        debugger.AddText(_bitmap.GetType().ToString());
-        debugger.AddText((_bitmap == null).ToString());
+        
         return _bitmap;
     }
 

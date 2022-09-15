@@ -24,16 +24,29 @@ using Windows.Media.Capture.Frames;
 #endif
 
 
+//For Tracking
+using OpenCVForUnity.CoreModule;
+using OpenCVForUnity.ImgprocModule;
+using OpenCVForUnity.TrackingModule;
+using OpenCVForUnity.UnityUtils;
+using OpenCVForUnity.UnityUtils.Helper;
+using OpenCVForUnity.VideoModule;
+using RectCV = OpenCVForUnity.CoreModule.Rect;
+
+
 
 public class APIController : MonoBehaviour
 {
 
     private FrameHandler frameHandler;
 
+    private Mat tempFrameMat;
+
     public GameObject detectionName;
 
     private WebSocket ws;
 
+    private bool justStop = false;
 
     
     string address = "ws://192.168.1.238:8000/ws";
@@ -100,13 +113,159 @@ public class APIController : MonoBehaviour
         var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
                 JsonConvert.DeserializeObject(predictions).ToString());
 
+        // --------------------------- DANGER ZONE ---------------------------- //
+
+        NewTracker(results[0].list[0].faceRect);
+
+
+        // ------------------------ You are safe now -------------------------- //
+
 
         MRWorld.Project2DBoundingBox(results[0].list[0], true, cubeForTest, detectionName);
 
         return;
 
 
-    }   
+    }
+
+    // --------------------------- DANGER ZONE ---------------------------- //
+
+    /// <summary>
+    /// The trackers.
+    /// </summary>
+    List<TrackerSetting> trackers;
+
+    private void NewTracker(FaceRect faceRect)
+    {
+        Debugger debugger = GameObject.FindObjectOfType<Debugger>();
+
+        debugger.AddText("Tracker");
+        trackers = new List<TrackerSetting>();
+        Point top = new Point(faceRect.x1, faceRect.y1);
+        Point bottom = new Point(faceRect.x2, faceRect.y2);
+        debugger.AddText("Top: " + top.ToString());
+        debugger.AddText("Bottom: " + bottom.ToString());
+        //ConvertScreenPointToTexturePoint(top, top, gameObject, 1440, 936);
+        debugger.AddText("1");
+        RectCV region = new RectCV(top, bottom);
+        debugger.AddText("2");
+        TrackerCSRT trackerCSRT = TrackerCSRT.create(new TrackerCSRT_Params());
+        debugger.AddText("3");
+        trackerCSRT.init(tempFrameMat, region);
+        debugger.AddText("4");
+        trackers.Add(new TrackerSetting(trackerCSRT, trackerCSRT.GetType().Name.ToString(), new Scalar(0, 255, 0)));
+        debugger.AddText("5");
+
+
+
+    }
+
+    void Update()
+    {   
+            Debugger debugger = GameObject.FindObjectOfType<Debugger>();
+            debugger.AddText("trackers count: " + trackers.Count);
+            for (int i = 0; i < trackers.Count; i++)
+        {
+            Tracker tracker = trackers[i].tracker;
+            RectCV boundingBox = trackers[i].boundingBox;
+#if ENABLE_WINMD_SUPPORT
+            var lastFrame = frameHandler.LastFrame;
+            tracker.update(lastFrame.frameMat, boundingBox);
+#endif
+            if (tracker is TrackerCSRT)
+            {
+
+                debugger.AddText(boundingBox.ToString());
+         
+            }
+            //Imgproc.rectangle(rgbMat, boundingBox.tl(), boundingBox.br(), lineColor, 2, 1, 0);
+            
+        }
+    }
+
+
+    /// <summary>
+    /// Converts the screen point to texture point.
+    /// </summary>
+    /// <param name="screenPoint">Screen point.</param>
+    /// <param name="dstPoint">Dst point.</param>
+    /// <param name="texturQuad">Texture quad.</param>
+    /// <param name="textureWidth">Texture width.</param>
+    /// <param name="textureHeight">Texture height.</param>
+    /// <param name="camera">Camera.</param>
+    private void ConvertScreenPointToTexturePoint(Point screenPoint, Point dstPoint, GameObject textureQuad, int textureWidth = -1, int textureHeight = -1, Camera camera = null)
+    {
+        if (textureWidth < 0 || textureHeight < 0)
+        {
+            Renderer r = textureQuad.GetComponent<Renderer>();
+            if (r != null && r.material != null && r.material.mainTexture != null)
+            {
+                textureWidth = r.material.mainTexture.width;
+                textureHeight = r.material.mainTexture.height;
+            }
+            else
+            {
+                textureWidth = (int)textureQuad.transform.localScale.x;
+                textureHeight = (int)textureQuad.transform.localScale.y;
+            }
+        }
+
+        if (camera == null)
+            camera = Camera.main;
+
+        Vector3 quadPosition = textureQuad.transform.localPosition;
+        Vector3 quadScale = textureQuad.transform.localScale;
+
+        Vector2 tl = camera.WorldToScreenPoint(new Vector3(quadPosition.x - quadScale.x / 2, quadPosition.y + quadScale.y / 2, quadPosition.z));
+        Vector2 tr = camera.WorldToScreenPoint(new Vector3(quadPosition.x + quadScale.x / 2, quadPosition.y + quadScale.y / 2, quadPosition.z));
+        Vector2 br = camera.WorldToScreenPoint(new Vector3(quadPosition.x + quadScale.x / 2, quadPosition.y - quadScale.y / 2, quadPosition.z));
+        Vector2 bl = camera.WorldToScreenPoint(new Vector3(quadPosition.x - quadScale.x / 2, quadPosition.y - quadScale.y / 2, quadPosition.z));
+
+        using (Mat srcRectMat = new Mat(4, 1, CvType.CV_32FC2))
+        using (Mat dstRectMat = new Mat(4, 1, CvType.CV_32FC2))
+        {
+            srcRectMat.put(0, 0, tl.x, tl.y, tr.x, tr.y, br.x, br.y, bl.x, bl.y);
+            dstRectMat.put(0, 0, 0, 0, quadScale.x, 0, quadScale.x, quadScale.y, 0, quadScale.y);
+
+            using (Mat perspectiveTransform = Imgproc.getPerspectiveTransform(srcRectMat, dstRectMat))
+            using (MatOfPoint2f srcPointMat = new MatOfPoint2f(screenPoint))
+            using (MatOfPoint2f dstPointMat = new MatOfPoint2f())
+            {
+                Core.perspectiveTransform(srcPointMat, dstPointMat, perspectiveTransform);
+
+                dstPoint.x = dstPointMat.get(0, 0)[0] * textureWidth / quadScale.x;
+                dstPoint.y = dstPointMat.get(0, 0)[1] * textureHeight / quadScale.y;
+            }
+        }
+    }
+
+    class TrackerSetting
+    {
+        public Tracker tracker;
+        public string label;
+        public Scalar lineColor;
+        public RectCV boundingBox;
+
+        public TrackerSetting(Tracker tracker, string label, Scalar lineColor)
+        {
+            this.tracker = tracker;
+            this.label = label;
+            this.lineColor = lineColor;
+            this.boundingBox = new RectCV();
+        }
+
+        public void Dispose()
+        {
+            if (tracker != null)
+            {
+                tracker.Dispose();
+                tracker = null;
+            }
+        }
+    }
+
+
+    // ------------------------ You are safe now -------------------------- //
 
 
 
@@ -135,41 +294,53 @@ public class APIController : MonoBehaviour
         Debugger debugger = GameObject.FindObjectOfType<Debugger>();
         debugger.AddText("So it starts");
 
+        debugger.AddText("Height: " + Camera.main.pixelHeight);
+        debugger.AddText("Width: " + Camera.main.pixelWidth);
+        debugger.AddText("Camera Rect: " + Camera.main.pixelRect.ToString());
+
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = frameHandler.LastFrame;
         if (lastFrame.mediaFrameReference != null)
-        {debugger.AddText("1");
+        {
             try
-            {debugger.AddText("1.1");
+            {
                 using (var videoFrame = lastFrame.mediaFrameReference.VideoMediaFrame.GetVideoFrame())
-                {debugger.AddText("1.2");
+                {
                     if (videoFrame != null && videoFrame.SoftwareBitmap != null)
-                    {debugger.AddText("2");
+                    {
                         byte[] byteArray = await Parser.ToByteArray(videoFrame.SoftwareBitmap);
                         
-                        debugger.AddText("2.1");
+                        
+                        tempFrameMat = lastFrame.frameMat;
+
+                        // --------------------------- DANGER ZONE ---------------------------- //
+
+
+
+                        // ------------------------ You are safe now -------------------------- //
+
+
                         videoFrame.SoftwareBitmap.Dispose();
                         //Debug.Log($"[### DEBUG ###] byteArray Size = {byteArray.Length}");
                       
                         
                         Instantiate(sphereForTest, Camera.main.transform.position, Quaternion.identity);
                         Instantiate(cubeForTest, lastFrame.extrinsic.Position, Quaternion.identity);
-                        debugger.AddText("2.2");
+                       
                         //this.tempExtrinsic = lastFrame.extrinsic;
                         //this.tempIntrinsic = lastFrame.intrinsic;
                         MRWorld.UpdateExtInt(lastFrame.extrinsic, lastFrame.intrinsic);
                         
-                        debugger.AddText("3");
+                        
                         FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)));
 
-                        debugger.AddText("4");
+                        
                         
 
                         ws.Send("Sending");
                         ws.Send(JsonUtility.ToJson(frame));
                         ws.Send("Sended");
-                        debugger.AddText("5");
-                        //debugger.AddText(frame.bytes.ToString());
+                        
 
                     }
                     else
@@ -183,7 +354,7 @@ public class APIController : MonoBehaviour
         }
         else
         { Debug.Log("lastFrame.mediaFrameReference = null"); 
-        debugger.AddText("0");}
+        }
 #endif
 
     }
