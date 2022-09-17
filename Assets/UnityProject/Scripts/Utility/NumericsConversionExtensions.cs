@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-// from https://docs.microsoft.com/en-us/windows/mixed-reality/develop/unity/unity-xrdevice-advanced
-// Unity uses a left-handed coordinate system, while the Windows Perception APIs use right-handed coordinate systems.
-// To convert between these two conventions, you can use this helper.
+
+/// <summary>
+/// Unity uses a left-handed coordinate system, while the Windows Perception APIs use right-handed coordinate systems. To convert between these two conventions, you can use this helper.
+/// </summary>
 public static class NumericsConversionExtensions
 {
 #if ENABLE_WINMD_SUPPORT

@@ -5,11 +5,7 @@ using UnityEngine;
 public class LineDrawer : MonoBehaviour
 {
     public GameObject line;
-    void Start()
-    {
-        
-    }
-
+ 
     public void Draw(Vector3 startPoint, Vector3 endPoint, Color color)
     {
         GameObject newLine = Instantiate(line, Vector3.zero, Quaternion.identity);

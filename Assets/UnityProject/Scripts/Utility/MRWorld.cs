@@ -12,20 +12,8 @@ using Microsoft.MixedReality.OpenXR;
 
 #endif
 
-public static class MRWorld //TODO: Change for something more general, like MRWorld, and save Intrinsics info also, since that dont change a lot
+public static class MRWorld 
 {
-    private static string _test;
-    public static string test
-    {
-        get
-        {
-            if (_test == "")
-            {
-                _test = "Dasdsa";
-            }
-            return _test;
-        }
-    }
 
     public static CameraExtrinsic tempExtrinsic = null;
     public static CameraIntrinsic tempIntrinsic = null;

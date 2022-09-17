@@ -47,6 +47,7 @@ public class APIController : MonoBehaviour
     private WebSocket ws;
 
     private bool justStop = false;
+    private byte timeToStop = 0;
 
     
     string address = "ws://192.168.1.238:8000/ws";
@@ -54,7 +55,6 @@ public class APIController : MonoBehaviour
     public GameObject sphereForTest;
     async void Start()
     {
-
         ws = new WebSocket(new Uri(address));
 
         
@@ -133,13 +133,14 @@ public class APIController : MonoBehaviour
     /// <summary>
     /// The trackers.
     /// </summary>
-    List<TrackerSetting> trackers;
+
 
     private void NewTracker(FaceRect faceRect)
     {
         Debugger debugger = GameObject.FindObjectOfType<Debugger>();
-
+        
         debugger.AddText("Tracker");
+        /*
         trackers = new List<TrackerSetting>();
         Point top = new Point(faceRect.x1, faceRect.y1);
         Point bottom = new Point(faceRect.x2, faceRect.y2);
@@ -154,15 +155,32 @@ public class APIController : MonoBehaviour
         trackerCSRT.init(tempFrameMat, region);
         debugger.AddText("4");
         trackers.Add(new TrackerSetting(trackerCSRT, trackerCSRT.GetType().Name.ToString(), new Scalar(0, 255, 0)));
-        debugger.AddText("5");
+        debugger.AddText("5");*/
 
+        TrackingManager.CreateTracker(faceRect, tempFrameMat);
+        debugger.AddText("1");
 
 
     }
 
     void Update()
-    {   
-            Debugger debugger = GameObject.FindObjectOfType<Debugger>();
+    {
+        if (!justStop)
+        {
+            
+#if ENABLE_WINMD_SUPPORT
+            bool wasUpdated = TrackingManager.UpdateTrackers(frameHandler.LastFrame.frameMat);
+            if (wasUpdated) {
+                timeToStop++;
+                if (timeToStop >= 20)
+                    justStop = true;
+            }
+#endif
+            
+        }
+
+        /*
+        Debugger debugger = GameObject.FindObjectOfType<Debugger>();
             debugger.AddText("trackers count: " + trackers.Count);
             for (int i = 0; i < trackers.Count; i++)
         {
@@ -171,7 +189,7 @@ public class APIController : MonoBehaviour
 #if ENABLE_WINMD_SUPPORT
             var lastFrame = frameHandler.LastFrame;
             tracker.update(lastFrame.frameMat, boundingBox);
-#endif
+
             if (tracker is TrackerCSRT)
             {
 
@@ -180,65 +198,13 @@ public class APIController : MonoBehaviour
             }
             //Imgproc.rectangle(rgbMat, boundingBox.tl(), boundingBox.br(), lineColor, 2, 1, 0);
             
+
         }
+        */
     }
 
 
-    /// <summary>
-    /// Converts the screen point to texture point.
-    /// </summary>
-    /// <param name="screenPoint">Screen point.</param>
-    /// <param name="dstPoint">Dst point.</param>
-    /// <param name="texturQuad">Texture quad.</param>
-    /// <param name="textureWidth">Texture width.</param>
-    /// <param name="textureHeight">Texture height.</param>
-    /// <param name="camera">Camera.</param>
-    private void ConvertScreenPointToTexturePoint(Point screenPoint, Point dstPoint, GameObject textureQuad, int textureWidth = -1, int textureHeight = -1, Camera camera = null)
-    {
-        if (textureWidth < 0 || textureHeight < 0)
-        {
-            Renderer r = textureQuad.GetComponent<Renderer>();
-            if (r != null && r.material != null && r.material.mainTexture != null)
-            {
-                textureWidth = r.material.mainTexture.width;
-                textureHeight = r.material.mainTexture.height;
-            }
-            else
-            {
-                textureWidth = (int)textureQuad.transform.localScale.x;
-                textureHeight = (int)textureQuad.transform.localScale.y;
-            }
-        }
-
-        if (camera == null)
-            camera = Camera.main;
-
-        Vector3 quadPosition = textureQuad.transform.localPosition;
-        Vector3 quadScale = textureQuad.transform.localScale;
-
-        Vector2 tl = camera.WorldToScreenPoint(new Vector3(quadPosition.x - quadScale.x / 2, quadPosition.y + quadScale.y / 2, quadPosition.z));
-        Vector2 tr = camera.WorldToScreenPoint(new Vector3(quadPosition.x + quadScale.x / 2, quadPosition.y + quadScale.y / 2, quadPosition.z));
-        Vector2 br = camera.WorldToScreenPoint(new Vector3(quadPosition.x + quadScale.x / 2, quadPosition.y - quadScale.y / 2, quadPosition.z));
-        Vector2 bl = camera.WorldToScreenPoint(new Vector3(quadPosition.x - quadScale.x / 2, quadPosition.y - quadScale.y / 2, quadPosition.z));
-
-        using (Mat srcRectMat = new Mat(4, 1, CvType.CV_32FC2))
-        using (Mat dstRectMat = new Mat(4, 1, CvType.CV_32FC2))
-        {
-            srcRectMat.put(0, 0, tl.x, tl.y, tr.x, tr.y, br.x, br.y, bl.x, bl.y);
-            dstRectMat.put(0, 0, 0, 0, quadScale.x, 0, quadScale.x, quadScale.y, 0, quadScale.y);
-
-            using (Mat perspectiveTransform = Imgproc.getPerspectiveTransform(srcRectMat, dstRectMat))
-            using (MatOfPoint2f srcPointMat = new MatOfPoint2f(screenPoint))
-            using (MatOfPoint2f dstPointMat = new MatOfPoint2f())
-            {
-                Core.perspectiveTransform(srcPointMat, dstPointMat, perspectiveTransform);
-
-                dstPoint.x = dstPointMat.get(0, 0)[0] * textureWidth / quadScale.x;
-                dstPoint.y = dstPointMat.get(0, 0)[1] * textureHeight / quadScale.y;
-            }
-        }
-    }
-
+    
     class TrackerSetting
     {
         public Tracker tracker;
