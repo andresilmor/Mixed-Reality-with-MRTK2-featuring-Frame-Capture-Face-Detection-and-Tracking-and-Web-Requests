@@ -21,7 +21,7 @@ abstract public class Person : BinaryTree.NodeType
     {
         Debugger debugger = GameObject.FindObjectOfType<Debugger>();
 
-        _trackerSetting = new TrackerSetting(tracker);
+        //_trackerSetting = new TrackerSetting(tracker);
 
         debugger.AddText("Person created");
     }
@@ -35,7 +35,17 @@ abstract public class Person : BinaryTree.NodeType
         debugger.AddText("Person MOSSE created");
     }
 
-    // Tracker CSRT
+    public Person(legacy_TrackerCSRT tracker) // FOR MOSSE
+    {
+        Debugger debugger = GameObject.FindObjectOfType<Debugger>();
+
+        _trackerSetting = new TrackerSetting(tracker);
+
+        debugger.AddText("Person legacy CSRT created");
+    }
+
+
+    /* Tracker CSRT
     public struct TrackerSetting
     {
         public Tracker tracker;
@@ -58,9 +68,9 @@ abstract public class Person : BinaryTree.NodeType
             }
         }
     }
-    
+    */
 
-    /* Tracker MOSSE
+    // Tracker MOSSE
     public struct TrackerSetting
     {
         public legacy_Tracker tracker;
@@ -83,5 +93,5 @@ abstract public class Person : BinaryTree.NodeType
             }
         }
     }
-    */
+    
 }

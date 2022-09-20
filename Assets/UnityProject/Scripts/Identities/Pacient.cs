@@ -18,4 +18,10 @@ public class Pacient : Person
         debugger.AddText("Pacient MOSSE created");
     }
 
+    public Pacient(legacy_TrackerCSRT tracker) : base(tracker)
+    {
+        Debugger debugger = GameObject.FindObjectOfType<Debugger>();
+        debugger.AddText("Pacient legacy CSRT created");
+    }
+
 }

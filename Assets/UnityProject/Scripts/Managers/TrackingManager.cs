@@ -27,19 +27,26 @@ public static class TrackingManager
 
         RectCV region = new RectCV(top, bottom);
         debugger.AddText(region.ToString());
-        // Tracker CSRT
+        /* Tracker CSRT
         debugger.AddText("2");
         TrackerCSRT trackerCSRT = TrackerCSRT.create(new TrackerCSRT_Params());
         trackerCSRT.init(frame, region);
-        
+        */
 
-        /* Tracker MOSSE
+        /* Tracker legacy_MOSSE
         legacy_TrackerMOSSE trackerMOSSE = legacy_TrackerMOSSE.create();
         Rect2d _region = new Rect2d(region.tl(), region.size());
         debugger.AddText(_region.ToString());
         trackerMOSSE.init(frame, _region);
         */
-     
+
+        // Tracker legacy_CSRT
+        legacy_TrackerCSRT trackerCSRT = legacy_TrackerCSRT.create();
+        Rect2d _region = new Rect2d(region.tl(), region.size());
+        debugger.AddText(_region.ToString());
+        trackerCSRT.init(frame, _region);
+   
+
         debugger.AddText("3");
         Person newtracker = null;
         switch (type)
@@ -70,7 +77,7 @@ public static class TrackingManager
             debugger.AddText("trackers count: " + trackers.Count);
 
 
-        // Tracker CSRT
+        /* Tracker CSRT
         for (int i = 0; i < trackers.Count; i++)
         {
             debugger.AddText("1" );
@@ -84,9 +91,9 @@ public static class TrackingManager
          
             
         }
-        
+        */
 
-        /* Tracker MOSSE
+        // Tracker legacy
         for (int i = 0; i < trackers.Count; i++)
         {
             debugger.AddText("1");
@@ -105,7 +112,7 @@ public static class TrackingManager
           
 
         }
-        */
+        
 
         return true;
     }
