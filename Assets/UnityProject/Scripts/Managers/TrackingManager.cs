@@ -21,18 +21,32 @@ public static class TrackingManager
         Debugger debugger = GameObject.FindObjectOfType<Debugger>();
 
         debugger.AddText("1");
+        
         Point top = new Point(faceRect.x1, faceRect.y1);
         Point bottom = new Point(faceRect.x2, faceRect.y2);
+
+        RectCV region = new RectCV(top, bottom);
+        debugger.AddText(region.ToString());
+        // Tracker CSRT
         debugger.AddText("2");
         TrackerCSRT trackerCSRT = TrackerCSRT.create(new TrackerCSRT_Params());
-        RectCV region = new RectCV(top, bottom);
         trackerCSRT.init(frame, region);
+        
+
+        /* Tracker MOSSE
+        legacy_TrackerMOSSE trackerMOSSE = legacy_TrackerMOSSE.create();
+        Rect2d _region = new Rect2d(region.tl(), region.size());
+        debugger.AddText(_region.ToString());
+        trackerMOSSE.init(frame, _region);
+        */
+     
         debugger.AddText("3");
         Person newtracker = null;
         switch (type)
         {
             case "Pacient":
                 newtracker = new Pacient(trackerCSRT);
+                //newtracker = new Pacient(trackerMOSSE);
                 break;
             
         }
@@ -55,23 +69,43 @@ public static class TrackingManager
         else
             debugger.AddText("trackers count: " + trackers.Count);
 
+
+        // Tracker CSRT
         for (int i = 0; i < trackers.Count; i++)
         {
             debugger.AddText("1" );
             Tracker tracker = trackers[i].trackerSetting.tracker;
             RectCV boundingBox = trackers[i].trackerSetting.boundingBox;
             debugger.AddText("2");
-#if ENABLE_WINMD_SUPPORT
-            tracker.update(frameMat, boundingBox);
-#endif
-            if (tracker is TrackerCSRT)
-            {
 
-                debugger.AddText(boundingBox.ToString());
+            tracker.update(frameMat, boundingBox);
+
+            debugger.AddText(boundingBox.ToString());
          
-            }
             
         }
+        
+
+        /* Tracker MOSSE
+        for (int i = 0; i < trackers.Count; i++)
+        {
+            debugger.AddText("1");
+            legacy_Tracker tracker = trackers[i].trackerSetting.tracker;
+            if (tracker == null)
+                debugger.AddText("Tracker is NULL!!!!!");
+            Rect2d boundingBox = trackers[i].trackerSetting.boundingBox;
+            if (boundingBox == null)
+                debugger.AddText("boundingBox is NULL!!!!!");
+            debugger.AddText("2");
+
+            tracker.update(frameMat, boundingBox);
+
+            debugger.AddText(boundingBox.ToString());
+
+          
+
+        }
+        */
 
         return true;
     }

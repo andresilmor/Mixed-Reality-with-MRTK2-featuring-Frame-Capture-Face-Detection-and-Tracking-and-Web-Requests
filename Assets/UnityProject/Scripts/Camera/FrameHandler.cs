@@ -222,6 +222,7 @@ public class FrameHandler
             /// <param name="capacity">The number of bytes in the returned array</param>
 			
             void GetBuffer(out byte* value, out uint capacity);
+		
         }
 
 #if ENABLE_WINMD_SUPPORT

@@ -204,32 +204,6 @@ public class APIController : MonoBehaviour
     }
 
 
-    
-    class TrackerSetting
-    {
-        public Tracker tracker;
-        public string label;
-        public Scalar lineColor;
-        public RectCV boundingBox;
-
-        public TrackerSetting(Tracker tracker, string label, Scalar lineColor)
-        {
-            this.tracker = tracker;
-            this.label = label;
-            this.lineColor = lineColor;
-            this.boundingBox = new RectCV();
-        }
-
-        public void Dispose()
-        {
-            if (tracker != null)
-            {
-                tracker.Dispose();
-                tracker = null;
-            }
-        }
-    }
-
 
     // ------------------------ You are safe now -------------------------- //
 
