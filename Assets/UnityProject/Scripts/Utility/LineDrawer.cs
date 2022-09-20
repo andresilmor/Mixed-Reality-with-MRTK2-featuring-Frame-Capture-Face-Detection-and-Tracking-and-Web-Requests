@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class LineDrawer : MonoBehaviour
+public static class LineDrawer
 {
-    public GameObject line;
+    public static GameObject line;
  
-    public void Draw(Vector3 startPoint, Vector3 endPoint, Color color)
+    public static void Draw(Vector3 startPoint, Vector3 endPoint, Color color)
     {
-        GameObject newLine = Instantiate(line, Vector3.zero, Quaternion.identity);
+        GameObject newLine = GameObject.Instantiate(line, Vector3.zero, Quaternion.identity);
         LineRenderer lineRenderer = newLine.GetComponent<LineRenderer>();   
         lineRenderer.SetPosition(0, startPoint);
         lineRenderer.SetPosition(1, endPoint);
@@ -16,5 +17,10 @@ public class LineDrawer : MonoBehaviour
         lineRenderer.startColor = color;
         lineRenderer.endColor = color;
 
+    }
+
+    public static void SetDrawLine(GameObject lineGameObject)
+    {
+        line = lineGameObject;  
     }
 }

@@ -230,7 +230,7 @@ public class FrameHandler
     /// Extracts the image according to the <see cref="ColorFormat"/> and invokes the <see cref="FrameArrived"/> event containing a <see cref="CameraFrame"/>.
     /// </summary>
     public unsafe Mat GenerateCVMat(MediaFrameReference frameReference, bool toDispose = false, int frameWidth = 1504, int frameHeight = 846) {
-        Debugger debugger = GameObject.FindObjectOfType<Debugger>();
+        
         
         SoftwareBitmap softwareBitmap = frameReference.VideoMediaFrame?.GetVideoFrame().SoftwareBitmap;
         

@@ -176,7 +176,7 @@ public static class MRWorld
             layForward = MRWorld.GetLayForward(new Vector2(0,-0.08f), detection.faceRect, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
             position = MRWorld.GetPosition(cameraPosition, layForward);
             GameObject two = UnityEngine.Object.Instantiate(debugObject, position, Quaternion.identity);
-            //gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.red);
+            //LineDrawer.Draw(cameraPosition, position, Color.red);
     
 
         } else {
@@ -184,7 +184,7 @@ public static class MRWorld
             layForward = MRWorld.GetLayForward(new Vector2(0,-0.05f), detection.faceRect, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
             position = MRWorld.GetPosition(cameraPosition, layForward);
             GameObject two = UnityEngine.Object.Instantiate(debugObject, position, Quaternion.identity);
-            //gameObject.GetComponent<LineDrawer>().Draw(cameraPosition, position, Color.blue); // < Seems to work so far
+            //LineDrawer.Draw(cameraPosition, position, Color.blue); // < Seems to work so far
 
         }
 
@@ -252,16 +252,16 @@ public static class MRWorld
             cubeOffsetInWorldSpace = new System.Numerics.Vector3(0.0f, 0.12f, 0.0f);
             position = (bestRectPositionInWorldspace - cubeOffsetInWorldSpace).ToUnity();
             debugText.text = debugText.text + "\nNew PositionOffset X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
-            two = Instantiate(cubeForTest, position, Quaternion.identity);
-            gameObject.GetComponent<LineDrawer>().Draw(cameraPosition,  position, Color.cyan);
+            two = Instantiate(Debugger.GetCubeForTest(), position, Quaternion.identity);
+            LineDrawer.Draw(cameraPosition,  position, Color.cyan);
 
         } else {
         
             cubeOffsetInWorldSpace = new System.Numerics.Vector3(0.0f, 0.25f, 0.0f);
             position = (bestRectPositionInWorldspace - cubeOffsetInWorldSpace).ToUnity();
             debugText.text = debugText.text + "\nNew PositionOffset X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
-            two = Instantiate(cubeForTest, position, Quaternion.identity);
-            gameObject.GetComponent<LineDrawer>().Draw(cameraPosition,  position, Color.green);
+            two = Instantiate(Debugger.GetCubeForTest(), position, Quaternion.identity);
+            LineDrawer.Draw(cameraPosition,  position, Color.green);
         }
 
         
@@ -269,8 +269,8 @@ public static class MRWorld
 
         position = bestRectPositionInWorldspace.ToUnity();
         debugText.text = debugText.text + "\nNew Position X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
-        two = Instantiate(cubeForTest, position, Quaternion.identity);
-        gameObject.GetComponent<LineDrawer>().Draw(cameraPosition,  position, Color.yellow);
+        two = Instantiate(Debugger.GetCubeForTest(), position, Quaternion.identity);
+        LineDrawer.Draw(cameraPosition,  position, Color.yellow);
 
 
         // tEST END

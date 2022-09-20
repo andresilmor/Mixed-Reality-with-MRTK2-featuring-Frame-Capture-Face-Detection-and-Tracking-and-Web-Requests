@@ -3500,6 +3500,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 682832d02ce6b2e4ebbda2b4cb1dc290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugText: {fileID: 1520693231}
+  cubeForTest: {fileID: 5166614015768655864, guid: f5439ff4138eb2e4e98cb39677737bc0, type: 3}
+  sphereForTest: {fileID: 7747253093464675002, guid: 256969b470d89c441bd75fb2c6b0a3ba, type: 3}
+  lineForTest: {fileID: 7438048857545862999, guid: 7c129ff77fddcb3458036b064d83fe08, type: 3}
 --- !u!4 &794339292
 Transform:
   m_ObjectHideFlags: 0
@@ -4674,8 +4678,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1226567736}
   - component: {fileID: 1226567735}
-  - component: {fileID: 1226567737}
-  - component: {fileID: 1226567738}
   m_Layer: 0
   m_Name: Tester
   m_TagString: Untagged
@@ -4696,8 +4698,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionName: {fileID: 7846235075062323456, guid: 5c5fcddbea03ecb439f9ce040d8c16ae, type: 3}
-  cubeForTest: {fileID: 5166614015768655864, guid: f5439ff4138eb2e4e98cb39677737bc0, type: 3}
-  sphereForTest: {fileID: 7747253093464675002, guid: 256969b470d89c441bd75fb2c6b0a3ba, type: 3}
 --- !u!4 &1226567736
 Transform:
   m_ObjectHideFlags: 0
@@ -4712,32 +4712,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1226567737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1226567734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38275a49278bd5f4ebf8c794e0c81699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  line: {fileID: 7438048857545862999, guid: 7c129ff77fddcb3458036b064d83fe08, type: 3}
---- !u!114 &1226567738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1226567734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 820a418c67041b0469c9124d644cb470, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debugText: {fileID: 1520693231}
 --- !u!1 &1245756343
 GameObject:
   m_ObjectHideFlags: 0
