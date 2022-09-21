@@ -9,7 +9,7 @@ public static class LineDrawer
  
     public static void Draw(Vector3 startPoint, Vector3 endPoint, Color color)
     {
-        GameObject newLine = GameObject.Instantiate(line, Vector3.zero, Quaternion.identity);
+        GameObject newLine = UnityEngine.Object.Instantiate(line, Vector3.zero, Quaternion.identity);
         LineRenderer lineRenderer = newLine.GetComponent<LineRenderer>();   
         lineRenderer.SetPosition(0, startPoint);
         lineRenderer.SetPosition(1, endPoint);

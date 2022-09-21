@@ -1356,9 +1356,9 @@ MonoBehaviour:
   OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ToggleProfiler
+      - m_Target: {fileID: 794339291}
+        m_TargetAssemblyTypeName: AppCommandCenter, Assembly-CSharp
+        m_MethodName: DetectPacients
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3504,6 +3504,7 @@ MonoBehaviour:
   cubeForTest: {fileID: 5166614015768655864, guid: f5439ff4138eb2e4e98cb39677737bc0, type: 3}
   sphereForTest: {fileID: 7747253093464675002, guid: 256969b470d89c441bd75fb2c6b0a3ba, type: 3}
   lineForTest: {fileID: 7438048857545862999, guid: 7c129ff77fddcb3458036b064d83fe08, type: 3}
+  detectionName: {fileID: 7846235075062323456, guid: 5c5fcddbea03ecb439f9ce040d8c16ae, type: 3}
 --- !u!4 &794339292
 Transform:
   m_ObjectHideFlags: 0
@@ -3686,7 +3687,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &988070291
 GameObject:
@@ -4679,7 +4680,7 @@ GameObject:
   - component: {fileID: 1226567736}
   - component: {fileID: 1226567735}
   m_Layer: 0
-  m_Name: Tester
+  m_Name: Controllers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4697,7 +4698,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb6e46f3ba404f4db4e519d628f7084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionName: {fileID: 7846235075062323456, guid: 5c5fcddbea03ecb439f9ce040d8c16ae, type: 3}
+  ws: ws://
+  ip: 192.168.1.238
+  port: 8000
+  _pacientsDetection: /ws
 --- !u!4 &1226567736
 Transform:
   m_ObjectHideFlags: 0
@@ -4710,7 +4714,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1245756343
 GameObject:
@@ -7165,7 +7169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4467575798175976, guid: 3cbdd56c762cc4ab48893244f0aa8e76, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4467575798175976, guid: 3cbdd56c762cc4ab48893244f0aa8e76, type: 3}
       propertyPath: m_LocalScale.x

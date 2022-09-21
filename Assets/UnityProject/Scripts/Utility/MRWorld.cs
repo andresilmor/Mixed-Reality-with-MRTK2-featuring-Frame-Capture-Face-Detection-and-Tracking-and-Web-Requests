@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using TMPro;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Perception.Spatial;
@@ -75,30 +74,27 @@ public static class MRWorld
     /// <see cref="VisualizationManager"/> may override fallback if main camera is available (only available on main thread).
     /// Adapted from https://github.com/abist-co-ltd/hololens-opencv-laserpointer/blob/master/Assets/Script/HololensLaserPointerDetection.cs.
     /// </summary>
-    public static Vector3 GetLayForward(Vector2 unprojectionOffset, FaceRect boundingBox, CameraExtrinsic extrinsic, CameraIntrinsic intrinsic)
+#if ENABLE_WINMD_SUPPORT
+    public static Vector3 GetLayForward(Vector2 unprojectionOffset, Windows.Foundation.Point target, CameraExtrinsic extrinsic, CameraIntrinsic intrinsic)
     {
         Vector4 forward = Vector4.one;
         Vector4 upwards = Vector4.one;
         forward = -extrinsic.Forward;
         upwards = extrinsic.Upwards;
 
+        //Windows.Foundation.Point target = GetBoundingBoxTarget(extrinsic, boundingBox).ToWindowsPoint();
+        Vector2 unprojection = intrinsic.UnprojectAtUnitDepth(target).ToUnity();
+        Vector3 correctedUnprojection = new Vector3(unprojection.x + unprojectionOffset.x, unprojection.y + unprojectionOffset.y, 1.0f);
+        Quaternion rotation = Quaternion.LookRotation(forward, upwards);
+        Vector3 layForward = Vector3.Normalize(rotation * correctedUnprojection);
 
 
-#if ENABLE_WINMD_SUPPORT
-            Windows.Foundation.Point target = GetBoundingBoxTarget(extrinsic, boundingBox).ToWindowsPoint();
-            Vector2 unprojection = intrinsic.UnprojectAtUnitDepth(target).ToUnity();
-            Vector3 correctedUnprojection = new Vector3(unprojection.x + unprojectionOffset.x, unprojection.y + unprojectionOffset.y, 1.0f);
-            Quaternion rotation = Quaternion.LookRotation(forward, upwards);
-            Vector3 layForward = Vector3.Normalize(rotation * correctedUnprojection);
-#else
-        // Fallback if using Mono. Main camera needs to be executed on main thread.
-        Vector3 layForward = Camera.main.transform.forward * -1f;
-#endif
         if (layForward == Vector3.forward) Debug.LogWarning("Lay forward is forward vector.");
         if (layForward == Vector3.zero) Debug.LogWarning("Lay forward is zero vector.");
         return layForward;
 
     }
+#endif
 
     public static Vector3 GetPosition(Vector3 cameraPosition, Vector3 layForward)
     {
@@ -151,45 +147,54 @@ public static class MRWorld
 
 
 
-    public static void Project2DBoundingBox(Detection detection, bool debug = false, GameObject debugObject = null, GameObject debugText = null)
+    public static Vector3 GetWorldPositionOfPixel(Point pointCV, Vector2 unprojectionOffset, GameObject toInstantiate = null, bool debug = false, GameObject debugText = null)
     {
 
+        Vector3 layForward = Vector3.zero;
 
         Vector3 cameraPosition = MRWorld.tempExtrinsic.Position;
-
-        Vector3 layForward = MRWorld.GetLayForward(new Vector2(0, 0), detection.faceRect, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
-
-        Vector3 position = MRWorld.GetPosition(cameraPosition, layForward);
+#if ENABLE_WINMD_SUPPORT
+        Windows.Foundation.Point target = pointCV.ToWindowsPoint();
+        
 
         if (debug) {
-            UnityEngine.Object.Instantiate(debugObject, cameraPosition, Quaternion.identity);
-            UnityEngine.Object.Instantiate(debugObject, position, Quaternion.identity);
+            layForward = MRWorld.GetLayForward( Vector3.zero, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
+            
+            Vector3 position = MRWorld.GetPosition(cameraPosition, layForward);
+
+            UnityEngine.Object.Instantiate(toInstantiate, cameraPosition, Quaternion.identity);
+            UnityEngine.Object.Instantiate(toInstantiate, position, Quaternion.identity);
 
         }
 
-#if ENABLE_WINMD_SUPPORT
 
+        layForward = MRWorld.GetLayForward(unprojectionOffset, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
 
-        
+#endif
+
+        return MRWorld.GetPosition(cameraPosition, layForward);
+
+        /*
         if ((detection.faceRect.y1 + ((detection.faceRect.y2 - detection.faceRect.y1) * 0.5f)) > Camera.main.pixelHeight / 2) {
 
-            layForward = MRWorld.GetLayForward(new Vector2(0,-0.08f), detection.faceRect, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
-            position = MRWorld.GetPosition(cameraPosition, layForward);
-            GameObject two = UnityEngine.Object.Instantiate(debugObject, position, Quaternion.identity);
+            layForward = MRWorld.GetLayForward(unprojectionOffset, detection.faceRect, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
+            return MRWorld.GetPosition(cameraPosition, layForward);
+            //GameObject two = UnityEngine.Object.Instantiate(toInstantiate, position, Quaternion.identity);
             //LineDrawer.Draw(cameraPosition, position, Color.red);
     
 
         } else {
 
             layForward = MRWorld.GetLayForward(new Vector2(0,-0.05f), detection.faceRect, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
-            position = MRWorld.GetPosition(cameraPosition, layForward);
-            GameObject two = UnityEngine.Object.Instantiate(debugObject, position, Quaternion.identity);
+            return MRWorld.GetPosition(cameraPosition, layForward);
+            //GameObject two = UnityEngine.Object.Instantiate(toInstantiate, position, Quaternion.identity);
             //LineDrawer.Draw(cameraPosition, position, Color.blue); // < Seems to work so far
 
         }
 
-        GameObject detectionTooltip = UnityEngine.Object.Instantiate(debugText, position + new Vector3(0, 0.10f, 0), Quaternion.identity);
-        detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id);
+        */
+        //GameObject detectionTooltip = UnityEngine.Object.Instantiate(debugText, position + new Vector3(0, 0.10f, 0), Quaternion.identity);
+        //detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id);
 
 
 
@@ -284,9 +289,6 @@ public static class MRWorld
 
 
 
-        
-
-#endif
 
 
 
