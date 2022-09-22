@@ -3488,7 +3488,7 @@ MonoBehaviour:
   sphereForTest: {fileID: 7747253093464675002, guid: 256969b470d89c441bd75fb2c6b0a3ba, type: 3}
   lineForTest: {fileID: 7438048857545862999, guid: 7c129ff77fddcb3458036b064d83fe08, type: 3}
   detectionName: {fileID: 7846235075062323456, guid: 5c5fcddbea03ecb439f9ce040d8c16ae, type: 3}
-  personMaker: {fileID: 0}
+  personMaker: {fileID: 4071399639840041839, guid: da45ce7f02bea4b49b62d5098126eff7, type: 3}
 --- !u!4 &794339292
 Transform:
   m_ObjectHideFlags: 0

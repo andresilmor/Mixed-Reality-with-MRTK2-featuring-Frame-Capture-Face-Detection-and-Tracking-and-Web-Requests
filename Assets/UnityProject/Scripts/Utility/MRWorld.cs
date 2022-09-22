@@ -96,6 +96,26 @@ public static class MRWorld
     }
 #endif
 
+
+    public static Vector2 GetUnprojectionOffset(float posY)
+    {
+        Vector2 unprojectionOffset = Vector2.zero;
+        if (posY > Camera.main.pixelHeight / 2) // Got by trial and error
+        {
+            unprojectionOffset = new Vector2(0, -0.08f);
+
+        }
+        else
+        {
+            unprojectionOffset = new Vector2(0, -0.05f);
+
+
+        }
+
+        return unprojectionOffset;
+
+    }
+
     public static Vector3 GetPosition(Vector3 cameraPosition, Vector3 layForward)
     {
         if (!Microsoft.MixedReality.Toolkit.Utilities.SyncContextUtility.IsMainThread)
@@ -174,29 +194,7 @@ public static class MRWorld
 
         return MRWorld.GetPosition(cameraPosition, layForward);
 
-        /*
-        if ((detection.faceRect.y1 + ((detection.faceRect.y2 - detection.faceRect.y1) * 0.5f)) > Camera.main.pixelHeight / 2) {
-
-            layForward = MRWorld.GetLayForward(unprojectionOffset, detection.faceRect, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
-            return MRWorld.GetPosition(cameraPosition, layForward);
-            //GameObject two = UnityEngine.Object.Instantiate(toInstantiate, position, Quaternion.identity);
-            //LineDrawer.Draw(cameraPosition, position, Color.red);
-    
-
-        } else {
-
-            layForward = MRWorld.GetLayForward(new Vector2(0,-0.05f), detection.faceRect, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
-            return MRWorld.GetPosition(cameraPosition, layForward);
-            //GameObject two = UnityEngine.Object.Instantiate(toInstantiate, position, Quaternion.identity);
-            //LineDrawer.Draw(cameraPosition, position, Color.blue); // < Seems to work so far
-
-        }
-
-        */
-        //GameObject detectionTooltip = UnityEngine.Object.Instantiate(debugText, position + new Vector3(0, 0.10f, 0), Quaternion.identity);
-        //detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id);
-
-
+ 
 
 
 

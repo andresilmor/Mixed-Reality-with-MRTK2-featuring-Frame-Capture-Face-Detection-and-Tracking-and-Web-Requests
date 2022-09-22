@@ -84,9 +84,14 @@ public class AppCommandCenter : MonoBehaviour
 
     private async void MapPredictions(string predictions)
     {
-        Debugger.AddText("MapPredctions Called");
+        try
+        {
+            Debugger.AddText("MapPredctions Called");
+
+        
         var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
                 JsonConvert.DeserializeObject(predictions).ToString());
+       
 
         Debugger.SetFieldView();
 
@@ -94,18 +99,8 @@ public class AppCommandCenter : MonoBehaviour
         {
             FaceRect faceRect = detection.faceRect;
 
-            Vector2 unprojectionOffset = Vector2.zero; // Use 0,0 as default
-            if ((faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f)) > Camera.main.pixelHeight / 2) // Got by trial and error
-            {
-                unprojectionOffset = new Vector2(0, -0.08f);
+            Vector2 unprojectionOffset = MRWorld.GetUnprojectionOffset(faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f));
 
-            }
-            else
-            {
-                unprojectionOffset = new Vector2(0, -0.05f);
-
-
-            }
             Vector3 facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, Debugger.GetCubeForTest(), true, detectionName);
             
             
@@ -116,17 +111,7 @@ public class AppCommandCenter : MonoBehaviour
                 Person newPerson;
                 Debugger.AddText("Im here yup");
 
-                if (detection.bodyCenter.y > Camera.main.pixelHeight / 2) // Got by trial and error
-                {
-                    unprojectionOffset = new Vector2(0, -0.08f);
-
-                }
-                else
-                {
-                    unprojectionOffset = new Vector2(0, -0.05f);
-
-
-                }
+                unprojectionOffset = MRWorld.GetUnprojectionOffset(detection.bodyCenter.y);
 
                 Vector3 bodyPos = MRWorld.GetWorldPositionOfPixel(new Point(detection.bodyCenter.x, detection.bodyCenter.y), unprojectionOffset, Debugger.GetCubeForTest(), true, detectionName);
                 bodyPos.y = facePos.y;
@@ -135,13 +120,13 @@ public class AppCommandCenter : MonoBehaviour
                 TrackingManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, bodyPos, out newPerson, "Pacient");
 
                 Debugger.AddText(newPerson.GetType().ToString());
-                GameObject two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
-                two.GetComponent<Renderer>().material.color = Color.green;
+                GameObject two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), bodyPos, Quaternion.identity);
+                two.GetComponent<Renderer>().material.color = Color.yellow;
                 Debugger.AddText("Second cube was created");
+                Debugger.AddText(detection.emotions.categorical[0].ToString());
 
                 if (newPerson is Pacient)
-                    (newPerson as Pacient).UpdateEmotion("Suffering");
-
+                    (newPerson as Pacient).UpdateEmotion(detection.emotions.categorical[0].ToString());
 
 
                 GameObject detectionTooltip = UnityEngine.Object.Instantiate(detectionName, facePos + new Vector3(0, 0.10f, 0), Quaternion.identity);
@@ -168,6 +153,11 @@ public class AppCommandCenter : MonoBehaviour
             ;
 
         }
+        }
+        catch (Exception e)
+        {
+            Debugger.AddText(e.Message.ToString());
+        }
         return;
     }
 
@@ -178,6 +168,20 @@ public class AppCommandCenter : MonoBehaviour
         Debugger.SetDebugText(debugText);
         LineDrawer.SetDrawLine(lineForTest);
 
+    }
+
+    public static void Strech(GameObject _sprite, Vector3 _initialPosition, Vector3 _finalPosition, bool _mirrorZ)
+    {
+        Vector3 centerPos = (_initialPosition + _finalPosition) / 2f;
+        _sprite.transform.position = centerPos;
+        Vector3 direction = _finalPosition - _initialPosition;
+        direction = Vector3.Normalize(direction);
+        _sprite.transform.right = direction;
+        if (_mirrorZ) _sprite.transform.right *= -1f;
+        Vector3 scale = new Vector3(1, 1, 1);
+        scale.x = Vector3.Distance(_initialPosition, _finalPosition);
+        _sprite.transform.localScale = scale;
+        _sprite.transform.localRotation = new Quaternion(_sprite.transform.localRotation.x, _sprite.transform.localRotation.y, 0, _sprite.transform.localRotation.w);
     }
 
     private void LoadSavedData()

@@ -1,3 +1,4 @@
+using Microsoft.MixedReality.Toolkit.UI;
 using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.TrackingModule;
 using OpenCVForUnity.VideoModule;
@@ -6,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.UIElements;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
 public static class TrackingManager
@@ -49,8 +51,60 @@ public static class TrackingManager
         if (visualMarker == null)
             Debugger.AddText("visual tracker is null");
 
+        Debugger.ClearText();
+        Debugger.AddText("Here we are");
         GameObject newVisualTracker = UnityEngine.Object.Instantiate(visualMarker, mrPosition, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
+        /*
+        // Get material component from attached game object via the mesh renderer.
+        Material material = newVisualTracker.GetComponent<MeshRenderer>().material;
+        Debugger.AddText("Got Material");
+        // Create a new texture instance with same size as the canvas.
+        Texture2D texture = new Texture2D(1504, 846);
+        Debugger.AddText("Created Texture");
+        // Set the texture to transparent (with helper method)
+        texture = Texture2DExtension.TransparentTexture(texture);
+        Debugger.AddText("Texture Transparent");
+        // Draw bounding boxes at specified coordinates.
+          */
+        /*
+        int width = faceRect.x2 - faceRect.x1;
+        int height = faceRect.y2 - faceRect.y1;
+        Debugger.AddText("Width: " + width + " | Height: " + height);
 
+        //int x1 = faceRect.x1 > 0.0f ? (int)faceRect.x1 : 3;
+        //int y1 = faceRect.y1> 0.0f ? (int)faceRect.y1 : 3;
+        //int x2 = (width + x1) > 1504 ? (int)(1504) - 3 : (int)(width + x1);
+        //int y2 = (height + y1) > 846 ? (int)(846) - 3 : (int)(height + y1);
+
+        //Debugger.AddText("x1: " + x1 + " | x2: " + x2 + " | y1: " + y1 + " | y2: " + y2);
+      
+        //Vector2 topLeft = new Vector2(x1, y1);
+        //Vector2 bottomRight = new Vector2(x2, y2);
+
+        Vector3 layForwardTop = Vector3.zero;
+        Vector3 layForwardBottom = Vector3.one;
+#if ENABLE_WINMD_SUPPORT
+        Windows.Foundation.Point topLeft = top.ToWindowsPoint();
+        Windows.Foundation.Point bottomRight = bottom.ToWindowsPoint();
+        Debugger.AddText("Points");
+
+        layForwardTop = MRWorld.GetLayForward(MRWorld.GetUnprojectionOffset(faceRect.y1), topLeft, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
+        layForwardBottom = MRWorld.GetLayForward(MRWorld.GetUnprojectionOffset(faceRect.y2), bottomRight, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
+         Debugger.AddText("LayForward");
+#endif
+
+        layForwardTop.z = mrPosition.z;
+        layForwardBottom.z = mrPosition.z;
+
+        Debugger.AddText("PositionZ");
+        AppCommandCenter.Strech(newVisualTracker, layForwardBottom, layForwardTop, true);
+        Debugger.AddText("Strech");
+        // Apply and set main material texture;
+        //texture.Apply();
+        //material.mainTexture = texture;
+        Debugger.AddText("Apply");  */
+        newVisualTracker.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+      
         if (newVisualTracker == null)
             Debugger.AddText("visual tracker is null");
 

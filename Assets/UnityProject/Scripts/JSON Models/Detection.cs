@@ -8,11 +8,13 @@ public class Detection
     public string id;
     public BodyCenter bodyCenter;
     public FaceRect faceRect;
+    public Emotions emotions;
 
-    public Detection(string id, BodyCenter bodyCenter, FaceRect faceRect)
+    public Detection(string id, BodyCenter bodyCenter, FaceRect faceRect, Emotions emotions)
     {
         this.id = id;
         this.bodyCenter = bodyCenter;
         this.faceRect = faceRect;
+        this.emotions = emotions;
     }
 }
