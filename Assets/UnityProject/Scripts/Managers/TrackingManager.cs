@@ -55,18 +55,7 @@ public static class TrackingManager
         Debugger.AddText("Here we are");
         GameObject newVisualTracker = UnityEngine.Object.Instantiate(visualMarker, mrPosition, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
         /*
-        // Get material component from attached game object via the mesh renderer.
-        Material material = newVisualTracker.GetComponent<MeshRenderer>().material;
-        Debugger.AddText("Got Material");
-        // Create a new texture instance with same size as the canvas.
-        Texture2D texture = new Texture2D(1504, 846);
-        Debugger.AddText("Created Texture");
-        // Set the texture to transparent (with helper method)
-        texture = Texture2DExtension.TransparentTexture(texture);
-        Debugger.AddText("Texture Transparent");
-        // Draw bounding boxes at specified coordinates.
-          */
-        /*
+        
         int width = faceRect.x2 - faceRect.x1;
         int height = faceRect.y2 - faceRect.y1;
         Debugger.AddText("Width: " + width + " | Height: " + height);
