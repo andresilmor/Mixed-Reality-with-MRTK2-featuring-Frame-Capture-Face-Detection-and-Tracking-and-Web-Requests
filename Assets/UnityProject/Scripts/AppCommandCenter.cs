@@ -2,6 +2,7 @@ using BestHTTP.WebSocket;
 using Microsoft.MixedReality.Toolkit.UI;
 using Newtonsoft.Json;
 using OpenCVForUnity.CoreModule;
+using OpenCVForUnity.TrackingModule;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,13 +15,15 @@ public class AppCommandCenter : MonoBehaviour
     //
     BinaryTree pacients;
 
-    // For Debug
+    [Header("World Markers:")]
+    [SerializeField] GameObject personMarker;
+
     [Header("Debugger:")]
-    public TextMeshPro debugText;
-    public GameObject cubeForTest;
-    public GameObject sphereForTest;
-    public GameObject lineForTest;
-    public GameObject detectionName;
+    [SerializeField] TextMeshPro debugText;
+    [SerializeField] GameObject cubeForTest;
+    [SerializeField] GameObject sphereForTest;
+    [SerializeField] GameObject lineForTest;
+    [SerializeField] GameObject detectionName;
 
     // Controllers
     APIController apiController;
@@ -30,18 +33,37 @@ public class AppCommandCenter : MonoBehaviour
     private FrameHandler frameHandler;
     private Mat tempFrameMat;
 
-
-
+   
 
     private bool justStop = false;
     private byte timeToStop = 0;
+
+
+    private static AppCommandCenter _instance;
+    public static AppCommandCenter Instance
+    {
+        get { return _instance; }
+        set
+        {
+            if (_instance == null)
+            {
+                _instance = value;
+            }
+            else
+            {
+                Debugger.AddText("~cc I was called ?_?");
+                Destroy(value);
+            }
+        }
+    }
+
+    public PersonMarker personMaker;
 
 
     async void Start()
     {
         LoadSavedData();
         SetDebugger();
-        Debugger.SetFieldView();
 
         apiController = FindObjectOfType<APIController>();
 
@@ -51,7 +73,12 @@ public class AppCommandCenter : MonoBehaviour
 
         apiController.CreateWebSocketConnection(apiController.pacientsDetection, MapPredictions);
 
-
+        /*
+        GameObject newVisualTracker = UnityEngine.Object.Instantiate(personMarker, Vector3.zero, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
+        Pacient newPerson = new Pacient(newVisualTracker.GetComponent<PersonMarker>(), legacy_TrackerCSRT.create());
+        newPerson.UpdateEmotion("Anger");
+        newPerson.UpdateEmotion("Affection");
+        */
     }
 
 
@@ -61,37 +88,86 @@ public class AppCommandCenter : MonoBehaviour
         var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
                 JsonConvert.DeserializeObject(predictions).ToString());
 
-        //NewTracker(results[0].list[0].faceRect);
+        Debugger.SetFieldView();
+
         foreach (Detection detection in results[0].list)
-            TrackingManager.CreateTracker(detection.faceRect, tempFrameMat);
-
-        FaceRect faceRect = results[0].list[0].faceRect;
-
-        Vector2 unprojectionOffset = Vector2.zero; // Use 0,0 as default
-        if ((faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f)) > Camera.main.pixelHeight / 2) // Got by trial and error
         {
-            unprojectionOffset = new Vector2(0, -0.08f);
+            FaceRect faceRect = detection.faceRect;
 
-        }
-        else
-        {
-            unprojectionOffset = new Vector2(0, -0.05f);
-         
+            Vector2 unprojectionOffset = Vector2.zero; // Use 0,0 as default
+            if ((faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f)) > Camera.main.pixelHeight / 2) // Got by trial and error
+            {
+                unprojectionOffset = new Vector2(0, -0.08f);
 
-        }
-        Debugger.AddText(unprojectionOffset.ToString());
-        Vector3 position = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, Debugger.GetCubeForTest(), true, detectionName);
-        if (!position.Equals(Vector3.zero)) { 
-            GameObject two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), position, Quaternion.identity);
-            GameObject detectionTooltip = UnityEngine.Object.Instantiate(detectionName, position + new Vector3(0, 0.10f, 0), Quaternion.identity);
-            detectionTooltip.GetComponent<TextMeshPro>().SetText(results[0].list[0].id);
-        }
-        else
-        {
-            Debugger.AddText("Ya, no XD");
-        }
+            }
+            else
+            {
+                unprojectionOffset = new Vector2(0, -0.05f);
 
 
+            }
+            Vector3 facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, Debugger.GetCubeForTest(), true, detectionName);
+            
+            
+            if (!facePos.Equals(Vector3.zero))
+            {
+                Debugger.AddText("Ok");
+               
+                Person newPerson;
+                Debugger.AddText("Im here yup");
+
+                if (detection.bodyCenter.y > Camera.main.pixelHeight / 2) // Got by trial and error
+                {
+                    unprojectionOffset = new Vector2(0, -0.08f);
+
+                }
+                else
+                {
+                    unprojectionOffset = new Vector2(0, -0.05f);
+
+
+                }
+
+                Vector3 bodyPos = MRWorld.GetWorldPositionOfPixel(new Point(detection.bodyCenter.x, detection.bodyCenter.y), unprojectionOffset, Debugger.GetCubeForTest(), true, detectionName);
+                bodyPos.y = facePos.y;
+
+
+                TrackingManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, bodyPos, out newPerson, "Pacient");
+
+                Debugger.AddText(newPerson.GetType().ToString());
+                GameObject two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
+                two.GetComponent<Renderer>().material.color = Color.green;
+                Debugger.AddText("Second cube was created");
+
+                if (newPerson is Pacient)
+                    (newPerson as Pacient).UpdateEmotion("Suffering");
+
+
+
+                GameObject detectionTooltip = UnityEngine.Object.Instantiate(detectionName, facePos + new Vector3(0, 0.10f, 0), Quaternion.identity);
+
+                Debugger.AddText("tOOL");
+                detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id);
+                
+            }
+            else
+            {
+                Debugger.AddText("Ya, no XD");
+            }
+
+            // ------------------------------------ DANGER ZONE --------------------------------------------- //
+
+            
+            GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
+            three.GetComponent<Renderer>().material.color = Color.red;
+
+            Debugger.AddText("ITS OVER")
+
+            // ---------------------------------------------------------------------------------------------- //
+
+            ;
+
+        }
         return;
     }
 
@@ -119,7 +195,6 @@ public class AppCommandCenter : MonoBehaviour
         Debugger.AddText("Height: " + Camera.main.pixelHeight);
         Debugger.AddText("Width: " + Camera.main.pixelWidth);
         Debugger.AddText("Camera Rect: " + Camera.main.pixelRect.ToString());
-        WebSocket wsTemp = apiController.GetWebSocket(apiController.pacientsDetection);
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = frameHandler.LastFrame;
         if (lastFrame.mediaFrameReference != null)

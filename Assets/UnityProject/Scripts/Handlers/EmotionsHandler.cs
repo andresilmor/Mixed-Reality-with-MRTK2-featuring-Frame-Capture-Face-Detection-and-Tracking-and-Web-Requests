@@ -1,73 +1,56 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 
 public class EmotionsHandler : MonoBehaviour
 {
-    [Serializable]
-    public struct EmotionSprite
-    {
-        public string name;
-        public GameObject sprite;
-    }
-    public EmotionSprite[] emotionSprite;
-    private EmotionSprite? activeEmotion = null;
+    [SerializeField] GameObject[] emotionSprites;
+    private int activeEmotionIndex = -1;
 
     //Create something alike more common emotion XD
 
     // Start is called before the first frame update
     void Start()
     {
-        if (activeEmotion != null)
+        if (activeEmotionIndex > 0)
         {
-            activeEmotion.Value.sprite.SetActive(false);
-            activeEmotion = null;
-
+            transform.GetChild(activeEmotionIndex).gameObject.SetActive(true);
+            activeEmotionIndex = -1;
         }
 
-        if (emotionSprite.Length != 26)
+        if (emotionSprites.Length != 26)
         {
             Debug.Log("Emotions Listed < 26");
         }
-
+        
     }
 
     public bool UpdateActiveEmotion(string emotionName)
     {
-        try {
-            EmotionSprite sprite = (EmotionSprite)FindEmotionSprite(emotionName);
-            if (sprite.Equals(default(EmotionSprite))) // Because is a struct :/
-            {
-                if (activeEmotion != null)
-                    activeEmotion.Value.sprite.SetActive(false);
-
-                sprite.sprite.SetActive(true);
-                activeEmotion = sprite;
-                return true;
-
-            }
-
-        } catch (Exception e) {
-            Debug.Log(e.ToString());
-            return false;
-
-        }
-
-        return false;
-
-
-    }
-
-    private EmotionSprite? FindEmotionSprite(string emotionName)
-    {
-        foreach (EmotionSprite sprite in emotionSprite)
+        Debug.Log(emotionName);
+        
+        Debug.Log("try");
+        for (byte index = 0; index < emotionSprites.Length; index++)
         {
-            if (sprite.name == emotionName)
-                return sprite;
+            if (emotionSprites[index].name == emotionName) { 
+                transform.GetChild(index).gameObject.SetActive(true);
 
+                if (activeEmotionIndex > 0)
+                    transform.GetChild(activeEmotionIndex).gameObject.SetActive(false);
+
+                activeEmotionIndex = index;
+            }
         }
-        return new EmotionSprite();
+
+        
+        return true;
+
+        
+
+
     }
+
 }

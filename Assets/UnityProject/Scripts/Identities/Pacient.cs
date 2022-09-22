@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class Pacient : Person
 {
+
+    private PersonMarker personMarker;
+
+
     public Pacient(Tracker tracker) : base(tracker)
     {
     }
@@ -14,8 +18,17 @@ public class Pacient : Person
     {
     }
 
-    public Pacient(legacy_TrackerCSRT tracker) : base(tracker)
+    public Pacient(PersonMarker personMarker, legacy_TrackerCSRT tracker = null) : base(tracker)
     {
+        this.personMarker = personMarker;
+
     }
+
+    public void UpdateEmotion(string emotion)
+    {
+        Debugger.AddText("UpdateEmotion");
+        personMarker.GetEmotionsHandler().UpdateActiveEmotion(emotion);
+    }
+
 
 }

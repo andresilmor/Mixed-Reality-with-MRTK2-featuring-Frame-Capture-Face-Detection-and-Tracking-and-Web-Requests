@@ -17,6 +17,7 @@ abstract public class Person : BinaryTree.NodeType
         }
     }
 
+
     public Person(Tracker tracker) // FOR CSRT
     {
 
@@ -24,15 +25,13 @@ abstract public class Person : BinaryTree.NodeType
 
         Debugger.AddText("Person created");
     }
-
     public Person(legacy_TrackerMOSSE tracker) // FOR MOSSE
     {
         //_trackerSetting = new TrackerSetting(tracker);
 
         Debugger.AddText("Person MOSSE created");
     }
-
-    public Person(legacy_TrackerCSRT tracker) // FOR MOSSE
+    public Person(legacy_TrackerCSRT tracker = null) // FOR Legacy_CSRT
     {
         _trackerSetting = new TrackerSetting(tracker);
 
@@ -88,5 +87,15 @@ abstract public class Person : BinaryTree.NodeType
             }
         }
     }
-    
+
+    public struct BoundingBoxXYWH
+    {
+        public float X;
+        public float Y;
+        public float Width;
+        public float Height;
+        public string label;
+        public Color color;
+    }
+
 }

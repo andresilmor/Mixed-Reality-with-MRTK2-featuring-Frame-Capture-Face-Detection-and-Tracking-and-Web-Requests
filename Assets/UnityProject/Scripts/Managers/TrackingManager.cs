@@ -13,7 +13,7 @@ public static class TrackingManager
     public static List<Person> trackers;
 
 
-    public static void CreateTracker(FaceRect faceRect, Mat frame, string type = "Pacient")
+    public static void CreateTracker(FaceRect faceRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, out Person newPerson, string trackerWhat)
     {
         if (trackers == null)
             TrackingManager.trackers = new List<Person>();
@@ -26,6 +26,7 @@ public static class TrackingManager
 
         RectCV region = new RectCV(top, bottom);
         Debugger.AddText(region.ToString());
+
         /* Tracker CSRT
         Debugger.AddText("2");
         TrackerCSRT trackerCSRT = TrackerCSRT.create(new TrackerCSRT_Params());
@@ -43,27 +44,43 @@ public static class TrackingManager
         legacy_TrackerCSRT trackerCSRT = legacy_TrackerCSRT.create();
         Rect2d _region = new Rect2d(region.tl(), region.size());
         Debugger.AddText(_region.ToString());
-        trackerCSRT.init(frame, _region);
-   
+
+        // ------------------------------------ DANGER ZONE --------------------------------------------- //
+        if (visualMarker == null)
+            Debugger.AddText("visual tracker is null");
+
+        GameObject newVisualTracker = UnityEngine.Object.Instantiate(visualMarker, mrPosition, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
+
+        if (newVisualTracker == null)
+            Debugger.AddText("visual tracker is null");
+
+
+        // ---------------------------------------------------------------------------------------------- //
 
         Debugger.AddText("3");
-        Person newtracker = null;
-        switch (type)
+        switch (trackerWhat)
         {
             case "Pacient":
-                newtracker = new Pacient(trackerCSRT);
-                //newtracker = new Pacient(trackerMOSSE);
+                newPerson = new Pacient(newVisualTracker.GetComponent<PersonMarker>(), trackerCSRT);
+
+                trackerCSRT.init(frame, _region);
+                //newPerson = new Pacient(trackerMOSSE);
+                Debugger.AddText("I WAS HERE!!!!!");
                 break;
+            default:
+                newPerson = null;
+                return;
             
         }
 
-        if (newtracker == null)
-            return;
+        
         Debugger.AddText("4");
-        TrackingManager.trackers.Add(newtracker);
+        TrackingManager.trackers.Add(newPerson);
      
         Debugger.AddText("5");
     }
+
+    
 
 
     public static bool UpdateTrackers(Mat frameMat)

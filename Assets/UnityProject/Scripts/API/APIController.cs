@@ -55,15 +55,12 @@ public class APIController : MonoBehaviour
 
 
 
+
+
     private List<WebSocket> wsConnections;
     private List<string> wsConnectionsPath;
 
     private WebSocket pacientMapping;
-
-
-
-    //private WebSocket WScONN;
-
 
 
 
@@ -96,33 +93,6 @@ public class APIController : MonoBehaviour
     {
         wsConnections = new List<WebSocket>(); 
 
-        /*
-        WScONN = new WebSocket(new Uri(ws + ip + ":" + port + pacientsDetection));
-
-        
-
-        WScONN.OnMessage += (WebSocket webSocket, string message) =>
-        {
-    
-
-            if(message.Length > 0) {
-                MapPredictions(message);
-
-            } 
-
-        };
-
-
-
-        WScONN.OnOpen += (WebSocket ws) =>
-        {
-            Debugger.AddText("Connection Opened");
-            ws.Send("Connection Opened");
-            Debugger.AddText("Warning Sended");
-        };
-        
-        WScONN.Open();
-        */
     }
 
     public WebSocket GetWebSocket(string path)
@@ -161,7 +131,10 @@ public class APIController : MonoBehaviour
             newConnection.OnMessage += (WebSocket webSocket, string message) =>
             {
                 Debugger.AddText("Message Received");
-                callback?.Invoke(message);
+                if(message.Length > 6)
+                    callback?.Invoke(message);
+                else
+                    Debugger.AddText("Message Size: " + message.Length);
 
             };
 
@@ -201,22 +174,6 @@ public class APIController : MonoBehaviour
         
 
     }
-
-
-
-
-
-    /*
-    private void NewTracker(FaceRect faceRect)
-    {
-        TrackingManager.CreateTracker(faceRect, tempFrameMat);
-
-    }*/
-
-    
-
-    
-
     
 
     void OnDestroy()
