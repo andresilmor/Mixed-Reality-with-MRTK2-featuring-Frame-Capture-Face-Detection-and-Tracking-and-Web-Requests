@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UIElements;
 
 public class AppCommandCenter : MonoBehaviour
@@ -33,7 +34,7 @@ public class AppCommandCenter : MonoBehaviour
     private FrameHandler frameHandler;
     private Mat tempFrameMat;
 
-   
+
 
     private bool justStop = false;
     private byte timeToStop = 0;
@@ -71,7 +72,9 @@ public class AppCommandCenter : MonoBehaviour
         frameHandler = await FrameHandler.CreateAsync();
 #endif
 
-        apiController.CreateWebSocketConnection(apiController.pacientsDetection, MapPredictions);
+        Debugger.AddText("Buld 1");
+
+        apiController.CreateWebSocketConnection(apiController.pacientsDetection, this.MapPredictions);
 
         /*
         GameObject newVisualTracker = UnityEngine.Object.Instantiate(personMarker, Vector3.zero, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
@@ -84,14 +87,26 @@ public class AppCommandCenter : MonoBehaviour
 
     private async void MapPredictions(string predictions)
     {
-        try
-        {
-            Debugger.AddText("MapPredctions Called");
 
-        
+        Debugger.AddText("MapPredctions Called");
+
+
         var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
                 JsonConvert.DeserializeObject(predictions).ToString());
-       
+
+
+        int y1 = results[0].list[0].faceRect.y1;
+        int y2 = results[0].list[0].faceRect.y2;
+        int bodyY = results[0].list[0].bodyCenter.y;
+        Debugger.AddText("Center Body: " + bodyY);
+        Debugger.AddText("Center Face: " + (y1 + ((y2 - y1) * 0.5f)).ToString("F9"));
+        MRWorld.pixelPointRatio.distPixel = bodyY - (y1 + ((y2 - y1) * 0.5f));
+        Debugger.AddText("Dist Pixel: " + MRWorld.pixelPointRatio.distPixel.ToString("F9"));
+
+        Vector3 facePos = Vector3.zero;
+        Vector3 bodyPos = Vector3.zero;
+
+
 
         Debugger.SetFieldView();
 
@@ -101,27 +116,73 @@ public class AppCommandCenter : MonoBehaviour
 
             Vector2 unprojectionOffset = MRWorld.GetUnprojectionOffset(faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f));
 
-            Vector3 facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, Debugger.GetCubeForTest(), true, detectionName);
-            
-            
+            facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, Debugger.GetCubeForTest(), true, detectionName);
+
+
             if (!facePos.Equals(Vector3.zero))
             {
                 Debugger.AddText("Ok");
-               
+
                 Person newPerson;
                 Debugger.AddText("Im here yup");
 
                 unprojectionOffset = MRWorld.GetUnprojectionOffset(detection.bodyCenter.y);
 
-                Vector3 bodyPos = MRWorld.GetWorldPositionOfPixel(new Point(detection.bodyCenter.x, detection.bodyCenter.y), unprojectionOffset, Debugger.GetCubeForTest(), true, detectionName);
+
+
+
+
+                // ------------------------------------ DANGER ZONE --------------------------------------------- //
+
+
+
+
+                bodyPos = MRWorld.GetWorldPositionOfPixel(new Point(detection.bodyCenter.x, detection.bodyCenter.y), unprojectionOffset, Debugger.GetCubeForTest(), true, detectionName);
+
+                Debugger.AddText("Pixels " + (detection.bodyCenter.y - (faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f))).ToString("F9"));
+
+                Debugger.AddText("Center Body: " + bodyPos.y);
+                Debugger.AddText("Center Face: " + facePos.y.ToString("F9"));
+                MRWorld.pixelPointRatio.distPoint = facePos.y - bodyPos.y;
+                Debugger.AddText("Dist Pixel: " + MRWorld.pixelPointRatio.distPoint.ToString("F9"));
+
+
+                
+                Vector3 test = facePos;
+                test.x = test.x - MRWorld.ConvertPixelDistToPoint((faceRect.x1 + ((faceRect.x2 - faceRect.x1) * 0.5f)) - faceRect.x1);
+
+                GameObject two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), test, Quaternion.identity);
+                two.GetComponent<Renderer>().material.color = Color.red;
+
+                 test = facePos;
+                test.x = test.x + MRWorld.ConvertPixelDistToPoint((faceRect.x1 + ((faceRect.x2 - faceRect.x1) * 0.5f)) - faceRect.x1);
+
+                 two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), test, Quaternion.identity);
+                two.GetComponent<Renderer>().material.color = Color.red;
+
+                 test = facePos;
+                test.y = test.y - MRWorld.ConvertPixelDistToPoint((faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f)) - faceRect.y1);
+
+                 two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), test, Quaternion.identity);
+                two.GetComponent<Renderer>().material.color = Color.red;
+
+                 test = facePos;
+                test.y = test.y + MRWorld.ConvertPixelDistToPoint((faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f)) - faceRect.y1);
+
+                 two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), test, Quaternion.identity);
+                two.GetComponent<Renderer>().material.color = Color.red;
+
                 bodyPos.y = facePos.y;
 
-
+                Debugger.AddText("Four cubes created");
                 TrackingManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, bodyPos, out newPerson, "Pacient");
 
                 Debugger.AddText(newPerson.GetType().ToString());
-                GameObject two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), bodyPos, Quaternion.identity);
-                two.GetComponent<Renderer>().material.color = Color.yellow;
+                 two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), bodyPos, Quaternion.identity);
+                two.GetComponent<Renderer>().material.color = Color.blue;
+
+
+                // ---------------------------------------------------------------------------------------------- //
                 Debugger.AddText("Second cube was created");
                 Debugger.AddText(detection.emotions.categorical[0].ToString());
 
@@ -133,31 +194,28 @@ public class AppCommandCenter : MonoBehaviour
 
                 Debugger.AddText("tOOL");
                 detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id);
-                
+
             }
             else
             {
                 Debugger.AddText("Ya, no XD");
             }
 
-            // ------------------------------------ DANGER ZONE --------------------------------------------- //
+     
 
-            
+
             GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
             three.GetComponent<Renderer>().material.color = Color.red;
 
             Debugger.AddText("ITS OVER")
 
-            // ---------------------------------------------------------------------------------------------- //
 
             ;
 
         }
-        }
-        catch (Exception e)
-        {
-            Debugger.AddText(e.Message.ToString());
-        }
+
+
+
         return;
     }
 

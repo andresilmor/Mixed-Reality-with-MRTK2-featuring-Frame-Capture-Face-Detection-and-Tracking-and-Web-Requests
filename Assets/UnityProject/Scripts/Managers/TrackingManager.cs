@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UIElements;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
@@ -51,9 +52,17 @@ public static class TrackingManager
         if (visualMarker == null)
             Debugger.AddText("visual tracker is null");
 
-        Debugger.ClearText();
+   
         Debugger.AddText("Here we are");
         GameObject newVisualTracker = UnityEngine.Object.Instantiate(visualMarker, mrPosition, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
+
+        Vector3 tempPos = mrPosition;
+
+
+
+
+
+
         /*
         
         int width = faceRect.x2 - faceRect.x1;
@@ -92,7 +101,7 @@ public static class TrackingManager
         //texture.Apply();
         //material.mainTexture = texture;
         Debugger.AddText("Apply");  */
-        newVisualTracker.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        newVisualTracker.GetComponent<PersonMarker>().SetMarkerVisibility(true);
       
         if (newVisualTracker == null)
             Debugger.AddText("visual tracker is null");
@@ -105,10 +114,24 @@ public static class TrackingManager
         {
             case "Pacient":
                 newPerson = new Pacient(newVisualTracker.GetComponent<PersonMarker>(), trackerCSRT);
-
-                trackerCSRT.init(frame, _region);
-                //newPerson = new Pacient(trackerMOSSE);
                 Debugger.AddText("I WAS HERE!!!!!");
+                trackerCSRT.init(frame, _region);
+                Rect2d boundingBox = newPerson.trackerSetting.boundingBox;
+             
+#if ENABLE_WINMD_SUPPORT
+                Windows.Foundation.Point target = new Point(_region.tl().x, _region.tl().y).ToWindowsPoint();
+                Debugger.AddText(target.ToString());
+#endif
+                Debugger.AddText(_region.tl().ToString());
+#if ENABLE_WINMD_SUPPORT
+                target = new Point(_region.br().x, _region.br().y).ToWindowsPoint();
+                Debugger.AddText(target.ToString());
+#endif
+                Debugger.AddText(_region.br().ToString());
+                Debugger.AddText(mrPosition.ToString());
+
+                //newPerson = new Pacient(trackerMOSSE);
+                Debugger.AddText("I WAS NOT!!!!!");
                 break;
             default:
                 newPerson = null;
@@ -154,18 +177,18 @@ public static class TrackingManager
         // Tracker legacy
         for (int i = 0; i < trackers.Count; i++)
         {
-            Debugger.AddText("1");
+            //Debugger.AddText("1");
             legacy_Tracker tracker = trackers[i].trackerSetting.tracker;
             if (tracker == null)
                 Debugger.AddText("Tracker is NULL!!!!!");
             Rect2d boundingBox = trackers[i].trackerSetting.boundingBox;
             if (boundingBox == null)
                 Debugger.AddText("boundingBox is NULL!!!!!");
-            Debugger.AddText("2");
+            //Debugger.AddText("2");
 
             tracker.update(frameMat, boundingBox);
 
-            Debugger.AddText(boundingBox.ToString());
+            //Debugger.AddText(boundingBox.ToString());
 
           
 

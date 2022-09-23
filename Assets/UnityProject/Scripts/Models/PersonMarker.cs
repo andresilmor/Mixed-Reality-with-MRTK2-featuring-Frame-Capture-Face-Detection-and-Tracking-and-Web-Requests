@@ -5,7 +5,7 @@ using UnityEngine;
 public class PersonMarker : MonoBehaviour
 {
     [SerializeField] EmotionsHandler emotionDisplay;
-
+    [SerializeField] GameObject markerRect;
     
     public PersonMarker()
     {
@@ -25,6 +25,6 @@ public class PersonMarker : MonoBehaviour
 
     public void SetMarkerVisibility(bool to)
     {
-        this.gameObject.SetActive(to);
+        markerRect.GetComponent<SpriteRenderer>().enabled = to;
     }
 }

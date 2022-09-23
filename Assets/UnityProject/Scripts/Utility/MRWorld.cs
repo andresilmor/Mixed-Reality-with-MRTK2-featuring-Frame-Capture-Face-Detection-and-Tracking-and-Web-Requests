@@ -17,6 +17,8 @@ public static class MRWorld
     public static CameraExtrinsic tempExtrinsic = null;
     public static CameraIntrinsic tempIntrinsic = null;
 
+    public static PixelPointRatio pixelPointRatio = new PixelPointRatio();
+
 #if ENABLE_WINMD_SUPPORT
     private static SpatialCoordinateSystem _worldOrigin;
         public static SpatialCoordinateSystem worldOrigin
@@ -31,6 +33,16 @@ public static class MRWorld
             }
         }
 
+#endif
+
+    public struct PixelPointRatio
+    {
+        public float distPixel;
+        public float distPoint;
+    }
+
+
+#if ENABLE_WINMD_SUPPORT
     private static SpatialCoordinateSystem CreateWorldOrigin()
         {
             //IntPtr worldOriginPtr = Microsoft.MixedReality.Toolkit.WindowsMixedReality.WindowsMixedRealityUtilities.UtilitiesProvider.ISpatialCoordinateSystemPtr;
@@ -68,6 +80,7 @@ public static class MRWorld
         }
 
 #endif
+
 
     /// <summary>
     /// Returns the unprojected forward vector. Fallback to default forward vector if UWP is not available.
@@ -156,14 +169,19 @@ public static class MRWorld
     }
 
 
-
+  
     public static void UpdateExtInt(CameraExtrinsic cameraExtrinsic, CameraIntrinsic cameraIntrinsic)
     {
         tempExtrinsic = cameraExtrinsic;
         tempIntrinsic = cameraIntrinsic;
 
     }
+  
 
+    public static float ConvertPixelDistToPoint(float pixelDist)
+    {
+        return ((pixelDist * pixelPointRatio.distPoint) / pixelPointRatio.distPixel) * 0.5f;
+    }
 
 
 
