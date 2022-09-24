@@ -116,12 +116,12 @@ public static class MRWorld
         if (posY > Camera.main.pixelHeight / 2) // Got by trial and error
         {
             unprojectionOffset = new Vector2(0, -0.08f);
-
+            Debugger.AddText("Unprojection A");
         }
         else
         {
             unprojectionOffset = new Vector2(0, -0.05f);
-
+            Debugger.AddText("Unprojection B");
 
         }
 
@@ -129,14 +129,14 @@ public static class MRWorld
 
     }
 
-    public static Vector3 GetPosition(Vector3 cameraPosition, Vector3 layForward)
+    public static Vector3 GetPosition(Vector3 cameraPosition, Vector3 layForward, int layer)
     {
         if (!Microsoft.MixedReality.Toolkit.Utilities.SyncContextUtility.IsMainThread)
         {
             return Vector3.zero;
         }
         RaycastHit hit;
-        if (!Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, 1 << 31)) // TODO: Check -1
+        if (!Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, 1 << layer)) // TODO: Check -1
         {
 #if ENABLE_WINMD_SUPPORT
                 Debug.LogWarning("Raycast failed. Probably no spatial mesh provided.");
@@ -185,7 +185,7 @@ public static class MRWorld
 
 
 
-    public static Vector3 GetWorldPositionOfPixel(Point pointCV, Vector2 unprojectionOffset, GameObject toInstantiate = null, bool debug = false, GameObject debugText = null)
+    public static Vector3 GetWorldPositionOfPixel(Point pointCV, Vector2 unprojectionOffset, GameObject toInstantiate = null, int layer = 31, bool debug = false, GameObject debugText = null)
     {
 
         Vector3 layForward = Vector3.zero;
@@ -198,7 +198,7 @@ public static class MRWorld
         if (debug) {
             layForward = MRWorld.GetLayForward( Vector3.zero, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
             
-            Vector3 position = MRWorld.GetPosition(cameraPosition, layForward);
+            Vector3 position = MRWorld.GetPosition(cameraPosition, layForward, layer);
 
             UnityEngine.Object.Instantiate(toInstantiate, cameraPosition, Quaternion.identity);
             UnityEngine.Object.Instantiate(toInstantiate, position, Quaternion.identity);
@@ -210,7 +210,7 @@ public static class MRWorld
 
 #endif
 
-        return MRWorld.GetPosition(cameraPosition, layForward);
+        return MRWorld.GetPosition(cameraPosition, layForward, layer);
 
  
 
