@@ -180,7 +180,7 @@ public static class MRWorld
 
     public static float ConvertPixelDistToPoint(float pixelDist)
     {
-        return ((pixelDist * pixelPointRatio.distPoint) / pixelPointRatio.distPixel) * 0.5f;
+        return ((pixelDist * pixelPointRatio.distPoint) / pixelPointRatio.distPixel) * 0.25f;
     }
 
 
