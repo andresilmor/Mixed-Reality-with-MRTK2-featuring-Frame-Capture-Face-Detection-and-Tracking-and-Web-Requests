@@ -200,7 +200,7 @@ public class AppCommandCenter : MonoBehaviour
                 {
 
                     Debugger.AddText("NO PERSON IN BINARY TREE");
-                    Pacient newPerson;
+                    Person newPerson;
                    
                     TrackingManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newPerson, "Pacient");
 

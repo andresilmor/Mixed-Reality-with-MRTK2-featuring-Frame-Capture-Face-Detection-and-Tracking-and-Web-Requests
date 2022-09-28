@@ -65,10 +65,7 @@ abstract public class Person : BinaryTree.NodeType
 
     public Person() // FOR Legacy_CSRT
     {
-        _trackerSetting = new TrackerSetting(null);
-        id = -1;
-
-        Debugger.AddText("Person legacy CSRT created");
+      
     }
 
 
@@ -147,14 +144,5 @@ abstract public class Person : BinaryTree.NodeType
         }
     }
 
-    public struct BoundingBoxXYWH
-    {
-        public float X;
-        public float Y;
-        public float Width;
-        public float Height;
-        public string label;
-        public Color color;
-    }
 
 }

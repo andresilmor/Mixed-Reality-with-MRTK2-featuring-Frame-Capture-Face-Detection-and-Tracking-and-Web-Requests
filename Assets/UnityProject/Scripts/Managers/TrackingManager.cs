@@ -16,7 +16,7 @@ public static class TrackingManager
     public static List<Pacient> trackers;
 
 
-    public static void CreateTracker(FaceRect faceRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, out Pacient newPerson, string trackerWhat)
+    public static void CreateTracker(FaceRect faceRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, out Person newPerson, string trackerWhat)
     {
         if (trackers == null)
             TrackingManager.trackers = new List<Pacient>();
@@ -123,7 +123,7 @@ public static class TrackingManager
                 case "Pacient":
 
                     trackerCSRT.init(frame, _region);
-
+                    PersonMarker personMarker = newVisualTracker.GetComponent<PersonMarker>();
                     if (newVisualTracker.GetComponent<PersonMarker>() != null)
                         Debugger.AddText("Yup eu tenho isso");
 
@@ -132,7 +132,7 @@ public static class TrackingManager
 
 
                     //newPerson = new Pacient(newVisualTracker.GetComponent<PersonMarker>(), trackerCSRT);
-                    Pacient p = new Pacient();
+                    newPerson = new Pacient(personMarker);
                     Debugger.AddText("I WAS HERE!!!!!");
 
                     

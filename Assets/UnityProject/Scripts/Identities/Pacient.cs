@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pacient
+public class Pacient : Person
 {
 
     private PersonMarker personMarker;
@@ -19,9 +19,9 @@ public class Pacient
     }
     */
 
-    public Pacient()
+    public Pacient(PersonMarker personMarker)
     {
-       
+       this.personMarker = personMarker;
 
     }
 
