@@ -46,7 +46,7 @@ public class FrameHandler
 			lock (this)
 			{
 				_lastFrame.extrinsic = new CameraExtrinsic(_lastFrame.mediaFrameReference.CoordinateSystem, MRWorld.worldOrigin);
-				_lastFrame.intrinsic = new CameraIntrinsic(_lastFrame.mediaFrameReference.VideoMediaFrame.CameraIntrinsics);
+				_lastFrame.intrinsic = new CameraIntrinsic(_lastFrame.mediaFrameReference.VideoMediaFrame);
 				_lastFrame.frameMat = GenerateCVMat(_lastFrame.mediaFrameReference);
 				return _lastFrame;
 			}

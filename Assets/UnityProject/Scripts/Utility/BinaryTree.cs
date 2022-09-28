@@ -2,6 +2,12 @@ using System;
 
 public class BinaryTree 
 {
+
+    public BinaryTree()
+    {
+        Root = null;
+    }
+
     public Node Root { get; set; }
 
     public class Node

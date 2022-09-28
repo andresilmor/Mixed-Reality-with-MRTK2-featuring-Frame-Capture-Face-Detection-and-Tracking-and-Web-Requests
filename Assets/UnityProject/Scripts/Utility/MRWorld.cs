@@ -4,11 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Perception.Spatial;
 using Microsoft.MixedReality.OpenXR;
-
+using Windows.Graphics.Imaging;
 #endif
 
 public static class MRWorld 
@@ -146,6 +147,8 @@ public static class MRWorld
 #endif
         }
         //frame.Dispose(); // TODO: Check disposal
+
+        UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), hit.point, Quaternion.identity);
         return hit.point;
     }
 
@@ -184,90 +187,108 @@ public static class MRWorld
     }
 
 
-
-    public static Vector3 GetWorldPositionOfPixel(Point pointCV, Vector2 unprojectionOffset, GameObject toInstantiate = null, int layer = 31, bool debug = false, GameObject debugText = null)
+    // ATTENTION TO THIS IS FOR BOUNDIG BOX
+    public static Vector3 GetWorldPositionOfPixel(Point pointCV, Vector2 unprojectionOffset, uint boundigBoxWidth, GameObject toInstantiate = null, int layer = 31, bool debug = false, GameObject debugText = null)
     {
+        Debugger.ClearText();
+        Debugger.AddText("Get World Position: ");
 
         Vector3 layForward = Vector3.zero;
 
         Vector3 cameraPosition = MRWorld.tempExtrinsic.Position;
+        Vector3 position = Vector3.zero;
+
+        try
+        {
 #if ENABLE_WINMD_SUPPORT
         Windows.Foundation.Point target = pointCV.ToWindowsPoint();
         
-
         if (debug) {
             layForward = MRWorld.GetLayForward( Vector3.zero, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
             
-            Vector3 position = MRWorld.GetPosition(cameraPosition, layForward, layer);
-
+            position = MRWorld.GetPosition(cameraPosition, layForward, layer);
             UnityEngine.Object.Instantiate(toInstantiate, cameraPosition, Quaternion.identity);
             UnityEngine.Object.Instantiate(toInstantiate, position, Quaternion.identity);
-
         }
-
-
         layForward = MRWorld.GetLayForward(unprojectionOffset, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
 
-#endif
+            return MRWorld.GetPosition(cameraPosition, layForward, layer);
+            Debugger.AddText("2");
+        layForward = MRWorld.GetLayForward(unprojectionOffset, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
 
-        return MRWorld.GetPosition(cameraPosition, layForward, layer);
 
- 
+         Debugger.AddText("3");
+
 
 
 
 
         //Second method test FOLLOWING THE METHOD FROM FACE TRACKIN UNITY IT MAY BE NEEDED IN THE FUTURE, SO LETS KEEP ....  <======================
-        /*
-        debugText.text = "";
-
-        debugText.text = debugText.text + "\nPrev Position X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
-
-        System.Numerics.Matrix4x4? cameraToWorld = this.tempExtrinsic.cameraToWorld;
-
-        // If we can't locate the world, this transform will be null.
-        if (!cameraToWorld.HasValue)
-        {
-        debugText.text = debugText.text + "\n No Value";
-            return;
-        }
 
 
-        float textureWidthInv = 1.0f / 1504;
-        float textureHeightInv = 1.0f / 846;
 
+        System.Numerics.Matrix4x4? cameraToWorld = MRWorld.tempExtrinsic.cameraToWorld;
+
+        Debugger.AddText("4");
+
+        float textureWidthInv = 1.0f / MRWorld.tempIntrinsic.videoFormat.Width;
+        float textureHeightInv = 1.0f / MRWorld.tempIntrinsic.videoFormat.Height;
+         Debugger.AddText("5");
         int paddingForFaceRect = 24;
         float averageFaceWidthInMeters = 0.15f;
 
-        float pixelsPerMeterAlongX = this.tempIntrinsic.FocalLength.x;
-        debugText.text = debugText.text + "\n FocalLength.x " + this.tempIntrinsic.FocalLength.x.ToString("f9");
+        float pixelsPerMeterAlongX = MRWorld.tempIntrinsic.FocalLength.x;
         float averagePixelsForFaceAt1Meter = pixelsPerMeterAlongX * averageFaceWidthInMeters;
-
+         Debugger.AddText("6");
         System.Numerics.Vector3 cubeOffsetInWorldSpace = new System.Numerics.Vector3(0.0f, 0.25f, 0.0f);
         BitmapBounds bestRect = new BitmapBounds();
         System.Numerics.Vector3 bestRectPositionInCameraSpace = System.Numerics.Vector3.Zero;
         float bestDotProduct = -1.0f;
+         Debugger.AddText("7");
+        Windows.Foundation.Point faceRectCenterPoint = target;
 
-        Windows.Foundation.Point faceRectCenterPoint = new Windows.Foundation.Point(results[0].list[0].box.x1 + ((results[0].list[0].box.x2 - results[0].list[0].box.x1) / 2u), results[0].list[0].box.y1 + ((results[0].list[0].box.y2 - results[0].list[0].box.x1) / 2u));
-
-        System.Numerics.Vector2 centerOfFace = this.tempIntrinsic.UnprojectAtUnitDepth(faceRectCenterPoint);
+        System.Numerics.Vector2 centerOfFace = MRWorld.tempIntrinsic.UnprojectAtUnitDepth(faceRectCenterPoint);
 
         System.Numerics.Vector3 vectorTowardsFace = System.Numerics.Vector3.Normalize(new System.Numerics.Vector3(centerOfFace.X, centerOfFace.Y, -1.0f));
 
-        float estimatedFaceDepth = averagePixelsForFaceAt1Meter / (results[0].list[0].box.x2 - results[0].list[0].box.x1);
+        float estimatedFaceDepth = averagePixelsForFaceAt1Meter / boundigBoxWidth;
 
         float dotFaceWithGaze = System.Numerics.Vector3.Dot(vectorTowardsFace, -System.Numerics.Vector3.UnitZ);
 
         System.Numerics.Vector3 targetPositionInCameraSpace = vectorTowardsFace * estimatedFaceDepth;
-
+         Debugger.AddText("8");
         if (dotFaceWithGaze > bestDotProduct)
             {
+             Debugger.AddText("Inside IF");
                 bestDotProduct = dotFaceWithGaze;
                 //bestRect = faceRect;
                 bestRectPositionInCameraSpace = targetPositionInCameraSpace;
             }
-
+             Debugger.AddText("9");
         System.Numerics.Vector3 bestRectPositionInWorldspace = System.Numerics.Vector3.Transform(bestRectPositionInCameraSpace, cameraToWorld.Value);
+        Vector3 bestRectPositionInWorldspaceUnity = (bestRectPositionInWorldspace + cubeOffsetInWorldSpace).ToUnity();
+         Debugger.AddText("1~0");
+        position = MRWorld.GetPosition(MRWorld.tempExtrinsic.Position, layForward, layer);
+        UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), bestRectPositionInWorldspaceUnity, Quaternion.identity);
+         Debugger.AddText("11");
+        if (Vector3.Distance(bestRectPositionInWorldspaceUnity, MRWorld.tempExtrinsic.Position) < Vector3.Distance(position, MRWorld.tempExtrinsic.Position))
+        {
+         Debugger.AddText("Inside if");
+            //layForward = MRWorld.GetLayForward(unprojectionOffset, bestRectPositionInWorldspaceUnity, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
+            return bestRectPositionInWorldspaceUnity;
+        }
+        
+#endif
+        } catch(Exception e)
+        {
+            Debugger.AddText(e.Message);
+        }
+
+        Debugger.AddText("12");
+        Debugger.AddText(position.ToString());
+        return position;
+
+        /*
 
         if (results[0].list[0].box.centerY > Camera.main.pixelHeight / 2) {
             cubeOffsetInWorldSpace = new System.Numerics.Vector3(0.0f, 0.12f, 0.0f);
@@ -284,23 +305,18 @@ public static class MRWorld
             two = Instantiate(Debugger.GetCubeForTest(), position, Quaternion.identity);
             LineDrawer.Draw(cameraPosition,  position, Color.green);
         }
-
-        
-
-
-        position = bestRectPositionInWorldspace.ToUnity();
-        debugText.text = debugText.text + "\nNew Position X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
-        two = Instantiate(Debugger.GetCubeForTest(), position, Quaternion.identity);
-        LineDrawer.Draw(cameraPosition,  position, Color.yellow);
-
-
-        // tEST END
         */
 
 
-        //this.tempExtrinsic = null;
 
-        //this.tempIntrinsic = null;
+
+        // tEST END
+
+
+
+        //MRWorld.tempExtrinsic = null;
+
+        //MRWorld.tempIntrinsic = null;
 
 
 

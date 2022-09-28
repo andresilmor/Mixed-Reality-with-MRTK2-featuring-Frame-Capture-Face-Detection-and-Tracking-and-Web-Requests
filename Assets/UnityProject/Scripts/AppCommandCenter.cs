@@ -14,7 +14,7 @@ using UnityEngine.UIElements;
 public class AppCommandCenter : MonoBehaviour
 {
     //
-    BinaryTree pacients;
+    BinaryTree pacientsMemory;
 
     [Header("World Markers:")]
     [SerializeField] GameObject personMarker;
@@ -31,7 +31,11 @@ public class AppCommandCenter : MonoBehaviour
 
 
     // Attr's for the Machine Learning and detections
-    private FrameHandler frameHandler;
+    private static FrameHandler _frameHandler = null;
+    public static FrameHandler frameHandler
+    {
+        get { return AppCommandCenter._frameHandler; } set { if (AppCommandCenter.frameHandler == null) AppCommandCenter._frameHandler = value; }  
+    }
     private Mat tempFrameMat;
 
 
@@ -66,13 +70,17 @@ public class AppCommandCenter : MonoBehaviour
         LoadSavedData();
         SetDebugger();
 
+
+
         apiController = FindObjectOfType<APIController>();
+        pacientsMemory = new BinaryTree();
+        Debugger.AddText("Pre FrameHandler");
 
 #if ENABLE_WINMD_SUPPORT
-        frameHandler = await FrameHandler.CreateAsync();
+        AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
 
-        Debugger.AddText("Buld 1");
+        Debugger.AddText("Buld 6");
 
         apiController.CreateWebSocketConnection(apiController.pacientsDetection, this.MapPredictions);
 
@@ -112,24 +120,18 @@ public class AppCommandCenter : MonoBehaviour
 
         foreach (Detection detection in results[0].list)
         {
+
             FaceRect faceRect = detection.faceRect;
 
             Vector2 unprojectionOffset = MRWorld.GetUnprojectionOffset(detection.bodyCenter.y);
-            bodyPos = MRWorld.GetWorldPositionOfPixel(new Point(detection.bodyCenter.x, detection.bodyCenter.y), unprojectionOffset, Debugger.GetCubeForTest());
+            bodyPos = MRWorld.GetWorldPositionOfPixel(new Point(detection.bodyCenter.x, detection.bodyCenter.y), unprojectionOffset, (uint)(faceRect.x2 - faceRect.x1), Debugger.GetCubeForTest());
 
             unprojectionOffset = MRWorld.GetUnprojectionOffset(faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f));
-            facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, Debugger.GetCubeForTest(), 31, true, detectionName);
+            Debugger.AddText("Rect Width: " + ((uint)(faceRect.x2 - faceRect.x1)).ToString());
+            facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, (uint)(faceRect.x2 - faceRect.x1), Debugger.GetCubeForTest(), 31, true, detectionName);
 
 
             Debugger.AddText("Ok");
-
-            Person newPerson;
-            Debugger.AddText("Im here yup");
-
-           
-
-
-
 
 
             // ------------------------------------ DANGER ZONE --------------------------------------------- //
@@ -183,41 +185,80 @@ public class AppCommandCenter : MonoBehaviour
 
 
             Debugger.AddText("Four cubes created");
-            TrackingManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newPerson, "Pacient");
 
-            Debugger.AddText(newPerson.GetType().ToString());
-            // two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), bodyPos, Quaternion.identity);
-            //two.GetComponent<Renderer>().material.color = Color.blue;
+            try
+            {
+                Debugger.AddText(detection.id.ToString());
+                Debugger.AddText(detection.id.GetType().ToString());
+                Debugger.AddText(pacientsMemory.GetTreeDepth().ToString());
+                BinaryTree.Node node = pacientsMemory.Find(detection.id);
+                Debugger.AddText("Node is null: " + (node is null).ToString());
+                if (node != null)
+                    Debugger.AddText("Node is: " + node.GetType().ToString());
+           
+                if (node is null)
+                {
 
-
-
-
-            // ---------------------------------------------------------------------------------------------- //
-            Debugger.AddText("Second cube was created");
-            Debugger.AddText(detection.emotions.categorical[0].ToString());
-
-            if (newPerson is Pacient)
-                (newPerson as Pacient).UpdateEmotion(detection.emotions.categorical[0].ToString());
-
-
-            GameObject detectionTooltip = UnityEngine.Object.Instantiate(detectionName, facePos + new Vector3(0, 0.10f, 0), Quaternion.identity);
-
-            Debugger.AddText("tOOL");
-            detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id);
+                    Debugger.AddText("NO PERSON IN BINARY TREE");
+                    Pacient newPerson;
+                   
+                    TrackingManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newPerson, "Pacient");
 
 
+                    Debugger.AddText("END");
+                    return;
+                    //newPerson.id = detection.id;
+
+                    Debugger.AddText(newPerson.GetType().ToString());
+
+
+
+                    
+
+                    // ---------------------------------------------------------------------------------------------- //
+                    Debugger.AddText("Second cube was created");
+                    Debugger.AddText(detection.emotions.categorical[0].ToString());
+
+                    if (newPerson is Pacient)
+                        (newPerson as Pacient).UpdateEmotion(detection.emotions.categorical[0].ToString());
+
+
+                    GameObject detectionTooltip = UnityEngine.Object.Instantiate(detectionName, facePos + new Vector3(0, 0.10f, 0), Quaternion.identity);
+
+                    Debugger.AddText("tOOL");
+                    detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
+
+                    //pacientsMemory.Add(newPerson.id, newPerson);
+                    Debugger.AddText(pacientsMemory.GetTreeDepth().ToString());
 
 
 
 
 
-            GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
-            three.GetComponent<Renderer>().material.color = Color.red;
+                    GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
+                    three.GetComponent<Renderer>().material.color = Color.red;
 
-            Debugger.AddText("ITS OVER")
+                    Debugger.AddText("ITS OVER");
 
+                }
+                else
+                {
+                    Debugger.AddText("PERSON FINDED IN BINARY TREE: " + node.GetType().ToString());
+                    return;
+                    /*
+                    if (node.data is Pacient)
+                    {
+                        (node.data as Pacient).UpdateEmotion(detection.emotions.categorical[0]);
+                        (node.data as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
 
-            ;
+                    }
+                    */
+
+                }
+            }
+            catch (Exception ex) {
+                Debugger.AddText(ex.Message);
+            }
 
         }
 
@@ -235,24 +276,10 @@ public class AppCommandCenter : MonoBehaviour
 
     }
 
-    public static void Strech(GameObject _sprite, Vector3 _initialPosition, Vector3 _finalPosition, bool _mirrorZ)
-    {
-        Vector3 centerPos = (_initialPosition + _finalPosition) / 2f;
-        _sprite.transform.position = centerPos;
-        Vector3 direction = _finalPosition - _initialPosition;
-        direction = Vector3.Normalize(direction);
-        _sprite.transform.right = direction;
-        if (_mirrorZ) _sprite.transform.right *= -1f;
-        Vector3 scale = new Vector3(1, 1, 1);
-        scale.x = Vector3.Distance(_initialPosition, _finalPosition);
-        _sprite.transform.localScale = scale;
-        _sprite.transform.localRotation = new Quaternion(_sprite.transform.localRotation.x, _sprite.transform.localRotation.y, 0, _sprite.transform.localRotation.w);
-    }
-
     private void LoadSavedData()
     {
-        if (pacients == null)
-            pacients = new BinaryTree();
+        if (pacientsMemory == null)
+            pacientsMemory = new BinaryTree();
 
     }
 
@@ -265,7 +292,7 @@ public class AppCommandCenter : MonoBehaviour
         Debugger.AddText("Width: " + Camera.main.pixelWidth);
         Debugger.AddText("Camera Rect: " + Camera.main.pixelRect.ToString());
 #if ENABLE_WINMD_SUPPORT
-        var lastFrame = frameHandler.LastFrame;
+        var lastFrame = AppCommandCenter.frameHandler.LastFrame;
         if (lastFrame.mediaFrameReference != null)
         {
             try
@@ -335,7 +362,7 @@ public class AppCommandCenter : MonoBehaviour
         {
 
 #if ENABLE_WINMD_SUPPORT
-            bool wasUpdated = TrackingManager.UpdateTrackers(frameHandler.LastFrame.frameMat);
+            bool wasUpdated = TrackingManager.UpdateTrackers();
             if (wasUpdated) {
                 timeToStop++;
                 if (timeToStop >= 20)

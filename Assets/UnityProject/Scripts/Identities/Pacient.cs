@@ -4,12 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pacient : Person
+public class Pacient
 {
 
     private PersonMarker personMarker;
 
-
+    /*
     public Pacient(Tracker tracker) : base(tracker)
     {
     }
@@ -17,8 +17,16 @@ public class Pacient : Person
     public Pacient(legacy_TrackerMOSSE tracker) : base(tracker)
     {
     }
+    */
 
-    public Pacient(PersonMarker personMarker, legacy_TrackerCSRT tracker = null) : base(tracker)
+    public Pacient()
+    {
+       
+
+    }
+
+
+    public Pacient(PersonMarker personMarker, legacy_TrackerCSRT tracker)
     {
         this.personMarker = personMarker;
 
@@ -26,6 +34,7 @@ public class Pacient : Person
 
     public void UpdateEmotion(string emotion)
     {
+        return;
         Debugger.AddText("UpdateEmotion");
         personMarker.GetEmotionsHandler().UpdateActiveEmotion(emotion);
     }

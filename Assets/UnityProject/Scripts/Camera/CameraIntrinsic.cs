@@ -70,6 +70,11 @@ public class CameraIntrinsic
     /// </summary>
     public readonly Matrix4x4 UndistortedProjectionTransform;
 
+
+#if ENABLE_WINMD_SUPPORT
+    public readonly Windows.Media.Capture.Frames.VideoMediaFrameFormat videoFormat;
+#endif
+
     /// <param name="focalLength">focal length for the camera</param>
     /// <param name="imageWidth">image width in pixels</param>
     /// <param name="imageHeight">image height in pixels</param>
@@ -94,7 +99,7 @@ public class CameraIntrinsic
         TangentialDistortion = tangentialDistortion;
         UndistortedProjectionTransform = undistortedProjectionTransform;
     }
-
+    /*
     /// <summary>
     /// Constructor using default values.
     /// </summary>
@@ -124,7 +129,7 @@ public class CameraIntrinsic
         TangentialDistortion = Vector2.zero;
         UndistortedProjectionTransform = undistortedProjectionTransform;
     }
-
+    */
     /// <summary>
     /// Copy Constructor (shallow). On Windows UWP, values of the original camera intrinsics are used.
     /// </summary>
@@ -153,8 +158,12 @@ public class CameraIntrinsic
     }
 
 #if ENABLE_WINMD_SUPPORT
-        public CameraIntrinsic([NotNull] Windows.Media.Devices.Core.CameraIntrinsics cameraIntrinsics)
+
+
+        public CameraIntrinsic([NotNull] Windows.Media.Capture.Frames.VideoMediaFrame videoMediaFrame)
         {
+            Windows.Media.Devices.Core.CameraIntrinsics cameraIntrinsics = videoMediaFrame.CameraIntrinsics;
+
             if (cameraIntrinsics == null) throw new ArgumentNullException(nameof(cameraIntrinsics));
             FocalLength = new Vector2(cameraIntrinsics.FocalLength.X, cameraIntrinsics.FocalLength.Y);
             ImageWidth = cameraIntrinsics.ImageWidth;
@@ -164,6 +173,8 @@ public class CameraIntrinsic
             TangentialDistortion = new Vector2(cameraIntrinsics.TangentialDistortion.X, cameraIntrinsics.TangentialDistortion.Y);
             UndistortedProjectionTransform = cameraIntrinsics.UndistortedProjectionTransform.ToUnity();
             WindowsCameraIntrinsics = cameraIntrinsics;
+
+            videoFormat = videoMediaFrame.VideoFormat;
         }
         
         /// <summary>
@@ -176,6 +187,36 @@ public class CameraIntrinsic
             System.Numerics.Vector2 unprojected = WindowsCameraIntrinsics.UnprojectAtUnitDepth(pixelCoordinate);
             return unprojected;
         }
+
+/*
+        public CameraIntrinsic([NotNull] Windows.Media.Devices.Core.CameraIntrinsics cameraIntrinsics)
+        {
+            if (cameraIntrinsics == null) throw new ArgumentNullException(nameof(cameraIntrinsics));
+            FocalLength = new Vector2(cameraIntrinsics.FocalLength.X, cameraIntrinsics.FocalLength.Y);
+            ImageWidth = cameraIntrinsics.ImageWidth;
+            ImageHeight = cameraIntrinsics.ImageHeight;
+            PrincipalPoint = new Vector2(cameraIntrinsics.PrincipalPoint.X, cameraIntrinsics.PrincipalPoint.Y);
+            RadialDistortion = new Vector3(cameraIntrinsics.RadialDistortion.X, cameraIntrinsics.RadialDistortion.Y, cameraIntrinsics.RadialDistortion.Z);
+            TangentialDistortion = new Vector2(cameraIntrinsics.TangentialDistortion.X, cameraIntrinsics.TangentialDistortion.Y);
+            UndistortedProjectionTransform = cameraIntrinsics.UndistortedProjectionTransform.ToUnity();
+            WindowsCameraIntrinsics = cameraIntrinsics;
+        }
+
+
+
+
+        /// <summary>
+        /// Unprojects pixel coordinates into a camera space ray from the camera origin, expressed as a X, Y coordinates on a plane one meter from the camera.
+        /// </summary>
+        /// <param name="pixelCoordinate">The point to unproject. Points in Windows UWP use a different coordinate system than OpenCV</param>
+        public System.Numerics.Vector2 UnprojectAtUnitDepth(Windows.Foundation.Point pixelCoordinate)
+        {
+            if (WindowsCameraIntrinsics == null) throw new NotImplementedException("Unprojection without UWP is not implemented yet.");
+            System.Numerics.Vector2 unprojected = WindowsCameraIntrinsics.UnprojectAtUnitDepth(pixelCoordinate);
+            return unprojected;
+        }
+*/
+
 #endif
 
     public override string ToString()

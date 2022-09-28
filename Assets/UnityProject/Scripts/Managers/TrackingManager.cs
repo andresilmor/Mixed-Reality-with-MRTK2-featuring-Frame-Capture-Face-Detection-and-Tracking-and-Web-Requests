@@ -13,13 +13,13 @@ using RectCV = OpenCVForUnity.CoreModule.Rect;
 
 public static class TrackingManager
 {
-    public static List<Person> trackers;
+    public static List<Pacient> trackers;
 
 
-    public static void CreateTracker(FaceRect faceRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, out Person newPerson, string trackerWhat)
+    public static void CreateTracker(FaceRect faceRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, out Pacient newPerson, string trackerWhat)
     {
         if (trackers == null)
-            TrackingManager.trackers = new List<Person>();
+            TrackingManager.trackers = new List<Pacient>();
 
 
         Debugger.AddText("1");
@@ -54,6 +54,8 @@ public static class TrackingManager
 
    
         Debugger.AddText("Here we are");
+        newPerson = null;
+
         GameObject newVisualTracker = UnityEngine.Object.Instantiate(visualMarker, mrPosition, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
 
         Vector3 tempPos = mrPosition;
@@ -61,7 +63,7 @@ public static class TrackingManager
 
 
 
-
+        Debugger.AddText("Here we are now");
 
         /*
         
@@ -101,47 +103,56 @@ public static class TrackingManager
         //texture.Apply();
         //material.mainTexture = texture;
         Debugger.AddText("Apply");  */
-        newVisualTracker.GetComponent<PersonMarker>().SetMarkerVisibility(true);
-      
+
+        //newVisualTracker.GetComponent<PersonMarker>().SetMarkerVisibility(true);
+
         if (newVisualTracker == null)
             Debugger.AddText("visual tracker is null");
 
-
+        // mice
         // ---------------------------------------------------------------------------------------------- //
 
-        Debugger.AddText("3");
-        switch (trackerWhat)
+        Debugger.AddText("3 " + trackerWhat);
+        Debugger.AddText(trackerWhat.Equals("Pacient").ToString());
+        Debugger.AddText("---- TILL HERE ----");
+        // NOT NICE
+        try
         {
-            case "Pacient":
-                newPerson = new Pacient(newVisualTracker.GetComponent<PersonMarker>(), trackerCSRT);
-                Debugger.AddText("I WAS HERE!!!!!");
-                trackerCSRT.init(frame, _region);
-                Rect2d boundingBox = newPerson.trackerSetting.boundingBox;
-             
-#if ENABLE_WINMD_SUPPORT
-                Windows.Foundation.Point target = new Point(_region.tl().x, _region.tl().y).ToWindowsPoint();
-                Debugger.AddText(target.ToString());
-#endif
-                Debugger.AddText(_region.tl().ToString());
-#if ENABLE_WINMD_SUPPORT
-                target = new Point(_region.br().x, _region.br().y).ToWindowsPoint();
-                Debugger.AddText(target.ToString());
-#endif
-                Debugger.AddText(_region.br().ToString());
-                Debugger.AddText(mrPosition.ToString());
+            switch (trackerWhat)
+            {
+                case "Pacient":
 
-                //newPerson = new Pacient(trackerMOSSE);
-                Debugger.AddText("I WAS NOT!!!!!");
-                break;
-            default:
-                newPerson = null;
-                return;
-            
+                    trackerCSRT.init(frame, _region);
+
+                    if (newVisualTracker.GetComponent<PersonMarker>() != null)
+                        Debugger.AddText("Yup eu tenho isso");
+
+                    Debugger.AddText(trackerCSRT.GetType().ToString());
+                    Debugger.AddText(newVisualTracker.GetComponent<PersonMarker>().GetType().ToString());
+
+
+                    //newPerson = new Pacient(newVisualTracker.GetComponent<PersonMarker>(), trackerCSRT);
+                    Pacient p = new Pacient();
+                    Debugger.AddText("I WAS HERE!!!!!");
+
+                    
+
+                    //newPerson = new Pacient(trackerMOSSE);
+                    Debugger.AddText("I WAS NOT!!!!!");
+                    break;
+                default:
+                    newPerson = null;
+                    return;
+
+            }
+        }
+        catch (Exception e) {
+            Debugger.AddText(e.Message);
         }
 
-        
+
         Debugger.AddText("4");
-        TrackingManager.trackers.Add(newPerson);
+        //TrackingManager.trackers.Add(newPerson);
      
         Debugger.AddText("5");
     }
@@ -149,7 +160,7 @@ public static class TrackingManager
     
 
 
-    public static bool UpdateTrackers(Mat frameMat)
+    public static bool UpdateTrackers()
     {
 
         if (trackers.Count == 0)
@@ -175,25 +186,28 @@ public static class TrackingManager
         */
 
         // Tracker legacy
+        /*
         for (int i = 0; i < trackers.Count; i++)
         {
-            //Debugger.AddText("1");
-            legacy_Tracker tracker = trackers[i].trackerSetting.tracker;
-            if (tracker == null)
-                Debugger.AddText("Tracker is NULL!!!!!");
-            Rect2d boundingBox = trackers[i].trackerSetting.boundingBox;
-            if (boundingBox == null)
-                Debugger.AddText("boundingBox is NULL!!!!!");
-            //Debugger.AddText("2");
+            if (!trackers[i].trackerSetting.isUpdating) { 
+                //Debugger.AddText("1");
+                legacy_Tracker tracker = trackers[i].trackerSetting.tracker;
+                if (tracker == null)
+                    Debugger.AddText("Tracker is NULL!!!!!");
+                Rect2d boundingBox = trackers[i].trackerSetting.boundingBox;
+                if (boundingBox == null)
+                    Debugger.AddText("boundingBox is NULL!!!!!");
+                    //Debugger.AddText("2");
+#if ENABLE_WINMD_SUPPORT
 
-            tracker.update(frameMat, boundingBox);
+                tracker.update(AppCommandCenter.frameHandler.LastFrame.frameMat, boundingBox);
+#endif
+                //Debugger.AddText(boundingBox.ToString());
 
-            //Debugger.AddText(boundingBox.ToString());
-
-          
+            }
 
         }
-        
+        */
 
         return true;
     }

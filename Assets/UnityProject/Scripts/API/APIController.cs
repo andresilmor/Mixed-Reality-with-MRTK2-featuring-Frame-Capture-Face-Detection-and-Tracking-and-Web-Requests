@@ -40,7 +40,7 @@ public class APIController : MonoBehaviour
 
     [Header("API Address:")]
     //string address = "ws://192.168.1.238:8000";
-    [SerializeField] string ip = "192.168.1.238";
+    [SerializeField] string ip = "192.168.1.50";
     [SerializeField] string port = "8000";
 
     [Header("API Paths")]
@@ -103,6 +103,7 @@ public class APIController : MonoBehaviour
         Debugger.AddText("Get WebSocket");
         if (path.Equals(this.pacientsDetection))
         {
+            Debugger.AddText("Connection State: " + pacientMapping.State);
             Debugger.AddText("WebSocket Getted Var");
             return pacientMapping;
 
@@ -152,19 +153,24 @@ public class APIController : MonoBehaviour
             };
 
             newConnection.Open();
+            Debugger.AddText("Connection State: " + newConnection.State);
+          
+                if (path.Equals(_pacientsDetection))
+                {
+                    pacientMapping = newConnection;
+                    Debugger.AddText("Connection Added Var");
 
-            if (path.Equals(_pacientsDetection))
-            {
-                pacientMapping = newConnection;
-                Debugger.AddText("Connection Added Var");
+                }
+                else
+                {
+                    wsConnections.Add(newConnection);
+                    wsConnectionsPath.Add(path);
 
-            }
-            else
-            {
-                wsConnections.Add(newConnection);
-                wsConnectionsPath.Add(path);
-                Debugger.AddText("Connection Added List");
-            }
+                    Debugger.AddText("Connection Added List");
+                }
+           
+            Debugger.AddText("Connection State: " + newConnection.State);
+
 
         } catch(Exception e)
         {
