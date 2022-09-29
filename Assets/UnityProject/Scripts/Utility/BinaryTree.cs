@@ -43,7 +43,7 @@ public class BinaryTree
         Node newNode = new Node();
         newNode.index = value;
         newNode.data = data;
-
+     
         if (this.Root == null)//Tree ise empty
             this.Root = newNode;
         else

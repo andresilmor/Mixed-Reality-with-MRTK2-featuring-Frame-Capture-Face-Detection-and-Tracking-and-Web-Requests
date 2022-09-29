@@ -19,14 +19,10 @@ public class Pacient : Person
     }
     */
 
-    public Pacient(PersonMarker personMarker)
-    {
-       this.personMarker = personMarker;
-
-    }
+  
 
 
-    public Pacient(PersonMarker personMarker, legacy_TrackerCSRT tracker)
+    public Pacient(PersonMarker personMarker, legacy_TrackerCSRT tracker) : base(tracker)
     {
         this.personMarker = personMarker;
 
@@ -34,7 +30,6 @@ public class Pacient : Person
 
     public void UpdateEmotion(string emotion)
     {
-        return;
         Debugger.AddText("UpdateEmotion");
         personMarker.GetEmotionsHandler().UpdateActiveEmotion(emotion);
     }

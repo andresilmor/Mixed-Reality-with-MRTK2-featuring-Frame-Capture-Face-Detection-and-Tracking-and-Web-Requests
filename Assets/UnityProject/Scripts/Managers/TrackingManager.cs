@@ -132,7 +132,7 @@ public static class TrackingManager
 
 
                     //newPerson = new Pacient(newVisualTracker.GetComponent<PersonMarker>(), trackerCSRT);
-                    newPerson = new Pacient(personMarker);
+                    newPerson = new Pacient(personMarker, trackerCSRT);
                     Debugger.AddText("I WAS HERE!!!!!");
 
                     

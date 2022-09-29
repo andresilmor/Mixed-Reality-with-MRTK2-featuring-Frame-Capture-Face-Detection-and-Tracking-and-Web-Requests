@@ -80,7 +80,7 @@ public class AppCommandCenter : MonoBehaviour
         AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
 
-        Debugger.AddText("Buld 6");
+        Debugger.AddText("Buld 7");
 
         apiController.CreateWebSocketConnection(apiController.pacientsDetection, this.MapPredictions);
 
@@ -192,6 +192,13 @@ public class AppCommandCenter : MonoBehaviour
                 Debugger.AddText(detection.id.GetType().ToString());
                 Debugger.AddText(pacientsMemory.GetTreeDepth().ToString());
                 BinaryTree.Node node = pacientsMemory.Find(detection.id);
+
+
+
+
+
+
+
                 Debugger.AddText("Node is null: " + (node is null).ToString());
                 if (node != null)
                     Debugger.AddText("Node is: " + node.GetType().ToString());
@@ -206,8 +213,8 @@ public class AppCommandCenter : MonoBehaviour
 
 
                     Debugger.AddText("END");
-                    return;
-                    //newPerson.id = detection.id;
+                 
+                    newPerson.id = detection.id;
 
                     Debugger.AddText(newPerson.GetType().ToString());
 
@@ -219,6 +226,7 @@ public class AppCommandCenter : MonoBehaviour
                     Debugger.AddText("Second cube was created");
                     Debugger.AddText(detection.emotions.categorical[0].ToString());
 
+                    // FIINE TILL HERE
                     if (newPerson is Pacient)
                         (newPerson as Pacient).UpdateEmotion(detection.emotions.categorical[0].ToString());
 
@@ -228,12 +236,20 @@ public class AppCommandCenter : MonoBehaviour
                     Debugger.AddText("tOOL");
                     detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
 
-                    //pacientsMemory.Add(newPerson.id, newPerson);
+                    pacientsMemory.Add(newPerson.id, newPerson);
                     Debugger.AddText(pacientsMemory.GetTreeDepth().ToString());
 
+                    /*
 
+                    Person newPerson = new Pacient(null, null);
+                    newPerson.id = 23;
+                    Debug.Log(pacientsMemory.GetTreeDepth());
 
-
+                    pacientsMemory.Add(newPerson.id, newPerson);
+                    Debug.Log(pacientsMemory.GetTreeDepth());
+                    Debug.Log(pacientsMemory.Find(23) != null);
+                    Debug.Log((pacientsMemory.Find(23).data as Pacient));
+                    */
 
                     GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
                     three.GetComponent<Renderer>().material.color = Color.red;
@@ -244,15 +260,15 @@ public class AppCommandCenter : MonoBehaviour
                 else
                 {
                     Debugger.AddText("PERSON FINDED IN BINARY TREE: " + node.GetType().ToString());
-                    return;
-                    /*
+             
+                    
                     if (node.data is Pacient)
                     {
                         (node.data as Pacient).UpdateEmotion(detection.emotions.categorical[0]);
-                        (node.data as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
+                        //(node.data as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
 
                     }
-                    */
+                    
 
                 }
             }

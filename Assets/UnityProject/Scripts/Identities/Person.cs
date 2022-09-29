@@ -17,23 +17,13 @@ abstract public class Person : BinaryTree.NodeType
         }
     }
 
+    private int _id;
     public int id
     {
-        get
-        {
-            return id;
-
-        }
-        set
-        {
-
-            if (id < 0)
-            {
-                id = value;
-            }
-
-        }
+        get { return _id; }
+        set { _id = value; }    
     }
+   
 
     /*
     public Person(Tracker tracker) // FOR CSRT
@@ -63,13 +53,15 @@ abstract public class Person : BinaryTree.NodeType
     }
     */
 
-    public Person() // FOR Legacy_CSRT
+    public Person(legacy_TrackerCSRT tracker) // FOR Legacy_CSRT
     {
-      
+        Debugger.AddText("Person Created");
+        _trackerSetting = new TrackerSetting(tracker);
+   
     }
 
 
-
+    /*
     public Person(legacy_TrackerCSRT tracker) // FOR Legacy_CSRT
     {
         _trackerSetting = new TrackerSetting(tracker);
@@ -121,17 +113,18 @@ abstract public class Person : BinaryTree.NodeType
     // Tracker MOSSE
     public struct TrackerSetting
     {
-        public legacy_Tracker tracker;
+        public legacy_TrackerCSRT tracker;
         public Scalar lineColor;
         public Rect2d boundingBox;
         public bool isUpdating;
 
-        public TrackerSetting(legacy_Tracker tracker, Scalar lineColor = null)
+        public TrackerSetting(legacy_TrackerCSRT tracker, Scalar lineColor = null)
         {
             this.tracker = tracker;
             this.lineColor = lineColor == null ? new Scalar(0, 255, 0) : lineColor;
             this.boundingBox = new Rect2d();
             this.isUpdating = false;
+            Debugger.AddText("Tracker Setting Created");
         }
 
         public void Dispose()

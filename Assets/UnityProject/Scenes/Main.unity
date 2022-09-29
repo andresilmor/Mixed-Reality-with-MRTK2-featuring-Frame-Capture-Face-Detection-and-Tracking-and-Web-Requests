@@ -4805,7 +4805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ws: ws://
-  ip: 192.168.1.238
+  ip: 192.168.1.119
   port: 8000
   _pacientsDetection: /ws
 --- !u!4 &1226567736
