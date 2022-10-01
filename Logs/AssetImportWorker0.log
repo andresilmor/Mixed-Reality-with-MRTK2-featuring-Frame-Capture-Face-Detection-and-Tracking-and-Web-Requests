@@ -465,3 +465,49 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 775.310240 seconds.
+  path: Assets/UnityProject/Prefabs/Person Marker.prefab
+  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d5f59020ee25061c18cfab886f97c1c') in 0.045289 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.360876 seconds.
+  path: Assets/UnityProject/Prefabs/Person Marker.prefab
+  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b4298bb8ceb7f4f64d7c59885f3aa5c') in 0.042142 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.864896 seconds.
+  path: Assets/UnityProject/Prefabs/Person Marker.prefab
+  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4408752608c190299e614acf374d06a9') in 0.032051 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.659174 seconds.
+  path: Assets/UnityProject/Prefabs/Person Marker.prefab
+  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52bd7c67fc19ff10567185ba39cd8821') in 0.032479 seconds 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 37.33 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+Unloading 191 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 105.9 MB.
+System memory in use after: 106.4 MB.
+
+Unloading 191 unused Assets to reduce memory usage. Loaded Objects now: 6560.
+Total: 4.481200 ms (FindLiveObjects: 0.433100 ms CreateObjectMapping: 0.359700 ms MarkObjects: 3.642600 ms  DeleteObjects: 0.045400 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
