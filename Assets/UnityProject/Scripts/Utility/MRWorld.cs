@@ -116,12 +116,12 @@ public static class MRWorld
         Vector2 unprojectionOffset = Vector2.zero;
         if (posY > Camera.main.pixelHeight / 2) // Got by trial and error
         {
-            unprojectionOffset = new Vector2(0, -0.08f);
+            unprojectionOffset = new Vector2(0, -0.05f);
             Debugger.AddText("Unprojection A");
         }
         else
         {
-            unprojectionOffset = new Vector2(0, -0.05f);
+            unprojectionOffset = new Vector2(0, -0.08f);
             Debugger.AddText("Unprojection B");
 
         }
@@ -148,7 +148,7 @@ public static class MRWorld
         }
         //frame.Dispose(); // TODO: Check disposal
 
-        UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), hit.point, Quaternion.identity);
+        //UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), hit.point, Quaternion.identity);
         return hit.point;
     }
 
@@ -207,12 +207,18 @@ public static class MRWorld
             layForward = MRWorld.GetLayForward( Vector3.zero, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
             
             position = MRWorld.GetPosition(cameraPosition, layForward, layer);
-            UnityEngine.Object.Instantiate(toInstantiate, cameraPosition, Quaternion.identity);
-            UnityEngine.Object.Instantiate(toInstantiate, position, Quaternion.identity);
+            if (toInstantiate != null) {
+                UnityEngine.Object.Instantiate(toInstantiate, cameraPosition, Quaternion.identity);
+                UnityEngine.Object.Instantiate(toInstantiate, position, Quaternion.identity);
+            }
         }
         layForward = MRWorld.GetLayForward(unprojectionOffset, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
 
             return MRWorld.GetPosition(cameraPosition, layForward, layer);
+
+
+
+
             Debugger.AddText("2");
         layForward = MRWorld.GetLayForward(unprojectionOffset, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
 
@@ -279,7 +285,8 @@ public static class MRWorld
         }
         
 #endif
-        } catch(Exception e)
+        }
+        catch (Exception e)
         {
             Debugger.AddText(e.Message);
         }
