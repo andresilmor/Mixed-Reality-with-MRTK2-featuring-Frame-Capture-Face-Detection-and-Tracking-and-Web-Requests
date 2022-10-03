@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f5eda0ec17f2646a204012e6bb1442, type: 3}
+  m_Name: Emotion List
+  m_EditorClassIdentifier: 
+  _categorical:
+  - name: Affection
+    description: Fond feelings; love; tenderness.
+  - name: Anger
+    description: Intense displeasure or rage; furious; resentful.
+  - name: Annoyance
+    description: Bothered by something or someone; irritated; impatient; frustrated.
+  - name: Anticipation
+    description: State of looking forward; hoping on or getting prepared for possible
+      future events.
+  - name: Aversion
+    description: Feeling disgust, dislike, repulsion; feeling hate.
+  - name: Confidence
+    description: Feeling of being certain; conviction that an outcome will be favorable;
+      encouraged; proud.
+  - name: Disapproval
+    description: Feeling that something is wrong or reprehensible; contempt; hostile.
+  - name: Disconnection
+    description: Feeling not interested in the main event of the surrounding; indifferent;
+      bored; distracted.
+  - name: Disquietment
+    description: Nervous; worried; upset; anxious; tense; pressured; alarmed.
+  - name: Doubt-Confusion
+    description: Difficulty to understand or decide; thinking about different options.
+  - name: Embarrassment
+    description: Feeling ashamed or guilty.
+  - name: Engagement
+    description: Paying attention to something; absorbed into something; curious;
+      interested.
+  - name: Esteem
+    description: Feelings of favorable opinion or judgment; respect; admiration;
+      gratefulness.
+  - name: Excitement
+    description: Feeling enthusiasm; stimulated; energetic.
+  - name: Fatigue
+    description: Weariness; tiredness; sleepy.
+  - name: Fear
+    description: Feeling suspicious or afraid of danger, threat, evil or pain; horror.
+  - name: Happiness
+    description: Feeling delighted; feeling enjoyment or amusement.
+  - name: Pain
+    description: Physical suffering.
+  - name: Peace
+    description: Well being and relaxed; no worry; having positive thoughts or sensations;
+      satisfied.
+  - name: Pleasure
+    description: Feeling of delight in the senses.
+  - name: Sadness
+    description: Feeling unhappy, sorrow, disappointed, or discouraged.
+  - name: Sensitivity
+    description: Feeling of being physically or emotionally wounded; feeling delicate
+      or vulnerable.
+  - name: Suffering
+    description: Psychological or emotional pain; distressed; anguished.
+  - name: Surprise
+    description: Sudden discovery of something unexpected.
+  - name: Sympathy
+    description: "State of sharing others\u2019 emotions, goals or troubles; supportive;
+      compassionate."
+  - name: Yearning
+    description: Strong desire to have something; jealous; envious; lust.
+  _continuous:
+  - name: Valence
+    description: This dimension measures how positive or pleasant an emotion is.
+      It ranges from negative to positive.
+  - name: Arousal
+    description: This dimension measures the agitation level of the person. It ranges
+      from non-active / in calm to agitated / ready to act.
+  - name: Dominance
+    description: This dimension measures the control level of the situation by the
+      person. It ranges from submissive / non-control to dominant / in-control.

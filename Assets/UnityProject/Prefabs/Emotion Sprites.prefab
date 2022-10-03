@@ -91,9 +91,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9059164229662461078}
-  - component: {fileID: 9059164229662461073}
   m_Layer: 0
-  m_Name: Emotion Display
+  m_Name: Emotion Sprites
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,45 +138,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9059164229662461073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9059164229662461079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18bcce2bd3860de4ba4dfbcf085731fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emotionSprites:
-  - {fileID: 9059164229705076736}
-  - {fileID: 9059164230641540408}
-  - {fileID: 9059164230794467123}
-  - {fileID: 9059164230779096871}
-  - {fileID: 9059164230400641178}
-  - {fileID: 9059164229682947466}
-  - {fileID: 9059164230421807166}
-  - {fileID: 9059164230644195714}
-  - {fileID: 9059164230285077777}
-  - {fileID: 9059164230376378865}
-  - {fileID: 9059164229986719044}
-  - {fileID: 9059164231538815137}
-  - {fileID: 9059164231459680361}
-  - {fileID: 9059164229704780361}
-  - {fileID: 9059164230338372591}
-  - {fileID: 9059164229899798340}
-  - {fileID: 9059164231522054869}
-  - {fileID: 9059164230461878660}
-  - {fileID: 9059164231110282138}
-  - {fileID: 9059164230793889093}
-  - {fileID: 9059164230970028438}
-  - {fileID: 9059164229946213546}
-  - {fileID: 9059164229429438743}
-  - {fileID: 9059164231017986050}
-  - {fileID: 9059164231208514231}
-  - {fileID: 9059164231323552840}
 --- !u!1 &9059164229682947466
 GameObject:
   m_ObjectHideFlags: 0

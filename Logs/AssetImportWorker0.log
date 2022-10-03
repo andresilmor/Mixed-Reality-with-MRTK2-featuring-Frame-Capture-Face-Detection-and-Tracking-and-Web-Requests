@@ -15,12 +15,12 @@ D:/PC/Desktop/IP/UnityProject
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-64305
+61606
 Successfully changed project path to: D:/PC/Desktop/IP/UnityProject
 D:/PC/Desktop/IP/UnityProject
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 135.33 ms, found 13 plugins.
-Preloading 1 native plugins for Editor in 4.42 ms.
+Refreshing native plugins compatible for Editor in 1263.12 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 4.06 ms.
 Initialize engine version: 2020.3.35f1 (18e4db7a9996)
 [Subsystems] Discovering subsystems at path C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.35f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path D:/PC/Desktop/IP/UnityProject/Assets
@@ -35,479 +35,42 @@ Initialize mono
 Mono path[0] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.35f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.35f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.35f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56120
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56556
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.35f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001851 seconds.
+Registered in 0.135328 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 105.33 ms, found 13 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
+Refreshing native plugins compatible for Editor in 139.51 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.04 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.530 seconds
+- Completed reload, in  2.611 seconds
 Domain Reload Profiling:
-	ReloadAssembly (531ms)
-		BeginReloadAssembly (51ms)
+	ReloadAssembly (2611ms)
+		BeginReloadAssembly (1531ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (423ms)
-			LoadAssemblies (49ms)
+		EndReloadAssembly (794ms)
+			LoadAssemblies (1529ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (111ms)
+			SetupTypeCache (408ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (23ms)
-			SetupLoadedEditorAssemblies (211ms)
+			RebuildScriptCaches (25ms)
+			SetupLoadedEditorAssemblies (262ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (3ms)
+				InitializePlatformSupportModulesInManaged (4ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (105ms)
-				BeforeProcessingInitializeOnLoad (12ms)
-				ProcessInitializeOnLoadAttributes (68ms)
-				ProcessInitializeOnLoadMethodAttributes (22ms)
+				RefreshPlugins (140ms)
+				BeforeProcessingInitializeOnLoad (17ms)
+				ProcessInitializeOnLoadAttributes (74ms)
+				ProcessInitializeOnLoadMethodAttributes (28ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.013992 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 102.58 ms, found 13 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
-[XR] [MROpenXR][Info   ][18:00:22.866369][tid:38f8] MeshProvider_RegisterLifecycleProvider
-[XR] [MROpenXR][Info   ][18:00:22.866508][tid:38f8] InputProvider_RegisterLifecycleProvider
-[XR] Error loading subsystem: Display (1) (header mismatch?)
-[XR] [MROpenXR][Info   ][18:00:22.868125][tid:38f8] OnPluginStarted UnityVersion=2020.3.35f1 OpenXRPluginVersion=1.4.2 MROpenXRPluginVersion=1.5.0.0 PartA_PrivTags=33554432
-Mono: successfully reloaded assembly
-- Completed reload, in  1.701 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1701ms)
-		BeginReloadAssembly (119ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (4ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (14ms)
-		EndReloadAssembly (1536ms)
-			LoadAssemblies (89ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (288ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (60ms)
-			SetupLoadedEditorAssemblies (1010ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (3ms)
-				SetLoadedEditorAssemblies (1ms)
-				RefreshPlugins (103ms)
-				BeforeProcessingInitializeOnLoad (96ms)
-				ProcessInitializeOnLoadAttributes (766ms)
-				ProcessInitializeOnLoadMethodAttributes (35ms)
-				AfterProcessingInitializeOnLoad (8ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (1ms)
-Platform modules already initialized, skipping
-========================================================================
-Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
-Refreshing native plugins compatible for Editor in 1.91 ms, found 13 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
-Unloading 6242 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 221.2 MB.
-System memory in use after: 221.6 MB.
-
-Unloading 200 unused Assets to reduce memory usage. Loaded Objects now: 6550.
-Total: 3.687500 ms (FindLiveObjects: 0.417200 ms CreateObjectMapping: 0.319900 ms MarkObjects: 2.893000 ms  DeleteObjects: 0.056900 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d7825ab28be0e4c7d44f6b05008d494') in 0.172273 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 19.748009 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f92852a9a215bdfff39f7857718a58a0') in 0.041942 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 8.390805 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a77f7764bde8c8e6371965c04db4c7f8') in 0.039166 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 9.296788 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2d18c7d3162e1cfe804dc161018372a') in 0.036753 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 10.499922 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f18e15bb7e0d44b9941b2c9f03e7758c') in 0.035457 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 13.745802 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0cb53e5a93ae6b51116fd229d20952db') in 0.040469 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 4.758040 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fd179214ae178a36e9b7aeab27ded9a2') in 0.033795 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 6.237577 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b98301e16482962c6370f123b74aafd4') in 0.031881 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 2.363977 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4eee8d0dedefbfd5b32a8abb3085fe84') in 0.028808 seconds 
-========================================================================
-Received Prepare
-Refreshing native plugins compatible for Editor in 34.39 ms, found 13 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
-Unloading 191 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 104.4 MB.
-System memory in use after: 104.9 MB.
-
-Unloading 191 unused Assets to reduce memory usage. Loaded Objects now: 6559.
-Total: 4.165000 ms (FindLiveObjects: 0.388800 ms CreateObjectMapping: 0.340100 ms MarkObjects: 3.402400 ms  DeleteObjects: 0.033200 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 698.855721 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '31da78150a54b88824dc07aec57cc37a') in 0.041737 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 18.289571 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f454a9d27679d239b833be75dc3bb679') in 0.032164 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 1.731244 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a8783217dd466364e47287273f79560c') in 0.029819 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 2.438711 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '91e2ecf39b84e43ceeea8b71182d9f12') in 0.030834 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.963931 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a33bd01234f018de6e9cbef891c8e115') in 0.035062 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 2.974827 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7e713b693fb44baf9a6f2ebb463a1a28') in 0.031749 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 2.677227 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '88ae3f374daddac19259299a9c08dab2') in 0.031239 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 2.180944 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e01115e3034a4c98d61896f718f6ca5') in 0.033344 seconds 
-========================================================================
-Received Prepare
-Refreshing native plugins compatible for Editor in 35.43 ms, found 13 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
-Unloading 191 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 104.5 MB.
-System memory in use after: 105.0 MB.
-
-Unloading 191 unused Assets to reduce memory usage. Loaded Objects now: 6559.
-Total: 4.594400 ms (FindLiveObjects: 0.410700 ms CreateObjectMapping: 0.331500 ms MarkObjects: 3.809400 ms  DeleteObjects: 0.042400 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 864.790837 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0f70a60bda2692904a8b287b4f60b0c5') in 0.044136 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 267.351071 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/ConicalGrabPointer.prefab
-  artifactKey: Guid(c2fde7a8938065b459cff79b8ed89393) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/ConicalGrabPointer.prefab using Guid(c2fde7a8938065b459cff79b8ed89393) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a5ea7a4611342c67a469aaed12173c1f') in 0.022735 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000264 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/GGVPointer.prefab
-  artifactKey: Guid(039b325c9e8fd0545a0475fd4aa35b10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/GGVPointer.prefab using Guid(039b325c9e8fd0545a0475fd4aa35b10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c6704dd831f7f98e67a589ed4f5dc662') in 0.009791 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000254 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/ScreenSpaceMousePointer.prefab
-  artifactKey: Guid(840df22ff840d5540b58ca6088afde25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/ScreenSpaceMousePointer.prefab using Guid(840df22ff840d5540b58ca6088afde25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dabaad74774c36123ea5c42483a48ce4') in 0.050267 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000231 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/ShellHandRayPointer.prefab
-  artifactKey: Guid(d5b94136462644c9873bb3347169ae7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/ShellHandRayPointer.prefab using Guid(d5b94136462644c9873bb3347169ae7e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4220b51340f707efa43766eb4a066861') in 0.216830 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000244 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/TouchPointer.prefab
-  artifactKey: Guid(51e60b8742bc47640923ac9e75ea74e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/TouchPointer.prefab using Guid(51e60b8742bc47640923ac9e75ea74e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f6b49042e715470033abf1793148f916') in 0.013532 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000208 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/ParabolicTeleportPointer.prefab
-  artifactKey: Guid(c4fd3c6fc7ff484eb434775066e7f327) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/ParabolicTeleportPointer.prefab using Guid(c4fd3c6fc7ff484eb434775066e7f327) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02cc779c74e360877d84fece66d49ccd') in 0.026749 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000288 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/GrabPointer.prefab
-  artifactKey: Guid(526b854247016cf47bc5c58e01d82407) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/GrabPointer.prefab using Guid(526b854247016cf47bc5c58e01d82407) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90c7e6a2ae8739741ab6e7dc8c2afd0d') in 0.038931 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000275 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/MousePointer.prefab
-  artifactKey: Guid(31d81f88cf3f71d4b8392ded50df3f05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/MousePointer.prefab using Guid(31d81f88cf3f71d4b8392ded50df3f05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f0cc12bc027e43d8fbd55c99a7ce30d7') in 0.011927 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000212 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/PokePointer.prefab
-  artifactKey: Guid(38b548c6a2c270545a383296ad2bc4d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Prefabs/Pointers/PokePointer.prefab using Guid(38b548c6a2c270545a383296ad2bc4d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1cf2571f968651a851b5cf6e480ad45') in 0.012602 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 75.033956 seconds.
-  path: Assets/UnityProject/Prefabs
-  artifactKey: Guid(50ee2e0f95003254a8608f09e2a40bbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs using Guid(50ee2e0f95003254a8608f09e2a40bbc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec16485e20a83947cc19135017813104') in 0.006974 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 5.005221 seconds.
-  path: Assets/UnityProject/Prefabs/Pointers
-  artifactKey: Guid(5ad6b464131f0c44392c2274af341779) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Pointers using Guid(5ad6b464131f0c44392c2274af341779) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ca8e9851643a4aa0586a244a82d76bbe') in 0.006640 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 26.049880 seconds.
-  path: Assets/UnityProject/Prefabs/ConicalGrabPointer.prefab
-  artifactKey: Guid(0c225d92c034a57468f691cd7555ed83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/ConicalGrabPointer.prefab using Guid(0c225d92c034a57468f691cd7555ed83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c0443718c73efba96c3467f5234a158') in 0.010579 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000173 seconds.
-  path: Assets/UnityProject/Prefabs/GrabPointer.prefab
-  artifactKey: Guid(e60e5f03a8914a542854197df2da7e9c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/GrabPointer.prefab using Guid(e60e5f03a8914a542854197df2da7e9c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c81a788a07f222b136af0d2a697a7711') in 0.018352 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000219 seconds.
-  path: Assets/UnityProject/Prefabs/ShellHandRayPointer.prefab
-  artifactKey: Guid(50f829e66320ae64ea7f8b121eeb5e14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/ShellHandRayPointer.prefab using Guid(50f829e66320ae64ea7f8b121eeb5e14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dcba27fe307fc898e868966e08488279') in 0.025849 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000168 seconds.
-  path: Assets/UnityProject/Prefabs/GGVPointer.prefab
-  artifactKey: Guid(f620c901cf0cdb145801b9be42b15dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/GGVPointer.prefab using Guid(f620c901cf0cdb145801b9be42b15dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a07856f921b6998b3b1190747565eff6') in 0.005586 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000249 seconds.
-  path: Assets/UnityProject/Prefabs/PokePointer.prefab
-  artifactKey: Guid(d60f94cc580df1f468c870412b80e8b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/PokePointer.prefab using Guid(d60f94cc580df1f468c870412b80e8b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4dbfa9a9a4d52560db287e26b2a29c6e') in 0.005803 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000221 seconds.
-  path: Assets/UnityProject/Prefabs/TouchPointer.prefab
-  artifactKey: Guid(a3a3b04ec3991f14ab5bf835ed552d8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/TouchPointer.prefab using Guid(a3a3b04ec3991f14ab5bf835ed552d8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ea628c4aeef3e129224e62a8296bc3a') in 0.006724 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000216 seconds.
-  path: Assets/UnityProject/Prefabs/ScreenSpaceMousePointer.prefab
-  artifactKey: Guid(f92d38dbd56e6d8448c5bff2dd46db8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/ScreenSpaceMousePointer.prefab using Guid(f92d38dbd56e6d8448c5bff2dd46db8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2db4d419954d6c3462914411c9b80014') in 0.005560 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000250 seconds.
-  path: Assets/UnityProject/Prefabs/ParabolicTeleportPointer.prefab
-  artifactKey: Guid(c9feb860a2a43ec488beb632fe7b5060) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/ParabolicTeleportPointer.prefab using Guid(c9feb860a2a43ec488beb632fe7b5060) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e52dd444b5027b40242d63ebb62cd3a2') in 0.020632 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000156 seconds.
-  path: Assets/UnityProject/Prefabs/MousePointer.prefab
-  artifactKey: Guid(8187f75eea9477b42b08f34cef2dae4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/MousePointer.prefab using Guid(8187f75eea9477b42b08f34cef2dae4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd78853f4dbe8f2ccce823ad045d26830') in 0.005420 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 30.831405 seconds.
-  path: Assets/UnityProject/Prefabs/Pointers/ShellHandRayPointer.prefab
-  artifactKey: Guid(50f829e66320ae64ea7f8b121eeb5e14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Pointers/ShellHandRayPointer.prefab using Guid(50f829e66320ae64ea7f8b121eeb5e14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d5c6c32fe565de4e7bd59e1e56c8e30') in 0.010255 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 13.542340 seconds.
-  path: Assets/UnityProject/Prefabs/Pointers/ParabolicTeleportPointer.prefab
-  artifactKey: Guid(c9feb860a2a43ec488beb632fe7b5060) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Pointers/ParabolicTeleportPointer.prefab using Guid(c9feb860a2a43ec488beb632fe7b5060) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eea45d798a29158386f296dda3ad88ec') in 0.031304 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 11.597925 seconds.
-  path: Assets/UnityProject/Prefabs/Pointers/TouchPointer.prefab
-  artifactKey: Guid(a3a3b04ec3991f14ab5bf835ed552d8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Pointers/TouchPointer.prefab using Guid(a3a3b04ec3991f14ab5bf835ed552d8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '088bf31978dbd9de2960e0dd6a79c99b') in 0.007415 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 8.241609 seconds.
-  path: Assets/UnityProject/Prefabs/Pointers/MousePointer.prefab
-  artifactKey: Guid(8187f75eea9477b42b08f34cef2dae4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Pointers/MousePointer.prefab using Guid(8187f75eea9477b42b08f34cef2dae4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90ec55ea173f750b0664aaf1fbd66405') in 0.005938 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 7.993802 seconds.
-  path: Assets/UnityProject/Prefabs/Pointers/PokePointer.prefab
-  artifactKey: Guid(d60f94cc580df1f468c870412b80e8b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Pointers/PokePointer.prefab using Guid(d60f94cc580df1f468c870412b80e8b2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '496115b12bbca1c0dfae6531fcc043c1') in 0.005743 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 92.408371 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '33a1e7997b2e1ca829d44e6e273f3d2c') in 0.041830 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 6.927419 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3fabb77a9c58d792e6fd52b5f5103512') in 0.035402 seconds 
-========================================================================
-Received Prepare
-Refreshing native plugins compatible for Editor in 35.06 ms, found 13 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
-Unloading 191 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 105.9 MB.
-System memory in use after: 106.4 MB.
-
-Unloading 191 unused Assets to reduce memory usage. Loaded Objects now: 6560.
-Total: 4.374500 ms (FindLiveObjects: 0.399400 ms CreateObjectMapping: 0.388300 ms MarkObjects: 3.552100 ms  DeleteObjects: 0.034200 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 775.310240 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d5f59020ee25061c18cfab886f97c1c') in 0.045289 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 7.360876 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b4298bb8ceb7f4f64d7c59885f3aa5c') in 0.042142 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 8.864896 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4408752608c190299e614acf374d06a9') in 0.032051 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 3.659174 seconds.
-  path: Assets/UnityProject/Prefabs/Person Marker.prefab
-  artifactKey: Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Prefabs/Person Marker.prefab using Guid(da45ce7f02bea4b49b62d5098126eff7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52bd7c67fc19ff10567185ba39cd8821') in 0.032479 seconds 
-========================================================================
-Received Prepare
-Refreshing native plugins compatible for Editor in 37.33 ms, found 13 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
-Unloading 191 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 105.9 MB.
-System memory in use after: 106.4 MB.
-
-Unloading 191 unused Assets to reduce memory usage. Loaded Objects now: 6560.
-Total: 4.481200 ms (FindLiveObjects: 0.433100 ms CreateObjectMapping: 0.359700 ms MarkObjects: 3.642600 ms  DeleteObjects: 0.045400 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
+Registered in 1.430755 seconds.

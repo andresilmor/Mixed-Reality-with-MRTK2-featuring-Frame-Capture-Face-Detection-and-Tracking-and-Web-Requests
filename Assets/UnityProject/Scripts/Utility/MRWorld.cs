@@ -191,7 +191,6 @@ public static class MRWorld
     public static Vector3 GetWorldPositionOfPixel(Point pointCV, Vector2 unprojectionOffset, uint boundigBoxWidth, GameObject toInstantiate = null, int layer = 31, bool debug = false, GameObject debugText = null)
     {
         Debugger.ClearText();
-        Debugger.AddText("Get World Position: ");
 
         Vector3 layForward = Vector3.zero;
 
@@ -219,11 +218,9 @@ public static class MRWorld
 
 
 
-            Debugger.AddText("2");
         layForward = MRWorld.GetLayForward(unprojectionOffset, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
 
 
-         Debugger.AddText("3");
 
 
 
@@ -235,11 +232,9 @@ public static class MRWorld
 
         System.Numerics.Matrix4x4? cameraToWorld = MRWorld.tempExtrinsic.cameraToWorld;
 
-        Debugger.AddText("4");
 
         float textureWidthInv = 1.0f / MRWorld.tempIntrinsic.videoFormat.Width;
         float textureHeightInv = 1.0f / MRWorld.tempIntrinsic.videoFormat.Height;
-         Debugger.AddText("5");
         int paddingForFaceRect = 24;
         float averageFaceWidthInMeters = 0.15f;
 
@@ -250,7 +245,6 @@ public static class MRWorld
         BitmapBounds bestRect = new BitmapBounds();
         System.Numerics.Vector3 bestRectPositionInCameraSpace = System.Numerics.Vector3.Zero;
         float bestDotProduct = -1.0f;
-         Debugger.AddText("7");
         Windows.Foundation.Point faceRectCenterPoint = target;
 
         System.Numerics.Vector2 centerOfFace = MRWorld.tempIntrinsic.UnprojectAtUnitDepth(faceRectCenterPoint);
@@ -262,7 +256,6 @@ public static class MRWorld
         float dotFaceWithGaze = System.Numerics.Vector3.Dot(vectorTowardsFace, -System.Numerics.Vector3.UnitZ);
 
         System.Numerics.Vector3 targetPositionInCameraSpace = vectorTowardsFace * estimatedFaceDepth;
-         Debugger.AddText("8");
         if (dotFaceWithGaze > bestDotProduct)
             {
              Debugger.AddText("Inside IF");
@@ -270,16 +263,12 @@ public static class MRWorld
                 //bestRect = faceRect;
                 bestRectPositionInCameraSpace = targetPositionInCameraSpace;
             }
-             Debugger.AddText("9");
         System.Numerics.Vector3 bestRectPositionInWorldspace = System.Numerics.Vector3.Transform(bestRectPositionInCameraSpace, cameraToWorld.Value);
         Vector3 bestRectPositionInWorldspaceUnity = (bestRectPositionInWorldspace + cubeOffsetInWorldSpace).ToUnity();
-         Debugger.AddText("1~0");
         position = MRWorld.GetPosition(MRWorld.tempExtrinsic.Position, layForward, layer);
         UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), bestRectPositionInWorldspaceUnity, Quaternion.identity);
-         Debugger.AddText("11");
         if (Vector3.Distance(bestRectPositionInWorldspaceUnity, MRWorld.tempExtrinsic.Position) < Vector3.Distance(position, MRWorld.tempExtrinsic.Position))
         {
-         Debugger.AddText("Inside if");
             //layForward = MRWorld.GetLayForward(unprojectionOffset, bestRectPositionInWorldspaceUnity, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
             return bestRectPositionInWorldspaceUnity;
         }
@@ -291,8 +280,6 @@ public static class MRWorld
             Debugger.AddText(e.Message);
         }
 
-        Debugger.AddText("12");
-        Debugger.AddText(position.ToString());
         return position;
 
         /*

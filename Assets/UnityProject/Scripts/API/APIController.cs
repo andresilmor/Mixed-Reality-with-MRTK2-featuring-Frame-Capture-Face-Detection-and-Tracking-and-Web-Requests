@@ -76,7 +76,6 @@ public class APIController : MonoBehaviour
             }
             else
             {
-                Debugger.AddText("I was called ?_?");
                 Destroy(value);
             }
         }
@@ -125,7 +124,6 @@ public class APIController : MonoBehaviour
     public void CreateWebSocketConnection(string path, Action<string> callback)
     {
         Debugger.AddText("Address: " + (ws + ip + ":" + port + path));
-        Debugger.AddText(new Uri(ws + ip + ":" + port + path).ToString());
         try { 
             WebSocket newConnection = new WebSocket(new Uri(ws + ip + ":" + port + path));
        
@@ -169,7 +167,6 @@ public class APIController : MonoBehaviour
                     Debugger.AddText("Connection Added List");
                 }
            
-            Debugger.AddText("Connection State: " + newConnection.State);
 
 
         } catch(Exception e)

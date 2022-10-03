@@ -56,13 +56,12 @@ public class AppCommandCenter : MonoBehaviour
             }
             else
             {
-                Debugger.AddText("~cc I was called ?_?");
                 Destroy(value);
             }
         }
     }
 
-    public PersonMarker personMaker;
+    public PersonProfile personMaker;
 
 
     async void Start()
@@ -74,19 +73,17 @@ public class AppCommandCenter : MonoBehaviour
 
         apiController = FindObjectOfType<APIController>();
         pacientsMemory = new BinaryTree();
-        Debugger.AddText("Pre FrameHandler");
 
 #if ENABLE_WINMD_SUPPORT
         AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
 
-        Debugger.AddText("Buld 7");
 
         apiController.CreateWebSocketConnection(apiController.pacientsDetection, this.MapPredictions);
 
         /*
-        GameObject newVisualTracker = UnityEngine.Object.Instantiate(personMarker, Vector3.zero, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
-        Pacient newPerson = new Pacient(newVisualTracker.GetComponent<PersonMarker>(), legacy_TrackerCSRT.create());
+        GameObject newVisualTracker = UnityEngine.Object.Instantiate(personProfile, Vector3.zero, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
+        Pacient newPerson = new Pacient(newVisualTracker.GetComponent<PersonProfile>(), legacy_TrackerCSRT.create());
         newPerson.UpdateEmotion("Anger");
         newPerson.UpdateEmotion("Affection");
         */
@@ -96,7 +93,6 @@ public class AppCommandCenter : MonoBehaviour
     private async void MapPredictions(string predictions)
     {
 
-        Debugger.AddText("MapPredctions Called");
 
 
         var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
@@ -106,10 +102,7 @@ public class AppCommandCenter : MonoBehaviour
         int y1 = results[0].list[0].faceRect.y1;
         int y2 = results[0].list[0].faceRect.y2;
         int bodyY = results[0].list[0].bodyCenter.y;
-        Debugger.AddText("Center Body: " + bodyY);
-        Debugger.AddText("Center Face: " + (y1 + ((y2 - y1) * 0.5f)).ToString("F9"));
         MRWorld.pixelPointRatio.distPixel = bodyY - (y1 + ((y2 - y1) * 0.5f));
-        Debugger.AddText("Dist Pixel: " + MRWorld.pixelPointRatio.distPixel.ToString("F9"));
 
         Vector3 facePos = Vector3.zero;
         Vector3 bodyPos = Vector3.zero;
@@ -127,11 +120,8 @@ public class AppCommandCenter : MonoBehaviour
             bodyPos = MRWorld.GetWorldPositionOfPixel(new Point(detection.bodyCenter.x, detection.bodyCenter.y), unprojectionOffset, (uint)(faceRect.x2 - faceRect.x1));
 
             unprojectionOffset = MRWorld.GetUnprojectionOffset(faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f));
-            Debugger.AddText("Rect Width: " + ((uint)(faceRect.x2 - faceRect.x1)).ToString());
             facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, (uint)(faceRect.x2 - faceRect.x1), null, 31, true, detectionName);
 
-
-            Debugger.AddText("Ok");
 
 
             // ------------------------------------ DANGER ZONE --------------------------------------------- //
@@ -139,14 +129,7 @@ public class AppCommandCenter : MonoBehaviour
 
 
 
-
-            Debugger.AddText("Pixels " + (detection.bodyCenter.y - (faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f))).ToString("F9"));
-
-            Debugger.AddText("Center Body: " + bodyPos.y);
-            Debugger.AddText("Center Face: " + facePos.y.ToString("F9"));
             MRWorld.pixelPointRatio.distPoint = facePos.y - bodyPos.y;
-            Debugger.AddText("Dist : " + MRWorld.pixelPointRatio.distPoint.ToString("F9"));
-            Debugger.AddText("Distance : " + Vector3.Distance(bodyPos, facePos));
 
             /*
 
@@ -183,25 +166,14 @@ public class AppCommandCenter : MonoBehaviour
 
 
 
-
-            Debugger.AddText("Four cubes created");
-
             try
             {
-                Debugger.AddText(detection.id.ToString());
-                Debugger.AddText(detection.id.GetType().ToString());
-                Debugger.AddText(pacientsMemory.GetTreeDepth().ToString());
                 BinaryTree.Node node = pacientsMemory.Find(detection.id);
 
 
 
 
 
-
-
-                Debugger.AddText("Node is null: " + (node is null).ToString());
-                if (node != null)
-                    Debugger.AddText("Node is: " + node.GetType().ToString());
            
                 if (node is null)
                 {
@@ -211,20 +183,14 @@ public class AppCommandCenter : MonoBehaviour
                    
                     TrackingManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newPerson, "Pacient");
 
-
-                    Debugger.AddText("END");
                  
                     newPerson.id = detection.id;
-
-                    Debugger.AddText(newPerson.GetType().ToString());
 
 
 
                     
 
                     // ---------------------------------------------------------------------------------------------- //
-                    Debugger.AddText("Second cube was created");
-                    Debugger.AddText(detection.emotions.categorical[0].ToString());
 
                     // FIINE TILL HERE
                     if (newPerson is Pacient)
@@ -233,11 +199,9 @@ public class AppCommandCenter : MonoBehaviour
 
                     GameObject detectionTooltip = UnityEngine.Object.Instantiate(detectionName, facePos + new Vector3(0, 0.10f, 0), Quaternion.identity);
 
-                    Debugger.AddText("tOOL");
                     detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
 
                     pacientsMemory.Add(newPerson.id, newPerson);
-                    Debugger.AddText(pacientsMemory.GetTreeDepth().ToString());
 
                     /*
 
@@ -253,8 +217,6 @@ public class AppCommandCenter : MonoBehaviour
 
                     GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
                     three.GetComponent<Renderer>().material.color = Color.red;
-
-                    Debugger.AddText("ITS OVER");
 
                 }
                 else
@@ -302,11 +264,6 @@ public class AppCommandCenter : MonoBehaviour
     public async void DetectPacients()
     {
 
-        Debugger.AddText("So it starts");
-
-        Debugger.AddText("Height: " + Camera.main.pixelHeight);
-        Debugger.AddText("Width: " + Camera.main.pixelWidth);
-        Debugger.AddText("Camera Rect: " + Camera.main.pixelRect.ToString());
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = AppCommandCenter.frameHandler.LastFrame;
         if (lastFrame.mediaFrameReference != null)
@@ -333,7 +290,6 @@ public class AppCommandCenter : MonoBehaviour
                         MRWorld.UpdateExtInt(lastFrame.extrinsic, lastFrame.intrinsic);
                         
                         FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)));
-                        Debugger.AddText("Till the frame is ok");
                         WebSocket wsTemp = apiController.GetWebSocket(apiController.pacientsDetection);
                         if (wsTemp.IsOpen)
                         {
@@ -346,7 +302,6 @@ public class AppCommandCenter : MonoBehaviour
                         wsTemp.Send("Sending");
                         wsTemp.Send(JsonUtility.ToJson(frame));
                         wsTemp.Send("Sended");
-                        Debugger.AddText("And keeps ok XD");
 
                         /*
                         ws.Send("Sending");

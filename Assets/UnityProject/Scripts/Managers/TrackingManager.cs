@@ -22,14 +22,11 @@ public static class TrackingManager
             TrackingManager.trackers = new List<Pacient>();
 
 
-        Debugger.AddText("1");
         
         Point top = new Point(faceRect.x1, faceRect.y1);
         Point bottom = new Point(faceRect.x2, faceRect.y2);
 
         RectCV region = new RectCV(top, bottom);
-        Debugger.AddText(region.ToString());
-
         /* Tracker CSRT
         Debugger.AddText("2");
         TrackerCSRT trackerCSRT = TrackerCSRT.create(new TrackerCSRT_Params());
@@ -46,14 +43,12 @@ public static class TrackingManager
         // Tracker legacy_CSRT
         legacy_TrackerCSRT trackerCSRT = legacy_TrackerCSRT.create();
         Rect2d _region = new Rect2d(region.tl(), region.size());
-        Debugger.AddText(_region.ToString());
 
         // ------------------------------------ DANGER ZONE --------------------------------------------- //
         if (visualMarker == null)
             Debugger.AddText("visual tracker is null");
 
    
-        Debugger.AddText("Here we are");
         newPerson = null;
 
         GameObject newVisualTracker = UnityEngine.Object.Instantiate(visualMarker, mrPosition, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
@@ -62,8 +57,6 @@ public static class TrackingManager
 
 
 
-
-        Debugger.AddText("Here we are now");
 
         /*
         
@@ -104,7 +97,7 @@ public static class TrackingManager
         //material.mainTexture = texture;
         Debugger.AddText("Apply");  */
 
-        //newVisualTracker.GetComponent<PersonMarker>().SetMarkerVisibility(true);
+        //newVisualTracker.GetComponent<PersonProfile>().SetMarkerVisibility(true);
 
         if (newVisualTracker == null)
             Debugger.AddText("visual tracker is null");
@@ -112,9 +105,6 @@ public static class TrackingManager
         // mice
         // ---------------------------------------------------------------------------------------------- //
 
-        Debugger.AddText("3 " + trackerWhat);
-        Debugger.AddText(trackerWhat.Equals("Pacient").ToString());
-        Debugger.AddText("---- TILL HERE ----");
         // NOT NICE
         try
         {
@@ -123,22 +113,17 @@ public static class TrackingManager
                 case "Pacient":
 
                     trackerCSRT.init(frame, _region);
-                    PersonMarker personMarker = newVisualTracker.GetComponent<PersonMarker>();
-                    if (newVisualTracker.GetComponent<PersonMarker>() != null)
-                        Debugger.AddText("Yup eu tenho isso");
-
-                    Debugger.AddText(trackerCSRT.GetType().ToString());
-                    Debugger.AddText(newVisualTracker.GetComponent<PersonMarker>().GetType().ToString());
+                    PersonProfile personMarker = newVisualTracker.GetComponent<PersonProfile>();
+                    
 
 
-                    //newPerson = new Pacient(newVisualTracker.GetComponent<PersonMarker>(), trackerCSRT);
+
+                    //newPerson = new Pacient(newVisualTracker.GetComponent<PersonProfile>(), trackerCSRT);
                     newPerson = new Pacient(personMarker, trackerCSRT);
-                    Debugger.AddText("I WAS HERE!!!!!");
 
                     
 
                     //newPerson = new Pacient(trackerMOSSE);
-                    Debugger.AddText("I WAS NOT!!!!!");
                     break;
                 default:
                     newPerson = null;
@@ -151,10 +136,8 @@ public static class TrackingManager
         }
 
 
-        Debugger.AddText("4");
         //TrackingManager.trackers.Add(newPerson);
      
-        Debugger.AddText("5");
     }
 
     

@@ -55,7 +55,6 @@ abstract public class Person : BinaryTree.NodeType
 
     public Person(legacy_TrackerCSRT tracker) // FOR Legacy_CSRT
     {
-        Debugger.AddText("Person Created");
         _trackerSetting = new TrackerSetting(tracker);
    
     }
@@ -124,7 +123,6 @@ abstract public class Person : BinaryTree.NodeType
             this.lineColor = lineColor == null ? new Scalar(0, 255, 0) : lineColor;
             this.boundingBox = new Rect2d();
             this.isUpdating = false;
-            Debugger.AddText("Tracker Setting Created");
         }
 
         public void Dispose()
