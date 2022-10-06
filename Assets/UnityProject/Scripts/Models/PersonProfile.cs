@@ -16,29 +16,19 @@ public class PersonProfile : MonoBehaviour
 
     private void Start()
     {
-        /*
-        if (activeEmotionIndex > 0)
-        {
-            emotionsSprites.transform.GetChild(activeEmotionIndex).gameObject.SetActive(false);
-            activeEmotionIndex = -1;
-        }
-        */
         if (emotionsList.categorical.Length != 26)
         {
             Debug.Log("Emotions Listed < 26");
         }
     }
-
+    /*
     private void SetupEmotionsSprites()
     {
         Debugger.AddText("Person Profile Child: " + transform.childCount);
         emotionsSprites = gameObject.transform.GetChild(1).gameObject;
 
-        if (emotionsSprites != null)
-            Debugger.AddText("oK");
-        else
-            Debugger.AddText("Ya, not ok");
     }
+    */
 
     void FixedUpdate()
     {
@@ -53,20 +43,12 @@ public class PersonProfile : MonoBehaviour
 
     public bool UpdateActiveEmotion(string emotionName)
     {
-        Debugger.AddText("1 Update to: " + emotionName);
-        if (emotionsSprites != null)
-            Debugger.AddText("oK");
-        else
-            Debugger.AddText("Ya, not ok");
-        Debugger.AddText(emotionsSprites.gameObject.transform.childCount.ToString());
         for (byte index = 0; index < 26; index++)
         {
-            Debugger.AddText("On: " + index + " | " + emotionsList.categorical[index].name);
             if (emotionsList.categorical[index].name.Equals(emotionName))
             {
                 if (activeEmotionIndex > 0)
                     emotionsSprites.transform.GetChild(activeEmotionIndex).gameObject.SetActive(false);
-
 
                 emotionsSprites.transform.GetChild(index).gameObject.SetActive(true);
 

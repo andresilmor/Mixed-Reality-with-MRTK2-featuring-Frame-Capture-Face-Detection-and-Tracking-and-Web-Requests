@@ -123,40 +123,9 @@ public class AppCommandCenter : MonoBehaviour
             facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, (uint)(faceRect.x2 - faceRect.x1), null, 31, true, detectionName);
 
 
-
-            // ------------------------------------ DANGER ZONE --------------------------------------------- //
-
-
-
-
             MRWorld.pixelPointRatio.distPoint = facePos.y - bodyPos.y;
 
-            /*
-
-            Vector3 test = facePos;
-            test.x = test.x - MRWorld.ConvertPixelDistToPoint((faceRect.x1 + ((faceRect.x2 - faceRect.x1) * 0.5f)) - faceRect.x1);
-
-            GameObject two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), test, Quaternion.identity);
-            two.GetComponent<Renderer>().material.color = Color.red;
-
-             test = facePos;
-            test.x = test.x + MRWorld.ConvertPixelDistToPoint((faceRect.x1 + ((faceRect.x2 - faceRect.x1) * 0.5f)) - faceRect.x1);
-
-             two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), test, Quaternion.identity);
-            two.GetComponent<Renderer>().material.color = Color.red;
-
-             test = facePos;
-            test.y = test.y - MRWorld.ConvertPixelDistToPoint((faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f)) - faceRect.y1);
-
-             two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), test, Quaternion.identity);
-            two.GetComponent<Renderer>().material.color = Color.red;
-
-             test = facePos;
-            test.y = test.y + MRWorld.ConvertPixelDistToPoint((faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f)) - faceRect.y1);
-
-             two = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), test, Quaternion.identity);
-            two.GetComponent<Renderer>().material.color = Color.red;
-            */
+           
 
             if (Vector3.Distance(bodyPos, MRWorld.tempExtrinsic.Position) < Vector3.Distance(facePos, MRWorld.tempExtrinsic.Position))
             {
@@ -170,11 +139,6 @@ public class AppCommandCenter : MonoBehaviour
             {
                 BinaryTree.Node node = pacientsMemory.Find(detection.id);
 
-
-
-
-
-           
                 if (node is null)
                 {
 
@@ -186,13 +150,6 @@ public class AppCommandCenter : MonoBehaviour
                  
                     newPerson.id = detection.id;
 
-
-
-                    
-
-                    // ---------------------------------------------------------------------------------------------- //
-
-                    // FIINE TILL HERE
                     if (newPerson is Pacient)
                         (newPerson as Pacient).UpdateEmotion(detection.emotions.categorical[0].ToString());
 
@@ -202,18 +159,6 @@ public class AppCommandCenter : MonoBehaviour
                     detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
 
                     pacientsMemory.Add(newPerson.id, newPerson);
-
-                    /*
-
-                    Person newPerson = new Pacient(null, null);
-                    newPerson.id = 23;
-                    Debug.Log(pacientsMemory.GetTreeDepth());
-
-                    pacientsMemory.Add(newPerson.id, newPerson);
-                    Debug.Log(pacientsMemory.GetTreeDepth());
-                    Debug.Log(pacientsMemory.Find(23) != null);
-                    Debug.Log((pacientsMemory.Find(23).data as Pacient));
-                    */
 
                     GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
                     three.GetComponent<Renderer>().material.color = Color.red;
