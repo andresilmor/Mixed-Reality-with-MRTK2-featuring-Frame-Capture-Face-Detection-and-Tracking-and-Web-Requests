@@ -7,7 +7,7 @@ using UnityEngine;
 public class Pacient : Person
 {
 
-    private PersonProfile personProfile;
+    public PersonProfile personProfile { get; }
 
     /*
     public Pacient(Tracker tracker) : base(tracker)

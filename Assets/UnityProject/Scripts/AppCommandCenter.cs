@@ -78,8 +78,9 @@ public class AppCommandCenter : MonoBehaviour
         AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
 
-
         apiController.CreateWebSocketConnection(apiController.pacientsDetection, this.MapPredictions);
+    
+
 
         /*
         GameObject newVisualTracker = UnityEngine.Object.Instantiate(personProfile, Vector3.zero, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
@@ -146,7 +147,7 @@ public class AppCommandCenter : MonoBehaviour
                     Person newPerson;
                    
                     TrackingManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newPerson, "Pacient");
-
+                    (newPerson as Pacient).personProfile.gameObject.name = detection.id.ToString();
                  
                     newPerson.id = detection.id;
 
@@ -162,6 +163,8 @@ public class AppCommandCenter : MonoBehaviour
 
                     GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
                     three.GetComponent<Renderer>().material.color = Color.red;
+
+                    Debugger.AddText((newPerson as Pacient).personProfile.gameObject.name);
 
                 }
                 else
