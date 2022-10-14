@@ -811,6 +811,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Emotion Sprites
       objectReference: {fileID: 0}
+    - target: {fileID: 9059164229662461079, guid: 1a575cd9f9174f7459589efbf6b7c9aa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a575cd9f9174f7459589efbf6b7c9aa, type: 3}
 --- !u!1 &190969104

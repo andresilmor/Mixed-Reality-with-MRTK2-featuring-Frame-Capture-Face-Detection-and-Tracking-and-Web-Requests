@@ -63,9 +63,14 @@ public class AppCommandCenter : MonoBehaviour
 
     public PersonProfile personMaker;
 
+#if ENABLE_WINMD_SUPPORT
+        async void Start()
+#else
+    void Start()
+#endif
 
-    async void Start()
     {
+        Debug.Log(SystemInfo.processorCount);
         LoadSavedData();
         SetDebugger();
 

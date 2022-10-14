@@ -5,7 +5,7 @@ using UnityEngine;
 public class PersonProfile : MonoBehaviour
 {
     [SerializeField] EmotionsListScriptableObject emotionsList;
-    [SerializeField] GameObject emotionsSprites = null;
+    [SerializeField] SpriteRenderer emotionSpriteRenderer = null;
     private int activeEmotionIndex = -1;
 
     [SerializeField] GameObject markerRect;
@@ -25,7 +25,7 @@ public class PersonProfile : MonoBehaviour
     private void SetupEmotionsSprites()
     {
         Debugger.AddText("Person Profile Child: " + transform.childCount);
-        emotionsSprites = gameObject.transform.GetChild(1).gameObject;
+        emotionSpriteRenderer = gameObject.transform.GetChild(1).gameObject;
 
     }
     */
@@ -47,10 +47,7 @@ public class PersonProfile : MonoBehaviour
         {
             if (emotionsList.categorical[index].name.Equals(emotionName))
             {
-                if (activeEmotionIndex > 0)
-                    emotionsSprites.transform.GetChild(activeEmotionIndex).gameObject.SetActive(false);
-
-                emotionsSprites.transform.GetChild(index).gameObject.SetActive(true);
+                emotionSpriteRenderer.sprite = emotionsList.categorical[index].sprite;
 
                 activeEmotionIndex = index;
 

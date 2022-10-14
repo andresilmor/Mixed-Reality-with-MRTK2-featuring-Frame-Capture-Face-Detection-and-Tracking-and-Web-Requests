@@ -10,7 +10,8 @@ public class EmotionsListScriptableObject : ScriptableObject
     public struct data
     {
         public string name; 
-        public string description;  
+        public string description;
+        public Sprite sprite;
     }
 
     [SerializeField] data[] _categorical;
