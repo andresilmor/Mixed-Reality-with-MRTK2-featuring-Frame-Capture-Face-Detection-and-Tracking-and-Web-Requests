@@ -4659,10 +4659,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb6e46f3ba404f4db4e519d628f7084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ws: ws://
-  ip: 192.168.1.238
+  graphQlSchema: {fileID: 11400000, guid: 567730e4f11f96e4aa4a790baeaf01b7, type: 2}
+  websocketProtocol: ws://
+  httpProtocol: http://
+  ip: 192.168.1.119
   port: 8000
-  _pacientsDetection: /brain/ws
+  _websocketPath: /ws
+  _graphqlPath: /api
+  _pacientsDetection: /live
 --- !u!4 &1226567736
 Transform:
   m_ObjectHideFlags: 0

@@ -31,20 +31,50 @@ using OpenCVForUnity.UnityUtils;
 using OpenCVForUnity.UnityUtils.Helper;
 using OpenCVForUnity.VideoModule;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
+using BestHTTP.JSON;
+using System.Collections;
+using Newtonsoft.Json.Linq;
+using BestHTTP;
+using GraphQlClient.Core;
+using UnityEngine.Networking;
+using System.Text;
+using static BestHTTP.SecureProtocol.Org.BouncyCastle.Crypto.Digests.SkeinEngine;
 
 public class APIController : MonoBehaviour
 {
+    [SerializeField] GraphQLShemaScriptableObject graphQlSchema;
+
     [Header("Protocols:")]
-    [SerializeField] string ws = "ws://";
+    [SerializeField] string websocketProtocol = "ws://";
+    [SerializeField] string httpProtocol = "http://";
 
 
     [Header("API Address:")]
-    //string address = "ws://192.168.1.238:8000";
+    //string address = "websocketProtocol://192.168.1.238:8000";
     [SerializeField] string ip = "192.168.1.50";
     [SerializeField] string port = "8000";
 
-    [Header("API Paths")]
-    [SerializeField]  private string _pacientsDetection = "/ws";
+    [Header("Root Paths:")]
+    [SerializeField] private string _websocketPath = "/ws";
+    public string websocketPath
+    {
+        get
+        {
+            return _websocketPath;
+        }
+    }
+    [SerializeField] private string _graphqlPath = "/api";
+    public string graphqlPath
+    {
+        get
+        {
+            return _graphqlPath;
+        }
+    }
+
+
+    [Header("WebSockets Paths:")]
+    [SerializeField]  private string _pacientsDetection = "/live";
     public string pacientsDetection
     {
         get
@@ -56,11 +86,11 @@ public class APIController : MonoBehaviour
 
 
 
-
     private List<WebSocket> wsConnections;
     private List<string> wsConnectionsPath;
 
     private WebSocket pacientMapping;
+
 
 
 
@@ -80,6 +110,51 @@ public class APIController : MonoBehaviour
             }
         }
     }
+
+
+    public struct Field
+    {
+        public string name;
+        public FieldParams[] parameters;
+        public Field[] subfield;
+
+        public Field(string name, FieldParams[] parameters = null)
+        {
+            this.name = name;
+            this.parameters = parameters;
+            this.subfield = null;
+        }
+
+        public Field(string name, Field[] subfield)
+        {
+            this.name = name;
+            this.parameters = null;
+            this.subfield = subfield;
+        }
+
+        public Field(string name, FieldParams[] parameters, Field[] subfield)
+        {
+            this.name = name;
+            this.parameters = parameters;
+            this.subfield = subfield;
+        }
+
+
+    }
+
+    public struct FieldParams
+    {
+        public string name;
+        public string value;
+
+        public FieldParams(string name, string value)
+        {
+            this.name = name;
+            this.value = value;
+        }
+    }
+
+
     private void Awake()
     {
         Instance = this;
@@ -90,15 +165,14 @@ public class APIController : MonoBehaviour
 
     void Start()
     {
-        wsConnections = new List<WebSocket>(); 
+        wsConnections = new List<WebSocket>();
+
 
     }
 
     public WebSocket GetWebSocket(string path)
     {
         
-
-
         Debugger.AddText("Get WebSocket");
         if (path.Equals(this.pacientsDetection))
         {
@@ -123,9 +197,9 @@ public class APIController : MonoBehaviour
 
     public void CreateWebSocketConnection(string path, Action<string> callback)
     {
-        Debugger.AddText("Address: " + (ws + ip + ":" + port + path));
+        Debugger.AddText("Address: " + (websocketProtocol + ip + ":" + port + websocketPath + path));
         try { 
-            WebSocket newConnection = new WebSocket(new Uri(ws + ip + ":" + port + path));
+            WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + ":" + port + websocketPath + path));
        
             newConnection.OnMessage += (WebSocket webSocket, string message) =>
             {
@@ -177,13 +251,76 @@ public class APIController : MonoBehaviour
         
 
     }
-    
+
+
+    async public void ExecuteQuery(Field route, params Field[] args)
+    {
+        string query = "query {\r\n";
+        query += (new string('\t', 1) + route.name);
+        if (route.parameters != null)
+        {
+            query += " (";
+            foreach (FieldParams parameter in route.parameters)
+                query += (parameter.name + ": " + parameter.value);
+
+            query += ") {\r\n";
+
+        }
+
+        MountQuery(args, ref query, 2);
+        query += (new string('\t', 1) + "}\r\n");
+        query += "}";
+
+        string jsonData = JsonConvert.SerializeObject(new {query});
+        byte[] postData = Encoding.ASCII.GetBytes(jsonData);
+
+        HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, OnRequestFinished);
+
+        request.SetHeader("Content-Type", "application/json; charset=UTF-8");
+
+        request.RawData = Encoding.UTF8.GetBytes(jsonData);
+        request.Send();
+      
+    }
+
+    private static void MountQuery(Field[] args, ref string query, byte identationLevel = 2)
+    {
+        foreach (Field field in args)
+        {
+            query += (new string('\t', identationLevel) + field.name);
+            if (field.parameters != null)
+            {
+                query += " (";
+                for (byte index = 0; index < field.parameters.Length; index++)
+                    query += (field.parameters[index].name + ": " + field.parameters[index].value + (index >= field.parameters.Length ? ", " : ""));
+
+                query += ") {";
+            }
+
+            if (field.subfield != null)
+            {
+                query += " {\r\n";
+                MountQuery(field.subfield, ref query, identationLevel += 1);
+
+                query += (new string('\t', identationLevel - 1) + "}\r\n");
+            }
+            else
+                query += "\r\n";
+
+        }
+    }
+
+    void OnRequestFinished(HTTPRequest request, HTTPResponse response)
+    {
+        Debug.Log("Request Finished! Text received: " + response.DataAsText);
+    }
+
 
     void OnDestroy()
     {
         foreach (WebSocket ws in wsConnections)
         {
-            //this.ws.Close();
+            ws.Close();
         }
 
 

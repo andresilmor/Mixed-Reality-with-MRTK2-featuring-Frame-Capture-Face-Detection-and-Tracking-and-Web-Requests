@@ -79,11 +79,24 @@ public class AppCommandCenter : MonoBehaviour
         apiController = FindObjectOfType<APIController>();
         pacientsMemory = new BinaryTree();
 
+        APIController.Field route = new APIController.Field(
+            "medicationToTake", new APIController.FieldParams[] { 
+                new APIController.FieldParams("id", "\"923fe860496a11eda8fd00c0caaaf470\""),
+            });
+
+        apiController.ExecuteQuery(route, new APIController.Field[] { 
+            new APIController.Field("hour"),
+            new APIController.Field("medication", new APIController.Field[] { 
+                new APIController.Field("name")
+            })
+        });
+
+
 #if ENABLE_WINMD_SUPPORT
-        AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
+        //AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
 
-        apiController.CreateWebSocketConnection(apiController.pacientsDetection, this.MapPredictions);
+        //apiController.CreateWebSocketConnection(apiController.pacientsDetection, this.MapPredictions);
     
 
 
@@ -98,7 +111,6 @@ public class AppCommandCenter : MonoBehaviour
 
     private async void MapPredictions(string predictions)
     {
-
 
 
         var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
