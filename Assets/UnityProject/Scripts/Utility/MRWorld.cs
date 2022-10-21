@@ -18,7 +18,7 @@ public static class MRWorld
     public static CameraExtrinsic tempExtrinsic = null;
     public static CameraIntrinsic tempIntrinsic = null;
 
-    public static PixelPointRatio pixelPointRatio = new PixelPointRatio();
+    //blic static PixelPointRatio pixelPointRatio = new PixelPointRatio();
 
 #if ENABLE_WINMD_SUPPORT
     private static SpatialCoordinateSystem _worldOrigin;
@@ -183,7 +183,7 @@ public static class MRWorld
 
     public static float ConvertPixelDistToPoint(float pixelDist)
     {
-        return ((pixelDist * pixelPointRatio.distPoint) / pixelPointRatio.distPixel) * 0.25f;
+        return 0; ///elDist * pixelPointRatio.distPoint) / pixelPointRatio.distPixel) * 0.25f;
     }
 
 
@@ -196,7 +196,7 @@ public static class MRWorld
 
         Vector3 cameraPosition = MRWorld.tempExtrinsic.Position;
         Vector3 position = Vector3.zero;
-
+        Debugger.AddText("yo");
         try
         {
 #if ENABLE_WINMD_SUPPORT
@@ -212,8 +212,9 @@ public static class MRWorld
             }
         }
         layForward = MRWorld.GetLayForward(unprojectionOffset, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
+        Debugger.AddText("yo");
 
-            return MRWorld.GetPosition(cameraPosition, layForward, layer);
+        return MRWorld.GetPosition(cameraPosition, layForward, layer);
 
 
 
@@ -228,7 +229,7 @@ public static class MRWorld
 
         //Second method test FOLLOWING THE METHOD FROM FACE TRACKIN UNITY IT MAY BE NEEDED IN THE FUTURE, SO LETS KEEP ....  <======================
 
-
+      
 
         System.Numerics.Matrix4x4? cameraToWorld = MRWorld.tempExtrinsic.cameraToWorld;
 

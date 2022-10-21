@@ -1,5 +1,6 @@
 using BestHTTP.WebSocket;
 using Microsoft.MixedReality.Toolkit.UI;
+using Microsoft.MixedReality.Toolkit.Utilities;
 using Newtonsoft.Json;
 using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.TrackingModule;
@@ -79,25 +80,31 @@ public class AppCommandCenter : MonoBehaviour
         apiController = FindObjectOfType<APIController>();
         pacientsMemory = new BinaryTree();
 
-        APIController.Field route = new APIController.Field(
+        APIController.Field type = new APIController.Field(
             "medicationToTake", new APIController.FieldParams[] { 
                 new APIController.FieldParams("id", "\"923fe860496a11eda8fd00c0caaaf470\""),
             });
 
-        apiController.ExecuteQuery(route, new APIController.Field[] { 
-            new APIController.Field("hour"),
-            new APIController.Field("medication", new APIController.Field[] { 
-                new APIController.Field("name")
+
+        apiController.ExecuteQuery("3466fab4975481651940ed328aa990e4", type,
+            
+            (string message) => { Debug.Log("Request Finished! Text received: " + message); }
+            
+            ,
+            new APIController.Field[] { 
+                new APIController.Field("hour"),
+                new APIController.Field("medication", new APIController.Field[] { 
+                    new APIController.Field("name")
             })
         });
 
 
 #if ENABLE_WINMD_SUPPORT
-        //AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
+        AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
 
-        //apiController.CreateWebSocketConnection(apiController.pacientsDetection, this.MapPredictions);
-    
+        apiController.CreateWebSocketConnection(apiController.pacientsDetection, MapPredictions);
+       
 
 
         /*
@@ -111,23 +118,26 @@ public class AppCommandCenter : MonoBehaviour
 
     private async void MapPredictions(string predictions)
     {
-
-
-        var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
+        
+        try { 
+            var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
                 JsonConvert.DeserializeObject(predictions).ToString());
+            Debugger.AddText(results.ToString());
 
-
+      
+        
+        /*
         int y1 = results[0].list[0].faceRect.y1;
         int y2 = results[0].list[0].faceRect.y2;
         int bodyY = results[0].list[0].bodyCenter.y;
         MRWorld.pixelPointRatio.distPixel = bodyY - (y1 + ((y2 - y1) * 0.5f));
-
+        */
         Vector3 facePos = Vector3.zero;
         Vector3 bodyPos = Vector3.zero;
 
+        Debugger.AddText(">>>>>");
 
-
-        Debugger.SetFieldView();
+        
 
         foreach (Detection detection in results[0].list)
         {
@@ -141,7 +151,7 @@ public class AppCommandCenter : MonoBehaviour
             facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, (uint)(faceRect.x2 - faceRect.x1), null, 31, true, detectionName);
 
 
-            MRWorld.pixelPointRatio.distPoint = facePos.y - bodyPos.y;
+            //MRWorld.pixelPointRatio.distPoint = facePos.y - bodyPos.y;
 
            
 
@@ -202,6 +212,12 @@ public class AppCommandCenter : MonoBehaviour
             catch (Exception ex) {
                 Debugger.AddText(ex.Message);
             }
+
+        }
+        }
+        catch (Exception error)
+        {
+            Debugger.AddText("Error: " + error.Message.ToString());
 
         }
 

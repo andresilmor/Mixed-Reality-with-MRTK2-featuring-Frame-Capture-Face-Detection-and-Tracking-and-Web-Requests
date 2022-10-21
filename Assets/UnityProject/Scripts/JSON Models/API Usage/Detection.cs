@@ -5,12 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public class Detection
 {
-    public int id;
+    public string id;
     public BodyCenter bodyCenter;
     public FaceRect faceRect;
     public Emotions emotions;
 
-    public Detection(int id, BodyCenter bodyCenter, FaceRect faceRect, Emotions emotions)
+    public Detection(string id, BodyCenter bodyCenter, FaceRect faceRect, Emotions emotions)
     {
         this.id = id;
         this.bodyCenter = bodyCenter;

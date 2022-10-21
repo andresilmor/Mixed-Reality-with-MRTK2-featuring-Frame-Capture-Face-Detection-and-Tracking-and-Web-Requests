@@ -17,12 +17,12 @@ abstract public class Person : BinaryTree.NodeType
         }
     }
 
-    private int _id = -1;
-    public int id
+    private string _id = "";
+    public string id
     {
         get { return _id; }
         set {
-            if (id < 0)
+            if (id.Length <= 0)
                 _id = value; 
         }    
     }

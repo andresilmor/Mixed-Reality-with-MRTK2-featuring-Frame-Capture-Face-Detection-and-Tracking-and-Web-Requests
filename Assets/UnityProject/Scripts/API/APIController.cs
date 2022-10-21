@@ -72,6 +72,11 @@ public class APIController : MonoBehaviour
         }
     }
 
+    private string READ = "3466fab4975481651940ed328aa990e4";
+    private string UPDATE = "15a8022d0ed9cd9c2a2e756822703eb4";
+    private string CREATE = "294ce20cdefa29be3be0735cb62e715d";
+    private string DELETE = "32f68a60cef40faedbc6af20298c1a1e";
+
 
     [Header("WebSockets Paths:")]
     [SerializeField]  private string _pacientsDetection = "/live";
@@ -82,8 +87,6 @@ public class APIController : MonoBehaviour
             return _pacientsDetection;
         }
     }
-
-
 
 
     private List<WebSocket> wsConnections;
@@ -112,6 +115,7 @@ public class APIController : MonoBehaviour
     }
 
 
+    // For GraphQL Schema
     public struct Field
     {
         public string name;
@@ -153,6 +157,8 @@ public class APIController : MonoBehaviour
             this.value = value;
         }
     }
+
+
 
 
     private void Awake()
@@ -206,8 +212,7 @@ public class APIController : MonoBehaviour
                 Debugger.AddText("Message Received");
                 if(message.Length > 6)
                     callback?.Invoke(message);
-                else
-                    Debugger.AddText("Message Size: " + message.Length);
+           
 
             };
 
@@ -253,14 +258,14 @@ public class APIController : MonoBehaviour
     }
 
 
-    async public void ExecuteQuery(Field route, params Field[] args)
+    public void ExecuteQuery(string operation, Field type,  Action<string> callback, params Field[] args)
     {
         string query = "query {\r\n";
-        query += (new string('\t', 1) + route.name);
-        if (route.parameters != null)
+        query += (new string('\t', 1) + type.name);
+        if (type.parameters != null)
         {
             query += " (";
-            foreach (FieldParams parameter in route.parameters)
+            foreach (FieldParams parameter in type.parameters)
                 query += (parameter.name + ": " + parameter.value);
 
             query += ") {\r\n";
@@ -274,10 +279,13 @@ public class APIController : MonoBehaviour
         string jsonData = JsonConvert.SerializeObject(new {query});
         byte[] postData = Encoding.ASCII.GetBytes(jsonData);
 
-        HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, OnRequestFinished);
+        HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => {
+            callback?.Invoke(response.DataAsText);
+        });
 
         request.SetHeader("Content-Type", "application/json; charset=UTF-8");
-
+        request.SetHeader("Hash", READ);
+        
         request.RawData = Encoding.UTF8.GetBytes(jsonData);
         request.Send();
       
@@ -310,10 +318,7 @@ public class APIController : MonoBehaviour
         }
     }
 
-    void OnRequestFinished(HTTPRequest request, HTTPResponse response)
-    {
-        Debug.Log("Request Finished! Text received: " + response.DataAsText);
-    }
+    
 
 
     void OnDestroy()
