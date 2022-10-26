@@ -35,14 +35,12 @@ using BestHTTP.JSON;
 using System.Collections;
 using Newtonsoft.Json.Linq;
 using BestHTTP;
-using GraphQlClient.Core;
 using UnityEngine.Networking;
 using System.Text;
 using static BestHTTP.SecureProtocol.Org.BouncyCastle.Crypto.Digests.SkeinEngine;
 
 public class APIController : MonoBehaviour
 {
-    [SerializeField] GraphQLShemaScriptableObject graphQlSchema;
 
     [Header("Protocols:")]
     [SerializeField] string websocketProtocol = "ws://";

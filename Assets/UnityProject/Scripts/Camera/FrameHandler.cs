@@ -98,7 +98,7 @@ public class FrameHandler
 	{
 		MediaCapture mediaCapture = null;
 		MediaFrameReader mediaFrameReader = null;
-
+		Debugger.AddText("Frame Handler");
 		MediaFrameSourceGroup selectedGroup = null;
 		MediaFrameSourceInfo selectedSourceInfo = null;
 

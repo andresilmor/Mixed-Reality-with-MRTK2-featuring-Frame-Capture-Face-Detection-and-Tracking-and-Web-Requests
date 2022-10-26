@@ -2,6 +2,7 @@ using BestHTTP.WebSocket;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.TrackingModule;
 using System;
@@ -71,41 +72,55 @@ public class AppCommandCenter : MonoBehaviour
 #endif
 
     {
+        SetDebugger();
+        Debugger.AddText("1");
         Debug.Log(SystemInfo.processorCount);
         LoadSavedData();
-        SetDebugger();
-
-
-
+        Debugger.AddText("2");
         apiController = FindObjectOfType<APIController>();
         pacientsMemory = new BinaryTree();
-
-        APIController.Field type = new APIController.Field(
+        Debugger.AddText("3"); /*
+        APIController.Field queryOperation = new APIController.Field(
             "medicationToTake", new APIController.FieldParams[] { 
                 new APIController.FieldParams("id", "\"923fe860496a11eda8fd00c0caaaf470\""),
             });
 
+        Debugger.AddText("4");
+       
+        apiController.ExecuteQuery("3466fab4975481651940ed328aa990e4", queryOperation,
+            ( message) => {
+                Debug.Log(message);
+                try
+                {
+                    dynamic response = JObject.Parse(@message);
+                    Debug.Log(JObject.Parse(@message)["data"]["medicationToTake"][0]["timeMeasure"]);
 
-        apiController.ExecuteQuery("3466fab4975481651940ed328aa990e4", type,
-            
-            (string message) => { Debug.Log("Request Finished! Text received: " + message); }
-            
-            ,
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
+                Debug.Log("yo");
+            },
             new APIController.Field[] { 
-                new APIController.Field("hour"),
+                new APIController.Field("timeMeasure")
+                /*,
                 new APIController.Field("medication", new APIController.Field[] { 
                     new APIController.Field("name")
             })
         });
 
+        */
+        Debugger.AddText("5");
 
 #if ENABLE_WINMD_SUPPORT
         AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
+        Debugger.AddText("6");
 #endif
 
         apiController.CreateWebSocketConnection(apiController.pacientsDetection, MapPredictions);
-       
 
+        Debugger.AddText("7");
 
         /*
         GameObject newVisualTracker = UnityEngine.Object.Instantiate(personProfile, Vector3.zero, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
@@ -202,7 +217,7 @@ public class AppCommandCenter : MonoBehaviour
                     if (node.data is Pacient)
                     {
                         (node.data as Pacient).UpdateEmotion(detection.emotions.categorical[0]);
-                        //(node.data as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
+                        //(node.GraphQLData as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
 
                     }
                     
