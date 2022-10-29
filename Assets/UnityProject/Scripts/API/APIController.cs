@@ -256,7 +256,7 @@ public class APIController : MonoBehaviour
     }
 
 
-    public void ExecuteQuery(string operation, Field type,  Action<string> callback, params Field[] args)
+    async public void ExecuteQuery(string operation, Field type,  Action<string> callback, params Field[] args)
     {
         string query = "query {\r\n";
         query += (new string('\t', 1) + type.name);
@@ -282,7 +282,7 @@ public class APIController : MonoBehaviour
         });
 
         request.SetHeader("Content-Type", "application/json; charset=UTF-8");
-        request.SetHeader("Hash", READ);
+        request.SetHeader("Operation", operation);
         
         request.RawData = Encoding.UTF8.GetBytes(jsonData);
         request.Send();
