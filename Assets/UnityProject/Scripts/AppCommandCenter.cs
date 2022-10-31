@@ -27,9 +27,9 @@ public class AppCommandCenter : MonoBehaviour
     [SerializeField] GameObject sphereForTest;
     [SerializeField] GameObject lineForTest;
     [SerializeField] GameObject detectionName;
+    [SerializeField] GameObject general;
 
     // Controllers
-    APIController apiController;
 
 
     // Attr's for the Machine Learning and detections
@@ -63,7 +63,6 @@ public class AppCommandCenter : MonoBehaviour
         }
     }
 
-    public PersonProfile personMaker;
 
 #if ENABLE_WINMD_SUPPORT
     async void Start()
@@ -71,24 +70,27 @@ public class AppCommandCenter : MonoBehaviour
     void Start()
 #endif
     {
+        
         SetDebugger();
         Debug.Log(SystemInfo.processorCount);
         LoadSavedData();
-        apiController = FindObjectOfType<APIController>();
         pacientsMemory = new BinaryTree();
-       
+
+        BestHTTP.HTTPManager.Setup();
+
+        /*
         APIController.Field queryOperation = new APIController.Field(
             "medicationToTake", new APIController.FieldParams[] { 
                 new APIController.FieldParams("id", "\"3c764a20-629c-4be9-b19b-5f87bddd60d5\""),
             });
 
-        apiController.ExecuteQuery("Read", queryOperation,
+        await APIController.ExecuteQuery("Read", queryOperation,
             (message) => {
                 Debug.Log(message);
                 try
                 {
                     dynamic response = JObject.Parse(@message);
-                    Debug.Log(JObject.Parse(@message)["data"]["medicationToTake"][0]["toTake"]);
+                    Debug.Log(JObject.Parse(@message)["data"]["medicationToTake"]);
 
                 }
                 catch (Exception e)
@@ -105,21 +107,20 @@ public class AppCommandCenter : MonoBehaviour
                     })
          
         });
-
-        
+        */
 
 #if ENABLE_WINMD_SUPPORT
         AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
 
-        apiController.CreateWebSocketConnection(apiController.pacientsDetection, MapPredictions);
+        APIController.CreateWebSocketConnection(APIController.pacientsDetection, MapPredictions);
 
     }
 
 
     private async void MapPredictions(string predictions)
     {
-        
+        Debugger.AddText("HERE");
         try { 
             var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
                 JsonConvert.DeserializeObject(predictions).ToString());
@@ -153,11 +154,11 @@ public class AppCommandCenter : MonoBehaviour
 
                     if (node is null)
                     {
-
+                        Debugger.AddText("NEW ON TREE");
                         Person newPerson;
                    
                         TrackingManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newPerson, "Pacient");
-                        (newPerson as Pacient).personProfile.gameObject.name = detection.id.ToString();
+                        (newPerson as Pacient).pacientMark.gameObject.name = detection.id.ToString();
                  
                         newPerson.id = detection.id;
 
@@ -174,13 +175,13 @@ public class AppCommandCenter : MonoBehaviour
                         GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
                         three.GetComponent<Renderer>().material.color = Color.red;
 
-                        Debugger.AddText((newPerson as Pacient).personProfile.gameObject.name);
+                        Debugger.AddText((newPerson as Pacient).pacientMark.gameObject.name);
 
                     }
                     else
                     {
-             
-                    
+                        Debugger.AddText("ALREADY EXISTS ON TREE");
+
                         if (node.data is Pacient)
                         {
                             (node.data as Pacient).UpdateEmotion(detection.emotions.categorical[0]);
@@ -226,7 +227,7 @@ public class AppCommandCenter : MonoBehaviour
 
     public async void DetectPacients()
     {
-
+        Debugger.SetFieldView();
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = AppCommandCenter.frameHandler.LastFrame;
         if (lastFrame.mediaFrameReference != null)
@@ -253,7 +254,7 @@ public class AppCommandCenter : MonoBehaviour
                         MRWorld.UpdateExtInt(lastFrame.extrinsic, lastFrame.intrinsic);
                         
                         FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)));
-                        WebSocket wsTemp = apiController.GetWebSocket(apiController.pacientsDetection);
+                        WebSocket wsTemp = APIController.GetWebSocket(APIController.pacientsDetection);
                         if (wsTemp.IsOpen)
                         {
                             Debugger.AddText("Is Open");

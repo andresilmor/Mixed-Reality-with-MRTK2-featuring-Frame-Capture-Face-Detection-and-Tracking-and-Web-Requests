@@ -26,6 +26,9 @@ public class BinaryTree
 
     public int HexStringCompare(string value1, string value2)
     {
+        value1 = value1.Replace("-", string.Empty);
+        value2 = value2.Replace("-", string.Empty);
+
         string InvalidHexExp = @"[^\dabcdef]";
         string HexPaddingExp = @"^(0x)?0*";
         //Remove whitespace, "0x" prefix if present, and leading zeros.  

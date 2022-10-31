@@ -7,7 +7,7 @@ using UnityEngine;
 public class Pacient : Person
 {
 
-    public PersonProfile personProfile { get; }
+    public PacientMark pacientMark { get; }
 
     /*
     public Pacient(Tracker tracker) : base(tracker)
@@ -19,18 +19,20 @@ public class Pacient : Person
     }
     */
 
-  
-
-
-    public Pacient(PersonProfile personMarker, legacy_TrackerCSRT tracker) : base(tracker)
+    public Pacient(PacientMark personMarker, legacy_TrackerCSRT tracker) : base(tracker)
     {
-        this.personProfile = personMarker;
+        this.pacientMark = personMarker;
+
+    }
+
+    public Pacient() : base(null)
+    {
 
     }
 
     public void UpdateEmotion(string emotion)
     {
-        personProfile.UpdateActiveEmotion(emotion);
+        pacientMark.UpdateActiveEmotion(emotion);
     }
 
 

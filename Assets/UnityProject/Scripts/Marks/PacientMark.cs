@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PersonProfile : MonoBehaviour
+public class PacientMark : MonoBehaviour
 {
     [SerializeField] EmotionsListScriptableObject emotionsList;
     [SerializeField] SpriteRenderer emotionSpriteRenderer = null;
@@ -10,7 +10,7 @@ public class PersonProfile : MonoBehaviour
 
     [SerializeField] GameObject markerRect;
     
-    public PersonProfile()
+    public PacientMark()
     {
     }
 
@@ -58,8 +58,6 @@ public class PersonProfile : MonoBehaviour
 
         return false;
 
-
-
-
     }
+
 }

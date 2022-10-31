@@ -39,30 +39,30 @@ using UnityEngine.Networking;
 using System.Text;
 using static BestHTTP.SecureProtocol.Org.BouncyCastle.Crypto.Digests.SkeinEngine;
 
-public class APIController : MonoBehaviour
+public static class APIController 
 {
 
     [Header("Protocols:")]
-    [SerializeField] string websocketProtocol = "ws://";
-    [SerializeField] string httpProtocol = "http://";
+    [SerializeField] static string websocketProtocol = "ws://";
+    [SerializeField] static string httpProtocol = "http://";
 
 
     [Header("API Address:")]
     //string address = "websocketProtocol://192.168.1.238:8000";
-    [SerializeField] string ip = "192.168.1.50";
-    [SerializeField] string port = "8000";
+    [SerializeField] static string ip = "192.168.1.119";
+    [SerializeField] static string port = "8000";
 
     [Header("Root Paths:")]
-    [SerializeField] private string _websocketPath = "/ws";
-    public string websocketPath
+    [SerializeField] private static string _websocketPath = "/ws";
+    public static string websocketPath
     {
         get
         {
             return _websocketPath;
         }
     }
-    [SerializeField] private string _graphqlPath = "/api";
-    public string graphqlPath
+    [SerializeField] private static string _graphqlPath = "/api";
+    public static string graphqlPath
     {
         get
         {
@@ -70,15 +70,15 @@ public class APIController : MonoBehaviour
         }
     }
 
-    private string READ = "3466fab4975481651940ed328aa990e4";
-    private string UPDATE = "15a8022d0ed9cd9c2a2e756822703eb4";
-    private string CREATE = "294ce20cdefa29be3be0735cb62e715d";
-    private string DELETE = "32f68a60cef40faedbc6af20298c1a1e";
+    private static string READ = "3466fab4975481651940ed328aa990e4";
+    private static string UPDATE = "15a8022d0ed9cd9c2a2e756822703eb4";
+    private static string CREATE = "294ce20cdefa29be3be0735cb62e715d";
+    private static string DELETE = "32f68a60cef40faedbc6af20298c1a1e";
 
 
     [Header("WebSockets Paths:")]
-    [SerializeField]  private string _pacientsDetection = "/live";
-    public string pacientsDetection
+    [SerializeField]  private static string _pacientsDetection = "/live";
+    public static string pacientsDetection
     {
         get
         {
@@ -87,15 +87,15 @@ public class APIController : MonoBehaviour
     }
 
 
-    private List<WebSocket> wsConnections;
-    private List<string> wsConnectionsPath;
+    private static List<WebSocket> wsConnections;
+    private static List<string> wsConnectionsPath;
 
-    private WebSocket pacientMapping;
-
-
+    private static WebSocket pacientMapping;
 
 
-    private static APIController _instance;
+
+    /*
+    private static APIController _instance = this;
     public static APIController Instance
     {
         get { return _instance; }
@@ -112,6 +112,7 @@ public class APIController : MonoBehaviour
         }
     }
 
+    */
 
     // For GraphQL Schema
     public struct Field
@@ -158,27 +159,11 @@ public class APIController : MonoBehaviour
 
 
 
-
-    private void Awake()
-    {
-        Instance = this;
-
-    }
-
-
-
-    void Start()
-    {
-        wsConnections = new List<WebSocket>();
-
-
-    }
-
-    public WebSocket GetWebSocket(string path)
+    public static WebSocket GetWebSocket(string path)
     {
         
         Debugger.AddText("Get WebSocket");
-        if (path.Equals(this.pacientsDetection))
+        if (path.Equals(pacientsDetection))
         {
             Debugger.AddText("Connection State: " + pacientMapping.State);
             Debugger.AddText("WebSocket Getted Var");
@@ -199,7 +184,7 @@ public class APIController : MonoBehaviour
     }
 
 
-    public void CreateWebSocketConnection(string path, Action<string> callback)
+    public static void CreateWebSocketConnection(string path, Action<string> callback)
     {
         Debugger.AddText("Address: " + (websocketProtocol + ip + ":" + port + websocketPath + path));
         try { 
@@ -256,37 +241,38 @@ public class APIController : MonoBehaviour
     }
 
 
-    async public void ExecuteQuery(string operation, Field type,  Action<string> callback, params Field[] args)
+    public static async Task ExecuteQuery(string operation, Field type,  Action<string> callback, params Field[] args)
     {
-        string query = "query {\r\n";
-        query += (new string('\t', 1) + type.name);
-        if (type.parameters != null)
-        {
-            query += " (";
-            foreach (FieldParams parameter in type.parameters)
-                query += (parameter.name + ": " + parameter.value);
+        await Task.Run(() => { 
+            string query = "query {\r\n";
+            query += (new string('\t', 1) + type.name);
+            if (type.parameters != null)
+            {
+                query += " (";
+                foreach (FieldParams parameter in type.parameters)
+                    query += (parameter.name + ": " + parameter.value);
 
-            query += ") {\r\n";
+                query += ") {\r\n";
 
-        }
+            }
 
-        MountQuery(args, ref query, 2);
-        query += (new string('\t', 1) + "}\r\n");
-        query += "}";
+            MountQuery(args, ref query, 2);
+            query += (new string('\t', 1) + "}\r\n");
+            query += "}";
 
-        string jsonData = JsonConvert.SerializeObject(new {query});
-        byte[] postData = Encoding.ASCII.GetBytes(jsonData);
+            string jsonData = JsonConvert.SerializeObject(new {query});
+            byte[] postData = Encoding.ASCII.GetBytes(jsonData);
 
-        HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => {
-            callback?.Invoke(response.DataAsText);
-        });
+            HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => {
+                callback?.Invoke(response.DataAsText);
+            });
 
-        request.SetHeader("Content-Type", "application/json; charset=UTF-8");
-        request.SetHeader("Operation", operation);
+            request.SetHeader("Content-Type", "application/json; charset=UTF-8");
+            request.SetHeader("Operation", operation);
         
-        request.RawData = Encoding.UTF8.GetBytes(jsonData);
-        request.Send();
-      
+            request.RawData = Encoding.UTF8.GetBytes(jsonData);
+            request.Send();
+        });
     }
 
     private static void MountQuery(Field[] args, ref string query, byte identationLevel = 2)
@@ -316,10 +302,10 @@ public class APIController : MonoBehaviour
         }
     }
 
-    
 
 
-    void OnDestroy()
+
+    static void OnDestroy()
     {
         foreach (WebSocket ws in wsConnections)
         {

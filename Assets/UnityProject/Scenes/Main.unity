@@ -1676,7 +1676,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1226567735}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: APIController, Assembly-CSharp
         m_MethodName: ObjectPrediction
         m_Mode: 1
@@ -3492,7 +3492,7 @@ MonoBehaviour:
   sphereForTest: {fileID: 7747253093464675002, guid: 256969b470d89c441bd75fb2c6b0a3ba, type: 3}
   lineForTest: {fileID: 7438048857545862999, guid: 7c129ff77fddcb3458036b064d83fe08, type: 3}
   detectionName: {fileID: 7846235075062323456, guid: 5c5fcddbea03ecb439f9ce040d8c16ae, type: 3}
-  personMaker: {fileID: 0}
+  general: {fileID: 0}
 --- !u!4 &794339292
 Transform:
   m_ObjectHideFlags: 0
@@ -4639,7 +4639,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1226567736}
-  - component: {fileID: 1226567735}
   m_Layer: 0
   m_Name: Controllers
   m_TagString: Untagged
@@ -4647,26 +4646,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1226567735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1226567734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbb6e46f3ba404f4db4e519d628f7084, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  graphQlSchema: {fileID: 11400000, guid: 567730e4f11f96e4aa4a790baeaf01b7, type: 2}
-  websocketProtocol: ws://
-  httpProtocol: http://
-  ip: 192.168.1.119
-  port: 8000
-  _websocketPath: /ws
-  _graphqlPath: /api
-  _pacientsDetection: /live
 --- !u!4 &1226567736
 Transform:
   m_ObjectHideFlags: 0

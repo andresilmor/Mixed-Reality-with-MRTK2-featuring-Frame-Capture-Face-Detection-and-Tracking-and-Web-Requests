@@ -97,7 +97,7 @@ public static class TrackingManager
         //material.mainTexture = texture;
         Debugger.AddText("Apply");  */
 
-        //newVisualTracker.GetComponent<PersonProfile>().SetMarkerVisibility(true);
+        //newVisualTracker.GetComponent<PacientMark>().SetMarkerVisibility(true);
 
         if (newVisualTracker == null)
             Debugger.AddText("visual tracker is null");
@@ -113,12 +113,12 @@ public static class TrackingManager
                 case "Pacient":
 
                     trackerCSRT.init(frame, _region);
-                    PersonProfile personMarker = newVisualTracker.GetComponent<PersonProfile>();
+                    PacientMark personMarker = newVisualTracker.GetComponent<PacientMark>();
                     
 
 
 
-                    //newPerson = new Pacient(newVisualTracker.GetComponent<PersonProfile>(), trackerCSRT);
+                    //newPerson = new Pacient(newVisualTracker.GetComponent<PacientMark>(), trackerCSRT);
                     newPerson = new Pacient(personMarker, trackerCSRT);
 
                     
