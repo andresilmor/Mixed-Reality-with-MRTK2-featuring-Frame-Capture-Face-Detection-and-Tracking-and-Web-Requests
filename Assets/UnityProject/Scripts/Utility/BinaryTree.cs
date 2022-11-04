@@ -18,11 +18,10 @@ public class BinaryTree
         public Node RightNode { get; set; }
         public string index { get; set; }
 
-        public NodeType data;
+        public object data;
 
     }
 
-    abstract public class NodeType { }
 
     public int HexStringCompare(string value1, string value2)
     {
@@ -55,7 +54,7 @@ public class BinaryTree
         return Result;
     }
 
-    public bool Add(string value, NodeType data)
+    public bool Add(string value, object data)
     {
         Node before = null, after = this.Root;
         while (after != null)

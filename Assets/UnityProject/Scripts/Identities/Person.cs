@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
-abstract public class Person : BinaryTree.NodeType
+abstract public class Person
 {
     TrackerSetting _trackerSetting;
     public TrackerSetting trackerSetting
