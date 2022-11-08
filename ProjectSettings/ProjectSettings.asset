@@ -3,7 +3,7 @@
 --- !u!129 &1
 PlayerSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 22
+  serializedVersion: 23
   productGUID: 23272b10fe338cf4c80c9a096c0e2954
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
@@ -591,6 +591,12 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: -6617678826438391476, guid: 22d5abde2cbdd27438134548302635f9, type: 2}
+  - {fileID: 1757240611378375247, guid: a66648ca6d2551e47a2bb553fe5014f8, type: 2}
   - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0

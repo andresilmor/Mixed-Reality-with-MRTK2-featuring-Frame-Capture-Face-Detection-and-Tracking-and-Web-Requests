@@ -4,36 +4,35 @@ using System.Text.RegularExpressions;
 
 public class BinaryTree 
 {
-
     public BinaryTree()
     {
         Root = null;
     }
 
-    public Node Root { get; set; }
+    public Node Root { get; private set; }
 
     public class Node
     {
         public Node LeftNode { get; set; }
         public Node RightNode { get; set; }
-        public string index { get; set; }
+        public string key { get; set; }
 
         public object data;
 
     }
 
 
-    public int HexStringCompare(string value1, string value2)
+    public int HexStringCompare(string keyOne, string keyTwo)
     {
-        value1 = value1.Replace("-", string.Empty);
-        value2 = value2.Replace("-", string.Empty);
+        keyOne = keyOne.Replace("-", string.Empty);
+        keyTwo = keyTwo.Replace("-", string.Empty);
 
         string InvalidHexExp = @"[^\dabcdef]";
         string HexPaddingExp = @"^(0x)?0*";
         //Remove whitespace, "0x" prefix if present, and leading zeros.  
         //Also make all characters lower case.
-        string Value1 = Regex.Replace(value1.Trim().ToLower(), HexPaddingExp, "");
-        string Value2 = Regex.Replace(value2.Trim().ToLower(), HexPaddingExp, "");
+        string Value1 = Regex.Replace(keyOne.Trim().ToLower(), HexPaddingExp, "");
+        string Value2 = Regex.Replace(keyTwo.Trim().ToLower(), HexPaddingExp, "");
 
         //validate that values contain only hex characters
         if (Regex.IsMatch(Value1, InvalidHexExp))
@@ -54,35 +53,35 @@ public class BinaryTree
         return Result;
     }
 
-    public bool Add(string value, object data)
+    public bool Add(string key, object data)
     {
         Node before = null, after = this.Root;
         while (after != null)
         {
             before = after;
-            //if (value < after.index) //Is new node in left tree? 
-            if (this.HexStringCompare(value, after.index) < 0)
+            //if (key < after.key) //Is new node in left tree? 
+            if (this.HexStringCompare(key, after.key) < 0)
                 after = after.LeftNode;
-           //else if (value > after.index) //Is new node in right tree?
-            else if (this.HexStringCompare(value, after.index) > 0) //Is new node in right tree?
+           //else if (key > after.key) //Is new node in right tree?
+            else if (this.HexStringCompare(key, after.key) > 0) //Is new node in right tree?
                 after = after.RightNode;
             else
             {
-                //Exist same value
+                //Exist same key
                 return false;
             }
         }
 
         Node newNode = new Node();
-        newNode.index = value;
+        newNode.key = key;
         newNode.data = data;
      
         if (this.Root == null)//Tree ise empty
             this.Root = newNode;
         else
         {
-            //if (value < before.index)
-            if (this.HexStringCompare(value, before.index) < 0)
+            //if (key < before.key)
+            if (this.HexStringCompare(key, before.key) < 0)
                 before.LeftNode = newNode;
             else
                 before.RightNode = newNode;
@@ -91,27 +90,27 @@ public class BinaryTree
         return true;
     }
 
-    public Node Find(string value)
+    public Node Find(string key)
     {
-        return this.Find(value, this.Root);
+        return this.Find(key, this.Root);
     }
 
-    public void Remove(string value)
+    public void Remove(string key)
     {
-        this.Root = Remove(this.Root, value);
+        this.Root = Remove(this.Root, key);
     }
 
     private Node Remove(Node parent, string key)
     {
         if (parent == null) return parent;
 
-        //if (key < parent.index) parent.LeftNode = Remove(parent.LeftNode, key);
-        if (this.HexStringCompare(key, parent.index) < 0) parent.LeftNode = Remove(parent.LeftNode, key);
-        //else if (key > parent.index)
-        else if (this.HexStringCompare(key, parent.index) > 0)
+        //if (key < parent.key) parent.LeftNode = Remove(parent.LeftNode, key);
+        if (this.HexStringCompare(key, parent.key) < 0) parent.LeftNode = Remove(parent.LeftNode, key);
+        //else if (key > parent.key)
+        else if (this.HexStringCompare(key, parent.key) > 0)
             parent.RightNode = Remove(parent.RightNode, key);
 
-        // if value is same as parent's value, then this is the node to be deleted  
+        // if key is same as parent's key, then this is the node to be deleted  
         else
         {
             // node with only one child or no child  
@@ -121,10 +120,10 @@ public class BinaryTree
                 return parent.LeftNode;
 
             // node with two children: Get the inorder successor (smallest in the right subtree)  
-            parent.index = MinValue(parent.RightNode);
+            parent.key = MinValue(parent.RightNode);
 
             // Delete the inorder successor  
-            parent.RightNode = Remove(parent.RightNode, parent.index);
+            parent.RightNode = Remove(parent.RightNode, parent.key);
         }
 
         return parent;
@@ -132,26 +131,26 @@ public class BinaryTree
 
     private string MinValue(Node node)
     {
-        string minv = node.index;
+        string minv = node.key;
         while (node.LeftNode != null)
         {
-            minv = node.LeftNode.index;
+            minv = node.LeftNode.key;
             node = node.LeftNode;
         }
         return minv;
     }
 
-    private Node Find(string value, Node parent)
+    private Node Find(string key, Node parent)
     {
         if (parent != null)
         {
-            //if (value == parent.index) return parent;
-            if (this.HexStringCompare(value, parent.index) == 0) return parent;
-            //if (value < parent.index)
-            if (this.HexStringCompare(value, parent.index) < 0)
-                    return Find(value, parent.LeftNode);
+            //if (key == parent.key) return parent;
+            if (this.HexStringCompare(key, parent.key) == 0) return parent;
+            //if (key < parent.key)
+            if (this.HexStringCompare(key, parent.key) < 0)
+                    return Find(key, parent.LeftNode);
             else
-                return Find(value, parent.RightNode);
+                return Find(key, parent.RightNode);
         }
 
         return null;
@@ -171,7 +170,7 @@ public class BinaryTree
     {
         if (parent != null)
         {
-            Console.Write(parent.index + " ");
+            Console.Write(parent.key + " ");
             TraversePreOrder(parent.LeftNode);
             TraversePreOrder(parent.RightNode);
         }
@@ -182,7 +181,7 @@ public class BinaryTree
         if (parent != null)
         {
             TraverseInOrder(parent.LeftNode);
-            Console.Write(parent.index + " ");
+            Console.Write(parent.key + " ");
             TraverseInOrder(parent.RightNode);
         }
     }
@@ -193,7 +192,7 @@ public class BinaryTree
         {
             TraversePostOrder(parent.LeftNode);
             TraversePostOrder(parent.RightNode);
-            Console.Write(parent.index + " ");
+            Console.Write(parent.key + " ");
         }
     }
 }

@@ -12,10 +12,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.UIElements;
+using Realms;
+using Realms.Exceptions;
+
 
 public class AppCommandCenter : MonoBehaviour
 {
-    //
+
+    private Realm realm;
+
     BinaryTree pacientsMemory;
 
     [Header("World Markers:")]
@@ -63,6 +68,30 @@ public class AppCommandCenter : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        BestHTTP.HTTPManager.Setup();
+
+        var config = new RealmConfiguration
+        {
+            SchemaVersion = 1
+        };
+        config.ShouldDeleteIfMigrationNeeded = true;
+        realm = Realm.GetInstance(config);
+
+        Debug.Log("Persisted");
+        realm.Write(() => {
+            realm.RemoveAll();
+
+        });
+
+    }
+
+    void OnDisable()
+    {
+        realm.Dispose();
+    }
+
 
 #if ENABLE_WINMD_SUPPORT
     async void Start()
@@ -74,9 +103,10 @@ public class AppCommandCenter : MonoBehaviour
         SetDebugger();
         Debug.Log(SystemInfo.processorCount);
         LoadSavedData();
+
         pacientsMemory = new BinaryTree();
 
-        BestHTTP.HTTPManager.Setup();
+
 
         /*
         APIController.Field queryOperation = new APIController.Field(
@@ -155,12 +185,12 @@ public class AppCommandCenter : MonoBehaviour
                     if (node is null)
                     {
                         Debugger.AddText("NEW ON TREE");
-                        Person newPerson;
+                        object newPerson;
                    
-                        TrackingManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newPerson, "Pacient");
+                        TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newPerson, "Pacient");
                         (newPerson as Pacient).pacientMark.gameObject.name = detection.id.ToString();
-                 
-                        newPerson.id = detection.id;
+
+                        (newPerson as Pacient).id = detection.id;
 
                         if (newPerson is Pacient)
                             (newPerson as Pacient).UpdateEmotion(detection.emotions.categorical[0].ToString());
@@ -170,7 +200,7 @@ public class AppCommandCenter : MonoBehaviour
 
                         detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
 
-                        pacientsMemory.Add(newPerson.id, newPerson);
+                        //pacientsMemory.Add(newPerson.id, newPerson);
 
                         GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
                         three.GetComponent<Renderer>().material.color = Color.red;
@@ -184,7 +214,7 @@ public class AppCommandCenter : MonoBehaviour
 
                         if (node.data is Pacient)
                         {
-                            (node.data as Pacient).UpdateEmotion(detection.emotions.categorical[0]);
+                            //(node.data as Pacient).UpdateEmotion(detection.emotions.categorical[0]);
                             //(node.GraphQLData as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
 
                         }
@@ -297,7 +327,7 @@ public class AppCommandCenter : MonoBehaviour
         {
 
 #if ENABLE_WINMD_SUPPORT
-            bool wasUpdated = TrackingManager.UpdateTrackers();
+            bool wasUpdated = TrackerManager.UpdateTrackers();
             if (wasUpdated) {
                 timeToStop++;
                 if (timeToStop >= 20)
