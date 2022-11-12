@@ -15,6 +15,7 @@ using UnityEngine.UIElements;
 using Realms;
 using Realms.Exceptions;
 
+using System.Net.NetworkInformation;
 
 public class AppCommandCenter : MonoBehaviour
 {
@@ -50,6 +51,30 @@ public class AppCommandCenter : MonoBehaviour
     private bool justStop = false;
     private byte timeToStop = 0;
 
+    public string ShowNetworkInterfaces()
+    {
+        IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();
+        NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+        string info = "";
+        foreach (NetworkInterface adapter in nics)
+        {
+            PhysicalAddress address = adapter.GetPhysicalAddress();
+            byte[] bytes = address.GetAddressBytes();
+            string mac = null;
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                mac = string.Concat(mac + (string.Format("{0}", bytes[i].ToString("X2"))));
+                if (i != bytes.Length - 1)
+                {
+                    mac = string.Concat(mac + "-");
+                }
+            }
+            info += mac + "\n";
+
+            info += "\n";
+        }
+        return info;
+    }
 
     private static AppCommandCenter _instance;
     public static AppCommandCenter Instance
@@ -99,13 +124,14 @@ public class AppCommandCenter : MonoBehaviour
     void Start()
 #endif
     {
-        
         SetDebugger();
         Debug.Log(SystemInfo.processorCount);
         LoadSavedData();
 
         pacientsMemory = new BinaryTree();
 
+        Debugger.AddText(
+        ShowNetworkInterfaces());
 
 
         /*
@@ -200,7 +226,7 @@ public class AppCommandCenter : MonoBehaviour
 
                         detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
 
-                        //pacientsMemory.Add(newPerson.id, newPerson);
+                        pacientsMemory.Add(detection.id, newPerson);
 
                         GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
                         three.GetComponent<Renderer>().material.color = Color.red;
