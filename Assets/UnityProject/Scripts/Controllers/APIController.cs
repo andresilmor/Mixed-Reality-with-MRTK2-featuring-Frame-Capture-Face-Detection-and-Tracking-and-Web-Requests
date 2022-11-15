@@ -42,6 +42,8 @@ using static BestHTTP.SecureProtocol.Org.BouncyCastle.Crypto.Digests.SkeinEngine
 public static class APIController 
 {
 
+    #region API Meta Data
+
     [Header("Protocols:")]
     [SerializeField] static string websocketProtocol = "ws://";
     [SerializeField] static string httpProtocol = "http://";
@@ -70,14 +72,16 @@ public static class APIController
         }
     }
 
+    #endregion
+
     private static string READ = "3466fab4975481651940ed328aa990e4";
     private static string UPDATE = "15a8022d0ed9cd9c2a2e756822703eb4";
     private static string CREATE = "294ce20cdefa29be3be0735cb62e715d";
     private static string DELETE = "32f68a60cef40faedbc6af20298c1a1e";
 
+    #region WebSockets Data
 
-    [Header("WebSockets Paths:")]
-    [SerializeField]  private static string _pacientsDetection = "/live";
+    private const string _pacientsDetection = "/live";
     public static string pacientsDetection
     {
         get
@@ -86,35 +90,14 @@ public static class APIController
         }
     }
 
-
     private static List<WebSocket> wsConnections;
     private static List<string> wsConnectionsPath;
-
     private static WebSocket pacientMapping;
 
+    #endregion
 
+    #region GraphQL Field
 
-    /*
-    private static APIController _instance = this;
-    public static APIController Instance
-    {
-        get { return _instance; }
-        set
-        {
-            if (_instance == null)
-            {
-                _instance = value;
-            }
-            else
-            {
-                Destroy(value);
-            }
-        }
-    }
-
-    */
-
-    // For GraphQL Schema
     public struct Field
     {
         public string name;
@@ -157,53 +140,60 @@ public static class APIController
         }
     }
 
+    #endregion
 
+    #region WebSocket Functions
 
     public static WebSocket GetWebSocket(string path)
     {
+        switch (path)
+        {
+            case _pacientsDetection:
+                return pacientMapping;
+
+
+            default:
+                for (int index = 0; index >= wsConnections.Count; index++)
+                {
+                    if (wsConnectionsPath[index].Equals(path))
+                        return wsConnections[index];
+                }
+                return null;
+
+        }
         
-        Debugger.AddText("Get WebSocket");
-        if (path.Equals(pacientsDetection))
-        {
-            Debugger.AddText("Connection State: " + pacientMapping.State);
-            Debugger.AddText("WebSocket Getted Var");
-            return pacientMapping;
-
-        }
-        else
-        {
-            Debugger.AddText("Searching in List");
-            for (int index = 0; index >= wsConnections.Count; index++)
-            {
-                if (wsConnectionsPath[index].Equals(path))
-                    return wsConnections[index];
-            }
-
-        }
-        return null;
     }
 
+    private static void AddWebSocket(string path, WebSocket webSocket)
+    {
+        switch (path)
+        {
+            case _pacientsDetection:
+                pacientMapping = webSocket;
+                break;
+
+            default:
+                wsConnections.Add(webSocket);
+                wsConnectionsPath.Add(path);
+                break;
+
+        }
+    }
 
     public static void CreateWebSocketConnection(string path, Action<string> callback)
     {
-        Debugger.AddText("Address: " + (websocketProtocol + ip + ":" + port + websocketPath + path));
         try { 
             WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + ":" + port + websocketPath + path));
        
             newConnection.OnMessage += (WebSocket webSocket, string message) =>
             {
-                Debugger.AddText("Message Received");
                 if(message.Length > 6)
                     callback?.Invoke(message);
-           
-
             };
 
             newConnection.OnOpen += (WebSocket webSocket) =>
             {
-                Debugger.AddText("Connection Opened (CreateWebSocketConnection)");
                 webSocket.Send("Connection Opened");
-                Debugger.AddText("Warning Sended (CreateWebSocketConnection)");
             };
 
             newConnection.OnClosed += (WebSocket webSocket, UInt16 code, string message) =>
@@ -213,33 +203,55 @@ public static class APIController
             };
 
             newConnection.Open();
-            Debugger.AddText("Connection State: " + newConnection.State);
-          
-                if (path.Equals(_pacientsDetection))
-                {
-                    pacientMapping = newConnection;
-                    Debugger.AddText("Connection Added Var");
 
-                }
-                else
-                {
-                    wsConnections.Add(newConnection);
-                    wsConnectionsPath.Add(path);
-
-                    Debugger.AddText("Connection Added List");
-                }
-           
-
+            AddWebSocket(path, newConnection);
 
         } catch(Exception e)
         {
             Debugger.AddText("Error: " + e.Message.ToString());
         }
 
-        
+    }
+
+    public static void CloseAllWebSockets()
+    {
+        foreach (WebSocket ws in wsConnections)
+        {
+            ws.Close();
+        }
+
 
     }
 
+    #endregion
+
+    #region GraphQL Query Functions
+    private static void MountQuery(Field[] args, ref string query, byte identationLevel = 2)
+    {
+        foreach (Field field in args)
+        {
+            query += (new string('\t', identationLevel) + field.name);
+            if (field.parameters != null)
+            {
+                query += " (";
+                for (byte index = 0; index < field.parameters.Length; index++)
+                    query += (field.parameters[index].name + ": " + field.parameters[index].value + (index >= field.parameters.Length ? ", " : ""));
+
+                query += ") {";
+            }
+
+            if (field.subfield != null)
+            {
+                query += " {\r\n";
+                MountQuery(field.subfield, ref query, identationLevel += 1);
+
+                query += (new string('\t', identationLevel - 1) + "}\r\n");
+            }
+            else
+                query += "\r\n";
+
+        }
+    }
 
     public static async Task ExecuteQuery(string operation, Field type,  Action<string> callback, params Field[] args)
     {
@@ -275,43 +287,7 @@ public static class APIController
         });
     }
 
-    private static void MountQuery(Field[] args, ref string query, byte identationLevel = 2)
-    {
-        foreach (Field field in args)
-        {
-            query += (new string('\t', identationLevel) + field.name);
-            if (field.parameters != null)
-            {
-                query += " (";
-                for (byte index = 0; index < field.parameters.Length; index++)
-                    query += (field.parameters[index].name + ": " + field.parameters[index].value + (index >= field.parameters.Length ? ", " : ""));
+    #endregion
 
-                query += ") {";
-            }
-
-            if (field.subfield != null)
-            {
-                query += " {\r\n";
-                MountQuery(field.subfield, ref query, identationLevel += 1);
-
-                query += (new string('\t', identationLevel - 1) + "}\r\n");
-            }
-            else
-                query += "\r\n";
-
-        }
-    }
-
-
-
-
-    static void OnDestroy()
-    {
-        foreach (WebSocket ws in wsConnections)
-        {
-            ws.Close();
-        }
-
-
-    }
+    
 }

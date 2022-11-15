@@ -359,6 +359,9 @@ public class AppCommandCenter : MonoBehaviour
 
     }
 
-
+    private void OnDestroy()
+    {
+        APIController.CloseAllWebSockets();
+    }
 
 }
