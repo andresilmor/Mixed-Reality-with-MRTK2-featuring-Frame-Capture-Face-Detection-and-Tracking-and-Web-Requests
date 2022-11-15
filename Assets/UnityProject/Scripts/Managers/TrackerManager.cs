@@ -120,7 +120,7 @@ public static class TrackerManager
 
                     //newPerson = new Pacient(newVisualTracker.GetComponent<PacientMark>(), trackerCSRT);
                     newPerson = new Pacient(personMarker, trackerCSRT);
-
+                    //(newPerson as Pacient).trackerHandler.trackerSetting.tracker
                     
 
                     //newPerson = new Pacient(trackerMOSSE);

@@ -126,9 +126,9 @@ public class AppCommandCenter : MonoBehaviour
     {
         SetDebugger();
         Debug.Log(SystemInfo.processorCount);
-        LoadSavedData();
 
-        pacientsMemory = new BinaryTree();
+        if (pacientsMemory == null)
+            pacientsMemory = new BinaryTree();
 
         Debugger.AddText(
         ShowNetworkInterfaces());
@@ -274,12 +274,6 @@ public class AppCommandCenter : MonoBehaviour
 
     }
 
-    private void LoadSavedData()
-    {
-        if (pacientsMemory == null)
-            pacientsMemory = new BinaryTree();
-
-    }
 
     public async void DetectPacients()
     {

@@ -15,12 +15,12 @@ D:/PC/Desktop/IP/UnityProject
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-55885
+59614
 Successfully changed project path to: D:/PC/Desktop/IP/UnityProject
 D:/PC/Desktop/IP/UnityProject
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 170.56 ms, found 15 plugins.
-Preloading 1 native plugins for Editor in 5.37 ms.
+Refreshing native plugins compatible for Editor in 191.57 ms, found 15 plugins.
+Preloading 1 native plugins for Editor in 4.47 ms.
 Initialize engine version: 2020.3.41f1 (7c19dc9acfda)
 [Subsystems] Discovering subsystems at path C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.41f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path D:/PC/Desktop/IP/UnityProject/Assets
@@ -35,36 +35,36 @@ Initialize mono
 Mono path[0] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.41f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.41f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.41f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56692
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56908
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2020.3.41f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002433 seconds.
+Registered in 0.067351 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 116.09 ms, found 15 plugins.
-Preloading 1 native plugins for Editor in 0.05 ms.
+Refreshing native plugins compatible for Editor in 115.12 ms, found 15 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.593 seconds
+- Completed reload, in  3.282 seconds
 Domain Reload Profiling:
-	ReloadAssembly (593ms)
-		BeginReloadAssembly (59ms)
+	ReloadAssembly (3282ms)
+		BeginReloadAssembly (2287ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (472ms)
-			LoadAssemblies (56ms)
+		EndReloadAssembly (771ms)
+			LoadAssemblies (2287ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (127ms)
+			SetupTypeCache (426ms)
 			ReleaseScriptCaches (0ms)
 			RebuildScriptCaches (25ms)
-			SetupLoadedEditorAssemblies (228ms)
+			SetupLoadedEditorAssemblies (223ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (3ms)
+				InitializePlatformSupportModulesInManaged (4ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (116ms)
-				BeforeProcessingInitializeOnLoad (16ms)
+				RefreshPlugins (115ms)
+				BeforeProcessingInitializeOnLoad (12ms)
 				ProcessInitializeOnLoadAttributes (68ms)
 				ProcessInitializeOnLoadMethodAttributes (24ms)
 				AfterProcessingInitializeOnLoad (0ms)
@@ -73,55 +73,55 @@ Domain Reload Profiling:
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.018482 seconds.
+Registered in 0.016166 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 118.89 ms, found 15 plugins.
-Preloading 1 native plugins for Editor in 0.05 ms.
-[XR] [MROpenXR][Info   ][13:59:32.455624][tid:78e8] MeshProvider_RegisterLifecycleProvider
-[XR] [MROpenXR][Info   ][13:59:32.455715][tid:78e8] InputProvider_RegisterLifecycleProvider
+Refreshing native plugins compatible for Editor in 104.52 ms, found 15 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+[XR] [MROpenXR][Info   ][14:25:41.844762][tid:6838] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][14:25:41.844839][tid:6838] InputProvider_RegisterLifecycleProvider
 [XR] Error loading subsystem: Display (1) (header mismatch?)
-[XR] [MROpenXR][Info   ][13:59:32.457618][tid:78e8] OnPluginStarted UnityVersion=2020.3.41f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.6.0.0 PartA_PrivTags=33554432
+[XR] [MROpenXR][Info   ][14:25:41.846158][tid:6838] OnPluginStarted UnityVersion=2020.3.41f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.6.0.0 PartA_PrivTags=33554432
 Mono: successfully reloaded assembly
-- Completed reload, in  2.008 seconds
+- Completed reload, in  1.956 seconds
 Domain Reload Profiling:
-	ReloadAssembly (2010ms)
-		BeginReloadAssembly (129ms)
+	ReloadAssembly (1957ms)
+		BeginReloadAssembly (116ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (4ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (15ms)
-		EndReloadAssembly (1825ms)
-			LoadAssemblies (109ms)
+			CreateAndSetChildDomain (14ms)
+		EndReloadAssembly (1792ms)
+			LoadAssemblies (100ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (376ms)
+			SetupTypeCache (338ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (76ms)
-			SetupLoadedEditorAssemblies (1170ms)
+			RebuildScriptCaches (63ms)
+			SetupLoadedEditorAssemblies (1209ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (3ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (119ms)
-				BeforeProcessingInitializeOnLoad (112ms)
-				ProcessInitializeOnLoadAttributes (878ms)
-				ProcessInitializeOnLoadMethodAttributes (52ms)
-				AfterProcessingInitializeOnLoad (7ms)
+				RefreshPlugins (105ms)
+				BeforeProcessingInitializeOnLoad (103ms)
+				ProcessInitializeOnLoadAttributes (946ms)
+				ProcessInitializeOnLoadMethodAttributes (46ms)
+				AfterProcessingInitializeOnLoad (6ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 2.16 ms, found 15 plugins.
-Preloading 1 native plugins for Editor in 0.06 ms.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 2.13 ms, found 15 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
 Unloading 6346 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 228.9 MB.
+System memory in use before: 228.8 MB.
 System memory in use after: 229.3 MB.
 
 Unloading 223 unused Assets to reduce memory usage. Loaded Objects now: 6633.
-Total: 4.420000 ms (FindLiveObjects: 0.541400 ms CreateObjectMapping: 0.511700 ms MarkObjects: 3.290800 ms  DeleteObjects: 0.075500 ms)
+Total: 3.625500 ms (FindLiveObjects: 0.465100 ms CreateObjectMapping: 0.361500 ms MarkObjects: 2.685500 ms  DeleteObjects: 0.112900 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -135,181 +135,19 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  path: Packages/com.unity.inputsystem/InputSystem/Editor/Icons/Keyboard@3x.png
-  artifactKey: Guid(6191a40940a3e46899ecf82fa8389d01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.inputsystem/InputSystem/Editor/Icons/Keyboard@3x.png using Guid(6191a40940a3e46899ecf82fa8389d01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ba5fe3faa11eccfdc0fb2664d40cf7c3') in 0.089356 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000264 seconds.
-  path: Packages/com.unity.inputsystem/InputSystem/Editor/Icons/Keyboard.png
-  artifactKey: Guid(5a5b9538c3aaa4587856e68a93a92a51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.inputsystem/InputSystem/Editor/Icons/Keyboard.png using Guid(5a5b9538c3aaa4587856e68a93a92a51) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6cea3252ac2a83e91225d928888dd350') in 0.039501 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000226 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Shift_Symbols.png
-  artifactKey: Guid(1dde69ccd9583fa4f8dfab2b590119ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Shift_Symbols.png using Guid(1dde69ccd9583fa4f8dfab2b590119ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '690d4ddcc74b359f82e117b762b47b31') in 0.152508 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000233 seconds.
-  path: Packages/com.unity.inputsystem/InputSystem/Editor/Icons/Keyboard@4x.png
-  artifactKey: Guid(7fc0926499f7a4500b152d45397c44a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.inputsystem/InputSystem/Editor/Icons/Keyboard@4x.png using Guid(7fc0926499f7a4500b152d45397c44a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a7beeab1a7618ddc2fb591b444b650d7') in 0.049336 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000236 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboardPreview/Materials/MixedRealityKeyboardPreviewCaret.mat
-  artifactKey: Guid(1427cd2949bb6c94ca4958f6da5d9826) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboardPreview/Materials/MixedRealityKeyboardPreviewCaret.mat using Guid(1427cd2949bb6c94ca4958f6da5d9826) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '776a632debe6578f078a6f39a68d3538') in 0.108945 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000208 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboardPreview/Materials/MixedRealityKeyboardPreviewTextRect.mat
-  artifactKey: Guid(1fa0912959595a142b2cbae1684e0d38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboardPreview/Materials/MixedRealityKeyboardPreviewTextRect.mat using Guid(1fa0912959595a142b2cbae1684e0d38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6c9615187033efb07cbb84bd0a3946c8') in 0.093760 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000207 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Right.png
-  artifactKey: Guid(11e4524f21fc6434abbbba83d70d0040) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Right.png using Guid(11e4524f21fc6434abbbba83d70d0040) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b195ac1ddf2d344f4ae64cf3f8bc33f3') in 0.080499 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000230 seconds.
-  path: Packages/com.unity.inputsystem/InputSystem/Editor/Icons/d_Keyboard@3x.png
-  artifactKey: Guid(9ec4e316700da46b88741a8153b33963) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.inputsystem/InputSystem/Editor/Icons/d_Keyboard@3x.png using Guid(9ec4e316700da46b88741a8153b33963) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b567b798e5a61a9c768f39fd4142cf7') in 0.042743 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000219 seconds.
-  path: Packages/com.unity.inputsystem/InputSystem/Editor/Icons/d_Keyboard@4x.png
-  artifactKey: Guid(123b6218ad27a41af933311ee524dcdc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.inputsystem/InputSystem/Editor/Icons/d_Keyboard@4x.png using Guid(123b6218ad27a41af933311ee524dcdc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6377eaaca0e0dff822ae2effe97ab2c3') in 0.070182 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000260 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_UnShift_Symbols.png
-  artifactKey: Guid(f6f44dc3b387f9d48bcaaee0038969c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_UnShift_Symbols.png using Guid(f6f44dc3b387f9d48bcaaee0038969c4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ad0ef276f8be9f823a2191f82c86b35') in 0.114478 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000224 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Left.png
-  artifactKey: Guid(ec8b4073237c9724ba8422f71fda3694) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Left.png using Guid(ec8b4073237c9724ba8422f71fda3694) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d6a53e06f4a2645980b184a09f96fb3') in 0.079967 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000224 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboardPreview/Prefabs/MixedRealityKeyboardPreview.prefab
-  artifactKey: Guid(3a1a906d65a695048aa9dcd5216dbecd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboardPreview/Prefabs/MixedRealityKeyboardPreview.prefab using Guid(3a1a906d65a695048aa9dcd5216dbecd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d522b2f171a8c8c955f90e939f2b7ba') in 0.660168 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000243 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboard/Prefabs/MRKeyboardInputField_UGUI.prefab
-  artifactKey: Guid(6c3c43162542fa74db129b79265e6824) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboard/Prefabs/MRKeyboardInputField_UGUI.prefab using Guid(6c3c43162542fa74db129b79265e6824) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'da519b4681f9914e34fa8907fa4ce153') in 0.020740 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000210 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Dictation.png
-  artifactKey: Guid(b575d7b7d87461b4ea9965b50e367249) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Dictation.png using Guid(b575d7b7d87461b4ea9965b50e367249) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '91f89e12d497286c4497778eb0409228') in 0.088477 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000196 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Backspace.png
-  artifactKey: Guid(5eb0b332d494ca84d9c38cf77ba0e12d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Backspace.png using Guid(5eb0b332d494ca84d9c38cf77ba0e12d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '160b286a3263bbb5bdd4c89a9d1d4db1') in 0.067979 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000200 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboardPreview/Materials/MixedRealityKeyboardPreviewButtonBackPlate.mat
-  artifactKey: Guid(6f99b8c3ebc31c942a5af2e66bfa5950) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboardPreview/Materials/MixedRealityKeyboardPreviewButtonBackPlate.mat using Guid(6f99b8c3ebc31c942a5af2e66bfa5950) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de53a72b4ebbb7981ea8d7e76c4488ed') in 0.009513 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000200 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Prefabs/NonNativeKeyboard.prefab
-  artifactKey: Guid(c4e389e44d96da64ea974ab237ce1a9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Prefabs/NonNativeKeyboard.prefab using Guid(c4e389e44d96da64ea974ab237ce1a9a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fb4bc1fd72c9cdd41b69b13610ce49a4') in 0.258915 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000220 seconds.
-  path: Packages/com.unity.inputsystem/InputSystem/Editor/Icons/d_Keyboard.png
-  artifactKey: Guid(83382fb171da648c594229ca6fa7ad94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.inputsystem/InputSystem/Editor/Icons/d_Keyboard.png using Guid(83382fb171da648c594229ca6fa7ad94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cf9feb71fd05aa2b88f709c89bfa14ef') in 0.035706 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000178 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Down.png
-  artifactKey: Guid(161fc5872226601449a8143014ece469) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Down.png using Guid(161fc5872226601449a8143014ece469) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed0a148b1b1a877b782f69057d3c3103') in 0.091733 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000182 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Close.png
-  artifactKey: Guid(7029cbbbce5f0ac4dbc4e93267bfddf4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Close.png using Guid(7029cbbbce5f0ac4dbc4e93267bfddf4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7c62837de8529c95dc9b59815baf299') in 0.043668 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000206 seconds.
-  path: Packages/com.unity.inputsystem/InputSystem/Editor/Icons/Keyboard@2x.png
-  artifactKey: Guid(87ae93efe5d3b4262995b0acdc987d88) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.inputsystem/InputSystem/Editor/Icons/Keyboard@2x.png using Guid(87ae93efe5d3b4262995b0acdc987d88) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63fb2313831b38657ea7ec1e6f79dbf8') in 0.046812 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000204 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/NonNativeKeyboardSprites.spriteatlas
-  artifactKey: Guid(e81f5531b8920a64d8453c403213fc82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/NonNativeKeyboardSprites.spriteatlas using Guid(e81f5531b8920a64d8453c403213fc82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0629dc5e157b8a0db959ae7dec73357e') in 0.017646 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000200 seconds.
-  path: Packages/com.unity.inputsystem/InputSystem/Editor/Icons/d_Keyboard@2x.png
-  artifactKey: Guid(f14e3a4027f834f16b235498ac15bb3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.inputsystem/InputSystem/Editor/Icons/d_Keyboard@2x.png using Guid(f14e3a4027f834f16b235498ac15bb3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '55366da501ce5b0cd50e11f89e1b8a8c') in 0.030245 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000201 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Up.png
-  artifactKey: Guid(73830216a21a45e499598b2624ef723e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/NonNativeKeyboard/Icons/KeyboardKeyGlyphs_Up.png using Guid(73830216a21a45e499598b2624ef723e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60c0bacffee91d3649c31ceef010317f') in 0.047651 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000206 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboardPreview/Materials/MixedRealityKeyboardPreviewBackPlate.mat
-  artifactKey: Guid(d168438bf6820144983a2ab07904ac24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboardPreview/Materials/MixedRealityKeyboardPreviewBackPlate.mat using Guid(d168438bf6820144983a2ab07904ac24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '93fbba8b74f2b143e564e1b14e21980b') in 0.009359 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000227 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboard/Prefabs/MRKeyboardInputField_TMP.prefab
-  artifactKey: Guid(4daceed0c4c3c09468897226b8717688) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboard/Prefabs/MRKeyboardInputField_TMP.prefab using Guid(4daceed0c4c3c09468897226b8717688) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0c6d05f608e55d1371278e9acbad7e38') in 0.033818 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 25.152235 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboard
-  artifactKey: Guid(f9aff1583c2eff84680731fe0f76c8af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboard using Guid(f9aff1583c2eff84680731fe0f76c8af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6fccc2c4844ccba8b8f707162cabd070') in 0.006260 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 1.220801 seconds.
-  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboard/Prefabs
-  artifactKey: Guid(dc7295b7afbc1a849a755765e2aa57f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Experimental/MixedRealityKeyboard/Prefabs using Guid(dc7295b7afbc1a849a755765e2aa57f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '728187e3c5ee197c2979b20eb4179bca') in 0.506933 seconds 
+  path: Assets/UnityProject/Scripts/AppCommandCenter.cs
+  artifactKey: Guid(682832d02ce6b2e4ebbda2b4cb1dc290) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Scripts/AppCommandCenter.cs using Guid(682832d02ce6b2e4ebbda2b4cb1dc290) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ddaa383a471f5e42a2f885b22f06dfc3') in 0.048212 seconds 
 ========================================================================
 Received Prepare
-Refreshing native plugins compatible for Editor in 45.14 ms, found 15 plugins.
-Preloading 1 native plugins for Editor in 0.04 ms.
+Refreshing native plugins compatible for Editor in 44.06 ms, found 15 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
 Unloading 214 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 112.9 MB.
-System memory in use after: 113.4 MB.
+System memory in use before: 104.4 MB.
+System memory in use after: 104.9 MB.
 
-Unloading 215 unused Assets to reduce memory usage. Loaded Objects now: 6683.
-Total: 4.288200 ms (FindLiveObjects: 0.463800 ms CreateObjectMapping: 0.415600 ms MarkObjects: 3.351900 ms  DeleteObjects: 0.056400 ms)
+Unloading 214 unused Assets to reduce memory usage. Loaded Objects now: 6633.
+Total: 3.590400 ms (FindLiveObjects: 0.448800 ms CreateObjectMapping: 0.305000 ms MarkObjects: 2.768400 ms  DeleteObjects: 0.067700 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -322,14 +160,44 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Import Request.
-  Time since last request: 175312.978177 seconds.
-  path: Assets/UnityProject/Scripts/Models
-  artifactKey: Guid(a3ad616a70aa27b47a5663186426c95f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Scripts/Models using Guid(a3ad616a70aa27b47a5663186426c95f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a2eed33e9d1b499c5d434c8cd873ed3a') in 0.029972 seconds 
+Received Prepare
+Refreshing native plugins compatible for Editor in 41.19 ms, found 15 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+Unloading 214 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 104.4 MB.
+System memory in use after: 104.9 MB.
+
+Unloading 214 unused Assets to reduce memory usage. Loaded Objects now: 6633.
+Total: 4.635700 ms (FindLiveObjects: 0.439900 ms CreateObjectMapping: 0.336500 ms MarkObjects: 3.815400 ms  DeleteObjects: 0.042900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Import Request.
-  Time since last request: 0.774641 seconds.
-  path: Assets/UnityProject/Scripts/Models/Realm
-  artifactKey: Guid(f951d4c0d7c61ec49a6724d005383e8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Scripts/Models/Realm using Guid(f951d4c0d7c61ec49a6724d005383e8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c3129c17c22efcdcea21b88bbc494461') in 0.005750 seconds 
+Received Prepare
+Refreshing native plugins compatible for Editor in 44.41 ms, found 15 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+Unloading 214 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 104.4 MB.
+System memory in use after: 104.9 MB.
+
+Unloading 214 unused Assets to reduce memory usage. Loaded Objects now: 6633.
+Total: 3.779900 ms (FindLiveObjects: 0.427000 ms CreateObjectMapping: 0.390500 ms MarkObjects: 2.901500 ms  DeleteObjects: 0.060400 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
