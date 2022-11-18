@@ -5493,11 +5493,11 @@ MonoBehaviour:
   - {fileID: 578043570}
   - {fileID: 582131963}
   - {fileID: 362877687}
-  - {fileID: 0}
+  - {fileID: 1372965430}
   autoStart: 1
   invertDelays: 1
   cloneDelays: 0
-  timer: 2.0027812
+  timer: 0
   timeBetweenLoops: 3
   testLoop: 0
   autoLinearAppearDelay: 1
@@ -5512,6 +5512,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 954576972}
 --- !u!114 &954576969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5596,7 +5597,7 @@ MonoBehaviour:
   - {fileID: 578043570}
   - {fileID: 582131963}
   - {fileID: 362877687}
-  - {fileID: 0}
+  - {fileID: 1372965430}
 --- !u!114 &954576973
 MonoBehaviour:
   m_ObjectHideFlags: 0
