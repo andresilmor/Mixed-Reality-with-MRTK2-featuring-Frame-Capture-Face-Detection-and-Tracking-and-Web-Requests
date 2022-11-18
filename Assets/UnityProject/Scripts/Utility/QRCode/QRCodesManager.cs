@@ -82,6 +82,7 @@ namespace Microsoft.MixedReality.SampleQRCodes
             capabilityTask = QRCodeWatcher.RequestAccessAsync();
             accessStatus = await capabilityTask;
             capabilityInitialized = true;
+            SetupQRTracking();
         }
 
         private void SetupQRTracking()
@@ -131,6 +132,7 @@ namespace Microsoft.MixedReality.SampleQRCodes
                 IsTrackerRunning = false;
                 if (qrTracker != null)
                 {
+                    Debug.Log("QRCodesManager stopping QRCodeWatcher");
                     qrTracker.Stop();
                     qrCodesList.Clear();
                 }

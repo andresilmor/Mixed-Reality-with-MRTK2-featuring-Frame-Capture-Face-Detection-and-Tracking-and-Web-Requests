@@ -5,32 +5,51 @@ using Realms;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
+using Microsoft.MixedReality.SampleQRCodes;
 
 public static class AccountController 
 {
     public static RealmObject currentUser { get; private set; }
 
+    public static bool isLogged { get; private set; }
+
+
     async public static Task<bool> Login()
     {
+        AppCommandCenter.qrCodesManager.StartQRTracking();
+        AppCommandCenter.qrCodesManager.QRCodeAdded += LoginQRCode;
+
+        return true;
+    }
+
+    async private static void LoginQRCode(object sender, QRCodeEventArgs<Microsoft.MixedReality.QR.QRCode> args)
+    {
+        JObject response = JObject.Parse(@args.Data.Data.ToString());
+        AppCommandCenter.qrCodesManager.StopQRTracking();
+
         try
         {
-            string username = "test";
-            string password = "x";
-
 
             APIController.Field queryOperation = new APIController.Field(
             "memberLogin", new APIController.FieldParams[] {
-                new APIController.FieldParams("username", "\"" + username + "\""),
-                new APIController.FieldParams("password", "\"" + password + "\""),
+                new APIController.FieldParams("username", "\"" + response["username"]  + "\""),
+                new APIController.FieldParams("password", "\"" + response["password"] + "\""),
             });
 
             await APIController.ExecuteQuery("Read", queryOperation,
                 (message) => {
                     try
                     {
-                        dynamic response = JObject.Parse(@message);
-                        Debug.Log(JObject.Parse(@message)["data"]["memberLogin"]);
+                        JObject response = JObject.Parse(@message);
+                        if (response["data"] != null) { 
+                            AppCommandCenter.realm.Write(() => {
+                                AppCommandCenter.realm.Add(new UserEntity(response["data"]["uuid"].ToString(), response["data"]["token"].ToString()));
+                                
+                        });
 
+                        }
+
+                        AppCommandCenter.qrCodesManager.QRCodeAdded -= LoginQRCode;
                     }
                     catch (Exception e)
                     {
@@ -49,14 +68,14 @@ public static class AccountController
                     })
 
             });
-        } catch (Exception error)
+        }
+        catch (Exception error)
         {
-            Debugger.AddText(error.Message);    
-            return false;
+            Debugger.AddText(error.Message);
+         
 
         }
 
-        return true;
     }
 
     public static bool Logout()

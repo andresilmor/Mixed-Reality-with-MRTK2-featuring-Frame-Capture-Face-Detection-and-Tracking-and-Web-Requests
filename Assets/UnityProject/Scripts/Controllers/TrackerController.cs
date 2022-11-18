@@ -6,20 +6,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using UnityEditor.Sprites;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.UIElements;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
-public static class TrackerManager
+public static class TrackerController
 {
-    public static List<Pacient> trackers;
+    public static List<PacientTracker> trackers;
 
 
-    public static void CreateTracker(FaceRect faceRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, out object newPerson, string trackerWhat)
+    public static void CreateTracker(FaceRect faceRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, out object newTracker, string trackerWhat)
     {
         if (trackers == null)
-            TrackerManager.trackers = new List<Pacient>();
+            TrackerController.trackers = new List<PacientTracker>();
 
 
         
@@ -48,8 +49,8 @@ public static class TrackerManager
         if (visualMarker == null)
             Debugger.AddText("visual tracker is null");
 
-   
-        newPerson = null;
+
+        newTracker = null;
 
         GameObject newVisualTracker = UnityEngine.Object.Instantiate(visualMarker, mrPosition, Quaternion.LookRotation(Camera.main.transform.position, Vector3.up));
 
@@ -97,7 +98,7 @@ public static class TrackerManager
         //material.mainTexture = texture;
         Debugger.AddText("Apply");  */
 
-        //newVisualTracker.GetComponent<PacientMark>().SetMarkerVisibility(true);
+        //newVisualTracker.GetComponent<PacientTracker>().SetMarkerVisibility(true);
 
         if (newVisualTracker == null)
             Debugger.AddText("visual tracker is null");
@@ -110,23 +111,23 @@ public static class TrackerManager
         {
             switch (trackerWhat)
             {
-                case "Pacient":
+                case "PacientTracker":
 
                     trackerCSRT.init(frame, _region);
-                    PacientMark personMarker = newVisualTracker.GetComponent<PacientMark>();
-                    
+                    PacientTracker pacientMarker = newVisualTracker.GetComponent<PacientTracker>();
+                    pacientMarker.trackerHandler = new TrackerHandler(trackerCSRT);
 
 
 
-                    //newPerson = new Pacient(newVisualTracker.GetComponent<PacientMark>(), trackerCSRT);
-                    newPerson = new Pacient(personMarker, trackerCSRT);
+                    //newPerson = new Pacient(newVisualTracker.GetComponent<PacientTracker>(), trackerCSRT);
+                    newTracker = new PacientTracker( new TrackerHandler(trackerCSRT));
                     //(newPerson as Pacient).trackerHandler.trackerSetting.tracker
                     
 
                     //newPerson = new Pacient(trackerMOSSE);
                     break;
                 default:
-                    newPerson = null;
+                    newTracker = null;
                     return;
 
             }
@@ -136,7 +137,7 @@ public static class TrackerManager
         }
 
 
-        //TrackerManager.trackers.Add(newPerson);
+        //TrackerController.trackers.Add(newPerson);
      
     }
 

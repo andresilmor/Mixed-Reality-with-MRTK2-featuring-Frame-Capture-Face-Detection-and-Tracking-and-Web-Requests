@@ -1,17 +1,33 @@
+using OpenCVForUnity.TrackingModule;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PacientMark : MonoBehaviour
+
+public class PacientTracker : MonoBehaviour
 {
     [SerializeField] EmotionsListScriptableObject emotionsList;
     [SerializeField] SpriteRenderer emotionSpriteRenderer = null;
     private int activeEmotionIndex = -1;
 
+    public TrackerHandler trackerHandler;
+
     [SerializeField] GameObject markerRect;
-    
-    public PacientMark()
+
+    private string _id = "";
+    public string id
     {
+        get { return _id; }
+        set
+        {
+            if (id.Length <= 0)
+                _id = value;
+        }
+    }
+
+    public PacientTracker(TrackerHandler trackerHandler = null)
+    {
+        this.trackerHandler = trackerHandler;
     }
 
     private void Start()

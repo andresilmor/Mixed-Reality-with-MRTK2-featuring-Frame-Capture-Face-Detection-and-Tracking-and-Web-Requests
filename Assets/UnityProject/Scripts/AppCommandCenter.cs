@@ -16,11 +16,13 @@ using Realms;
 using Realms.Exceptions;
 
 using System.Net.NetworkInformation;
+using Microsoft.MixedReality.SampleQRCodes;
 
 public class AppCommandCenter : MonoBehaviour
 {
 
-    private Realm realm;
+    public static Realm realm { get; private set; }    
+
 
     BinaryTree pacientsMemory;
 
@@ -30,6 +32,10 @@ public class AppCommandCenter : MonoBehaviour
     [Header("World Markers:")]
     [SerializeField] GameObject personMarker;
 
+    [Header("Support:")]
+    [SerializeField] GameObject controllers;
+   
+
     [Header("Debugger:")]
     [SerializeField] TextMeshPro debugText;
     [SerializeField] GameObject cubeForTest;
@@ -38,7 +44,6 @@ public class AppCommandCenter : MonoBehaviour
     [SerializeField] GameObject detectionName;
     [SerializeField] GameObject general;
 
-    // Controllers
 
 
     // Attr's for the Machine Learning and detections
@@ -49,7 +54,7 @@ public class AppCommandCenter : MonoBehaviour
     }
     private Mat tempFrameMat;
 
-
+    public static QRCodesManager qrCodesManager { get; private set; }  
 
     private bool justStop = false;
     private byte timeToStop = 0;
@@ -109,6 +114,7 @@ public class AppCommandCenter : MonoBehaviour
         config.ShouldDeleteIfMigrationNeeded = true;
         realm = Realm.GetInstance(config);
 
+
         Debug.Log("Persisted");
         realm.Write(() => {
             realm.RemoveAll();
@@ -126,7 +132,7 @@ public class AppCommandCenter : MonoBehaviour
 #if ENABLE_WINMD_SUPPORT
     async void Start()
 #else
-    void Start()
+    async void Start()
 #endif
     {
         SetDebugger();
@@ -137,6 +143,9 @@ public class AppCommandCenter : MonoBehaviour
 
         Debugger.AddText(
         ShowNetworkInterfaces());
+
+        qrCodesManager = controllers.GetComponent<QRCodesManager>();
+        
 
 
         /*
@@ -170,7 +179,7 @@ public class AppCommandCenter : MonoBehaviour
         });
         */
 
-        AccountController.Login();
+        //AccountController.Login();
 
 #if ENABLE_WINMD_SUPPORT
         //AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
@@ -179,6 +188,8 @@ public class AppCommandCenter : MonoBehaviour
         //APIController.CreateWebSocketConnection(APIController.pacientsDetection, MapPredictions);
 
     }
+
+
 
 
     private async void MapPredictions(string predictions)
@@ -218,40 +229,40 @@ public class AppCommandCenter : MonoBehaviour
                     if (node is null)
                     {
                         Debugger.AddText("NEW ON TREE");
-                        object newPerson;
+                        object newTracker;
                    
-                        TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newPerson, "Pacient");
-                        (newPerson as Pacient).pacientMark.gameObject.name = detection.id.ToString();
+                        TrackerController.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newTracker, "PacientTracker");
+                        (newTracker as PacientTracker).gameObject.name = detection.id.ToString();
 
-                        (newPerson as Pacient).id = detection.id;
+                        (newTracker as PacientTracker).id = detection.id;
 
-                        if (newPerson is Pacient)
-                            (newPerson as Pacient).UpdateEmotion(detection.emotions.categorical[0].ToString());
+                        if (newTracker is PacientTracker)
+                            (newTracker as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0].ToString());
 
 
                         GameObject detectionTooltip = UnityEngine.Object.Instantiate(detectionName, facePos + new Vector3(0, 0.10f, 0), Quaternion.identity);
 
                         detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
 
-                        pacientsMemory.Add(detection.id, newPerson);
+                        pacientsMemory.Add(detection.id, newTracker);
 
                         GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
                         three.GetComponent<Renderer>().material.color = Color.red;
 
-                        Debugger.AddText((newPerson as Pacient).pacientMark.gameObject.name);
+                        Debugger.AddText((newTracker as PacientTracker).gameObject.name);
 
                     }
                     else
                     {
                         Debugger.AddText("ALREADY EXISTS ON TREE");
 
-                        if (node.data is Pacient)
+                        if (node.data is PacientTracker)
                         {
-                            //(node.data as Pacient).UpdateEmotion(detection.emotions.categorical[0]);
+                            (node.data as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0]);
                             //(node.GraphQLData as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
 
                         }
-                    
+
 
                     }
                 }
