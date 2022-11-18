@@ -24,6 +24,9 @@ public class AppCommandCenter : MonoBehaviour
 
     BinaryTree pacientsMemory;
 
+    [Header("Graphical User Interface:")]
+    [SerializeField] GameObject sceneContent;
+
     [Header("World Markers:")]
     [SerializeField] GameObject personMarker;
 
@@ -97,6 +100,8 @@ public class AppCommandCenter : MonoBehaviour
     {
         BestHTTP.HTTPManager.Setup();
 
+        GUIController.sceneContent = sceneContent;
+
         var config = new RealmConfiguration
         {
             SchemaVersion = 1
@@ -165,11 +170,13 @@ public class AppCommandCenter : MonoBehaviour
         });
         */
 
+        AccountController.Login();
+
 #if ENABLE_WINMD_SUPPORT
-        AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
+        //AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
 
-        APIController.CreateWebSocketConnection(APIController.pacientsDetection, MapPredictions);
+        //APIController.CreateWebSocketConnection(APIController.pacientsDetection, MapPredictions);
 
     }
 

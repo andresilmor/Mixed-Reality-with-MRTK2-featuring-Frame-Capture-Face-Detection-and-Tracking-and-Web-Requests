@@ -215,11 +215,10 @@ public static class APIController
 
     public static void CloseAllWebSockets()
     {
-        foreach (WebSocket ws in wsConnections)
-        {
-            ws.Close();
+        if (wsConnections != null) { 
+            foreach (WebSocket ws in wsConnections)
+                ws.Close();
         }
-
 
     }
 
