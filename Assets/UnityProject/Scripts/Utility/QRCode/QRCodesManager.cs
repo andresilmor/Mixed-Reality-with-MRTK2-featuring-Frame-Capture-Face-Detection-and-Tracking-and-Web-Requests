@@ -48,6 +48,9 @@ namespace Microsoft.MixedReality.SampleQRCodes
         private QRCodeWatcherAccessStatus accessStatus;
         private System.Threading.Tasks.Task<QRCodeWatcherAccessStatus> capabilityTask;
 
+        public QRCodeEventArgs<Microsoft.MixedReality.QR.QRCode> lastSeen;
+
+
         public System.Guid GetIdForQRCode(string qrCodeData)
         {
             lock (qrCodesList)
@@ -82,7 +85,6 @@ namespace Microsoft.MixedReality.SampleQRCodes
             capabilityTask = QRCodeWatcher.RequestAccessAsync();
             accessStatus = await capabilityTask;
             capabilityInitialized = true;
-            SetupQRTracking();
         }
 
         private void SetupQRTracking()

@@ -17,6 +17,7 @@ using Realms.Exceptions;
 
 using System.Net.NetworkInformation;
 using Microsoft.MixedReality.SampleQRCodes;
+using System.Linq;
 
 public class AppCommandCenter : MonoBehaviour
 {
@@ -115,8 +116,10 @@ public class AppCommandCenter : MonoBehaviour
         realm = Realm.GetInstance(config);
 
 
+
         Debug.Log("Persisted");
         realm.Write(() => {
+
             realm.RemoveAll();
 
         });
@@ -136,7 +139,7 @@ public class AppCommandCenter : MonoBehaviour
 #endif
     {
         SetDebugger();
-        Debug.Log(SystemInfo.processorCount);
+        Debug.Log(DateTime.Now);
 
         if (pacientsMemory == null)
             pacientsMemory = new BinaryTree();
@@ -145,41 +148,15 @@ public class AppCommandCenter : MonoBehaviour
         ShowNetworkInterfaces());
 
         qrCodesManager = controllers.GetComponent<QRCodesManager>();
-        
 
+        AccountController.OnLoggedStatusChange += (bool status) =>
+        {
+            if (status)
+            {
+                Debug.Log("Im logged ye!");
+            }
+        };
 
-        /*
-        APIController.Field queryOperation = new APIController.Field(
-            "medicationToTake", new APIController.FieldParams[] { 
-                new APIController.FieldParams("id", "\"3c764a20-629c-4be9-b19b-5f87bddd60d5\""),
-            });
-
-        await APIController.ExecuteQuery("Read", queryOperation,
-            (message) => {
-                Debug.Log(message);
-                try
-                {
-                    dynamic response = JObject.Parse(@message);
-                    Debug.Log(JObject.Parse(@message)["data"]["medicationToTake"]);
-
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e.Message);
-                }
-                Debug.Log("yo");
-            },
-            new APIController.Field[] { 
-                new APIController.Field("atTime"),
-                new APIController.Field("quantity"),
-                new APIController.Field("medication", new APIController.Field[] {
-                    new APIController.Field("name")
-                    })
-         
-        });
-        */
-
-        //AccountController.Login();
 
 #if ENABLE_WINMD_SUPPORT
         //AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
@@ -365,7 +342,7 @@ public class AppCommandCenter : MonoBehaviour
         {
 
 #if ENABLE_WINMD_SUPPORT
-            bool wasUpdated = TrackerManager.UpdateTrackers();
+            bool wasUpdated = TrackerController.UpdateTrackers();
             if (wasUpdated) {
                 timeToStop++;
                 if (timeToStop >= 20)

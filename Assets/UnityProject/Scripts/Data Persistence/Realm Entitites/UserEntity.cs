@@ -1,34 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Realms;
+using System.Collections.Generic;
 
-public class UserEntity : RealmObject
+class UserEntity : RealmObject
 {
     [PrimaryKey]
-    public string UserUUID
-    {
-        get => (string)UserUUID;
-        set => UserUUID = (string)value;    
-    }
+    public string UUID { set; get; }
 
-    public string Role
-    {
-        get => (string)Role;
-        set => Role = (string)value;
-    }
+    public string Role { set; get; }
 
-    public string Token
-    {
-        get => (string)Token;
-        set => Token = (string)value;   
-    }
+    public string Token { set; get; }
+
+    public IList<MemberOf> MemberOf { get; }
+  
 
     public UserEntity() { }
 
-    public UserEntity(string userUUID, string token)
+    public UserEntity(string UUID, string token)
     {
-        UserUUID = userUUID;
+        this.UUID = UUID;
         Token = token;
     }   
 }

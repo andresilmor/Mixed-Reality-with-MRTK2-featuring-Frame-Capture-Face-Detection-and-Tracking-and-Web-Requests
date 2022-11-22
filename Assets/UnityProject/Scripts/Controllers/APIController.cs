@@ -261,7 +261,7 @@ public static class APIController
             {
                 query += " (";
                 foreach (FieldParams parameter in type.parameters)
-                    query += (parameter.name + ": " + parameter.value);
+                    query += (parameter.name + ": " + parameter.value + ", ");
 
                 query += ") {\r\n";
 
