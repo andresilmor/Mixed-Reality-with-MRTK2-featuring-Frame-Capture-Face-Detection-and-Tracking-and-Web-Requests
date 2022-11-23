@@ -7,6 +7,7 @@ class MemberOf : EmbeddedObject
 
     public InstitutionEntity Institution { get; set; }
 
+
     public MemberOf() { }
 
     public MemberOf(string role, InstitutionEntity institution)

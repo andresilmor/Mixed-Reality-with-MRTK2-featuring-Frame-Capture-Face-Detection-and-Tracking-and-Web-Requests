@@ -14,7 +14,7 @@ using System.Diagnostics.Contracts;
 
 public static class AccountController 
 {
-    public static RealmObject currentUser { get; private set; }
+    public static string currentUserUUID { get; private set; }
 
     private static bool _isLogged = false;
     public static bool isLogged {
@@ -22,14 +22,20 @@ public static class AccountController
         private set { 
             if (_isLogged == value) { return; }
             _isLogged = value;
-            if (OnLoggedStatusChange != null)
-                OnLoggedStatusChange(isLogged);
+            if (_isLogged) {
+               foreach (MemberOf memberOf in AppCommandCenter.realm.Find<UserEntity>(currentUserUUID).MemberOf)
+               {
+                    NotificationsController.SetupMedicationAlerts(memberOf.Institution.UUID);
+
+               }
+
+            }
+            //OnLoggedStatusChange(isLogged);
         }
     }
 
-    public delegate void OnVariableChangeDelegate(bool newValue);
-    public static event OnVariableChangeDelegate OnLoggedStatusChange;
-
+    //public delegate void OnVariableChangeDelegate(bool newValue);
+    //public static event OnVariableChangeDelegate OnLoggedStatusChange;
 
     private static bool requesting = false;
 
@@ -54,52 +60,45 @@ public static class AccountController
         JObject qrMessage = JObject.Parse(@args.Data.Data.ToString());
         AppCommandCenter.qrCodesManager.StopQRTracking();
         AppCommandCenter.qrCodesManager.QRCodeAdded -= LoginQRCode;
-        try
-        {
+        
+        requesting = true;
+        APIController.Field queryOperation = new APIController.Field(
+        "memberLogin", new APIController.FieldParams[] {
+            new APIController.FieldParams("username", "\"" + qrMessage["username"] + "\""),
+            new APIController.FieldParams("password", "\"" + qrMessage["password"] + "\""),
+        });
 
-            requesting = true;
-            APIController.Field queryOperation = new APIController.Field(
-            "memberLogin", new APIController.FieldParams[] {
-                new APIController.FieldParams("username", "\"" + qrMessage["username"] + "\""),
-                new APIController.FieldParams("password", "\"" + qrMessage["password"] + "\""),
-            });
-
-            await APIController.ExecuteQuery("Read", queryOperation,
-                (message) => {
-                    try
-                    {
-                        JObject response = JObject.Parse(@message);
-                        if (response["data"] != null) {
-                            isLogged = SaveUser(response);
-                            requesting = false;
-
-                        }
-
-                    } catch (Exception e) {
-                        Debug.Log("Error: " + e.Message);
-                        requesting = false; 
+        await APIController.ExecuteQuery("Read", null, queryOperation,
+            (message) => {
+                try
+                {
+                    JObject response = JObject.Parse(@message);
+                    if (response["data"] != null) {
+                        isLogged = SaveUser(response);
+                        requesting = false;
 
                     }
 
-                },
-                new APIController.Field[] {
-                    new APIController.Field("token"),
-                    new APIController.Field("uuid"),
-                    new APIController.Field("name"),
-                    new APIController.Field("memberOf", new APIController.Field[] {
-                        new APIController.Field("role"),
-                        new APIController.Field("institution", new APIController.Field[] {
-                            new APIController.Field("uuid")
-                        })
+                } catch (Exception e) {
+                    Debug.Log("Error: " + e.Message);
+                    requesting = false; 
 
-                    })
+                }
 
-            });
+            },
+            new APIController.Field[] {
+                new APIController.Field("token"),
+                new APIController.Field("uuid"),
+                new APIController.Field("name"),
+                new APIController.Field("memberOf", new APIController.Field[] {
+                    new APIController.Field("role"),
+                    new APIController.Field("institution", new APIController.Field[] {
+                    new APIController.Field("uuid")
+                })
 
-        } catch (Exception error) {
-            Debug.Log("Error: " + error.Message);
-        
-        }
+            })
+
+        });
 
     }
 
@@ -109,25 +108,31 @@ public static class AccountController
 
     private static bool SaveUser(JObject response)
     {
-        currentUser = AppCommandCenter.realm.Find<UserEntity>(response["data"]["memberLogin"]["uuid"].ToString());
-        if (currentUser == null) {
-            AppCommandCenter.realm.Write(() =>
-            {
-                currentUser = new UserEntity(
-                    UUID: response["data"]["memberLogin"]["uuid"].ToString(),
-                    token: response["data"]["memberLogin"]["token"].ToString()
-                );
+        UserEntity currentUser = AppCommandCenter.realm.Find<UserEntity>(response["data"]["memberLogin"]["uuid"].ToString());
 
-                AppCommandCenter.realm.Add(currentUser);
+        using (Realm realm = AppCommandCenter.realm) {
+            using (Transaction transiction = realm.BeginWrite()) { 
+                try { 
+                    if (currentUser == null) {
+                        currentUser = new UserEntity(
+                                UUID: response["data"]["memberLogin"]["uuid"].ToString(),
+                                token: response["data"]["memberLogin"]["token"].ToString()
+                        );
+                        realm.Add(currentUser);
 
-            });
+                    } else {
+                        currentUser.Token = response["data"]["memberLogin"]["token"].ToString();
+                        realm.Add(currentUser, update: true);
 
-        } else {
-            AppCommandCenter.realm.Write(() =>
-            {
-                (currentUser as UserEntity).Token = response["data"]["memberLogin"]["token"].ToString();
+                    }
+                    transiction.Commit();
+                    currentUserUUID = currentUser.UUID;
 
-            });
+                } catch (Exception ex) {
+                    transiction.Dispose();
+
+                }
+            }
 
         }
 
@@ -137,25 +142,31 @@ public static class AccountController
 
     private static bool SetRelationshipInstitution(JObject response)
     {
+        UserEntity currentUser = AppCommandCenter.realm.Find<UserEntity>(currentUserUUID);
+
         foreach (var relationship in response["data"]["memberLogin"]["memberOf"]) {
             InstitutionEntity institution = AppCommandCenter.realm.Find<InstitutionEntity>(relationship["institution"]["uuid"].ToString());
-            if (institution == null) {
-                AppCommandCenter.realm.Write(() =>  {
-                    institution = new InstitutionEntity(relationship["institution"]["uuid"].ToString());
-                    AppCommandCenter.realm.Add(institution);
 
-                });
+            using (var realm = AppCommandCenter.realm) {
+                var transiction = realm.BeginWrite();
+                Debug.Assert(institution == null);
+                try { 
+                    if (institution == null) {
+                        institution = new InstitutionEntity(relationship["institution"]["uuid"].ToString());
+                        AppCommandCenter.realm.Add(institution);
 
-            }
+                    }
 
-            AppCommandCenter.realm.Write(() => {
-                (currentUser as UserEntity).MemberOf.Add(new MemberOf(relationship["role"].ToString(), institution));
+                    currentUser.MemberOf.Add(new MemberOf(relationship["role"].ToString(), institution));
+                    AppCommandCenter.realm.Add(currentUser, update: true);
+                    transiction.Commit();
 
-            });
+                } catch (Exception ex) {
+                    Debug.Log("Error: " + ex.Message);
+                    transiction.Dispose();
 
-            foreach (var contact in (currentUser as UserEntity).MemberOf) //Why I did this???
-            {
-                
+                }
+
             }
 
         }
@@ -165,6 +176,8 @@ public static class AccountController
     }
 
     #endregion
+
+
 
     public static bool Logout()
     {

@@ -38,6 +38,7 @@ using BestHTTP;
 using UnityEngine.Networking;
 using System.Text;
 using static BestHTTP.SecureProtocol.Org.BouncyCastle.Crypto.Digests.SkeinEngine;
+using BestHTTP.Caching;
 
 public static class APIController 
 {
@@ -252,8 +253,14 @@ public static class APIController
         }
     }
 
-    public static async Task ExecuteQuery(string operation, Field type,  Action<string> callback, params Field[] args)
+    public static async Task ExecuteQuery(string operation, string token, Field type,  Action<string> callback, params Field[] args)
     {
+        if (!HTTPManager.IsCachingDisabled) {
+            HTTPCacheService.BeginClear();
+            HTTPManager.IsCachingDisabled = true;
+
+        }
+
         await Task.Run(() => { 
             string query = "query {\r\n";
             query += (new string('\t', 1) + type.name);
@@ -274,15 +281,26 @@ public static class APIController
             string jsonData = JsonConvert.SerializeObject(new {query});
             byte[] postData = Encoding.ASCII.GetBytes(jsonData);
 
-            HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => {
-                callback?.Invoke(response.DataAsText);
-            });
 
-            request.SetHeader("Content-Type", "application/json; charset=UTF-8");
-            request.SetHeader("Operation", operation);
-        
-            request.RawData = Encoding.UTF8.GetBytes(jsonData);
-            request.Send();
+            using (HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => {
+                callback?.Invoke(response.DataAsText);
+            }))
+            {
+                request.DisableCache = true;
+
+                request.SetHeader("Content-Type", "application/json; charset=UTF-8");
+                if (token != null)
+                    request.SetHeader("Authorization", token);
+                request.SetHeader("Operation", operation);
+
+                request.RawData = Encoding.UTF8.GetBytes(jsonData);
+                request.Send();
+            }
+                //HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => {
+                  //  callback?.Invoke(response.DataAsText);
+                //});
+
+            
         });
     }
 

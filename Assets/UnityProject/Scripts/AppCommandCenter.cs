@@ -18,11 +18,25 @@ using Realms.Exceptions;
 using System.Net.NetworkInformation;
 using Microsoft.MixedReality.SampleQRCodes;
 using System.Linq;
+using static BestHTTP.SecureProtocol.Org.BouncyCastle.Math.EC.ECCurve;
 
 public class AppCommandCenter : MonoBehaviour
 {
-
-    public static Realm realm { get; private set; }    
+    private static RealmConfiguration realmConfig = new RealmConfiguration
+    {
+        SchemaVersion = 1
+    };
+    public static Realm realm {
+        get
+        {
+            realmConfig.ShouldDeleteIfMigrationNeeded = true;
+            return Realm.GetInstance(realmConfig);
+        }
+        private set
+        {
+            realm = value;
+        }
+    }    
 
 
     BinaryTree pacientsMemory;
@@ -108,14 +122,6 @@ public class AppCommandCenter : MonoBehaviour
 
         GUIController.sceneContent = sceneContent;
 
-        var config = new RealmConfiguration
-        {
-            SchemaVersion = 1
-        };
-        config.ShouldDeleteIfMigrationNeeded = true;
-        realm = Realm.GetInstance(config);
-
-
 
         Debug.Log("Persisted");
         realm.Write(() => {
@@ -144,22 +150,13 @@ public class AppCommandCenter : MonoBehaviour
         if (pacientsMemory == null)
             pacientsMemory = new BinaryTree();
 
-        Debugger.AddText(
-        ShowNetworkInterfaces());
+        Debugger.AddText(ShowNetworkInterfaces());
 
         qrCodesManager = controllers.GetComponent<QRCodesManager>();
 
-        AccountController.OnLoggedStatusChange += (bool status) =>
-        {
-            if (status)
-            {
-                Debug.Log("Im logged ye!");
-            }
-        };
-
 
 #if ENABLE_WINMD_SUPPORT
-        //AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
+        AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
 
         //APIController.CreateWebSocketConnection(APIController.pacientsDetection, MapPredictions);
