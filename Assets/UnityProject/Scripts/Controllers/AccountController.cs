@@ -23,7 +23,7 @@ public static class AccountController
             if (_isLogged == value) { return; }
             _isLogged = value;
             if (_isLogged) {
-               foreach (MemberOf memberOf in AppCommandCenter.realm.Find<UserEntity>(currentUserUUID).MemberOf)
+               foreach (MemberOf memberOf in RealmController.realm.Find<UserEntity>(currentUserUUID).MemberOf)
                {
                     NotificationsController.SetupMedicationAlerts(memberOf.Institution.UUID);
 
@@ -68,11 +68,11 @@ public static class AccountController
             new APIController.FieldParams("password", "\"" + qrMessage["password"] + "\""),
         });
 
-        await APIController.ExecuteQuery("Read", null, queryOperation,
+        await APIController.ExecuteRequest("Read", null, queryOperation,
             (message) => {
                 try
                 {
-                    JObject response = JObject.Parse(@message);
+                    JObject response = JObject.Parse(@message); 
                     if (response["data"] != null) {
                         isLogged = SaveUser(response);
                         requesting = false;
@@ -108,68 +108,21 @@ public static class AccountController
 
     private static bool SaveUser(JObject response)
     {
-        UserEntity currentUser = AppCommandCenter.realm.Find<UserEntity>(response["data"]["memberLogin"]["uuid"].ToString());
+        if (RealmController.CreateUpdateUser(response, response["data"]["memberLogin"]["uuid"].ToString()))
+            currentUserUUID = response["data"]["memberLogin"]["uuid"].ToString();
 
-        using (Realm realm = AppCommandCenter.realm) {
-            using (Transaction transiction = realm.BeginWrite()) { 
-                try { 
-                    if (currentUser == null) {
-                        currentUser = new UserEntity(
-                                UUID: response["data"]["memberLogin"]["uuid"].ToString(),
-                                token: response["data"]["memberLogin"]["token"].ToString()
-                        );
-                        realm.Add(currentUser);
-
-                    } else {
-                        currentUser.Token = response["data"]["memberLogin"]["token"].ToString();
-                        realm.Add(currentUser, update: true);
-
-                    }
-                    transiction.Commit();
-                    currentUserUUID = currentUser.UUID;
-
-                } catch (Exception ex) {
-                    transiction.Dispose();
-
-                }
-            }
-
-        }
-
-        return SetRelationshipInstitution(response);   
+        return SetRelationshipInstitution(response);
 
     }
 
+    
+
     private static bool SetRelationshipInstitution(JObject response)
     {
-        UserEntity currentUser = AppCommandCenter.realm.Find<UserEntity>(currentUserUUID);
+        UserEntity currentUser = RealmController.realm.Find<UserEntity>(currentUserUUID);
 
-        foreach (var relationship in response["data"]["memberLogin"]["memberOf"]) {
-            InstitutionEntity institution = AppCommandCenter.realm.Find<InstitutionEntity>(relationship["institution"]["uuid"].ToString());
-
-            using (var realm = AppCommandCenter.realm) {
-                var transiction = realm.BeginWrite();
-                Debug.Assert(institution == null);
-                try { 
-                    if (institution == null) {
-                        institution = new InstitutionEntity(relationship["institution"]["uuid"].ToString());
-                        AppCommandCenter.realm.Add(institution);
-
-                    }
-
-                    currentUser.MemberOf.Add(new MemberOf(relationship["role"].ToString(), institution));
-                    AppCommandCenter.realm.Add(currentUser, update: true);
-                    transiction.Commit();
-
-                } catch (Exception ex) {
-                    Debug.Log("Error: " + ex.Message);
-                    transiction.Dispose();
-
-                }
-
-            }
-
-        }
+        foreach (var relationship in response["data"]["memberLogin"]["memberOf"])
+            RealmController.CreateUpdateUserMembership(currentUser, relationship);
 
         return true;
     

@@ -4,15 +4,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Realms;
 
 public static class NotificationsController 
 {   
 
     async public static void SetupMedicationAlerts(string institutionUUID)
     {
-        Debug.Log("User: " + AccountController.currentUserUUID);
-        Debug.Log("Institution: " + institutionUUID);
-        Debug.Log("Token: " + AppCommandCenter.realm.Find<UserEntity>(AccountController.currentUserUUID).Token);
 
         APIController.Field queryOperation = new APIController.Field(
                     "medicationToTake", new APIController.FieldParams[] {
@@ -20,11 +18,15 @@ public static class NotificationsController
                         new APIController.FieldParams("institutionID", "\"" + institutionUUID + "\""),
                     });
 
-        await APIController.ExecuteQuery("Read", AppCommandCenter.realm.Find<UserEntity>(AccountController.currentUserUUID).Token.ToString().Trim(), queryOperation,
+        await APIController.ExecuteRequest("Read", RealmController.realm.Find<UserEntity>(AccountController.currentUserUUID).Token.ToString().Trim(), queryOperation,
             (message) => {
                 try {
                     JObject response = JObject.Parse(@message);
+                    
                     Debug.Log(response.ToString());
+
+
+
                 } catch (Exception e) {
                     Debug.Log("Error: " + e.Message);
 
@@ -44,8 +46,6 @@ public static class NotificationsController
             }
         );
 
-
     }
-
 
 }

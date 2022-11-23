@@ -12,8 +12,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.UIElements;
-using Realms;
-using Realms.Exceptions;
 
 using System.Net.NetworkInformation;
 using Microsoft.MixedReality.SampleQRCodes;
@@ -21,23 +19,7 @@ using System.Linq;
 using static BestHTTP.SecureProtocol.Org.BouncyCastle.Math.EC.ECCurve;
 
 public class AppCommandCenter : MonoBehaviour
-{
-    private static RealmConfiguration realmConfig = new RealmConfiguration
-    {
-        SchemaVersion = 1
-    };
-    public static Realm realm {
-        get
-        {
-            realmConfig.ShouldDeleteIfMigrationNeeded = true;
-            return Realm.GetInstance(realmConfig);
-        }
-        private set
-        {
-            realm = value;
-        }
-    }    
-
+{  
 
     BinaryTree pacientsMemory;
 
@@ -124,17 +106,15 @@ public class AppCommandCenter : MonoBehaviour
 
 
         Debug.Log("Persisted");
-        realm.Write(() => {
 
-            realm.RemoveAll();
-
-        });
+        RealmController.BulldozeRealm();
 
     }
 
     void OnDisable()
     {
-        realm.Dispose();
+        RealmController.realm.Dispose();
+
     }
 
 

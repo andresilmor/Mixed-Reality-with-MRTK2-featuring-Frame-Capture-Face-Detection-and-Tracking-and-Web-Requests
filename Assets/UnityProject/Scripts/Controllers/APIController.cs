@@ -253,7 +253,7 @@ public static class APIController
         }
     }
 
-    public static async Task ExecuteQuery(string operation, string token, Field type,  Action<string> callback, params Field[] args)
+    public static async Task ExecuteRequest(string operation, string token, Field type,  Action<string> callback, params Field[] args)
     {
         if (!HTTPManager.IsCachingDisabled) {
             HTTPCacheService.BeginClear();
