@@ -61,6 +61,7 @@ public static class AccountController
         AppCommandCenter.qrCodesManager.StopQRTracking();
         AppCommandCenter.qrCodesManager.QRCodeAdded -= LoginQRCode;
         
+
         requesting = true;
         APIController.Field queryOperation = new APIController.Field(
         "memberLogin", new APIController.FieldParams[] {
@@ -73,6 +74,7 @@ public static class AccountController
                 try
                 {
                     JObject response = JObject.Parse(@message); 
+                    
                     if (response["data"] != null) {
                         isLogged = SaveUser(response);
                         requesting = false;
@@ -108,8 +110,8 @@ public static class AccountController
 
     private static bool SaveUser(JObject response)
     {
-        if (RealmController.CreateUpdateUser(response, response["data"]["memberLogin"]["uuid"].ToString()))
-            currentUserUUID = response["data"]["memberLogin"]["uuid"].ToString();
+        if (RealmController.CreateUpdateUser(response, response["data"]["memberLogin"]["uuid"].Value<string>()))
+            currentUserUUID = response["data"]["memberLogin"]["uuid"].Value<string>();
 
         return SetRelationshipInstitution(response);
 

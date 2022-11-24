@@ -104,9 +104,6 @@ public class AppCommandCenter : MonoBehaviour
 
         GUIController.sceneContent = sceneContent;
 
-
-        Debug.Log("Persisted");
-
         RealmController.BulldozeRealm();
 
     }

@@ -4,6 +4,8 @@ using UnityEngine;
 using Realms;
 using System;
 using Newtonsoft.Json.Linq;
+using System.Runtime.CompilerServices;
+using System.Linq;
 
 public static class RealmController
 {
@@ -34,17 +36,19 @@ public static class RealmController
 
             });
 
+            Debug.Log("The Realm was destroyed. No survivers.");
+
         }
 
     }
 
     /// <summary>
-    /// Checks existance of UserEntity with the gived userUUID, if already existes just updates the content based on the response, if not, a new one is created.
+    /// Checks existance of UserEntity with the gived userUUID, if already existes just updates the content based on the data, if not, a new one is created.
     /// </summary>
-    /// <param name="response"></param>
+    /// <param name="data"></param>
     /// <param name="userUUID"></param>
     /// <returns>True: Updated/created and commited | False: Did not commit</returns>
-    public static bool CreateUpdateUser(JObject response, string userUUID)
+    public static bool CreateUpdateUser(JObject data, string userUUID)
     {
         RealmObject userObject = RealmController.realm.Find<UserEntity>(userUUID);
 
@@ -57,8 +61,8 @@ public static class RealmController
                     if (userObject == null)
                     {
                         userObject = new UserEntity(
-                                UUID: response["data"]["memberLogin"]["uuid"].ToString(),
-                                token: response["data"]["memberLogin"]["token"].ToString()
+                                UUID: data["data"]["memberLogin"]["uuid"].Value<string>(),
+                                token: data["data"]["memberLogin"]["token"].Value<string>()
                         );
                         realm.Add(userObject);
                         Debug.Log("User Added");
@@ -66,7 +70,7 @@ public static class RealmController
                     }
                     else
                     {
-                        (userObject as UserEntity).Token = response["data"]["memberLogin"]["token"].ToString();
+                        (userObject as UserEntity).Token = data["data"]["memberLogin"]["token"].Value<string>();
                         realm.Add(userObject, update: true);
                         Debug.Log("User Updtted");
 
@@ -96,7 +100,7 @@ public static class RealmController
     /// <returns></returns>
     public static bool CreateUpdateUserMembership(RealmObject userObject, JToken relationship)
     {
-        InstitutionEntity institution = RealmController.realm.Find<InstitutionEntity>(relationship["institution"]["uuid"].ToString());
+        InstitutionEntity institution = RealmController.realm.Find<InstitutionEntity>(relationship["institution"]["uuid"].Value<string>());
 
         using (var realm = RealmController.realm)
         {
@@ -105,12 +109,12 @@ public static class RealmController
             {
                 if (institution == null)
                 {
-                    institution = new InstitutionEntity(relationship["institution"]["uuid"].ToString());
+                    institution = new InstitutionEntity(relationship["institution"]["uuid"].Value<string>());
                     RealmController.realm.Add(institution);
 
                 }
 
-                (userObject as UserEntity).MemberOf.Add(new MemberOf(relationship["role"].ToString(), institution));
+                (userObject as UserEntity).MemberOf.Add(new MemberOf(relationship["role"].Value<string>(), institution));
                 RealmController.realm.Add(userObject, update: true);
                 transiction.Commit();
                 return true;
@@ -125,6 +129,66 @@ public static class RealmController
             }
 
         }
+    }
+
+    public static bool CreateUpdateMedicationToTake(JToken data)
+    {
+        //Debug.Log( DateTimeOffset.Parse(medicationToTake["atTime"].Value<string>()).ToString());
+        
+        PacientEntity pacient = RealmController.realm.Find<PacientEntity>(data["pacient"]["uuid"].Value<string>());
+        if (pacient is null)
+            pacient = new PacientEntity(data["pacient"]["uuid"].Value<string>());
+
+        MedicationEntity medication = RealmController.realm.Find<MedicationEntity>(data["medication"]["uuid"].Value<string>());
+        if (medication is null)
+            medication = new MedicationEntity(data["medication"]["uuid"].Value<string>(), data["medication"]["name"].Value<string>());
+
+        MedicationToTakeEntity medicationToTake = null;
+        medicationToTake = RealmController.realm.All<MedicationToTakeEntity>().Filter(
+                "Medication.UUID == '" + medication.UUID + "' && Pacient.UUID == '" + pacient.UUID + "'"
+                ).FirstOrDefault();
+
+
+        if (medicationToTake is null)
+        {
+            if (data["atTime"].Type != JTokenType.Null)
+                medicationToTake = new MedicationToTakeEntity(data["quantity"].Value<byte>(), DateTimeOffset.Parse(data["atTime"].Value<string>()), pacient, medication);
+            else
+                medicationToTake = new MedicationToTakeEntity(data["quantity"].Value<byte>(), pacient, medication);
+        
+        } else { 
+            if (medicationToTake.atTime > DateTimeOffset.Parse(data["atTime"].Value<string>())) { 
+                // TO DO (When we start to have mutations in the API XD
+            
+            }
+        
+        }
+
+        using (Realm realm = RealmController.realm)
+        {
+            using (Transaction transaction = realm.BeginWrite())
+            {
+                try
+                {
+                    realm.Add(pacient, update: true);
+                    realm.Add(medication, update: true);
+                    realm.Add(medicationToTake, update: true);
+
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log(ex.Message);
+                    transaction.Dispose();
+
+                }
+
+            }
+
+        }
+
+        return false;
     }
 
 }

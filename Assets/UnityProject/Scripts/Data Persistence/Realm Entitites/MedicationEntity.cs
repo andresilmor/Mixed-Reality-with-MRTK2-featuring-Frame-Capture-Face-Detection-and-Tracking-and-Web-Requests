@@ -1,6 +1,6 @@
 using Realms;
 
-public class MedicationEntity
+public class MedicationEntity : RealmObject
 {
 
     [PrimaryKey]

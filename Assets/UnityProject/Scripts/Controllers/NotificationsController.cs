@@ -22,13 +22,18 @@ public static class NotificationsController
             (message) => {
                 try {
                     JObject response = JObject.Parse(@message);
-                    
-                    Debug.Log(response.ToString());
 
+                    foreach (var medicationToTake in response["data"]["medicationToTake"])
+                        RealmController.CreateUpdateMedicationToTake(medicationToTake);
+                    //Debug.Log( DateTimeOffset.Parse(medicationToTake["atTime"].Value<string>()).ToString());
 
+                    //foreach (var medicationToTake in response["data"]["medicationToTake"])
+                    //    RealmController.CreateUpdateMedicationToTake(response);
+
+                    //if ((response["data"]["medicationToTake"] as Newtonsoft.Json.Linq.JArray).Count >
 
                 } catch (Exception e) {
-                    Debug.Log("Error: " + e.Message);
+                    Debug.LogException(e);
 
                 }
 
