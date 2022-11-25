@@ -82,7 +82,7 @@ public class AppCommandCenter : MonoBehaviour
         return info;
     }
 
-    private static AppCommandCenter _instance;
+    private static AppCommandCenter _instance = null;
     public static AppCommandCenter Instance
     {
         get { return _instance; }
@@ -113,6 +113,11 @@ public class AppCommandCenter : MonoBehaviour
     {
         RealmController.realm.Dispose();
 
+    }
+
+    void Awake()
+    {
+        Instance = this;
     }
 
 
@@ -329,6 +334,7 @@ public class AppCommandCenter : MonoBehaviour
     private void OnDestroy()
     {
         APIController.CloseAllWebSockets();
+        StopAllCoroutines();
     }
 
 }

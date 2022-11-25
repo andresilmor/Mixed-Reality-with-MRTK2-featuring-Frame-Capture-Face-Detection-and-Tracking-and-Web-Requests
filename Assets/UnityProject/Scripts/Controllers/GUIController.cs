@@ -6,7 +6,7 @@ public class GUIController : MonoBehaviour
 {
     public static GameObject sceneContent;
 
-    async public void Login() {
+    public async void Login() {
         await AccountController.Login();
     }
 

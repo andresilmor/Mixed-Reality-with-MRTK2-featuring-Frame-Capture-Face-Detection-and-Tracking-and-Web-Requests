@@ -132,11 +132,11 @@ public static class RealmController
         }
     }
 
-    public static bool CreateUpdateMedicationToTake(JToken data)
+    public static bool CreateUpdateMedicationToTake(JToken data, string institutionResponsible)
     {
         PacientEntity pacient = RealmController.realm.Find<PacientEntity>(data["pacient"]["uuid"].Value<string>());
         if (pacient is null)
-            pacient = new PacientEntity(data["pacient"]["uuid"].Value<string>());
+            pacient = new PacientEntity(data["pacient"]["uuid"].Value<string>(), RealmController.realm.Find<InstitutionEntity>(institutionResponsible));
 
         MedicationEntity medication = RealmController.realm.Find<MedicationEntity>(data["medication"]["uuid"].Value<string>());
         if (medication is null)
