@@ -1197,6 +1197,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &28470952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7942,7 +7943,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &107301702
 GameObject:
@@ -8149,6 +8150,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &107301706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8680,8 +8682,8 @@ RectTransform:
   m_Father: {fileID: 883909246}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 5, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9593,6 +9595,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &198241303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14263,6 +14266,7 @@ MonoBehaviour:
   - {fileID: 1899195445}
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &343487259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15228,7 +15232,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.561412, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0.00000011920929, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15544,6 +15548,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &386361399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16812,6 +16817,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &439927110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19487,7 +19493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &523692661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19533,7 +19539,7 @@ Transform:
   - {fileID: 1381467786}
   - {fileID: 1167253822}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &524065763
 GameObject:
@@ -20423,6 +20429,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!82 &580232216
 AudioSource:
   m_ObjectHideFlags: 0
@@ -22980,6 +22987,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &693316487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32085,6 +32093,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1025790817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33135,6 +33144,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1045097843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36917,6 +36927,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1167253819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37867,6 +37878,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1193986534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46405,6 +46417,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1381467783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48210,6 +48223,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1442626571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50502,6 +50516,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1553115901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50934,6 +50949,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1565071812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51800,6 +51816,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1571746796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53780,6 +53797,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1661396858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57233,6 +57251,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!82 &1797903982
 AudioSource:
   m_ObjectHideFlags: 0
@@ -58589,7 +58608,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -59420,6 +59439,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1899195446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60372,7 +60392,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1940555545
 GameObject:
@@ -61894,6 +61914,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &1980766311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63205,6 +63226,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &2015564358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63532,6 +63554,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2021248687}
   m_CullTransparentMesh: 1
+--- !u!1 &2026083518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2026083520}
+  - component: {fileID: 2026083519}
+  m_Layer: 0
+  m_Name: Window Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2026083519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026083518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc47c97320c087649967a13703c396bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2026083520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2026083518}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2038584816
 GameObject:
   m_ObjectHideFlags: 0
@@ -64254,6 +64319,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &2054676762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65569,6 +65635,7 @@ MonoBehaviour:
   nestedIAM: []
   waitAppear_Nested: 0
   waitDisappear_Nested: 0
+  interfaceAnimElementsList: {fileID: 0}
 --- !u!114 &2124516532
 MonoBehaviour:
   m_ObjectHideFlags: 0

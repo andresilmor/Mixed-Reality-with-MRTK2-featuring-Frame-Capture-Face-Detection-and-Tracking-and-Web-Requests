@@ -18,6 +18,7 @@ using Microsoft.MixedReality.SampleQRCodes;
 using System.Linq;
 using static BestHTTP.SecureProtocol.Org.BouncyCastle.Math.EC.ECCurve;
 
+
 public class AppCommandCenter : MonoBehaviour
 {  
 
@@ -122,7 +123,6 @@ public class AppCommandCenter : MonoBehaviour
 #endif
     {
         SetDebugger();
-        Debug.Log(DateTime.Now);
 
         if (pacientsMemory == null)
             pacientsMemory = new BinaryTree();
@@ -131,7 +131,6 @@ public class AppCommandCenter : MonoBehaviour
 
         qrCodesManager = controllers.GetComponent<QRCodesManager>();
 
-
 #if ENABLE_WINMD_SUPPORT
         AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
@@ -139,7 +138,6 @@ public class AppCommandCenter : MonoBehaviour
         //APIController.CreateWebSocketConnection(APIController.pacientsDetection, MapPredictions);
 
     }
-
 
 
 

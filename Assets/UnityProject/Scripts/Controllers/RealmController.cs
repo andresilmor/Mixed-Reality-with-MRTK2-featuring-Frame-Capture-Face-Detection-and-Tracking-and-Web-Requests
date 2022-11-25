@@ -54,7 +54,7 @@ public static class RealmController
 
         using (Realm realm = RealmController.realm)
         {
-            using (Transaction transiction = realm.BeginWrite())
+            using (Transaction transaction = realm.BeginWrite())
             {
                 try
                 {
@@ -65,7 +65,6 @@ public static class RealmController
                                 token: data["data"]["memberLogin"]["token"].Value<string>()
                         );
                         realm.Add(userObject);
-                        Debug.Log("User Added");
 
                     }
                     else
@@ -75,13 +74,13 @@ public static class RealmController
                         Debug.Log("User Updtted");
 
                     }
-                    transiction.Commit();
+                    transaction.Commit();
                     return true;
 
                 }
                 catch (Exception ex)
                 {
-                    transiction.Dispose();
+                    transaction.Rollback();
                     return false;
 
                 }
@@ -102,29 +101,31 @@ public static class RealmController
     {
         InstitutionEntity institution = RealmController.realm.Find<InstitutionEntity>(relationship["institution"]["uuid"].Value<string>());
 
-        using (var realm = RealmController.realm)
+        using (Realm realm = RealmController.realm)
         {
-            var transiction = realm.BeginWrite();
-            try
-            {
-                if (institution == null)
+            using (Transaction transaction = realm.BeginWrite()) {
+                try
                 {
-                    institution = new InstitutionEntity(relationship["institution"]["uuid"].Value<string>());
-                    RealmController.realm.Add(institution);
+                    if (institution == null)
+                    {
+                        institution = new InstitutionEntity(relationship["institution"]["uuid"].Value<string>());
+                        RealmController.realm.Add(institution);
+
+                    }
+
+                    (userObject as UserEntity).MemberOf.Add(new MemberOf(relationship["role"].Value<string>(), institution));
+                    RealmController.realm.Add(userObject, update: true);
+                    transaction.Commit();
+                    return true;
 
                 }
+                catch (Exception ex)
+                {
+                    Debug.Log("Error: " + ex.Message);
+                    transaction.Rollback();
+                    return false;
 
-                (userObject as UserEntity).MemberOf.Add(new MemberOf(relationship["role"].Value<string>(), institution));
-                RealmController.realm.Add(userObject, update: true);
-                transiction.Commit();
-                return true;
-
-            }
-            catch (Exception ex)
-            {
-                Debug.Log("Error: " + ex.Message);
-                transiction.Dispose();
-                return false;
+                }
 
             }
 
@@ -133,8 +134,6 @@ public static class RealmController
 
     public static bool CreateUpdateMedicationToTake(JToken data)
     {
-        //Debug.Log( DateTimeOffset.Parse(medicationToTake["atTime"].Value<string>()).ToString());
-        
         PacientEntity pacient = RealmController.realm.Find<PacientEntity>(data["pacient"]["uuid"].Value<string>());
         if (pacient is null)
             pacient = new PacientEntity(data["pacient"]["uuid"].Value<string>());
@@ -147,7 +146,6 @@ public static class RealmController
         medicationToTake = RealmController.realm.All<MedicationToTakeEntity>().Filter(
                 "Medication.UUID == '" + medication.UUID + "' && Pacient.UUID == '" + pacient.UUID + "'"
                 ).FirstOrDefault();
-
 
         if (medicationToTake is null)
         {
@@ -164,23 +162,24 @@ public static class RealmController
         
         }
 
+        Debug.Log(medicationToTake.Medication.Name);
+
         using (Realm realm = RealmController.realm)
         {
             using (Transaction transaction = realm.BeginWrite())
             {
-                try
-                {
+                try {
                     realm.Add(pacient, update: true);
                     realm.Add(medication, update: true);
                     realm.Add(medicationToTake, update: true);
 
                     transaction.Commit();
                     return true;
-                }
-                catch (Exception ex)
-                {
+
+                } catch (Exception ex) {
                     Debug.Log(ex.Message);
-                    transaction.Dispose();
+                    transaction.Rollback();
+                    return false;
 
                 }
 
@@ -188,7 +187,6 @@ public static class RealmController
 
         }
 
-        return false;
     }
 
 }

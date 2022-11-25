@@ -68,17 +68,20 @@ public static class AccountController
             new APIController.FieldParams("username", "\"" + qrMessage["username"] + "\""),
             new APIController.FieldParams("password", "\"" + qrMessage["password"] + "\""),
         });
+        Debug.Log("Here");
 
-        await APIController.ExecuteRequest("Read", null, queryOperation,
-            (message) => {
-                try
-                {
-                    JObject response = JObject.Parse(@message); 
+        await APIController.ExecuteRequest(null, queryOperation,
+            (message, succeed) => {
+                Debug.Log(succeed);
+                try {
+                    if (succeed) { 
+                        JObject response = JObject.Parse(@message); 
                     
-                    if (response["data"] != null) {
-                        isLogged = SaveUser(response);
-                        requesting = false;
+                        if (response["data"] != null) {
+                            isLogged = SaveUser(response);
+                            requesting = false;
 
+                        }
                     }
 
                 } catch (Exception e) {

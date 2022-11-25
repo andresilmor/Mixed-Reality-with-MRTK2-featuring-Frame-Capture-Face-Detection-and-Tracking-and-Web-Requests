@@ -1,4 +1,3 @@
-using BestHTTP.Logger;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -9,6 +8,8 @@ using Realms;
 public static class NotificationsController 
 {   
 
+
+
     async public static void SetupMedicationAlerts(string institutionUUID)
     {
 
@@ -18,19 +19,16 @@ public static class NotificationsController
                         new APIController.FieldParams("institutionID", "\"" + institutionUUID + "\""),
                     });
 
-        await APIController.ExecuteRequest("Read", RealmController.realm.Find<UserEntity>(AccountController.currentUserUUID).Token.ToString().Trim(), queryOperation,
-            (message) => {
+        await APIController.ExecuteRequest(RealmController.realm.Find<UserEntity>(AccountController.currentUserUUID).Token.ToString().Trim(), queryOperation,
+            (message, succeed) => {
                 try {
-                    JObject response = JObject.Parse(@message);
+                    if (succeed) { 
+                        JObject response = JObject.Parse(@message);
 
-                    foreach (var medicationToTake in response["data"]["medicationToTake"])
-                        RealmController.CreateUpdateMedicationToTake(medicationToTake);
-                    //Debug.Log( DateTimeOffset.Parse(medicationToTake["atTime"].Value<string>()).ToString());
+                        foreach (JToken medicationToTake in response["data"]["medicationToTake"])
+                            RealmController.CreateUpdateMedicationToTake(medicationToTake);
 
-                    //foreach (var medicationToTake in response["data"]["medicationToTake"])
-                    //    RealmController.CreateUpdateMedicationToTake(response);
-
-                    //if ((response["data"]["medicationToTake"] as Newtonsoft.Json.Linq.JArray).Count >
+                    }
 
                 } catch (Exception e) {
                     Debug.LogException(e);
@@ -50,6 +48,13 @@ public static class NotificationsController
                 })
             }
         );
+
+    }
+
+    private static void CreateTimeEventHandler()
+    {
+
+
 
     }
 

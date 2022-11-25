@@ -39,6 +39,9 @@ using UnityEngine.Networking;
 using System.Text;
 using static BestHTTP.SecureProtocol.Org.BouncyCastle.Crypto.Digests.SkeinEngine;
 using BestHTTP.Caching;
+using Microsoft.MixedReality.Toolkit.Utilities;
+using System.Threading;
+using UnityEngine.UIElements;
 
 public static class APIController 
 {
@@ -75,10 +78,19 @@ public static class APIController
 
     #endregion
 
-    private static string READ = "3466fab4975481651940ed328aa990e4";
-    private static string UPDATE = "15a8022d0ed9cd9c2a2e756822703eb4";
-    private static string CREATE = "294ce20cdefa29be3be0735cb62e715d";
-    private static string DELETE = "32f68a60cef40faedbc6af20298c1a1e";
+    public static void SetupAPI()
+    {
+        if (!HTTPManager.IsCachingDisabled)
+        {
+            HTTPCacheService.BeginClear();
+            HTTPManager.IsCachingDisabled = true;
+
+        }
+
+        HTTPManager.HTTP2Settings.EnableConnectProtocol = true;
+
+
+    }
 
     #region WebSockets Data
 
@@ -143,7 +155,7 @@ public static class APIController
 
     #endregion
 
-    #region WebSocket Functions
+    #region WebSocket
 
     public static WebSocket GetWebSocket(string path)
     {
@@ -181,7 +193,7 @@ public static class APIController
         }
     }
 
-    public static void CreateWebSocketConnection(string path, Action<string> callback)
+    public static void CreateWebSocketConnection(string path, Action<string> action)
     {
         try { 
             WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + ":" + port + websocketPath + path));
@@ -189,7 +201,7 @@ public static class APIController
             newConnection.OnMessage += (WebSocket webSocket, string message) =>
             {
                 if(message.Length > 6)
-                    callback?.Invoke(message);
+                    action?.Invoke(message);
             };
 
             newConnection.OnOpen += (WebSocket webSocket) =>
@@ -225,6 +237,42 @@ public static class APIController
 
     #endregion
 
+    #region HTTP Request General
+
+    private static void OnRequestFinished(Action<string, bool> action, HTTPRequest request, HTTPResponse response)
+    {
+        switch (request.State)
+        {
+            // The request finished without any problem.
+            case HTTPRequestStates.Finished:
+                action?.Invoke(response.DataAsText, true);
+                break;
+
+            // The request finished with an unexpected error. The request's Exception property may contain more info about the error.
+            case HTTPRequestStates.Error:
+                action?.Invoke(response.DataAsText, false);
+                Debug.LogError("Request Finished with Error! " + (request.Exception != null ? (request.Exception.Message + "\n" + request.Exception.StackTrace) : "No Exception"));
+                break;
+
+            // The request aborted, initiated by the user.
+            case HTTPRequestStates.Aborted:
+                Debug.LogWarning("Request Aborted!");
+                break;
+
+            // Connecting to the server is timed out.
+            case HTTPRequestStates.ConnectionTimedOut:
+                Debug.LogError("Connection Timed Out!");
+                break;
+
+            // The request didn't finished in the given time.
+            case HTTPRequestStates.TimedOut:
+                Debug.LogError("Processing the request Timed Out!");
+                break;
+        }
+    }
+
+    #endregion
+
     #region GraphQL Query Functions
     private static void MountQuery(Field[] args, ref string query, byte identationLevel = 2)
     {
@@ -253,19 +301,13 @@ public static class APIController
         }
     }
 
-    public static async Task ExecuteRequest(string operation, string token, Field type,  Action<string> callback, params Field[] args)
+    public static async Task ExecuteRequest(string token, Field type,  Action<string, bool> action, params Field[] args)
     {
-        if (!HTTPManager.IsCachingDisabled) {
-            HTTPCacheService.BeginClear();
-            HTTPManager.IsCachingDisabled = true;
-
-        }
 
         await Task.Run(() => { 
             string query = "query {\r\n";
             query += (new string('\t', 1) + type.name);
-            if (type.parameters != null)
-            {
+            if (type.parameters != null) {
                 query += " (";
                 foreach (FieldParams parameter in type.parameters)
                     query += (parameter.name + ": " + parameter.value + ", ");
@@ -282,29 +324,24 @@ public static class APIController
             byte[] postData = Encoding.ASCII.GetBytes(jsonData);
 
 
-            using (HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => {
-                callback?.Invoke(response.DataAsText);
-            }))
-            {
+            using (HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => OnRequestFinished(action, request, response))) {
                 request.DisableCache = true;
 
                 request.SetHeader("Content-Type", "application/json; charset=UTF-8");
+                request.SetHeader("Accept", "application/json");
+                request.SetHeader("Keep-Alive", "timeout = 2, max = 20");
+
                 if (token != null)
                     request.SetHeader("Authorization", token);
-                request.SetHeader("Operation", operation);
 
                 request.RawData = Encoding.UTF8.GetBytes(jsonData);
                 request.Send();
-            }
-                //HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => {
-                  //  callback?.Invoke(response.DataAsText);
-                //});
 
-            
+            }
+
         });
     }
 
     #endregion
 
-    
 }
