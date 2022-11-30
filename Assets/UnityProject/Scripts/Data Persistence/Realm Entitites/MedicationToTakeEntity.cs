@@ -9,7 +9,7 @@ public class MedicationToTakeEntity : RealmObject
 
     public byte Quantity { get; set; }
 
-    public DateTimeOffset atTime { get; set; }
+    public DateTimeOffset? AtTime { get; set; }
 
     public PacientEntity Pacient { get; set; }
 
@@ -20,13 +20,14 @@ public class MedicationToTakeEntity : RealmObject
     public MedicationToTakeEntity(byte quantity, DateTimeOffset atTime, PacientEntity pacient, MedicationEntity medication)
     {
         Quantity = quantity;
-        this.atTime = atTime;
+        this.AtTime = atTime;
         Pacient = pacient;
         Medication = medication;
     }
 
     public MedicationToTakeEntity(byte quantity, PacientEntity pacient, MedicationEntity medication)
     {
+        AtTime = null;
         Quantity = quantity;
         Pacient = pacient;
         Medication = medication;

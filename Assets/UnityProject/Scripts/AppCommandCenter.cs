@@ -127,12 +127,16 @@ public class AppCommandCenter : MonoBehaviour
     async void Start()
 #endif
     {
+        
         SetDebugger();
 
         if (pacientsMemory == null)
             pacientsMemory = new BinaryTree();
 
         Debugger.AddText(ShowNetworkInterfaces());
+
+
+
 
         qrCodesManager = controllers.GetComponent<QRCodesManager>();
 

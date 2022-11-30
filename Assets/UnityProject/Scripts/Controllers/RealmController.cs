@@ -155,14 +155,12 @@ public static class RealmController
                 medicationToTake = new MedicationToTakeEntity(data["quantity"].Value<byte>(), pacient, medication);
         
         } else { 
-            if (medicationToTake.atTime > DateTimeOffset.Parse(data["atTime"].Value<string>())) { 
+            if (medicationToTake.AtTime > DateTimeOffset.Parse(data["atTime"].Value<string>())) { 
                 // TO DO (When we start to have mutations in the API XD
             
             }
         
         }
-
-        Debug.Log(medicationToTake.Medication.Name);
 
         using (Realm realm = RealmController.realm)
         {

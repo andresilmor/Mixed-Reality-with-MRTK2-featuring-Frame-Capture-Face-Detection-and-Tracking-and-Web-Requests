@@ -21,6 +21,16 @@ public static class Parser
         return base64;
     }
 
+    //ex if string: 2020-08-14T15:54:04+01:00
+    public static DateTime StringToDateTime(string datetime)
+    {
+        string date = Regex.Match(datetime, @"^\d{4}-\d{2}-\d{2}").ToString();
+        string time = Regex.Match(datetime, @"\d{2}:\d{2}:\d{2}").ToString();
+
+        return DateTime.Parse(string.Format("{0} {1}", date, time));
+
+    }
+
 
 #if ENABLE_WINMD_SUPPORT
     public static async Task<byte[]> ToByteArray(SoftwareBitmap sftBitmap_c)

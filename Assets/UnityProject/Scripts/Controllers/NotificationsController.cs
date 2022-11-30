@@ -67,7 +67,8 @@ public static class NotificationsController
         foreach (MedicationToTakeEntity medicationToTake in RealmController.realm.All<MedicationToTakeEntity>().Filter(
             "Pacient.InstitutionInCare.UUID == '" + institutionUUID + "'"
             )) {
-            Debug.Log(medicationToTake.Medication.Name);
+            if (medicationToTake.AtTime.HasValue)
+                Debug.Log(medicationToTake.AtTime.ToString() );
             yield return null;
 
         }
