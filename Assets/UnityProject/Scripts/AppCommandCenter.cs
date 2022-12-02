@@ -17,15 +17,27 @@ using System.Net.NetworkInformation;
 using Microsoft.MixedReality.SampleQRCodes;
 using System.Linq;
 using static BestHTTP.SecureProtocol.Org.BouncyCastle.Math.EC.ECCurve;
+using UnityEngine.SceneManagement;
+using Microsoft.MixedReality.Toolkit;
 
-
+[DisallowMultipleComponent]
 public class AppCommandCenter : MonoBehaviour
 {  
 
     BinaryTree pacientsMemory;
 
-    [Header("Graphical User Interface:")]
-    [SerializeField] GameObject sceneContent;
+    private static Camera _cameraMain;
+    public static Camera cameraMain { 
+        get
+        {
+            if (_cameraMain == null)
+                cameraMain = Camera.main;
+            return _cameraMain;
+        }
+
+        private set { _cameraMain = value; }
+    
+    }
 
     [Header("World Markers:")]
     [SerializeField] GameObject personMarker;
@@ -42,7 +54,7 @@ public class AppCommandCenter : MonoBehaviour
     [SerializeField] GameObject detectionName;
     [SerializeField] GameObject general;
 
-
+    public UIController uiController { get; private set; }
 
     // Attr's for the Machine Learning and detections
     private static FrameHandler _frameHandler = null;
@@ -103,8 +115,6 @@ public class AppCommandCenter : MonoBehaviour
     {
         BestHTTP.HTTPManager.Setup();
 
-        GUIController.sceneContent = sceneContent;
-
         RealmController.BulldozeRealm();
 
     }
@@ -127,7 +137,8 @@ public class AppCommandCenter : MonoBehaviour
     async void Start()
 #endif
     {
-        
+        Debug.Log(AppCommandCenter.cameraMain.transform.position.ToString());
+
         SetDebugger();
 
         if (pacientsMemory == null)
@@ -135,10 +146,14 @@ public class AppCommandCenter : MonoBehaviour
 
         Debugger.AddText(ShowNetworkInterfaces());
 
+        if (!SceneManager.GetSceneByName("UI").isLoaded) { 
+            await SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
+            uiController = FindObjectOfType<UIController>();
+            uiController.OpenWindow("Login", stackerName: "Login Window");
 
+        }
 
-
-        qrCodesManager = controllers.GetComponent<QRCodesManager>();
+        qrCodesManager = new QRCodesManager();
 
 #if ENABLE_WINMD_SUPPORT
         AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
@@ -272,7 +287,7 @@ public class AppCommandCenter : MonoBehaviour
                         videoFrame.SoftwareBitmap.Dispose();
                         //Debug.Log($"[### DEBUG ###] byteArray Size = {byteArray.Length}");
                       
-                        Instantiate(Debugger.GetSphereForTest(), Camera.main.transform.position, Quaternion.identity);
+                        Instantiate(Debugger.GetSphereForTest(), AppCommandCenter.cameraMain.transform.position, Quaternion.identity);
                         Instantiate(Debugger.GetCubeForTest(), lastFrame.extrinsic.Position, Quaternion.identity);
                        
                         //this.tempExtrinsic = lastFrame.extrinsic;

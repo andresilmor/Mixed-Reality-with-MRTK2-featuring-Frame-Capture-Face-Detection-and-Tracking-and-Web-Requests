@@ -78,7 +78,6 @@ public static class AccountController
                         if (response["data"] != null) {
                             isLogged = SaveUser(response);
                             requesting = false;
-
                         }
                     }
 

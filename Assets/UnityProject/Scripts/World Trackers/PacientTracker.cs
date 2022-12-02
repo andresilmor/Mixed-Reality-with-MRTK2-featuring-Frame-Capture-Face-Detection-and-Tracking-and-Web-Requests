@@ -48,7 +48,7 @@ public class PacientTracker : MonoBehaviour
 
     void FixedUpdate()
     {
-        this.gameObject.transform.LookAt(Camera.main.transform.position);
+        this.gameObject.transform.LookAt(AppCommandCenter.cameraMain.transform.position);
         
     }
 

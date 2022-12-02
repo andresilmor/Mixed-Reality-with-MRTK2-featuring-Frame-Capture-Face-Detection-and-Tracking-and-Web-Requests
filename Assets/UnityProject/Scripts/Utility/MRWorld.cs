@@ -77,7 +77,7 @@ public static class MRWorld
             }
 
             Point point = new Point(rect.x + rect.width / 2, rect.y + rect.height * offsetFactor);
-            return new Windows.Foundation.Point(point.x, Camera.main.pixelHeight - point.y); //846 = Frame Height, static now but we can turn dynamic and get from Intrinsics
+            return new Windows.Foundation.Point(point.x, AppCommandCenter.cameraMain.pixelHeight - point.y); //846 = Frame Height, static now but we can turn dynamic and get from Intrinsics
         }
 
 #endif
@@ -114,7 +114,7 @@ public static class MRWorld
     public static Vector2 GetUnprojectionOffset(float posY)
     {
         Vector2 unprojectionOffset = Vector2.zero;
-        if (posY > Camera.main.pixelHeight / 2) // Got by trial and error
+        if (posY > AppCommandCenter.cameraMain.pixelHeight / 2) // Got by trial and error
         {
             unprojectionOffset = new Vector2(0, -0.05f);
             Debugger.AddText("Unprojection A");
@@ -285,7 +285,7 @@ public static class MRWorld
 
         /*
 
-        if (results[0].list[0].box.centerY > Camera.main.pixelHeight / 2) {
+        if (results[0].list[0].box.centerY > AppCommandCenter.cameraMain.pixelHeight / 2) {
             cubeOffsetInWorldSpace = new System.Numerics.Vector3(0.0f, 0.12f, 0.0f);
             position = (bestRectPositionInWorldspace - cubeOffsetInWorldSpace).ToUnity();
             debugText.text = debugText.text + "\nNew PositionOffset X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
