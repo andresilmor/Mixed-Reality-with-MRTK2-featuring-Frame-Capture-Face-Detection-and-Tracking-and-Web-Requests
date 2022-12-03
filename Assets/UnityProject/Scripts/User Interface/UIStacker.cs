@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class UIStacker : MonoBehaviour
 {
     private Stack<UIWindow> WindowStack = new Stack<UIWindow>();

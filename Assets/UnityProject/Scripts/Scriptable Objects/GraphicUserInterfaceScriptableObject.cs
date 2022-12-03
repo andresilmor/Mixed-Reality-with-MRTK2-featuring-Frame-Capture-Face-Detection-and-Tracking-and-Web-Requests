@@ -11,7 +11,12 @@ public class GraphicUserInterfaceScriptableObject : ScriptableObject
     {
         public string name;
         public GameObject window;
+        public string[] windowComponents;
     }
+
+
+
+
 
     [SerializeField] data[] _windows;
     public data[] windows

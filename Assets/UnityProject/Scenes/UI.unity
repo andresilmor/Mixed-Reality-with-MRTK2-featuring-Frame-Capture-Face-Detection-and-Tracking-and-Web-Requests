@@ -212,5 +212,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphicUserInterface: {fileID: 11400000, guid: 61cc6a5d39d640a478a4e806e877ce63, type: 2}
-  initalWindow: Login
   uiPool: {fileID: 458620962}

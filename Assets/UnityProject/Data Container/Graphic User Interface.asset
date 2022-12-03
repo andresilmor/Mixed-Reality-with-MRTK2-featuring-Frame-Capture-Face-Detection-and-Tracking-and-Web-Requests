@@ -13,5 +13,12 @@ MonoBehaviour:
   m_Name: Graphic User Interface
   m_EditorClassIdentifier: 
   _windows:
-  - name: Login
-    window: {fileID: 973730315945128145, guid: 7ec73e43495a46240bafe385e021f180, type: 3}
+  - name: Header & Two Buttons
+    window: {fileID: 276482839091159031, guid: 320c3886c6cae114095f21387da22e64, type: 3}
+    windowComponents:
+    - Title
+    - Subtitle
+    - TopButtonText
+    - BotButton
+    - BotButtonText
+    - TopButton

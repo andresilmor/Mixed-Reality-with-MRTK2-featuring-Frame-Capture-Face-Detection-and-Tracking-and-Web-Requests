@@ -20,6 +20,7 @@ using static BestHTTP.SecureProtocol.Org.BouncyCastle.Math.EC.ECCurve;
 using UnityEngine.SceneManagement;
 using Microsoft.MixedReality.Toolkit;
 
+
 [DisallowMultipleComponent]
 public class AppCommandCenter : MonoBehaviour
 {  
@@ -39,12 +40,12 @@ public class AppCommandCenter : MonoBehaviour
     
     }
 
+    [Header("Config:")]
+    [SerializeField] GameObject controllers;
+
     [Header("World Markers:")]
     [SerializeField] GameObject personMarker;
-
-    [Header("Support:")]
-    [SerializeField] GameObject controllers;
-   
+    
 
     [Header("Debugger:")]
     [SerializeField] TextMeshPro debugText;
@@ -146,14 +147,14 @@ public class AppCommandCenter : MonoBehaviour
 
         Debugger.AddText(ShowNetworkInterfaces());
 
-        if (!SceneManager.GetSceneByName("UI").isLoaded) { 
+        if (!SceneManager.GetSceneByName("UI").isLoaded)
             await SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
-            uiController = FindObjectOfType<UIController>();
-            uiController.OpenWindow("Login", stackerName: "Login Window");
 
-        }
+        uiController = FindObjectOfType<UIController>();
+        Debug.Log(uiController is null);
+        uiController.OpenWindow("Header & Two Buttons", stackerName: "Login Window");
 
-        qrCodesManager = new QRCodesManager();
+        qrCodesManager = controllers.GetComponent<QRCodesManager>();
 
 #if ENABLE_WINMD_SUPPORT
         AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();

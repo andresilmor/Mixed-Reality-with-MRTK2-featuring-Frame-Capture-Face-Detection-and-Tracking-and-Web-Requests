@@ -41,9 +41,12 @@ public class UIController : MonoBehaviour
 
         if (stacker is null)
         {
-            GameObject newGameObject = Instantiate(new GameObject(), position, Quaternion.identity, this.gameObject.transform);
+            Debug.Log("oi");
+            GameObject newGameObject = new GameObject(stackerName);
+            newGameObject.transform.position = position;
+            newGameObject.transform.rotation = Quaternion.identity;
+            newGameObject.transform.parent = this.gameObject.transform;
             stacker = newGameObject.AddComponent<UIStacker>();
-            stacker.gameObject.name = stackerName;
 
         }
 
@@ -94,29 +97,30 @@ public class UIController : MonoBehaviour
     }
 
 
-        /*
-        public void PopAllWindows() {
-            foreach (UIWindow window in WindowStack)
-                PopWindow();
+    /*
+    public void PopAllWindows() {
+        foreach (UIWindow window in WindowStack)
+            PopWindow();
 
-            WindowStack.Clear();
+        WindowStack.Clear();
 
-        }
+    }
 
-        public bool IsWindowInStack(UIWindow window) { 
-            return WindowStack.Contains(window);
+    public bool IsWindowInStack(UIWindow window) { 
+        return WindowStack.Contains(window);
 
-        }
+    }
 
-        public bool IsWindowOnTop(UIWindow window) { 
-            return WindowStack.Count > 0 && WindowStack.Peek() == window;
-        }
+    public bool IsWindowOnTop(UIWindow window) { 
+        return WindowStack.Count > 0 && WindowStack.Peek() == window;
+    }
+    }
+     */
 
+    public async void LoginQR() {
+        await AccountController.LoginQR();
 
-        public async void Login() {
-            await AccountController.Login();
-        }
-         */
+    }
 
 
 

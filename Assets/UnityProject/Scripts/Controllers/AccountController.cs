@@ -37,13 +37,16 @@ public static class AccountController
     //public delegate void OnVariableChangeDelegate(bool newValue);
     //public static event OnVariableChangeDelegate OnLoggedStatusChange;
 
+    public static UIWindow loginWindow;
+
     private static bool requesting = false;
 
     #region Login
 
-    async public static Task<bool> Login()
+    async public static Task<bool> LoginQR()
     {
-       
+
+
         AppCommandCenter.qrCodesManager.StartQRTracking();
         AppCommandCenter.qrCodesManager.QRCodeAdded += LoginQRCode;
 
