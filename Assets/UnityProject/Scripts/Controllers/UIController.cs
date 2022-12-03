@@ -39,9 +39,7 @@ public class UIController : MonoBehaviour
         Vector3 position = AppCommandCenter.cameraMain.transform.position;
         position.z += 0.50f;
 
-        if (stacker is null)
-        {
-            Debug.Log("oi");
+        if (stacker is null) {
             GameObject newGameObject = new GameObject(stackerName);
             newGameObject.transform.position = position;
             newGameObject.transform.rotation = Quaternion.identity;
@@ -50,18 +48,14 @@ public class UIController : MonoBehaviour
 
         }
 
-        if (!window)
-        {
-            foreach (var data in graphicUserInterface.windows)
-            {
+        if (!window) {
+            foreach (var data in graphicUserInterface.windows) {
                 if (data.name.Equals(toOpen))
                     window = Instantiate(data.window, position, Quaternion.identity, stacker.gameObject.transform).GetComponent<UIWindow>();
 
             }
 
-        }
-        else
-        {
+        } else {
             WindowPool[toOpen].Remove(window);
             window.gameObject.transform.SetParent(stacker.gameObject.transform, true);
 
