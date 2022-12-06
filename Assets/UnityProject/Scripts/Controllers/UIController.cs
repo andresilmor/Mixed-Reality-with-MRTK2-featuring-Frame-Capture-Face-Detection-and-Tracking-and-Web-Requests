@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(MixedRealitySceneContent))]
 [DisallowMultipleComponent]
@@ -32,7 +33,14 @@ public class UIController : MonoBehaviour
     private List<UIStacker> UIStackers = new List<UIStacker>();
     private Dictionary<string, List<UIWindow>> WindowPool = new Dictionary<string, List<UIWindow>>();
 
-    public UIStacker OpenWindow(string toOpen, UIStacker stacker = null, string stackerName = "")
+    void Start()
+    { 
+        graphicUserInterface.SetupComponentsDictionary();
+        AppCommandCenter.StartApplication();
+
+    }
+
+    public UIWindow OpenWindow(string toOpen, UIStacker stacker = null, string stackerName = "")
     {
         UIWindow window = WindowPool.ContainsKey(toOpen) ? WindowPool[toOpen].First() : null;
 
@@ -50,8 +58,11 @@ public class UIController : MonoBehaviour
 
         if (!window) {
             foreach (var data in graphicUserInterface.windows) {
-                if (data.name.Equals(toOpen))
+                if (data.name.Equals(toOpen)) { 
                     window = Instantiate(data.window, position, Quaternion.identity, stacker.gameObject.transform).GetComponent<UIWindow>();
+                    window.DefineComponents(data);
+
+                }
 
             }
 
@@ -65,7 +76,7 @@ public class UIController : MonoBehaviour
         window.designation = toOpen;
         stacker.PushWindow(window);
 
-        return stacker;
+        return window;
 
     }
 

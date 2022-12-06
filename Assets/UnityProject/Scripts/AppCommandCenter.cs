@@ -151,8 +151,6 @@ public class AppCommandCenter : MonoBehaviour
             await SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
 
         uiController = FindObjectOfType<UIController>();
-        Debug.Log(uiController is null);
-        uiController.OpenWindow("Header & Two Buttons", stackerName: "Login Window");
 
         qrCodesManager = controllers.GetComponent<QRCodesManager>();
 
@@ -161,6 +159,19 @@ public class AppCommandCenter : MonoBehaviour
 #endif
 
         //APIController.CreateWebSocketConnection(APIController.pacientsDetection, MapPredictions);
+
+    }
+
+    public static void StartApplication()
+    {
+        UIWindow loginWindow = AppCommandCenter.Instance.uiController.OpenWindow("Header & Two Buttons", stackerName: "Login Window");
+
+        (loginWindow.components["Title"] as TextMeshPro).text = "Welcome Caregiver";
+        (loginWindow.components["Subtitle"] as TextMeshPro).text = "Select Login Method";
+        (loginWindow.components["TopButtonText"] as TextMeshPro).text = "Keyboard";
+        (loginWindow.components["BotButtonText"] as TextMeshPro).text = "QR Code";
+
+        (loginWindow.components["BotButton"] as Interactable).OnClick.AddListener(() => { System.Threading.Tasks.Task<bool> task = AccountController.LoginQR(); }) ;
 
     }
 

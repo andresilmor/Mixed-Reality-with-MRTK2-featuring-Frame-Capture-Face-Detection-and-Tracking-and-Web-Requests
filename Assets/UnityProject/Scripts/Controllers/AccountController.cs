@@ -46,7 +46,6 @@ public static class AccountController
     async public static Task<bool> LoginQR()
     {
 
-
         AppCommandCenter.qrCodesManager.StartQRTracking();
         AppCommandCenter.qrCodesManager.QRCodeAdded += LoginQRCode;
 

@@ -1,5 +1,7 @@
+using Microsoft.MixedReality.Toolkit.UI;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +12,8 @@ public class UIWindow : MonoBehaviour
     public bool wasInstantiated { get; private set; }
     public UIStacker stacker { get; set; }
 
+    public Dictionary<string, object> components = new Dictionary<string, object>();
+
 
     [Header("Events:")]
     [SerializeField] UnityEvent PrePushAction;
@@ -17,6 +21,22 @@ public class UIWindow : MonoBehaviour
     [SerializeField] UnityEvent PrePopAction;
     [SerializeField] UnityEvent PostPopAction;
 
+    public void DefineComponents(GraphicUserInterfaceScriptableObject.data uiData)
+    {
+        foreach (GraphicUserInterfaceScriptableObject.windowComponents component in uiData.components) {
+            switch (component.type) {
+                case GraphicUserInterfaceScriptableObject.componentType.Text:
+                    components.Add(component.name, gameObject.transform.Find(component.path).gameObject.GetComponent<TextMeshPro>());
+                    break;
+                case GraphicUserInterfaceScriptableObject.componentType.Button:
+                    components.Add(component.name, gameObject.transform.Find(component.path).gameObject.GetComponent<Interactable>());
+                    break;
+
+            }
+
+        }
+
+    }
 
 
     public void Enter(bool wasInstantiated = false)
