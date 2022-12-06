@@ -11,6 +11,7 @@ using System.Linq;
 using Realms.Sync;
 using UnityEditor;
 using System.Diagnostics.Contracts;
+using Microsoft.MixedReality.Toolkit.UI;
 
 public static class AccountController 
 {
@@ -45,6 +46,11 @@ public static class AccountController
 
     async public static Task<bool> LoginQR()
     {
+        if (loginWindow != null) {
+            (loginWindow.components["BotButton"] as Interactable).enabled = false;
+            loginWindow.UpdateContent("BotButtonText", "Looking for QR Code...");
+
+        }
 
         AppCommandCenter.qrCodesManager.StartQRTracking();
         AppCommandCenter.qrCodesManager.QRCodeAdded += LoginQRCode;
@@ -54,17 +60,22 @@ public static class AccountController
 
     async private static void LoginQRCode(object sender, QRCodeEventArgs<Microsoft.MixedReality.QR.QRCode> args)
     {
+            //improve
         if (requesting || AppCommandCenter.qrCodesManager.lastSeen?.Data == args.Data)
+        {
+            Debug.LogWarning("Old QRCode.");
             return;
+        }
 
-        AppCommandCenter.qrCodesManager.lastSeen = args;
 
         JObject qrMessage = JObject.Parse(@args.Data.Data.ToString());
+        AppCommandCenter.qrCodesManager.lastSeen = args;
+
+
         AppCommandCenter.qrCodesManager.StopQRTracking();
         AppCommandCenter.qrCodesManager.QRCodeAdded -= LoginQRCode;
-        
-
         requesting = true;
+
         APIController.Field queryOperation = new APIController.Field(
         "memberLogin", new APIController.FieldParams[] {
             new APIController.FieldParams("username", "\"" + qrMessage["username"] + "\""),
@@ -80,6 +91,8 @@ public static class AccountController
                         if (response["data"] != null) {
                             isLogged = SaveUser(response);
                             requesting = false;
+                            UIController.Instance.CloseWindow(AccountController.loginWindow.stacker);
+                            
                         }
                     }
 

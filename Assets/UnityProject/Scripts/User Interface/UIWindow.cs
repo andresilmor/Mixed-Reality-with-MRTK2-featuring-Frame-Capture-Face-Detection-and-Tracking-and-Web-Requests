@@ -1,4 +1,5 @@
 using Microsoft.MixedReality.Toolkit.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,6 +14,7 @@ public class UIWindow : MonoBehaviour
     public UIStacker stacker { get; set; }
 
     public Dictionary<string, object> components = new Dictionary<string, object>();
+    public Dictionary<string, string> componentsContent = new Dictionary<string, string>();
 
 
     [Header("Events:")]
@@ -23,6 +25,8 @@ public class UIWindow : MonoBehaviour
 
     public void DefineComponents(GraphicUserInterfaceScriptableObject.data uiData)
     {
+
+
         foreach (GraphicUserInterfaceScriptableObject.windowComponents component in uiData.components) {
             switch (component.type) {
                 case GraphicUserInterfaceScriptableObject.componentType.Text:
@@ -60,5 +64,19 @@ public class UIWindow : MonoBehaviour
         PostPopAction?.Invoke();
 
     }
+
+    public void UpdateContent(string key, string content)
+    {
+        try
+        {
+            (components[key] as TextMeshPro).text = content;
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
+    }
+
+
 }
 

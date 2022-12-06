@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alignmentType: 1
-  containerObject: {fileID: 0}
+  containerObject: {fileID: 932356029}
 --- !u!4 &932356029
 Transform:
   m_ObjectHideFlags: 0

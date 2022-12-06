@@ -171,6 +171,8 @@ public class AppCommandCenter : MonoBehaviour
         (loginWindow.components["TopButtonText"] as TextMeshPro).text = "Keyboard";
         (loginWindow.components["BotButtonText"] as TextMeshPro).text = "QR Code";
 
+        AccountController.loginWindow = loginWindow;
+
         (loginWindow.components["BotButton"] as Interactable).OnClick.AddListener(() => { System.Threading.Tasks.Task<bool> task = AccountController.LoginQR(); }) ;
 
     }

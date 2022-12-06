@@ -10,7 +10,7 @@ using UnityEngine.Events;
 [DisallowMultipleComponent]
 public class UIController : MonoBehaviour
 {
-    private static UIController _instance = null;
+    private static UIController _instance;
     public static UIController Instance
     {
         get { return _instance; }
@@ -33,10 +33,16 @@ public class UIController : MonoBehaviour
     private List<UIStacker> UIStackers = new List<UIStacker>();
     private Dictionary<string, List<UIWindow>> WindowPool = new Dictionary<string, List<UIWindow>>();
 
+    void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     { 
         graphicUserInterface.SetupComponentsDictionary();
         AppCommandCenter.StartApplication();
+        
 
     }
 
@@ -80,13 +86,12 @@ public class UIController : MonoBehaviour
 
     }
 
-    private void CloseWindow(UIStacker stacker)
+    public void CloseWindow(UIStacker stacker)
     {
-
 
         bool destroyStacker = stacker.PopWindow(out UIWindow windowToPool);
 
-        if (windowToPool != null) { 
+        if (windowToPool != null) {
             windowToPool.gameObject.transform.SetParent(uiPool.transform);
 
             if (!WindowPool.ContainsKey(windowToPool.designation))
@@ -121,11 +126,6 @@ public class UIController : MonoBehaviour
     }
     }
      */
-
-    public async void LoginQR() {
-        await AccountController.LoginQR();
-
-    }
 
 
 
