@@ -15,10 +15,22 @@ MonoBehaviour:
   _windows:
   - name: Header & Two Buttons
     window: {fileID: 276482839091159031, guid: 320c3886c6cae114095f21387da22e64, type: 3}
-    windowComponents:
-    - Title
-    - Subtitle
-    - TopButtonText
-    - BotButton
-    - BotButtonText
-    - TopButton
+    components:
+    - name: Title
+      type: 0
+      path: Header/Title
+    - name: Subtitle
+      type: 0
+      path: Header/Subtitle
+    - name: TopButtonText
+      type: 0
+      path: Top Button/ButtonVisual/TextMeshPro
+    - name: TopButton
+      type: 1
+      path: Top Button
+    - name: BotButtonText
+      type: 0
+      path: Bot Button/ButtonVisual/TextMeshPro
+    - name: BotButton
+      type: 1
+      path: Bot Button
