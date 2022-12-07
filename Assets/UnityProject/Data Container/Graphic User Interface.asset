@@ -13,8 +13,29 @@ MonoBehaviour:
   m_Name: Graphic User Interface
   m_EditorClassIdentifier: 
   _windows:
-  - name: Header & Two Buttons
-    window: {fileID: 276482839091159031, guid: 320c3886c6cae114095f21387da22e64, type: 3}
+  - name: Header_TwoButtons_00
+    window: {fileID: 4999941590618840993, guid: 320c3886c6cae114095f21387da22e64, type: 3}
+    components:
+    - name: Title
+      type: 0
+      path: Header/Title
+    - name: Subtitle
+      type: 0
+      path: Header/Subtitle
+    - name: TopButtonText
+      type: 0
+      path: Top Button/ButtonVisual/TextMeshPro
+    - name: TopButton
+      type: 1
+      path: Top Button
+    - name: BotButtonText
+      type: 0
+      path: Bot Button/ButtonVisual/TextMeshPro
+    - name: BotButton
+      type: 1
+      path: Bot Button
+  - name: Header_TwoButtons_01
+    window: {fileID: 2827474382965927193, guid: fca4ca8fe0b26b3489540f39faf84302, type: 3}
     components:
     - name: Title
       type: 0

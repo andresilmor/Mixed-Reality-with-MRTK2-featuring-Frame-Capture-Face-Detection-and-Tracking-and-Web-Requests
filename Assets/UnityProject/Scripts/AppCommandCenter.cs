@@ -148,7 +148,7 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
     public static void StartApplication() {
-        UIWindow loginWindow = UIController.Instance.OpenWindow("Header & Two Buttons", stackerName: "Login Window");
+        UIWindow loginWindow = UIController.Instance.OpenWindow("Header_TwoButtons_00", stackerName: "Login Window");
 
         (loginWindow.components["Title"] as TextMeshPro).text = "Welcome Caregiver";
         (loginWindow.components["Subtitle"] as TextMeshPro).text = "Select Login Method";
