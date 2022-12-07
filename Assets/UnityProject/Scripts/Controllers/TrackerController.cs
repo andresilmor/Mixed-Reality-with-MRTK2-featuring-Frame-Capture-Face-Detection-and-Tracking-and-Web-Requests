@@ -11,18 +11,16 @@ using UnityEngine.InputSystem.HID;
 using UnityEngine.UIElements;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
-public static class TrackerController
-{
+public static class TrackerController {
     public static List<PacientTracker> trackers;
 
 
-    public static void CreateTracker(FaceRect faceRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, out object newTracker, string trackerWhat)
-    {
+    public static void CreateTracker(FaceRect faceRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, out object newTracker, string trackerWhat) {
         if (trackers == null)
             TrackerController.trackers = new List<PacientTracker>();
 
 
-        
+
         Point top = new Point(faceRect.x1, faceRect.y1);
         Point bottom = new Point(faceRect.x2, faceRect.y2);
 
@@ -106,10 +104,8 @@ public static class TrackerController
         // ---------------------------------------------------------------------------------------------- //
 
         // NOT NICE
-        try
-        {
-            switch (trackerWhat)
-            {
+        try {
+            switch (trackerWhat) {
                 case "PacientTracker":
 
                     trackerCSRT.init(frame, _region);
@@ -119,9 +115,9 @@ public static class TrackerController
 
 
                     //newPerson = new Pacient(newVisualTracker.GetComponent<PacientTracker>(), trackerCSRT);
-                    newTracker = new PacientTracker( new TrackerHandler(trackerCSRT));
+                    newTracker = new PacientTracker(new TrackerHandler(trackerCSRT));
                     //(newPerson as Pacient).trackerHandler.trackerSetting.tracker
-                    
+
 
                     //newPerson = new Pacient(trackerMOSSE);
                     break;
@@ -130,21 +126,19 @@ public static class TrackerController
                     return;
 
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Debugger.AddText(e.Message);
         }
 
 
         //TrackerController.trackers.Add(newPerson);
-     
+
     }
 
-    
 
 
-    public static bool UpdateTrackers()
-    {
+
+    public static bool UpdateTrackers() {
 
         if (trackers.Count == 0)
             return false;

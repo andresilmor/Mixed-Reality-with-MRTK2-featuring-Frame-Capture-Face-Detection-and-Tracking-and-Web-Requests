@@ -43,8 +43,7 @@ using Microsoft.MixedReality.Toolkit.Utilities;
 using System.Threading;
 using UnityEngine.UIElements;
 
-public static class APIController 
-{
+public static class APIController {
 
     #region API Meta Data
 
@@ -60,28 +59,22 @@ public static class APIController
 
     [Header("Root Paths:")]
     [SerializeField] private static string _websocketPath = "/ws";
-    public static string websocketPath
-    {
-        get
-        {
+    public static string websocketPath {
+        get {
             return _websocketPath;
         }
     }
     [SerializeField] private static string _graphqlPath = "/api";
-    public static string graphqlPath
-    {
-        get
-        {
+    public static string graphqlPath {
+        get {
             return _graphqlPath;
         }
     }
 
     #endregion
 
-    public static void SetupAPI()
-    {
-        if (!HTTPManager.IsCachingDisabled)
-        {
+    public static void SetupAPI() {
+        if (!HTTPManager.IsCachingDisabled) {
             HTTPCacheService.BeginClear();
             HTTPManager.IsCachingDisabled = true;
 
@@ -95,10 +88,8 @@ public static class APIController
     #region WebSockets Data
 
     private const string _pacientsDetection = "/live";
-    public static string pacientsDetection
-    {
-        get
-        {
+    public static string pacientsDetection {
+        get {
             return _pacientsDetection;
         }
     }
@@ -111,28 +102,24 @@ public static class APIController
 
     #region GraphQL Field
 
-    public struct Field
-    {
+    public struct Field {
         public string name;
         public FieldParams[] parameters;
         public Field[] subfield;
 
-        public Field(string name, FieldParams[] parameters = null)
-        {
+        public Field(string name, FieldParams[] parameters = null) {
             this.name = name;
             this.parameters = parameters;
             this.subfield = null;
         }
 
-        public Field(string name, Field[] subfield)
-        {
+        public Field(string name, Field[] subfield) {
             this.name = name;
             this.parameters = null;
             this.subfield = subfield;
         }
 
-        public Field(string name, FieldParams[] parameters, Field[] subfield)
-        {
+        public Field(string name, FieldParams[] parameters, Field[] subfield) {
             this.name = name;
             this.parameters = parameters;
             this.subfield = subfield;
@@ -141,13 +128,11 @@ public static class APIController
 
     }
 
-    public struct FieldParams
-    {
+    public struct FieldParams {
         public string name;
         public string value;
 
-        public FieldParams(string name, string value)
-        {
+        public FieldParams(string name, string value) {
             this.name = name;
             this.value = value;
         }
@@ -157,30 +142,25 @@ public static class APIController
 
     #region WebSocket
 
-    public static WebSocket GetWebSocket(string path)
-    {
-        switch (path)
-        {
+    public static WebSocket GetWebSocket(string path) {
+        switch (path) {
             case _pacientsDetection:
                 return pacientMapping;
 
 
             default:
-                for (int index = 0; index >= wsConnections.Count; index++)
-                {
+                for (int index = 0; index >= wsConnections.Count; index++) {
                     if (wsConnectionsPath[index].Equals(path))
                         return wsConnections[index];
                 }
                 return null;
 
         }
-        
+
     }
 
-    private static void AddWebSocket(string path, WebSocket webSocket)
-    {
-        switch (path)
-        {
+    private static void AddWebSocket(string path, WebSocket webSocket) {
+        switch (path) {
             case _pacientsDetection:
                 pacientMapping = webSocket;
                 break;
@@ -193,24 +173,20 @@ public static class APIController
         }
     }
 
-    public static void CreateWebSocketConnection(string path, Action<string> action)
-    {
-        try { 
+    public static void CreateWebSocketConnection(string path, Action<string> action) {
+        try {
             WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + ":" + port + websocketPath + path));
-       
-            newConnection.OnMessage += (WebSocket webSocket, string message) =>
-            {
-                if(message.Length > 6)
+
+            newConnection.OnMessage += (WebSocket webSocket, string message) => {
+                if (message.Length > 6)
                     action?.Invoke(message);
             };
 
-            newConnection.OnOpen += (WebSocket webSocket) =>
-            {
+            newConnection.OnOpen += (WebSocket webSocket) => {
                 webSocket.Send("Connection Opened");
             };
 
-            newConnection.OnClosed += (WebSocket webSocket, UInt16 code, string message) =>
-            {
+            newConnection.OnClosed += (WebSocket webSocket, UInt16 code, string message) => {
                 wsConnections.Remove(newConnection);
 
             };
@@ -219,16 +195,14 @@ public static class APIController
 
             AddWebSocket(path, newConnection);
 
-        } catch(Exception e)
-        {
+        } catch (Exception e) {
             Debugger.AddText("Error: " + e.Message.ToString());
         }
 
     }
 
-    public static void CloseAllWebSockets()
-    {
-        if (wsConnections != null) { 
+    public static void CloseAllWebSockets() {
+        if (wsConnections != null) {
             foreach (WebSocket ws in wsConnections)
                 ws.Close();
         }
@@ -239,10 +213,8 @@ public static class APIController
 
     #region HTTP Request General
 
-    private static void OnRequestFinished(Action<string, bool> action, HTTPRequest request, HTTPResponse response)
-    {
-        switch (request.State)
-        {
+    private static void OnRequestFinished(Action<string, bool> action, HTTPRequest request, HTTPResponse response) {
+        switch (request.State) {
             // The request finished without any problem.
             case HTTPRequestStates.Finished:
                 action?.Invoke(response.DataAsText, true);
@@ -274,13 +246,10 @@ public static class APIController
     #endregion
 
     #region GraphQL Query Functions
-    private static void MountQuery(Field[] args, ref string query, byte identationLevel = 2)
-    {
-        foreach (Field field in args)
-        {
+    private static void MountQuery(Field[] args, ref string query, byte identationLevel = 2) {
+        foreach (Field field in args) {
             query += (new string('\t', identationLevel) + field.name);
-            if (field.parameters != null)
-            {
+            if (field.parameters != null) {
                 query += " (";
                 for (byte index = 0; index < field.parameters.Length; index++)
                     query += (field.parameters[index].name + ": " + field.parameters[index].value + (index >= field.parameters.Length ? ", " : ""));
@@ -288,23 +257,20 @@ public static class APIController
                 query += ") {";
             }
 
-            if (field.subfield != null)
-            {
+            if (field.subfield != null) {
                 query += " {\r\n";
                 MountQuery(field.subfield, ref query, identationLevel += 1);
 
                 query += (new string('\t', identationLevel - 1) + "}\r\n");
-            }
-            else
+            } else
                 query += "\r\n";
 
         }
     }
 
-    public static async Task ExecuteRequest(string token, Field type,  Action<string, bool> action, params Field[] args)
-    {
+    public static async Task ExecuteRequest(string token, Field type, Action<string, bool> action, params Field[] args) {
 
-        await Task.Run(() => { 
+        await Task.Run(() => {
             string query = "query {\r\n";
             query += (new string('\t', 1) + type.name);
             if (type.parameters != null) {
@@ -320,7 +286,7 @@ public static class APIController
             query += (new string('\t', 1) + "}\r\n");
             query += "}";
 
-            string jsonData = JsonConvert.SerializeObject(new {query});
+            string jsonData = JsonConvert.SerializeObject(new { query });
             byte[] postData = Encoding.ASCII.GetBytes(jsonData);
 
 

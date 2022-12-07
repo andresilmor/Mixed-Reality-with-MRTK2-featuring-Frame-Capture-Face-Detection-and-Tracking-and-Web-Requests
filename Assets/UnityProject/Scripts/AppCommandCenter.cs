@@ -22,22 +22,24 @@ using Microsoft.MixedReality.Toolkit;
 
 
 [DisallowMultipleComponent]
-public class AppCommandCenter : MonoBehaviour
-{  
+public class AppCommandCenter : MonoBehaviour {
+
+    // TODO change variable names: PublicVariable, _privateVariable, normalVariable
+
+
 
     BinaryTree pacientsMemory;
 
     private static Camera _cameraMain;
-    public static Camera cameraMain { 
-        get
-        {
+    public static Camera cameraMain {
+        get {
             if (_cameraMain == null)
                 cameraMain = Camera.main;
             return _cameraMain;
         }
 
         private set { _cameraMain = value; }
-    
+
     }
 
     [Header("Config:")]
@@ -45,7 +47,8 @@ public class AppCommandCenter : MonoBehaviour
 
     [Header("World Markers:")]
     [SerializeField] GameObject personMarker;
-    
+
+    //[field:SerializeField] x {get; private set;}
 
     [Header("Debugger:")]
     [SerializeField] TextMeshPro debugText;
@@ -55,36 +58,29 @@ public class AppCommandCenter : MonoBehaviour
     [SerializeField] GameObject detectionName;
     [SerializeField] GameObject general;
 
-    public UIController uiController { get; private set; }
 
     // Attr's for the Machine Learning and detections
     private static FrameHandler _frameHandler = null;
-    public static FrameHandler frameHandler
-    {
-        get { return AppCommandCenter._frameHandler; } set { if (AppCommandCenter.frameHandler == null) AppCommandCenter._frameHandler = value; }  
+    public static FrameHandler frameHandler {
+        get { return AppCommandCenter._frameHandler; }
+        set { if (AppCommandCenter.frameHandler == null) AppCommandCenter._frameHandler = value; }
     }
     private Mat tempFrameMat;
-
-    public static QRCodesManager qrCodesManager { get; private set; }  
 
     private bool justStop = false;
     private byte timeToStop = 0;
 
-    public string ShowNetworkInterfaces()
-    {
+    public string ShowNetworkInterfaces() {
         IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();
         NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
         string info = "";
-        foreach (NetworkInterface adapter in nics)
-        {
+        foreach (NetworkInterface adapter in nics) {
             PhysicalAddress address = adapter.GetPhysicalAddress();
             byte[] bytes = address.GetAddressBytes();
             string mac = null;
-            for (int i = 0; i < bytes.Length; i++)
-            {
+            for (int i = 0; i < bytes.Length; i++) {
                 mac = string.Concat(mac + (string.Format("{0}", bytes[i].ToString("X2"))));
-                if (i != bytes.Length - 1)
-                {
+                if (i != bytes.Length - 1) {
                     mac = string.Concat(mac + "-");
                 }
             }
@@ -96,38 +92,30 @@ public class AppCommandCenter : MonoBehaviour
     }
 
     private static AppCommandCenter _instance = null;
-    public static AppCommandCenter Instance
-    {
+    public static AppCommandCenter Instance {
         get { return _instance; }
-        set
-        {
-            if (_instance == null)
-            {
+        set {
+            if (_instance == null) {
                 _instance = value;
-            }
-            else
-            {
+            } else {
                 Destroy(value);
             }
         }
     }
 
-    void OnEnable()
-    {
+    void OnEnable() {
         BestHTTP.HTTPManager.Setup();
 
         RealmController.BulldozeRealm();
 
     }
 
-    void OnDisable()
-    {
+    void OnDisable() {
         RealmController.realm.Dispose();
 
     }
 
-    void Awake()
-    {
+    void Awake() {
         Instance = this;
     }
 
@@ -150,9 +138,6 @@ public class AppCommandCenter : MonoBehaviour
         if (!SceneManager.GetSceneByName("UI").isLoaded)
             await SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
 
-        uiController = FindObjectOfType<UIController>();
-
-        qrCodesManager = controllers.GetComponent<QRCodesManager>();
 
 #if ENABLE_WINMD_SUPPORT
         AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
@@ -162,9 +147,8 @@ public class AppCommandCenter : MonoBehaviour
 
     }
 
-    public static void StartApplication()
-    {
-        UIWindow loginWindow = AppCommandCenter.Instance.uiController.OpenWindow("Header & Two Buttons", stackerName: "Login Window");
+    public static void StartApplication() {
+        UIWindow loginWindow = UIController.Instance.OpenWindow("Header & Two Buttons", stackerName: "Login Window");
 
         (loginWindow.components["Title"] as TextMeshPro).text = "Welcome Caregiver";
         (loginWindow.components["Subtitle"] as TextMeshPro).text = "Select Login Method";
@@ -173,16 +157,14 @@ public class AppCommandCenter : MonoBehaviour
 
         AccountController.loginWindow = loginWindow;
 
-        (loginWindow.components["BotButton"] as Interactable).OnClick.AddListener(() => { System.Threading.Tasks.Task<bool> task = AccountController.LoginQR(); }) ;
+        (loginWindow.components["BotButton"] as Interactable).OnClick.AddListener(() => { System.Threading.Tasks.Task<bool> task = AccountController.LoginQR(); });
 
     }
 
 
-
-    private async void MapPredictions(string predictions)
-    {
+    private async void MapPredictions(string predictions) {
         Debugger.AddText("HERE");
-        try { 
+        try {
             var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
                 JsonConvert.DeserializeObject(predictions).ToString());
             Debugger.AddText(results.ToString());
@@ -191,8 +173,7 @@ public class AppCommandCenter : MonoBehaviour
             Vector3 bodyPos = Vector3.zero;
 
 
-            foreach (Detection detection in results[0].list)
-            {
+            foreach (Detection detection in results[0].list) {
 
                 FaceRect faceRect = detection.faceRect;
 
@@ -202,22 +183,19 @@ public class AppCommandCenter : MonoBehaviour
                 unprojectionOffset = MRWorld.GetUnprojectionOffset(faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f));
                 facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, (uint)(faceRect.x2 - faceRect.x1), null, 31, true, detectionName);
 
-                if (Vector3.Distance(bodyPos, MRWorld.tempExtrinsic.Position) < Vector3.Distance(facePos, MRWorld.tempExtrinsic.Position))
-                {
+                if (Vector3.Distance(bodyPos, MRWorld.tempExtrinsic.Position) < Vector3.Distance(facePos, MRWorld.tempExtrinsic.Position)) {
                     facePos.x = bodyPos.x;
                     facePos.z = bodyPos.z;
                 }
 
 
-                try
-                {
+                try {
                     BinaryTree.Node node = pacientsMemory.Find(detection.id);
 
-                    if (node is null)
-                    {
+                    if (node is null) {
                         Debugger.AddText("NEW ON TREE");
                         object newTracker;
-                   
+
                         TrackerController.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newTracker, "PacientTracker");
                         (newTracker as PacientTracker).gameObject.name = detection.id.ToString();
 
@@ -238,13 +216,10 @@ public class AppCommandCenter : MonoBehaviour
 
                         Debugger.AddText((newTracker as PacientTracker).gameObject.name);
 
-                    }
-                    else
-                    {
+                    } else {
                         Debugger.AddText("ALREADY EXISTS ON TREE");
 
-                        if (node.data is PacientTracker)
-                        {
+                        if (node.data is PacientTracker) {
                             (node.data as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0]);
                             //(node.GraphQLData as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
 
@@ -252,15 +227,12 @@ public class AppCommandCenter : MonoBehaviour
 
 
                     }
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     Debugger.AddText(ex.Message);
                 }
 
             }
-        }
-        catch (Exception error)
-        {
+        } catch (Exception error) {
             Debugger.AddText("Error: " + error.Message.ToString());
 
         }
@@ -270,8 +242,7 @@ public class AppCommandCenter : MonoBehaviour
         return;
     }
 
-    private void SetDebugger()
-    {
+    private void SetDebugger() {
         Debugger.SetCubeForTest(cubeForTest);
         Debugger.SetSphereForTest(sphereForTest);
         Debugger.SetDebugText(debugText);
@@ -280,8 +251,7 @@ public class AppCommandCenter : MonoBehaviour
     }
 
 
-    public async void DetectPacients()
-    {
+    public async void DetectPacients() {
         Debugger.SetFieldView();
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = AppCommandCenter.frameHandler.LastFrame;
@@ -346,10 +316,8 @@ public class AppCommandCenter : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        if (!justStop)
-        {
+    void Update() {
+        if (!justStop) {
 
 #if ENABLE_WINMD_SUPPORT
             bool wasUpdated = TrackerController.UpdateTrackers();
@@ -364,8 +332,7 @@ public class AppCommandCenter : MonoBehaviour
 
     }
 
-    private void OnDestroy()
-    {
+    private void OnDestroy() {
         APIController.CloseAllWebSockets();
         StopAllCoroutines();
     }

@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PacientTracker : MonoBehaviour
-{
+public class PacientTracker : MonoBehaviour {
     [SerializeField] EmotionsListScriptableObject emotionsList;
     [SerializeField] SpriteRenderer emotionSpriteRenderer = null;
     private int activeEmotionIndex = -1;
@@ -15,25 +14,20 @@ public class PacientTracker : MonoBehaviour
     [SerializeField] GameObject markerRect;
 
     private string _id = "";
-    public string id
-    {
+    public string id {
         get { return _id; }
-        set
-        {
+        set {
             if (id.Length <= 0)
                 _id = value;
         }
     }
 
-    public PacientTracker(TrackerHandler trackerHandler = null)
-    {
+    public PacientTracker(TrackerHandler trackerHandler = null) {
         this.trackerHandler = trackerHandler;
     }
 
-    private void Start()
-    {
-        if (emotionsList.categorical.Length != 26)
-        {
+    private void Start() {
+        if (emotionsList.categorical.Length != 26) {
             Debug.Log("Emotions Listed < 26");
         }
     }
@@ -46,23 +40,18 @@ public class PacientTracker : MonoBehaviour
     }
     */
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         this.gameObject.transform.LookAt(AppCommandCenter.cameraMain.transform.position);
-        
+
     }
 
-    public void SetMarkerVisibility(bool to)
-    {
+    public void SetMarkerVisibility(bool to) {
         markerRect.GetComponent<SpriteRenderer>().enabled = to;
     }
 
-    public bool UpdateActiveEmotion(string emotionName)
-    {
-        for (byte index = 0; index < 26; index++)
-        {
-            if (emotionsList.categorical[index].name.Equals(emotionName))
-            {
+    public bool UpdateActiveEmotion(string emotionName) {
+        for (byte index = 0; index < 26; index++) {
+            if (emotionsList.categorical[index].name.Equals(emotionName)) {
                 emotionSpriteRenderer.sprite = emotionsList.categorical[index].sprite;
 
                 activeEmotionIndex = index;

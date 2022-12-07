@@ -7,9 +7,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [DisallowMultipleComponent]
-public class UIWindow : MonoBehaviour
-{
-    public string designation { get; set; }  
+public class UIWindow : MonoBehaviour {
+    public string designation { get; set; }
     public bool wasInstantiated { get; private set; }
     public UIStacker stacker { get; set; }
 
@@ -23,8 +22,7 @@ public class UIWindow : MonoBehaviour
     [SerializeField] UnityEvent PrePopAction;
     [SerializeField] UnityEvent PostPopAction;
 
-    public void DefineComponents(GraphicUserInterfaceScriptableObject.data uiData)
-    {
+    public void DefineComponents(GraphicUserInterfaceScriptableObject.data uiData) {
 
 
         foreach (GraphicUserInterfaceScriptableObject.windowComponents component in uiData.components) {
@@ -43,8 +41,7 @@ public class UIWindow : MonoBehaviour
     }
 
 
-    public void Enter(bool wasInstantiated = false)
-    {
+    public void Enter(bool wasInstantiated = false) {
         PrePushAction?.Invoke();
 
 
@@ -55,9 +52,8 @@ public class UIWindow : MonoBehaviour
         PostPushAction?.Invoke();
     }
 
-    public void Exit()
-    {
-        PrePopAction?.Invoke(); 
+    public void Exit() {
+        PrePopAction?.Invoke();
 
         gameObject.SetActive(false);
 
@@ -65,14 +61,10 @@ public class UIWindow : MonoBehaviour
 
     }
 
-    public void UpdateContent(string key, string content)
-    {
-        try
-        {
+    public void UpdateContent(string key, string content) {
+        try {
             (components[key] as TextMeshPro).text = content;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Debug.LogException(e);
         }
     }

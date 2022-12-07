@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class UIStacker : MonoBehaviour
-{
+public class UIStacker : MonoBehaviour {
     private Stack<UIWindow> WindowStack = new Stack<UIWindow>();
 
     public void PushWindow(UIWindow window) {
-        if (WindowStack.Count > 0)
-        {
+        if (WindowStack.Count > 0) {
             UIWindow current = WindowStack.Peek();
-            if (true)
-            {
+            if (true) {
                 current.Exit();
             }
 
@@ -24,9 +21,8 @@ public class UIStacker : MonoBehaviour
     }
 
 
-    public bool PopWindow(out UIWindow windowToPool)
-    {
-        if (WindowStack.Count == 1){
+    public bool PopWindow(out UIWindow windowToPool) {
+        if (WindowStack.Count == 1) {
             windowToPool = WindowStack.Pop();
             windowToPool.Exit();
             return true;

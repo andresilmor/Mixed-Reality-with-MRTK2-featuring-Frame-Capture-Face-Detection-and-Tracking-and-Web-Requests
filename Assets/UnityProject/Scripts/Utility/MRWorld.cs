@@ -12,8 +12,7 @@ using Microsoft.MixedReality.OpenXR;
 using Windows.Graphics.Imaging;
 #endif
 
-public static class MRWorld 
-{
+public static class MRWorld {
 
     public static CameraExtrinsic tempExtrinsic = null;
     public static CameraIntrinsic tempIntrinsic = null;
@@ -36,8 +35,7 @@ public static class MRWorld
 
 #endif
 
-    public struct PixelPointRatio
-    {
+    public struct PixelPointRatio {
         public float distPixel;
         public float distPoint;
     }
@@ -111,16 +109,13 @@ public static class MRWorld
 #endif
 
 
-    public static Vector2 GetUnprojectionOffset(float posY)
-    {
+    public static Vector2 GetUnprojectionOffset(float posY) {
         Vector2 unprojectionOffset = Vector2.zero;
         if (posY > AppCommandCenter.cameraMain.pixelHeight / 2) // Got by trial and error
         {
             unprojectionOffset = new Vector2(0, -0.05f);
             Debugger.AddText("Unprojection A");
-        }
-        else
-        {
+        } else {
             unprojectionOffset = new Vector2(0, -0.08f);
             Debugger.AddText("Unprojection B");
 
@@ -130,10 +125,8 @@ public static class MRWorld
 
     }
 
-    public static Vector3 GetPosition(Vector3 cameraPosition, Vector3 layForward, int layer)
-    {
-        if (!Microsoft.MixedReality.Toolkit.Utilities.SyncContextUtility.IsMainThread)
-        {
+    public static Vector3 GetPosition(Vector3 cameraPosition, Vector3 layForward, int layer) {
+        if (!Microsoft.MixedReality.Toolkit.Utilities.SyncContextUtility.IsMainThread) {
             return Vector3.zero;
         }
         RaycastHit hit;
@@ -158,13 +151,11 @@ public static class MRWorld
     /// <summary>
     /// Algorithm to approximate the vertical point in the bounding box regarding the user's position.
     /// </summary>
-    public static Point GetBoundingBoxTarget(CameraExtrinsic extrinsic, FaceRect boundingBox)
-    {
+    public static Point GetBoundingBoxTarget(CameraExtrinsic extrinsic, FaceRect boundingBox) {
         var cameraForward = extrinsic.viewFromWorld.GetColumn(2);
         var cameraToGroundAngle = Vector3.Angle(cameraForward, Vector3.down);
         var offsetFactor = 0f;
-        if (cameraToGroundAngle <= 90)
-        {
+        if (cameraToGroundAngle <= 90) {
             offsetFactor = 0.5f + cameraToGroundAngle / 180;
         }
 
@@ -172,24 +163,21 @@ public static class MRWorld
     }
 
 
-  
-    public static void UpdateExtInt(CameraExtrinsic cameraExtrinsic, CameraIntrinsic cameraIntrinsic)
-    {
+
+    public static void UpdateExtInt(CameraExtrinsic cameraExtrinsic, CameraIntrinsic cameraIntrinsic) {
         tempExtrinsic = cameraExtrinsic;
         tempIntrinsic = cameraIntrinsic;
 
     }
-  
 
-    public static float ConvertPixelDistToPoint(float pixelDist)
-    {
+
+    public static float ConvertPixelDistToPoint(float pixelDist) {
         return 0; ///elDist * pixelPointRatio.distPoint) / pixelPointRatio.distPixel) * 0.25f;
     }
 
 
     // ATTENTION TO THIS IS FOR BOUNDIG BOX
-    public static Vector3 GetWorldPositionOfPixel(Point pointCV, Vector2 unprojectionOffset, uint boundigBoxWidth, GameObject toInstantiate = null, int layer = 31, bool debug = false, GameObject debugText = null)
-    {
+    public static Vector3 GetWorldPositionOfPixel(Point pointCV, Vector2 unprojectionOffset, uint boundigBoxWidth, GameObject toInstantiate = null, int layer = 31, bool debug = false, GameObject debugText = null) {
         Debugger.ClearText();
 
         Vector3 layForward = Vector3.zero;
@@ -197,8 +185,7 @@ public static class MRWorld
         Vector3 cameraPosition = MRWorld.tempExtrinsic.Position;
         Vector3 position = Vector3.zero;
         Debugger.AddText("yo");
-        try
-        {
+        try {
 #if ENABLE_WINMD_SUPPORT
         Windows.Foundation.Point target = pointCV.ToWindowsPoint();
         
@@ -275,9 +262,7 @@ public static class MRWorld
         }
         
 #endif
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             Debugger.AddText(e.Message);
         }
 

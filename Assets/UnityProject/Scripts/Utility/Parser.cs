@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Globalization;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Graphics.Imaging;
@@ -11,23 +12,29 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 #endif
 
-public static class Parser 
-{
-    public static string Base64ToJson(string base64)
-    {
+public static class Parser {
+    public static string Base64ToJson(string base64) {
         Regex.Replace(base64, @"/\=+$/", "");
         Regex.Replace(base64, @"/\//g", "_");
         Regex.Replace(base64, @"/\+/g", "-");
         return base64;
     }
-
     //ex if string: 2020-08-14T15:54:04+01:00
-    public static DateTime StringToDateTime(string datetime)
-    {
+    public static DateTime StringToDateTime(string datetime) {
         string date = Regex.Match(datetime, @"^\d{4}-\d{2}-\d{2}").ToString();
         string time = Regex.Match(datetime, @"\d{2}:\d{2}:\d{2}").ToString();
 
         return DateTime.Parse(string.Format("{0} {1}", date, time));
+
+    }
+
+    public static DateTime NormalizeRealmDateTime(string realmDateTime) {
+        //realmDateTime = realmDateTime.Replace("/", "-");
+        //realmDateTime = realmDateTime.Replace(realmDateTime.Substring(realmDateTime.IndexOf("M ") - 2), "");
+        realmDateTime = realmDateTime.Replace(realmDateTime.Substring(realmDateTime.IndexOf("M ") - 2), "");
+        DateTime dateTime = DateTime.Parse(realmDateTime);
+
+        return dateTime;
 
     }
 

@@ -1,24 +1,21 @@
 using Realms;
 
-public class PacientEntity : RealmObject
-{
+public class PacientEntity : RealmObject {
 
     [PrimaryKey]
-    public string UUID { get; set; }    
+    public string UUID { get; set; }
 
     public InstitutionEntity InstitutionInCare { get; set; }
 
 
     public PacientEntity() { }
 
-    public PacientEntity(string uuid)
-    {
+    public PacientEntity(string uuid) {
         UUID = uuid;
     }
 
-    public PacientEntity(string uuid, InstitutionEntity institutionInCare)
-    {
+    public PacientEntity(string uuid, InstitutionEntity institutionInCare) {
         UUID = uuid;
-        InstitutionInCare = institutionInCare;  
+        InstitutionInCare = institutionInCare;
     }
 }

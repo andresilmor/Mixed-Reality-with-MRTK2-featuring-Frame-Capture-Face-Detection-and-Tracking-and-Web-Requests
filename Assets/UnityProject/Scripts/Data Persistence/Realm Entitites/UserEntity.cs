@@ -1,8 +1,7 @@
 using Realms;
 using System.Collections.Generic;
 
-class UserEntity : RealmObject
-{
+class UserEntity : RealmObject {
     [PrimaryKey]
     public string UUID { set; get; }
 
@@ -11,13 +10,12 @@ class UserEntity : RealmObject
     public string Token { set; get; }
 
     public IList<MemberOf> MemberOf { get; }
-  
+
 
     public UserEntity() { }
 
-    public UserEntity(string UUID, string token)
-    {
+    public UserEntity(string UUID, string token) {
         this.UUID = UUID;
         Token = token;
-    }   
+    }
 }

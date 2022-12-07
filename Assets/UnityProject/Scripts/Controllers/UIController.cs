@@ -8,20 +8,14 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(MixedRealitySceneContent))]
 [DisallowMultipleComponent]
-public class UIController : MonoBehaviour
-{
+public class UIController : MonoBehaviour {
     private static UIController _instance;
-    public static UIController Instance
-    {
+    public static UIController Instance {
         get { return _instance; }
-        set
-        {
-            if (_instance == null)
-            {
+        set {
+            if (_instance == null) {
                 _instance = value;
-            }
-            else
-            {
+            } else {
                 Destroy(value);
             }
         }
@@ -33,30 +27,27 @@ public class UIController : MonoBehaviour
     private List<UIStacker> UIStackers = new List<UIStacker>();
     private Dictionary<string, List<UIWindow>> WindowPool = new Dictionary<string, List<UIWindow>>();
 
-    void Awake()
-    {
+    void Awake() {
         Instance = this;
     }
 
-    void Start()
-    { 
+    void Start() {
         graphicUserInterface.SetupComponentsDictionary();
         AppCommandCenter.StartApplication();
-        
+
 
     }
 
-    public UIWindow OpenWindow(string toOpen, UIStacker stacker = null, string stackerName = "")
-    {
+    public UIWindow OpenWindow(string toOpen, UIStacker stacker = null, string stackerName = "") {
         UIWindow window = WindowPool.ContainsKey(toOpen) ? WindowPool[toOpen].First() : null;
 
         Vector3 position = AppCommandCenter.cameraMain.transform.position;
         position.z += 0.50f;
+        position.y += -0.105f;
 
         if (stacker is null) {
             GameObject newGameObject = new GameObject(stackerName);
-            newGameObject.transform.position = position;
-            newGameObject.transform.rotation = Quaternion.identity;
+            newGameObject.transform.SetPositionAndRotation(position, Quaternion.identity);
             newGameObject.transform.parent = this.gameObject.transform;
             stacker = newGameObject.AddComponent<UIStacker>();
 
@@ -64,7 +55,7 @@ public class UIController : MonoBehaviour
 
         if (!window) {
             foreach (var data in graphicUserInterface.windows) {
-                if (data.name.Equals(toOpen)) { 
+                if (data.name.Equals(toOpen)) {
                     window = Instantiate(data.window, position, Quaternion.identity, stacker.gameObject.transform).GetComponent<UIWindow>();
                     window.DefineComponents(data);
 
@@ -86,8 +77,7 @@ public class UIController : MonoBehaviour
 
     }
 
-    public void CloseWindow(UIStacker stacker)
-    {
+    public void CloseWindow(UIStacker stacker) {
 
         bool destroyStacker = stacker.PopWindow(out UIWindow windowToPool);
 
@@ -129,5 +119,5 @@ public class UIController : MonoBehaviour
 
 
 
-    
+
 }
