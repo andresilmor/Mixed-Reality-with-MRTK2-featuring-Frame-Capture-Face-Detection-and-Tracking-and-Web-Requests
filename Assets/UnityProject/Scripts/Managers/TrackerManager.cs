@@ -11,13 +11,13 @@ using UnityEngine.InputSystem.HID;
 using UnityEngine.UIElements;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
-public static class TrackerController {
+public static class TrackerManager {
     public static List<PacientTracker> trackers;
 
 
     public static void CreateTracker(FaceRect faceRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, out object newTracker, string trackerWhat) {
         if (trackers == null)
-            TrackerController.trackers = new List<PacientTracker>();
+            TrackerManager.trackers = new List<PacientTracker>();
 
 
 
@@ -131,7 +131,7 @@ public static class TrackerController {
         }
 
 
-        //TrackerController.trackers.Add(newPerson);
+        //TrackerManager.trackers.Add(newPerson);
 
     }
 

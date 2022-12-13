@@ -43,19 +43,19 @@ using Microsoft.MixedReality.Toolkit.Utilities;
 using System.Threading;
 using UnityEngine.UIElements;
 
-public static class APIController {
+public static class APIManager {
 
     #region API Meta Data
 
     [Header("Protocols:")]
     [SerializeField] static string websocketProtocol = "ws://";
-    [SerializeField] static string httpProtocol = "http://";
+    [SerializeField] static string httpProtocol = "https://";
 
 
     [Header("API Address:")]
     //string address = "websocketProtocol://192.168.1.238:8000";
-    [SerializeField] static string ip = "192.168.1.119";
-    [SerializeField] static string port = "8000";
+    [SerializeField] static string ip = "a9e6-193-136-194-58.eu.ngrok.io";
+    [SerializeField] static string port = ""; //:8000
 
     [Header("Root Paths:")]
     [SerializeField] private static string _websocketPath = "/ws";
@@ -175,7 +175,7 @@ public static class APIController {
 
     public static void CreateWebSocketConnection(string path, Action<string> action) {
         try {
-            WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + ":" + port + websocketPath + path));
+            WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + port + websocketPath + path));
 
             newConnection.OnMessage += (WebSocket webSocket, string message) => {
                 if (message.Length > 6)
@@ -290,7 +290,7 @@ public static class APIController {
             byte[] postData = Encoding.ASCII.GetBytes(jsonData);
 
 
-            using (HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + ':' + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => OnRequestFinished(action, request, response))) {
+            using (HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => OnRequestFinished(action, request, response))) {
                 request.DisableCache = true;
 
                 request.SetHeader("Content-Type", "application/json; charset=UTF-8");

@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 using System.Runtime.CompilerServices;
 using System.Linq;
 
-public static class RealmController {
+public static class RealmManager {
 
     private static RealmConfiguration realmConfig = new RealmConfiguration {
         SchemaVersion = 1
@@ -23,7 +23,7 @@ public static class RealmController {
     }
 
     public static void BulldozeRealm() {
-        using (var realm = RealmController.realm) {
+        using (var realm = RealmManager.realm) {
             realm.Write(() => {
                 realm.RemoveAll();
 
@@ -42,9 +42,9 @@ public static class RealmController {
     /// <param name="userUUID"></param>
     /// <returns>True: Updated/created and commited | False: Did not commit</returns>
     public static bool CreateUpdateUser(JObject data, string userUUID) {
-        RealmObject userObject = RealmController.realm.Find<UserEntity>(userUUID);
+        RealmObject userObject = RealmManager.realm.Find<UserEntity>(userUUID);
 
-        using (Realm realm = RealmController.realm) {
+        using (Realm realm = RealmManager.realm) {
             using (Transaction transaction = realm.BeginWrite()) {
                 try {
                     if (userObject == null) {
@@ -82,19 +82,19 @@ public static class RealmController {
     /// <param name="relationship"></param>
     /// <returns></returns>
     public static bool CreateUpdateUserMembership(RealmObject userObject, JToken relationship) {
-        InstitutionEntity institution = RealmController.realm.Find<InstitutionEntity>(relationship["institution"]["uuid"].Value<string>());
+        InstitutionEntity institution = RealmManager.realm.Find<InstitutionEntity>(relationship["institution"]["uuid"].Value<string>());
 
-        using (Realm realm = RealmController.realm) {
+        using (Realm realm = RealmManager.realm) {
             using (Transaction transaction = realm.BeginWrite()) {
                 try {
                     if (institution == null) {
                         institution = new InstitutionEntity(relationship["institution"]["uuid"].Value<string>());
-                        RealmController.realm.Add(institution);
+                        RealmManager.realm.Add(institution);
 
                     }
 
                     (userObject as UserEntity).MemberOf.Add(new MemberOf(relationship["role"].Value<string>(), institution));
-                    RealmController.realm.Add(userObject, update: true);
+                    RealmManager.realm.Add(userObject, update: true);
                     transaction.Commit();
                     return true;
 
@@ -111,16 +111,16 @@ public static class RealmController {
     }
 
     public static bool CreateUpdateMedicationToTake(JToken data, string institutionResponsible) {
-        PacientEntity pacient = RealmController.realm.Find<PacientEntity>(data["pacient"]["uuid"].Value<string>());
+        PacientEntity pacient = RealmManager.realm.Find<PacientEntity>(data["pacient"]["uuid"].Value<string>());
         if (pacient is null)
-            pacient = new PacientEntity(data["pacient"]["uuid"].Value<string>(), RealmController.realm.Find<InstitutionEntity>(institutionResponsible));
+            pacient = new PacientEntity(data["pacient"]["uuid"].Value<string>(), RealmManager.realm.Find<InstitutionEntity>(institutionResponsible));
 
-        MedicationEntity medication = RealmController.realm.Find<MedicationEntity>(data["medication"]["uuid"].Value<string>());
+        MedicationEntity medication = RealmManager.realm.Find<MedicationEntity>(data["medication"]["uuid"].Value<string>());
         if (medication is null)
             medication = new MedicationEntity(data["medication"]["uuid"].Value<string>(), data["medication"]["name"].Value<string>());
 
         MedicationToTakeEntity medicationToTake = null;
-        medicationToTake = RealmController.realm.All<MedicationToTakeEntity>().Filter(
+        medicationToTake = RealmManager.realm.All<MedicationToTakeEntity>().Filter(
                 "Medication.UUID == '" + medication.UUID + "' && Pacient.UUID == '" + pacient.UUID + "'"
                 ).FirstOrDefault();
 
@@ -138,7 +138,7 @@ public static class RealmController {
 
         }
 
-        using (Realm realm = RealmController.realm) {
+        using (Realm realm = RealmManager.realm) {
             using (Transaction transaction = realm.BeginWrite()) {
                 try {
                     realm.Add(pacient, update: true);

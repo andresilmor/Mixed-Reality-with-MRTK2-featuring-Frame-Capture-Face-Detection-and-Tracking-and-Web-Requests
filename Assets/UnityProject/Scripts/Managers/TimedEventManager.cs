@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public static class TimedEventController {
+public static class TimedEventManager {
     private static Dictionary<string, TimedEventHandler> _timers = new Dictionary<string, TimedEventHandler>();
 
 

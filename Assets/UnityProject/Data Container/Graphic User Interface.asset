@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _windows:
   - name: Header_TwoButtons_00
-    window: {fileID: 4999941590618840993, guid: 320c3886c6cae114095f21387da22e64, type: 3}
+    window: {fileID: 7351710451413509655, guid: 320c3886c6cae114095f21387da22e64, type: 3}
     components:
     - name: Title
       type: 0
@@ -24,18 +24,18 @@ MonoBehaviour:
       path: Header/Subtitle
     - name: TopButtonText
       type: 0
-      path: Top Button/ButtonVisual/TextMeshPro
+      path: Button Group/Top Button/ButtonVisual/TextMeshPro
     - name: TopButton
       type: 1
-      path: Top Button
+      path: Button Group/Top Button
     - name: BotButtonText
       type: 0
-      path: Bot Button/ButtonVisual/TextMeshPro
+      path: Button Group/Bot Button/ButtonVisual/TextMeshPro
     - name: BotButton
       type: 1
-      path: Bot Button
-  - name: Header_TwoButtons_01
-    window: {fileID: 2827474382965927193, guid: fca4ca8fe0b26b3489540f39faf84302, type: 3}
+      path: Button Group/Bot Button
+  - name: Header_OneButtonAndClose
+    window: {fileID: 1102806071783211235, guid: 40886c5a1d156a14c9a4f498c1683926, type: 3}
     components:
     - name: Title
       type: 0

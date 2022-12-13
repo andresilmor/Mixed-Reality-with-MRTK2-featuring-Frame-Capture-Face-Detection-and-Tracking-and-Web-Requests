@@ -106,12 +106,12 @@ public class AppCommandCenter : MonoBehaviour {
     void OnEnable() {
         BestHTTP.HTTPManager.Setup();
 
-        RealmController.BulldozeRealm();
+        RealmManager.BulldozeRealm();
 
     }
 
     void OnDisable() {
-        RealmController.realm.Dispose();
+        RealmManager.realm.Dispose();
 
     }
 
@@ -143,21 +143,21 @@ public class AppCommandCenter : MonoBehaviour {
         AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
 
-        //APIController.CreateWebSocketConnection(APIController.pacientsDetection, MapPredictions);
+        //APIManager.CreateWebSocketConnection(APIManager.pacientsDetection, MapPredictions);
 
     }
 
     public static void StartApplication() {
-        UIWindow loginWindow = UIController.Instance.OpenWindow("Header_TwoButtons_00", stackerName: "Login Window");
+        UIWindow loginWindow = UIManager.Instance.OpenWindow("Header_TwoButtons_00", stackerName: "Login Window");
 
         (loginWindow.components["Title"] as TextMeshPro).text = "Welcome Caregiver";
         (loginWindow.components["Subtitle"] as TextMeshPro).text = "Select Login Method";
         (loginWindow.components["TopButtonText"] as TextMeshPro).text = "Keyboard";
         (loginWindow.components["BotButtonText"] as TextMeshPro).text = "QR Code";
 
-        AccountController.loginWindow = loginWindow;
+        AccountManager.loginWindow = loginWindow;
 
-        (loginWindow.components["BotButton"] as Interactable).OnClick.AddListener(() => { System.Threading.Tasks.Task<bool> task = AccountController.LoginQR(); });
+        (loginWindow.components["BotButton"] as Interactable).OnClick.AddListener(() => { System.Threading.Tasks.Task<bool> task = AccountManager.LoginQR(); });
 
     }
 
@@ -196,7 +196,7 @@ public class AppCommandCenter : MonoBehaviour {
                         Debugger.AddText("NEW ON TREE");
                         object newTracker;
 
-                        TrackerController.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newTracker, "PacientTracker");
+                        TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newTracker, "PacientTracker");
                         (newTracker as PacientTracker).gameObject.name = detection.id.ToString();
 
                         (newTracker as PacientTracker).id = detection.id;
@@ -320,7 +320,7 @@ public class AppCommandCenter : MonoBehaviour {
         if (!justStop) {
 
 #if ENABLE_WINMD_SUPPORT
-            bool wasUpdated = TrackerController.UpdateTrackers();
+            bool wasUpdated = TrackerManager.UpdateTrackers();
             if (wasUpdated) {
                 timeToStop++;
                 if (timeToStop >= 20)
@@ -333,7 +333,7 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
     private void OnDestroy() {
-        APIController.CloseAllWebSockets();
+        APIManager.CloseAllWebSockets();
         StopAllCoroutines();
     }
 

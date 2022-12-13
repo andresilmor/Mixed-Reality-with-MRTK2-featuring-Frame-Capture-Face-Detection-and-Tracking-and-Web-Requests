@@ -6,6 +6,12 @@ using UnityEngine;
 public class UIStacker : MonoBehaviour {
     private Stack<UIWindow> WindowStack = new Stack<UIWindow>();
 
+    public Vector3 GetActiveWindowPosition() {
+        return WindowStack.Peek().gameObject.transform.position;
+
+    }
+
+
     public void PushWindow(UIWindow window) {
         if (WindowStack.Count > 0) {
             UIWindow current = WindowStack.Peek();

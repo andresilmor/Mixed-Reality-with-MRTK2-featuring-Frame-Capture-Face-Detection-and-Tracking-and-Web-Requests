@@ -13,7 +13,7 @@ using UnityEditor;
 using System.Diagnostics.Contracts;
 using Microsoft.MixedReality.Toolkit.UI;
 
-public static class AccountController {
+public static class AccountManager {
     public static string currentUserUUID { get; private set; }
 
     private static bool _isLogged = false;
@@ -23,8 +23,8 @@ public static class AccountController {
             if (_isLogged == value) { return; }
             _isLogged = value;
             if (_isLogged) {
-                foreach (MemberOf memberOf in RealmController.realm.Find<UserEntity>(currentUserUUID).MemberOf) {
-                    NotificationsController.SetupMedicationAlerts(memberOf.Institution.UUID);
+                foreach (MemberOf memberOf in RealmManager.realm.Find<UserEntity>(currentUserUUID).MemberOf) {
+                    NotificationsManager.SetupMedicationAlerts(memberOf.Institution.UUID);
 
                 }
 
@@ -71,13 +71,13 @@ public static class AccountController {
         QRCodesManager.Instance.QRCodeAdded -= LoginQRCode;
         requesting = true;
 
-        APIController.Field queryOperation = new APIController.Field(
-        "memberLogin", new APIController.FieldParams[] {
-            new APIController.FieldParams("username", "\"" + qrMessage["username"] + "\""),
-            new APIController.FieldParams("password", "\"" + qrMessage["password"] + "\""),
+        APIManager.Field queryOperation = new APIManager.Field(
+        "memberLogin", new APIManager.FieldParams[] {
+            new APIManager.FieldParams("username", "\"" + qrMessage["username"] + "\""),
+            new APIManager.FieldParams("password", "\"" + qrMessage["password"] + "\""),
         });
 
-        await APIController.ExecuteRequest(null, queryOperation,
+        await APIManager.ExecuteRequest(null, queryOperation,
             (message, succeed) => {
                 try {
                     if (succeed) {
@@ -86,7 +86,7 @@ public static class AccountController {
                         if (response.HasValues && response["data"] != null) {
                             isLogged = SaveUser(response);
                             requesting = false;
-                            UIController.Instance.CloseWindow(AccountController.loginWindow.stacker);
+                            UIManager.Instance.CloseWindow(AccountManager.loginWindow.stacker);
 
                         } else {
                             Debug.LogWarning("Response empty");
@@ -102,14 +102,14 @@ public static class AccountController {
                 }
 
             },
-            new APIController.Field[] {
-                new APIController.Field("token"),
-                new APIController.Field("uuid"),
-                new APIController.Field("name"),
-                new APIController.Field("memberOf", new APIController.Field[] {
-                    new APIController.Field("role"),
-                    new APIController.Field("institution", new APIController.Field[] {
-                    new APIController.Field("uuid")
+            new APIManager.Field[] {
+                new APIManager.Field("token"),
+                new APIManager.Field("uuid"),
+                new APIManager.Field("name"),
+                new APIManager.Field("memberOf", new APIManager.Field[] {
+                    new APIManager.Field("role"),
+                    new APIManager.Field("institution", new APIManager.Field[] {
+                    new APIManager.Field("uuid")
                 })
 
             })
@@ -123,7 +123,7 @@ public static class AccountController {
     #region Logged Account Persistence
 
     private static bool SaveUser(JObject response) {
-        if (RealmController.CreateUpdateUser(response, response["data"]["memberLogin"]["uuid"].Value<string>()))
+        if (RealmManager.CreateUpdateUser(response, response["data"]["memberLogin"]["uuid"].Value<string>()))
             currentUserUUID = response["data"]["memberLogin"]["uuid"].Value<string>();
 
         return SetRelationshipInstitution(response);
@@ -133,10 +133,10 @@ public static class AccountController {
 
 
     private static bool SetRelationshipInstitution(JObject response) {
-        UserEntity currentUser = RealmController.realm.Find<UserEntity>(currentUserUUID);
+        UserEntity currentUser = RealmManager.realm.Find<UserEntity>(currentUserUUID);
 
         foreach (var relationship in response["data"]["memberLogin"]["memberOf"])
-            RealmController.CreateUpdateUserMembership(currentUser, relationship);
+            RealmManager.CreateUpdateUserMembership(currentUser, relationship);
 
         return true;
 

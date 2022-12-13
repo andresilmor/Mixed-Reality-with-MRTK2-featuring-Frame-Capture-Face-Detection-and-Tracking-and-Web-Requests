@@ -8,9 +8,9 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(MixedRealitySceneContent))]
 [DisallowMultipleComponent]
-public class UIController : MonoBehaviour {
-    private static UIController _instance;
-    public static UIController Instance {
+public class UIManager : MonoBehaviour {
+    private static UIManager _instance;
+    public static UIManager Instance {
         get { return _instance; }
         set {
             if (_instance == null) {
@@ -29,27 +29,32 @@ public class UIController : MonoBehaviour {
 
     void Awake() {
         Instance = this;
+
     }
 
     void Start() {
         graphicUserInterface.SetupComponentsDictionary();
         AppCommandCenter.StartApplication();
 
-
     }
 
     public UIWindow OpenWindow(string toOpen, UIStacker stacker = null, string stackerName = "") {
         UIWindow window = WindowPool.ContainsKey(toOpen) ? WindowPool[toOpen].First() : null;
 
-        Vector3 position = AppCommandCenter.cameraMain.transform.position;
-        position.z += 0.50f;
-        position.y += -0.105f;
+        Vector3 position;
+        if (stacker is null) {   
+            position = AppCommandCenter.cameraMain.transform.position;
+            position.z += 0.50f;
+            position.y += -0.105f;
 
-        if (stacker is null) {
             GameObject newGameObject = new GameObject(stackerName);
-            newGameObject.transform.SetPositionAndRotation(position, Quaternion.identity);
+            newGameObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             newGameObject.transform.parent = this.gameObject.transform;
             stacker = newGameObject.AddComponent<UIStacker>();
+            UIStackers.Add(stacker);
+
+        } else {
+            position = stacker.GetActiveWindowPosition();
 
         }
 
@@ -91,8 +96,11 @@ public class UIController : MonoBehaviour {
 
         }
 
-        if (destroyStacker)
+        if (destroyStacker) { 
             Destroy(stacker.gameObject);
+            UIStackers.Remove(stacker);
+
+        }
 
     }
 
