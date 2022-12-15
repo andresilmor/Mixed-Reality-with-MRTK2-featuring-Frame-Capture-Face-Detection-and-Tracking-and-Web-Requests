@@ -112,7 +112,7 @@ MonoBehaviour:
   - {fileID: 5028777840889874544}
   - {fileID: -2386439699839398719}
   - {fileID: -8814310874599618449}
-  m_renderMode: 0
+  m_renderMode: 1
   m_depthSubmissionMode: 1
 --- !u!114 &-6244962041987538603
 MonoBehaviour:
@@ -945,4 +945,4 @@ MonoBehaviour:
   required: 1
   disableFirstPersonObserver: 0
   enablePoseUpdateOnBeforeRender: 0
-  validationRuleTarget: 0
+  validationRuleTarget: 1

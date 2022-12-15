@@ -88,6 +88,8 @@ public static class AccountManager {
                             requesting = false;
                             UIManager.Instance.CloseWindow(AccountManager.loginWindow.stacker);
 
+
+
                         } else {
                             Debug.LogWarning("Response empty");
 

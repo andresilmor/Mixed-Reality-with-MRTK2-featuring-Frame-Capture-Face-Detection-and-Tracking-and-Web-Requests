@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1102806071722091305}
   - component: {fileID: 1102806071722091304}
   m_Layer: 0
-  m_Name: Right Button
+  m_Name: Action Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -581,6 +581,7 @@ GameObject:
   - component: {fileID: 1102806071783211239}
   - component: {fileID: 1102806071783211238}
   - component: {fileID: 1102806071783211237}
+  - component: {fileID: 3118566471708448679}
   m_Layer: 0
   m_Name: Header_OneButtonAndClose
   m_TagString: Untagged
@@ -827,6 +828,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoConstraintSelection: 1
   selectedConstraints: []
+--- !u!114 &3118566471708448679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102806071783211235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f20ec5b326403f4d9445fa32fe26e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PrePushAction:
+    m_PersistentCalls:
+      m_Calls: []
+  PostPushAction:
+    m_PersistentCalls:
+      m_Calls: []
+  PrePopAction:
+    m_PersistentCalls:
+      m_Calls: []
+  PostPopAction:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1102806071847850898
 GameObject:
   m_ObjectHideFlags: 0

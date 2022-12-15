@@ -7,8 +7,8 @@ public static class Debugger
 {
     public static TextMeshPro debugText;
 
-    public static GameObject cubeForTest;
-    public static GameObject sphereForTest;
+    public static GameObject _cubeForTest;
+    public static GameObject _sphereForTest;
 
     public static void AddText(string text)
     {
@@ -17,27 +17,27 @@ public static class Debugger
 
     public static void ClearText()
     {
-        //debugText.text = "";
+        //_debugText.text = "";
     }
 
     public static GameObject GetCubeForTest()
     {
-        return cubeForTest;
+        return _cubeForTest;
     }
 
     public static GameObject GetSphereForTest()
     {
-        return sphereForTest;
+        return _sphereForTest;
     }
 
     public static void SetCubeForTest(GameObject cube)
     {
-        cubeForTest = cube;
+        _cubeForTest = cube;
     }
 
     public static void SetSphereForTest(GameObject sphere)
     {
-        sphereForTest = sphere;
+        _sphereForTest = sphere;
     }
 
     public static void SetDebugText(TextMeshPro text)

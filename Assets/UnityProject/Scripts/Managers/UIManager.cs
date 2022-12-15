@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour {
 
     void Start() {
         graphicUserInterface.SetupComponentsDictionary();
-        AppCommandCenter.StartApplication();
+        //AppCommandCenter.StartApplication();
 
     }
 
@@ -60,9 +60,15 @@ public class UIManager : MonoBehaviour {
 
         if (!window) {
             foreach (var data in graphicUserInterface.windows) {
+                Debug.Log(data.name);
+                Debug.Log(toOpen);
                 if (data.name.Equals(toOpen)) {
                     window = Instantiate(data.window, position, Quaternion.identity, stacker.gameObject.transform).GetComponent<UIWindow>();
+                    Debug.Log(data is null);
+                    Debug.Log(data.name);
+                    Debug.Log(data.components.Count);
                     window.DefineComponents(data);
+                    break;
 
                 }
 

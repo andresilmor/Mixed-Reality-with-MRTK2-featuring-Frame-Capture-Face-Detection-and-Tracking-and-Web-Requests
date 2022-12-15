@@ -12,17 +12,6 @@ public class TimedEventHandler {
 
     private Action finishedAction = null;
 
-    private bool _inProgress = false;
-    public bool inProgress {
-        get { return _inProgress; }
-        private set {
-            if (_inProgress == value) { return; }
-            _inProgress = value;
-            if (!_inProgress && finishedAction != null)
-                finishedAction.Invoke();
-            //OnLoggedStatusChange(isLogged);
-        }
-    }
 
     public Coroutine timerCoroutine { get; private set; }
     public Coroutine timerDisplayCoroutine { get; private set; }
@@ -33,7 +22,6 @@ public class TimedEventHandler {
         this.timerEnd = timerEnd;
 
         finishedAction = action;
-        _inProgress = true;
 
         timerCoroutine = AppCommandCenter.Instance.StartCoroutine(Timer());
 
@@ -43,10 +31,10 @@ public class TimedEventHandler {
     private IEnumerator Timer() {
         DateTime start = DateTime.Now;
         this.secondsToFinish = (this.timerEnd - start).TotalSeconds;
-
+        Debug.Log("Timer Start");
         yield return new WaitForSeconds(Convert.ToSingle(this.secondsToFinish));
-
-        _inProgress = false;
+        Debug.Log("Timer Over");
+        finishedAction.Invoke();
 
     }
 
@@ -64,6 +52,11 @@ public class TimedEventHandler {
             if (timeLeft.Minutes != 0) {
                 TimeSpan ts = TimeSpan.FromSeconds(timeLeft.TotalSeconds);
                 text += ts.Minutes + "m ";
+
+            }
+
+            if (timeLeft.Seconds != 0) {
+                TimeSpan ts = TimeSpan.FromSeconds(timeLeft.TotalSeconds);
                 text += ts.Seconds + "s";
 
             }
@@ -71,7 +64,6 @@ public class TimedEventHandler {
             return text;
 
         } else {
-            _inProgress = false;
             Debug.Log("Time Out");
             return text;
 
@@ -124,7 +116,6 @@ public class TimedEventHandler {
                 yield return null;
 
             } else {
-                _inProgress = false;
                 break;
                 //time is out
             }

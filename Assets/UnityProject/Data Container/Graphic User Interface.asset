@@ -40,18 +40,15 @@ MonoBehaviour:
     - name: Title
       type: 0
       path: Header/Title
-    - name: Subtitle
+    - name: Description
       type: 0
-      path: Header/Subtitle
-    - name: TopButtonText
+      path: Header/Description
+    - name: ActionButtonText
       type: 0
-      path: Top Button/ButtonVisual/TextMeshPro
-    - name: TopButton
+      path: Button Group/Action Button/ButtonVisual/TextMeshPro
+    - name: ActionButton
       type: 1
-      path: Top Button
-    - name: BotButtonText
-      type: 0
-      path: Bot Button/ButtonVisual/TextMeshPro
-    - name: BotButton
+      path: Button Group/Action Button
+    - name: CloseButton
       type: 1
-      path: Bot Button
+      path: Button Group/Close Button

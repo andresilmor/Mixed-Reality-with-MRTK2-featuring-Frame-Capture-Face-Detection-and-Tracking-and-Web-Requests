@@ -23,9 +23,11 @@ public class UIWindow : MonoBehaviour {
     [SerializeField] UnityEvent PostPopAction;
 
     public void DefineComponents(GraphicUserInterfaceScriptableObject.data uiData) {
-
-
+        Debug.Log("Defining");
+        Debug.Log(uiData is null);
+        Debug.Log(uiData.name);
         foreach (GraphicUserInterfaceScriptableObject.windowComponents component in uiData.components) {
+            Debug.Log(component.name);
             switch (component.type) {
                 case GraphicUserInterfaceScriptableObject.componentType.Text:
                     components.Add(component.name, gameObject.transform.Find(component.path).gameObject.GetComponent<TextMeshPro>());

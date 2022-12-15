@@ -184,7 +184,6 @@ public static class MRWorld {
 
         Vector3 cameraPosition = MRWorld.tempExtrinsic.Position;
         Vector3 position = Vector3.zero;
-        Debugger.AddText("yo");
         try {
 #if ENABLE_WINMD_SUPPORT
         Windows.Foundation.Point target = pointCV.ToWindowsPoint();
@@ -199,7 +198,7 @@ public static class MRWorld {
             }
         }
         layForward = MRWorld.GetLayForward(unprojectionOffset, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
-        Debugger.AddText("yo");
+      
 
         return MRWorld.GetPosition(cameraPosition, layForward, layer);
 
@@ -228,7 +227,7 @@ public static class MRWorld {
 
         float pixelsPerMeterAlongX = MRWorld.tempIntrinsic.FocalLength.x;
         float averagePixelsForFaceAt1Meter = pixelsPerMeterAlongX * averageFaceWidthInMeters;
-         Debugger.AddText("6");
+        
         System.Numerics.Vector3 cubeOffsetInWorldSpace = new System.Numerics.Vector3(0.0f, 0.25f, 0.0f);
         BitmapBounds bestRect = new BitmapBounds();
         System.Numerics.Vector3 bestRectPositionInCameraSpace = System.Numerics.Vector3.Zero;
@@ -246,7 +245,6 @@ public static class MRWorld {
         System.Numerics.Vector3 targetPositionInCameraSpace = vectorTowardsFace * estimatedFaceDepth;
         if (dotFaceWithGaze > bestDotProduct)
             {
-             Debugger.AddText("Inside IF");
                 bestDotProduct = dotFaceWithGaze;
                 //bestRect = faceRect;
                 bestRectPositionInCameraSpace = targetPositionInCameraSpace;
@@ -273,7 +271,7 @@ public static class MRWorld {
         if (results[0].list[0].box.centerY > AppCommandCenter.cameraMain.pixelHeight / 2) {
             cubeOffsetInWorldSpace = new System.Numerics.Vector3(0.0f, 0.12f, 0.0f);
             position = (bestRectPositionInWorldspace - cubeOffsetInWorldSpace).ToUnity();
-            debugText.text = debugText.text + "\nNew PositionOffset X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
+            _debugText.text = _debugText.text + "\nNew PositionOffset X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
             two = Instantiate(Debugger.GetCubeForTest(), position, Quaternion.identity);
             LineDrawer.Draw(cameraPosition,  position, Color.cyan);
 
@@ -281,7 +279,7 @@ public static class MRWorld {
         
             cubeOffsetInWorldSpace = new System.Numerics.Vector3(0.0f, 0.25f, 0.0f);
             position = (bestRectPositionInWorldspace - cubeOffsetInWorldSpace).ToUnity();
-            debugText.text = debugText.text + "\nNew PositionOffset X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
+            _debugText.text = _debugText.text + "\nNew PositionOffset X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
             two = Instantiate(Debugger.GetCubeForTest(), position, Quaternion.identity);
             LineDrawer.Draw(cameraPosition,  position, Color.green);
         }

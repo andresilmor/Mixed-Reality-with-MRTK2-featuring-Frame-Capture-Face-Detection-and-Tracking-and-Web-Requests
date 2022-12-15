@@ -48,14 +48,14 @@ public static class APIManager {
     #region API Meta Data
 
     [Header("Protocols:")]
-    [SerializeField] static string websocketProtocol = "ws://";
+    [SerializeField] static string websocketProtocol = "wss://";
     [SerializeField] static string httpProtocol = "https://";
 
 
     [Header("API Address:")]
     //string address = "websocketProtocol://192.168.1.238:8000";
-    [SerializeField] static string ip = "a9e6-193-136-194-58.eu.ngrok.io";
-    [SerializeField] static string port = ""; //:8000
+    [SerializeField] static string ip = "2646-193-136-194-58.eu.ngrok.io";
+    [SerializeField] static string port = ""; //For when used with localhost server :8000
 
     [Header("Root Paths:")]
     [SerializeField] private static string _websocketPath = "/ws";
@@ -202,10 +202,15 @@ public static class APIManager {
     }
 
     public static void CloseAllWebSockets() {
+        if (pacientMapping.IsOpen) { 
+            pacientMapping.Close(); 
+        }
+
         if (wsConnections != null) {
             foreach (WebSocket ws in wsConnections)
                 ws.Close();
         }
+
 
     }
 

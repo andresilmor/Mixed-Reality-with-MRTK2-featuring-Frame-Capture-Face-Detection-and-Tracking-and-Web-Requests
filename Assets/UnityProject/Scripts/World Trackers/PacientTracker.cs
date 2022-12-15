@@ -13,14 +13,8 @@ public class PacientTracker : MonoBehaviour {
 
     [SerializeField] GameObject markerRect;
 
-    private string _id = "";
-    public string id {
-        get { return _id; }
-        set {
-            if (id.Length <= 0)
-                _id = value;
-        }
-    }
+    public string id = "";
+    
 
     public PacientTracker(TrackerHandler trackerHandler = null) {
         this.trackerHandler = trackerHandler;
@@ -34,7 +28,6 @@ public class PacientTracker : MonoBehaviour {
     /*
     private void SetupEmotionsSprites()
     {
-        Debugger.AddText("Person Profile Child: " + transform.childCount);
         emotionSpriteRenderer = gameObject.transform.GetChild(1).gameObject;
 
     }
