@@ -54,7 +54,7 @@ public static class APIManager {
 
     [Header("API Address:")]
     //string address = "websocketProtocol://192.168.1.238:8000";
-    [SerializeField] static string ip = "2646-193-136-194-58.eu.ngrok.io";
+    [SerializeField] static string ip = "c9ce-193-136-194-58.eu.ngrok.io";
     [SerializeField] static string port = ""; //For when used with localhost server :8000
 
     [Header("Root Paths:")]
@@ -87,16 +87,16 @@ public static class APIManager {
 
     #region WebSockets Data
 
-    private const string _pacientsDetection = "/live";
-    public static string pacientsDetection {
+    private const string _mlLiveDetection = "/live";
+    public static string mlLiveDetection {
         get {
-            return _pacientsDetection;
+            return _mlLiveDetection;
         }
     }
 
     private static List<WebSocket> wsConnections;
     private static List<string> wsConnectionsPath;
-    private static WebSocket pacientMapping;
+    public static WebSocket wsLiveDetection { get; private set; }
 
     #endregion
 
@@ -144,8 +144,8 @@ public static class APIManager {
 
     public static WebSocket GetWebSocket(string path) {
         switch (path) {
-            case _pacientsDetection:
-                return pacientMapping;
+            case _mlLiveDetection:
+                return wsLiveDetection;
 
 
             default:
@@ -161,8 +161,8 @@ public static class APIManager {
 
     private static void AddWebSocket(string path, WebSocket webSocket) {
         switch (path) {
-            case _pacientsDetection:
-                pacientMapping = webSocket;
+            case _mlLiveDetection:
+                wsLiveDetection = webSocket;
                 break;
 
             default:
@@ -202,8 +202,8 @@ public static class APIManager {
     }
 
     public static void CloseAllWebSockets() {
-        if (pacientMapping.IsOpen) { 
-            pacientMapping.Close(); 
+        if (wsLiveDetection.IsOpen) { 
+            wsLiveDetection.Close(); 
         }
 
         if (wsConnections != null) {

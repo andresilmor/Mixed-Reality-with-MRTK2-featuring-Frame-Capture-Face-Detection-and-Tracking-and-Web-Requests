@@ -26,9 +26,7 @@ public class AppCommandCenter : MonoBehaviour {
 
     // TODO change variable names: PublicVariable, _privateVariable, normalVariable
 
-
-
-    BinaryTree pacientsMemory;
+    public BinaryTree liveTrackers { get; private set; }
 
     private static Camera _cameraMain;
     public static Camera cameraMain {
@@ -46,7 +44,7 @@ public class AppCommandCenter : MonoBehaviour {
     [SerializeField] GameObject controllers;
 
     [Header("World Markers:")]
-    [SerializeField] GameObject personMarker;
+    [SerializeField] public GameObject personMarker;
 
     //[field:SerializeField] x {get; private set;}
 
@@ -55,7 +53,7 @@ public class AppCommandCenter : MonoBehaviour {
     [SerializeField] GameObject _cubeForTest;
     [SerializeField] GameObject _sphereForTest;
     [SerializeField] GameObject _lineForTest;
-    [SerializeField] GameObject _detectionName;
+    [SerializeField] public GameObject _detectionName;
     [SerializeField] GameObject _general;
 
 
@@ -65,7 +63,7 @@ public class AppCommandCenter : MonoBehaviour {
         get { return AppCommandCenter._frameHandler; }
         set { if (AppCommandCenter.frameHandler == null) AppCommandCenter._frameHandler = value; }
     }
-    private Mat tempFrameMat;
+    
 
     private bool justStop = false;
     private byte timeToStop = 0;
@@ -130,8 +128,8 @@ public class AppCommandCenter : MonoBehaviour {
         SetDebugger();
 
         Debugger.AddText("Debug 2");
-        if (pacientsMemory == null)
-            pacientsMemory = new BinaryTree();
+        if (liveTrackers == null)
+            liveTrackers = new BinaryTree();
 
 
         if (!SceneManager.GetSceneByName("UI").isLoaded)
@@ -139,11 +137,7 @@ public class AppCommandCenter : MonoBehaviour {
 
         MineField();
 
-#if ENABLE_WINMD_SUPPORT
-        AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
-#endif
-
-        APIManager.CreateWebSocketConnection(APIManager.pacientsDetection, MapPredictions);
+        await MLManager.ToggleLiveDetection();
 
     }
 
@@ -159,7 +153,8 @@ public class AppCommandCenter : MonoBehaviour {
             (timerOverNotification.components["Description"] as TextMeshPro).text = "Yay, time over";
             (timerOverNotification.components["ActionButtonText"] as TextMeshPro).text = "Locate Pacient";
             (timerOverNotification.components["ActionButton"] as Interactable).OnClick.AddListener(() => {
-                Debug.Log("Ya, nop");
+                Debugger.AddText("Ok im calling");
+                MLManager.AnalyseFrame();
 
             });
             (timerOverNotification.components["CloseButton"] as Interactable).OnClick.AddListener(() => {
@@ -190,7 +185,8 @@ public class AppCommandCenter : MonoBehaviour {
         });
 
     }
-
+    
+    /*
     private async void MapPredictions(string predictions) {
         try {
             var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
@@ -270,7 +266,7 @@ public class AppCommandCenter : MonoBehaviour {
 
         return;
     }
-
+    */
     private void SetDebugger() {
         Debugger.SetCubeForTest(_cubeForTest);
         Debugger.SetSphereForTest(_sphereForTest);
@@ -279,7 +275,7 @@ public class AppCommandCenter : MonoBehaviour {
 
     }
 
-
+    /*
     public async void DetectPacients() {
         Debugger.SetFieldView();
 #if ENABLE_WINMD_SUPPORT
@@ -308,7 +304,7 @@ public class AppCommandCenter : MonoBehaviour {
                         MRWorld.UpdateExtInt(lastFrame.extrinsic, lastFrame.intrinsic);
                         
                         FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)));
-                        WebSocket wsTemp = APIManager.GetWebSocket(APIManager.pacientsDetection);
+                        WebSocket wsTemp = APIManager.GetWebSocket(APIManager.mlLiveDetection);
                         if (wsTemp.IsOpen)
                         {
                         } else
@@ -325,7 +321,7 @@ public class AppCommandCenter : MonoBehaviour {
                         ws.Send("Sended");
                         */
                         
-
+    /*
                     }
                     else
                     { Debug.Log("videoFrame or SoftwareBitmap = null"); }
@@ -342,6 +338,10 @@ public class AppCommandCenter : MonoBehaviour {
 #endif
 
     }
+        */
+
+
+
 
     void Update() {
         if (!justStop) {
@@ -362,6 +362,7 @@ public class AppCommandCenter : MonoBehaviour {
     private void OnDestroy() {
         APIManager.CloseAllWebSockets();
         StopAllCoroutines();
+
     }
 
 }
