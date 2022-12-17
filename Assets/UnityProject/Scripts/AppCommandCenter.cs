@@ -128,8 +128,7 @@ public class AppCommandCenter : MonoBehaviour {
         SetDebugger();
 
         Debugger.AddText("Debug 2");
-        if (liveTrackers == null)
-            liveTrackers = new BinaryTree();
+        liveTrackers = new BinaryTree();
 
 
         if (!SceneManager.GetSceneByName("UI").isLoaded)

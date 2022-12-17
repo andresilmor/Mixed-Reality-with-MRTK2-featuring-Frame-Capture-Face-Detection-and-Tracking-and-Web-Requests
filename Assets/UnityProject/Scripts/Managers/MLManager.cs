@@ -115,19 +115,18 @@ public static class MLManager
 
                 try {
                     BinaryTree.Node node = AppCommandCenter.Instance.liveTrackers.Find(detection.id);
-
+                    Debugger.AddText(AppCommandCenter.Instance.liveTrackers.GetTreeDepth().ToString());
                     if (node is null) {
                         Debugger.AddText("NEW ON TREE");
-                        object newTracker;
+                        TrackerHandler newTracker = TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, AppCommandCenter.Instance.personMarker, facePos, TrackerType.PacientTracker);
 
-                        TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, AppCommandCenter.Instance.personMarker, facePos, out newTracker, "PacientTracker");
-                        (newTracker as PacientTracker).gameObject.name = detection.id.ToString();
 
-                        (newTracker as PacientTracker).id = detection.id;
+                        newTracker.gameObject.name = detection.id.ToString();
+                        newTracker.SetIdentifier(detection.id);
 
-                        if (newTracker is PacientTracker)
+                        /*if (newTracker is PacientTracker)
                             (newTracker as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0].ToString());
-
+                        */
 
                         GameObject detectionTooltip = UnityEngine.Object.Instantiate(AppCommandCenter.Instance._detectionName, facePos + new Vector3(0, 0.10f, 0), Quaternion.identity);
 
@@ -142,13 +141,13 @@ public static class MLManager
 
                     } else {
                         Debugger.AddText("ALREADY EXISTS ON TREE");
-
+                        /*
                         if (node.data is PacientTracker) {
                             (node.data as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0]);
                             //(node.GraphQLData as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
 
                         }
-
+                        */
 
                     }
                 } catch (Exception ex) {

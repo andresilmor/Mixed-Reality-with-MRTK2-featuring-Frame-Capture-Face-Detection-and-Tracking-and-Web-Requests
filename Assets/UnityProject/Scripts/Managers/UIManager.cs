@@ -39,10 +39,9 @@ public class UIManager : MonoBehaviour {
     }
 
     public UIWindow OpenWindow(string toOpen, UIStacker stacker = null, string stackerName = "") {
-        UIWindow window = WindowPool.ContainsKey(toOpen) ? WindowPool[toOpen].First() : null;
 
         Vector3 position;
-        if (stacker is null) {   
+        if (stacker is null) {
             position = AppCommandCenter.cameraMain.transform.position;
             position.z += 0.50f;
             position.y += -0.105f;
@@ -58,12 +57,32 @@ public class UIManager : MonoBehaviour {
 
         }
 
+        return InstantiateWindow(toOpen, stacker, position, Quaternion.identity);
+
+    }
+
+    public UIWindow OpenWindowAt(string toOpen, Vector3 position, Quaternion rotation, UIStacker stacker = null, string stackerName = "") {
+        if (stacker is null) {
+            GameObject newGameObject = new GameObject(stackerName);
+            newGameObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            newGameObject.transform.parent = this.gameObject.transform;
+            stacker = newGameObject.AddComponent<UIStacker>();
+            UIStackers.Add(stacker);
+
+        } 
+
+        return InstantiateWindow(toOpen, stacker, position, rotation);
+
+    }
+
+    private UIWindow InstantiateWindow(string toOpen, UIStacker stacker, Vector3 position, Quaternion rotation) {
+        UIWindow window = WindowPool.ContainsKey(toOpen) ? WindowPool[toOpen].First() : null;
         if (!window) {
             foreach (var data in graphicUserInterface.windows) {
                 Debug.Log(data.name);
                 Debug.Log(toOpen);
                 if (data.name.Equals(toOpen)) {
-                    window = Instantiate(data.window, position, Quaternion.identity, stacker.gameObject.transform).GetComponent<UIWindow>();
+                    window = Instantiate(data.window, position, rotation, stacker.gameObject.transform).GetComponent<UIWindow>();
                     Debug.Log(data is null);
                     Debug.Log(data.name);
                     Debug.Log(data.components.Count);
@@ -85,7 +104,6 @@ public class UIManager : MonoBehaviour {
         stacker.PushWindow(window);
 
         return window;
-
     }
 
     public void CloseWindow(UIStacker stacker) {

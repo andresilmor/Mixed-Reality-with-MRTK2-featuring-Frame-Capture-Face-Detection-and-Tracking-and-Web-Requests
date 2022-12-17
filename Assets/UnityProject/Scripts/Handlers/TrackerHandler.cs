@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
-public class TrackerHandler
+public class TrackerHandler : MonoBehaviour 
 {
     TrackerSetting _trackerSetting;
     public TrackerSetting trackerSetting
@@ -17,7 +17,9 @@ public class TrackerHandler
         }
     }
 
-
+    public string TrackerIdentifier { get; private set; }
+    public TrackerType TrackerType { get; private set; }    
+     
     /*
     public TrackerHandler(Tracker tracker) // FOR CSRT
     {
@@ -46,10 +48,16 @@ public class TrackerHandler
     }
     */
 
-    public TrackerHandler(legacy_TrackerCSRT tracker) // FOR Legacy_CSRT
+    public TrackerHandler(legacy_TrackerCSRT tracker, TrackerType type, string uuid = "") // FOR Legacy_CSRT
     {
         _trackerSetting = new TrackerSetting(tracker);
+        TrackerIdentifier = uuid;
+        TrackerType = type;
    
+    }
+
+    public void SetIdentifier(string uuid) {
+        TrackerIdentifier = uuid.Trim();
     }
 
 
@@ -102,7 +110,7 @@ public class TrackerHandler
     }
     */
 
-    // Tracker MOSSE
+    // Tracker CSRT
     public struct TrackerSetting
     {
         public legacy_TrackerCSRT tracker;

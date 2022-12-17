@@ -12,18 +12,20 @@ using UnityEngine.UIElements;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
 public static class TrackerManager {
-    public static List<PacientTracker> trackers;
 
+    public static List<TrackerHandler> trackers;
 
-    public static void CreateTracker(FaceRect faceRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, out object newTracker, string trackerWhat) {
+    public static TrackerHandler CreateTracker(BoxRect boxRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, TrackerType trackerType) {
         if (trackers == null)
-            TrackerManager.trackers = new List<PacientTracker>();
+            TrackerManager.trackers = new List<TrackerHandler>();
+   
 
-
-        Point top = new Point(faceRect.x1, faceRect.y1);
-        Point bottom = new Point(faceRect.x2, faceRect.y2);
+        Point top = new Point(boxRect.x1, boxRect.y1);
+        Point bottom = new Point(boxRect.x2, boxRect.y2);
 
         RectCV region = new RectCV(top, bottom);
+
+        #region Backup 01
         /* Tracker CSRT
         Debugger.AddText("2");
         TrackerCSRT trackerCSRT = TrackerCSRT.create(new TrackerCSRT_Params());
@@ -39,6 +41,8 @@ public static class TrackerManager {
 
         // Tracker legacy_CSRT
 
+        #endregion 
+
         legacy_TrackerCSRT trackerCSRT = legacy_TrackerCSRT.create();
         Rect2d _region = new Rect2d(region.tl(), region.size());
 
@@ -46,23 +50,21 @@ public static class TrackerManager {
         if (visualMarker == null)
             Debugger.AddText("visual tracker is null");
 
-        newTracker = null;
-
         GameObject newVisualTracker = UnityEngine.Object.Instantiate(visualMarker, mrPosition, Quaternion.LookRotation(AppCommandCenter.cameraMain.transform.position, Vector3.up));
         
-        Vector3 tempPos = mrPosition;
+        //Vector3 tempPos = mrPosition;
 
 
-
+        #region Backup 00
 
         /*
         
-        int width = faceRect.x2 - faceRect.x1;
-        int height = faceRect.y2 - faceRect.y1;
+        int width = boxRect.x2 - boxRect.x1;
+        int height = boxRect.y2 - boxRect.y1;
         Debugger.AddText("Width: " + width + " | Height: " + height);
 
-        //int x1 = faceRect.x1 > 0.0f ? (int)faceRect.x1 : 3;
-        //int y1 = faceRect.y1> 0.0f ? (int)faceRect.y1 : 3;
+        //int x1 = boxRect.x1 > 0.0f ? (int)boxRect.x1 : 3;
+        //int y1 = boxRect.y1> 0.0f ? (int)boxRect.y1 : 3;
         //int x2 = (width + x1) > 1504 ? (int)(1504) - 3 : (int)(width + x1);
         //int y2 = (height + y1) > 846 ? (int)(846) - 3 : (int)(height + y1);
 
@@ -78,8 +80,8 @@ public static class TrackerManager {
         Windows.Foundation.Point bottomRight = bottom.ToWindowsPoint();
         Debugger.AddText("Points");
 
-        layForwardTop = MRWorld.GetLayForward(MRWorld.GetUnprojectionOffset(faceRect.y1), topLeft, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
-        layForwardBottom = MRWorld.GetLayForward(MRWorld.GetUnprojectionOffset(faceRect.y2), bottomRight, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
+        layForwardTop = MRWorld.GetLayForward(MRWorld.GetUnprojectionOffset(boxRect.y1), topLeft, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
+        layForwardBottom = MRWorld.GetLayForward(MRWorld.GetUnprojectionOffset(boxRect.y2), bottomRight, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
          Debugger.AddText("LayForward");
 #endif
 
@@ -96,44 +98,48 @@ public static class TrackerManager {
 
         //newVisualTracker.GetComponent<PacientTracker>().SetMarkerVisibility(true);
 
+        #endregion
+
         if (newVisualTracker == null)
             Debugger.AddText("visual tracker is null");
         // mice
         // ---------------------------------------------------------------------------------------------- //
 
+        TrackerHandler newTracker = null;
+
         // NOT NICE
         try {
-            switch (trackerWhat) {
-                case "PacientTracker":
+            switch (trackerType) {
+                case TrackerType.PacientTracker:
                     Debugger.AddText("1");
                     trackerCSRT.init(frame, _region);
                     Debugger.AddText("2");
-                    PacientTracker pacientMarker = newVisualTracker.GetComponent<PacientTracker>();
-                    Debugger.AddText((pacientMarker != null).ToString());
+                    //PacientTracker pacientMarker = newVisualTracker.GetComponent<PacientTracker>();
+                    //Debugger.AddText((pacientMarker != null).ToString());
                     Debugger.AddText("3");
-                    pacientMarker.trackerHandler = new TrackerHandler(trackerCSRT);
+
+                    newTracker = new TrackerHandler(trackerCSRT, TrackerType.PacientTracker);
+                    //pacientMarker.trackerHandler = newTracker;
                     Debugger.AddText("4");
 
 
 
                     //newPerson = new Pacient(newVisualTracker.GetComponent<PacientTracker>(), trackerCSRT);
-                    newTracker = pacientMarker;
                     //(newPerson as Pacient).trackerHandler.trackerSetting.tracker
 
 
                     //newPerson = new Pacient(trackerMOSSE);
                     break;
                 default:
-                    newTracker = null;
-                    return;
+                    return null;
 
             }
         } catch (Exception e) {
             Debugger.AddText(e.Message);
         }
 
-
-        TrackerManager.trackers.Add((newTracker as PacientTracker));
+        TrackerManager.trackers.Add(newTracker);
+        return newTracker;
 
     }
 
