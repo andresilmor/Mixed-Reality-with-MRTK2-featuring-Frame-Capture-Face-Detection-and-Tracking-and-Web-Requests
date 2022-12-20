@@ -15,7 +15,7 @@ public static class TrackerManager {
 
     public static List<TrackerHandler> trackers;
 
-    public static TrackerHandler CreateTracker(BoxRect boxRect, Mat frame, GameObject visualMarker, Vector3 mrPosition, TrackerType trackerType) {
+    public static TrackerHandler CreateTracker(BoxRect boxRect, Mat frame, Vector3 mrPosition, TrackerType trackerType) {
         if (trackers == null)
             TrackerManager.trackers = new List<TrackerHandler>();
    
@@ -47,11 +47,18 @@ public static class TrackerManager {
         Rect2d _region = new Rect2d(region.tl(), region.size());
 
         // ------------------------------------ DANGER ZONE --------------------------------------------- //
-        if (visualMarker == null)
-            Debugger.AddText("visual tracker is null");
+        Debugger.AddText("Pre Create");
+        GameObject newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.PersonMarker, mrPosition, Quaternion.identity).gameObject;
+        //newVisualTracker.transform.LookAt(AppCommandCenter.cameraMain.transform);
+        Debugger.AddText("Pro Create");
 
-        GameObject newVisualTracker = UnityEngine.Object.Instantiate(visualMarker, mrPosition, Quaternion.LookRotation(AppCommandCenter.cameraMain.transform.position, Vector3.up));
-        
+        Debugger.AddText("Pos: " + mrPosition.ToString());
+        Debugger.AddText("Width: " + (boxRect.x2 - boxRect.x1));
+        Debugger.AddText("Height: " + (boxRect.y2 - boxRect.y1));
+
+
+        //GameObject newVisualTracker = UnityEngine.Object.Instantiate(visualMarker, mrPosition, Quaternion.LookRotation(AppCommandCenter.cameraMain.transform.position, Vector3.up));
+
         //Vector3 tempPos = mrPosition;
 
 
@@ -105,22 +112,21 @@ public static class TrackerManager {
         // mice
         // ---------------------------------------------------------------------------------------------- //
 
-        TrackerHandler newTracker = null;
+        TrackerHandler newTracker = newVisualTracker.AddComponent<TrackerHandler>();
 
         // NOT NICE
         try {
             switch (trackerType) {
                 case TrackerType.PacientTracker:
-                    Debugger.AddText("1");
                     trackerCSRT.init(frame, _region);
-                    Debugger.AddText("2");
                     //PacientTracker pacientMarker = newVisualTracker.GetComponent<PacientTracker>();
                     //Debugger.AddText((pacientMarker != null).ToString());
-                    Debugger.AddText("3");
+                   
 
+                    
                     newTracker = new TrackerHandler(trackerCSRT, TrackerType.PacientTracker);
                     //pacientMarker.trackerHandler = newTracker;
-                    Debugger.AddText("4");
+                   
 
 
 
@@ -138,7 +144,8 @@ public static class TrackerManager {
             Debugger.AddText(e.Message);
         }
 
-        TrackerManager.trackers.Add(newTracker);
+        trackers.Add(newTracker);
+        Debugger.AddText("Over tracker create");
         return newTracker;
 
     }

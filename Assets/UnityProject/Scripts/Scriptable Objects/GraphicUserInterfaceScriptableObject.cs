@@ -9,7 +9,7 @@ public class GraphicUserInterfaceScriptableObject : ScriptableObject {
 
     [System.Serializable]
     public class data {
-        public string name;
+        public WindowType windowType;
         public GameObject window;
         public List<windowComponents> components = new List<windowComponents>();
         public Dictionary<string, string> componentsDict = new Dictionary<string, string>();
@@ -18,7 +18,7 @@ public class GraphicUserInterfaceScriptableObject : ScriptableObject {
     [System.Serializable]
     public struct windowComponents {
         public string name;
-        public componentType type;
+        public GUIComponentType type;
         public string path;
     }
 
@@ -29,12 +29,6 @@ public class GraphicUserInterfaceScriptableObject : ScriptableObject {
         get {
             return _windows;
         }
-    }
-
-    [SerializeField]
-    public enum componentType {
-        Text,
-        Button
     }
 
 

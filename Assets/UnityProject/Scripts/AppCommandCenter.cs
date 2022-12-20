@@ -43,8 +43,6 @@ public class AppCommandCenter : MonoBehaviour {
     [Header("Config:")]
     [SerializeField] GameObject controllers;
 
-    [Header("World Markers:")]
-    [SerializeField] public GameObject personMarker;
 
     //[field:SerializeField] x {get; private set;}
 
@@ -136,10 +134,16 @@ public class AppCommandCenter : MonoBehaviour {
 
         MineField();
 
-        await MLManager.ToggleLiveDetection();
+        //await MLManager.ToggleLiveDetection();
+        StartCoroutine(WarmApplication());
 
     }
 
+    private IEnumerator WarmApplication() {
+        yield return new WaitForSeconds(1);
+        StartApplication();
+
+    }
 
     //Test start code
     private void MineField() {
@@ -147,7 +151,7 @@ public class AppCommandCenter : MonoBehaviour {
         testDT  = testDT.Add(new TimeSpan(0, 0, 5));
         Debug.Log("=> " + testDT.ToString());
         TimedEventManager.AddUpdateTimedEvent("3c764a20-629c-4be9-b19b-5f87bddd60d5", new TimedEventHandler(testDT, () => {
-            UIWindow timerOverNotification = UIManager.Instance.OpenWindow("Header_OneButtonAndClose", stackerName: "Time Over Notification");
+            UIWindow timerOverNotification = UIManager.Instance.OpenWindow(WindowType.Header_OneButtonAndClose, stackerName: "Time Over Notification", isNotification: true);
             (timerOverNotification.components["Title"] as TextMeshPro).text = "Time Over";
             (timerOverNotification.components["Description"] as TextMeshPro).text = "Yay, time over";
             (timerOverNotification.components["ActionButtonText"] as TextMeshPro).text = "Locate Pacient";
@@ -157,7 +161,7 @@ public class AppCommandCenter : MonoBehaviour {
 
             });
             (timerOverNotification.components["CloseButton"] as Interactable).OnClick.AddListener(() => {
-                UIManager.Instance.CloseWindow(timerOverNotification.stacker);
+                UIManager.Instance.CloseWindow(timerOverNotification.stacker, (timerOverNotification.components["CloseButton"] as Interactable).gameObject.GetComponent<AudioSource>());
 
             });
 
@@ -169,8 +173,8 @@ public class AppCommandCenter : MonoBehaviour {
 
     }
 
-    public static void StartApplication() {
-        UIWindow loginWindow = UIManager.Instance.OpenWindow("Header_TwoButtons_00", stackerName: "Login Window");
+    private static void StartApplication() {
+        UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.Header_TwoButtons_00, stackerName: "Login Window");
 
         (loginWindow.components["Title"] as TextMeshPro).text = "Welcome Caregiver";
         (loginWindow.components["Subtitle"] as TextMeshPro).text = "Select Login Method";
@@ -185,87 +189,6 @@ public class AppCommandCenter : MonoBehaviour {
 
     }
     
-    /*
-    private async void MapPredictions(string predictions) {
-        try {
-            var results = JsonConvert.DeserializeObject<List<DetectionsList>>(
-                JsonConvert.DeserializeObject(predictions).ToString());
-            
-
-            Vector3 facePos = Vector3.zero;
-            Vector3 bodyPos = Vector3.zero;
-
-            foreach (Detection detection in results[0].list) {
-
-                FaceRect faceRect = detection.faceRect;
-
-                Vector2 unprojectionOffset = MRWorld.GetUnprojectionOffset(detection.bodyCenter.y);
-                bodyPos = MRWorld.GetWorldPositionOfPixel(new Point(detection.bodyCenter.x, detection.bodyCenter.y), unprojectionOffset, (uint)(faceRect.x2 - faceRect.x1));
-
-                unprojectionOffset = MRWorld.GetUnprojectionOffset(faceRect.y1 + ((faceRect.y2 - faceRect.y1) * 0.5f));
-                facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, results[0].list[0].faceRect), unprojectionOffset, (uint)(faceRect.x2 - faceRect.x1), null, 31, true, _detectionName);
-
-                if (Vector3.Distance(bodyPos, MRWorld.tempExtrinsic.Position) < Vector3.Distance(facePos, MRWorld.tempExtrinsic.Position)) {
-                    facePos.x = bodyPos.x;
-                    facePos.z = bodyPos.z;
-                }
-
-
-                try {
-                    BinaryTree.Node node = pacientsMemory.Find(detection.id);
-
-                    if (node is null) {
-                        Debugger.AddText("NEW ON TREE");
-                        object newTracker;
-                        Debugger.AddText("1");
-                        TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, personMarker, facePos, out newTracker, "PacientTracker");
-                        (newTracker as PacientTracker).gameObject.name = detection.id.ToString();
-                        Debugger.AddText((newTracker as PacientTracker).gameObject.name);
-                        Debugger.AddText(detection.id.ToString());
-                        Debugger.AddText("2");
-                        (newTracker as PacientTracker).id = detection.id;
-                        Debugger.AddText("3");
-                        if (newTracker is PacientTracker)
-                            (newTracker as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0].ToString());
-
-                        Debugger.AddText("4");
-                        GameObject detectionTooltip = UnityEngine.Object.Instantiate(_detectionName, facePos + new Vector3(0, 0.10f, 0), Quaternion.identity);
-                        Debugger.AddText("5");
-                        detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
-                        Debugger.AddText("6");
-                        pacientsMemory.Add(detection.id, newTracker);
-                        Debugger.AddText("7");
-                        GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
-                        three.GetComponent<Renderer>().material.color = Color.red;
-                        Debugger.AddText("8");
-
-                    } else {
-                        Debugger.AddText("ALREADY EXISTS ON TREE");
-
-                        if (node.data is PacientTracker) {
-
-                            (node.data as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0]);
-                            //(node.GraphQLData as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
-
-                        }
-
-
-                    }
-                } catch (Exception ex) {
-                    Debugger.AddText(ex.Message);
-                }
-
-            }
-        } catch (Exception error) {
-            Debugger.AddText("Error: " + error.Message.ToString());
-
-        }
-
-
-
-        return;
-    }
-    */
     private void SetDebugger() {
         Debugger.SetCubeForTest(_cubeForTest);
         Debugger.SetSphereForTest(_sphereForTest);
@@ -273,74 +196,6 @@ public class AppCommandCenter : MonoBehaviour {
         LineDrawer.SetDrawLine(_lineForTest);
 
     }
-
-    /*
-    public async void DetectPacients() {
-        Debugger.SetFieldView();
-#if ENABLE_WINMD_SUPPORT
-        var lastFrame = AppCommandCenter.frameHandler.LastFrame;
-        if (lastFrame.mediaFrameReference != null)
-        {
-            try
-            {
-                using (var videoFrame = lastFrame.mediaFrameReference.VideoMediaFrame.GetVideoFrame())
-                {
-                    if (videoFrame != null && videoFrame.SoftwareBitmap != null)
-                    {
-                        byte[] byteArray = await Parser.ToByteArray(videoFrame.SoftwareBitmap);
-                        
-                        
-                        tempFrameMat = lastFrame.frameMat;
-
-                        videoFrame.SoftwareBitmap.Dispose();
-                        //Debug.Log($"[### DEBUG ###] byteArray Size = {byteArray.Length}");
-                      
-                        Instantiate(Debugger.GetSphereForTest(), AppCommandCenter.cameraMain.transform.position, Quaternion.identity);
-                        Instantiate(Debugger.GetCubeForTest(), lastFrame.extrinsic.Position, Quaternion.identity);
-                       
-                        //this.tempExtrinsic = lastFrame.extrinsic;
-                        //this.tempIntrinsic = lastFrame.intrinsic;
-                        MRWorld.UpdateExtInt(lastFrame.extrinsic, lastFrame.intrinsic);
-                        
-                        FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)));
-                        WebSocket wsTemp = APIManager.GetWebSocket(APIManager.mlLiveDetection);
-                        if (wsTemp.IsOpen)
-                        {
-                        } else
-                        {
-                            wsTemp.Open();
-                        }
-
-                        wsTemp.Send("Sending");
-                        wsTemp.Send(JsonUtility.ToJson(frame));
-                        wsTemp.Send("Sended");
-                        /*
-                        ws.Send("Sending");
-                        ws.Send(JsonUtility.ToJson(frame));
-                        ws.Send("Sended");
-                        */
-                        
-    /*
-                    }
-                    else
-                    { Debug.Log("videoFrame or SoftwareBitmap = null"); }
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.Log($"[### Deebug ###] Update Error: {ex.Message}");
-            }
-        }
-        else
-        { Debug.Log("lastFrame.mediaFrameReference = null"); 
-        }
-#endif
-
-    }
-        */
-
-
-
 
     void Update() {
         if (!justStop) {

@@ -21,11 +21,17 @@ public class UIManager : MonoBehaviour {
         }
     }
 
+    [Header("Config:")]
     [SerializeField] GraphicUserInterfaceScriptableObject graphicUserInterface;
     [SerializeField] GameObject uiPool;
 
+    [Header("Audio Clips:")]
+    [SerializeField] public AudioClip OpenWindowClip;
+    [SerializeField] public AudioClip CloseWindowClip;
+    [SerializeField] public AudioClip NotificationClip;
+
     private List<UIStacker> UIStackers = new List<UIStacker>();
-    private Dictionary<string, List<UIWindow>> WindowPool = new Dictionary<string, List<UIWindow>>();
+    private Dictionary<WindowType, List<UIWindow>> WindowPool = new Dictionary<WindowType, List<UIWindow>>();
 
     void Awake() {
         Instance = this;
@@ -38,7 +44,7 @@ public class UIManager : MonoBehaviour {
 
     }
 
-    public UIWindow OpenWindow(string toOpen, UIStacker stacker = null, string stackerName = "") {
+    public UIWindow OpenWindow(WindowType toOpen, UIStacker stacker = null, string stackerName = "", bool isNotification = false) {
 
         Vector3 position;
         if (stacker is null) {
@@ -57,11 +63,11 @@ public class UIManager : MonoBehaviour {
 
         }
 
-        return InstantiateWindow(toOpen, stacker, position, Quaternion.identity);
+        return InstantiateWindow(toOpen, stacker, position, Quaternion.identity, isNotification);
 
     }
 
-    public UIWindow OpenWindowAt(string toOpen, Vector3 position, Quaternion rotation, UIStacker stacker = null, string stackerName = "") {
+    public UIWindow OpenWindowAt(WindowType toOpen, Vector3 position, Quaternion rotation, UIStacker stacker = null, string stackerName = "", bool isNotification = false) {
         if (stacker is null) {
             GameObject newGameObject = new GameObject(stackerName);
             newGameObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
@@ -71,20 +77,17 @@ public class UIManager : MonoBehaviour {
 
         } 
 
-        return InstantiateWindow(toOpen, stacker, position, rotation);
+        return InstantiateWindow(toOpen, stacker, position, rotation, isNotification);
 
     }
 
-    private UIWindow InstantiateWindow(string toOpen, UIStacker stacker, Vector3 position, Quaternion rotation) {
+    private UIWindow InstantiateWindow(WindowType toOpen, UIStacker stacker, Vector3 position, Quaternion rotation, bool isNotification = false) {
         UIWindow window = WindowPool.ContainsKey(toOpen) ? WindowPool[toOpen].First() : null;
         if (!window) {
             foreach (var data in graphicUserInterface.windows) {
-                Debug.Log(data.name);
-                Debug.Log(toOpen);
-                if (data.name.Equals(toOpen)) {
+                if (data.windowType.Equals(toOpen)) {
                     window = Instantiate(data.window, position, rotation, stacker.gameObject.transform).GetComponent<UIWindow>();
                     Debug.Log(data is null);
-                    Debug.Log(data.name);
                     Debug.Log(data.components.Count);
                     window.DefineComponents(data);
                     break;
@@ -100,23 +103,24 @@ public class UIManager : MonoBehaviour {
         }
 
         window.stacker = stacker;
-        window.designation = toOpen;
+        window.windowType = toOpen;
+        window.isNotification = isNotification;
         stacker.PushWindow(window);
 
         return window;
     }
 
-    public void CloseWindow(UIStacker stacker) {
+    public void CloseWindow(UIStacker stacker, AudioSource closeCallerAudioSource = null) {
 
-        bool destroyStacker = stacker.PopWindow(out UIWindow windowToPool);
+        bool destroyStacker = stacker.PopWindow(out UIWindow windowToPool, closeCallerAudioSource);
 
         if (windowToPool != null) {
             windowToPool.gameObject.transform.SetParent(uiPool.transform);
 
-            if (!WindowPool.ContainsKey(windowToPool.designation))
-                WindowPool.Add(windowToPool.designation, new List<UIWindow>());
+            if (!WindowPool.ContainsKey(windowToPool.windowType))
+                WindowPool.Add(windowToPool.windowType, new List<UIWindow>());
 
-            WindowPool[windowToPool.designation].Add(windowToPool);
+            WindowPool[windowToPool.windowType].Add(windowToPool);
 
         }
 

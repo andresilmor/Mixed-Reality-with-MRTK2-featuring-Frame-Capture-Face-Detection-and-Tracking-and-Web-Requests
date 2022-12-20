@@ -27,7 +27,7 @@ public static class NotificationsManager {
                     if (succeed) {
                         JObject response = JObject.Parse(@message);
 
-                        if ((response["data"]["medicationToTake"] as JArray).Count > 0) {
+                        if (response.HasValues && (response["data"]["medicationToTake"] as JArray).Count > 0) {
                             foreach (JToken medicationToTake in response["data"]["medicationToTake"])
                                 RealmManager.CreateUpdateMedicationToTake(medicationToTake, institutionUUID);
 

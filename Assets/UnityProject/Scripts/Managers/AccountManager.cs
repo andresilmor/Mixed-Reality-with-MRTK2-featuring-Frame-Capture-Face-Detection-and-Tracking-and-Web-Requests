@@ -76,8 +76,8 @@ public static class AccountManager {
             new APIManager.FieldParams("username", "\"" + qrMessage["username"] + "\""),
             new APIManager.FieldParams("password", "\"" + qrMessage["password"] + "\""),
         });
-
-        await APIManager.ExecuteRequest(null, queryOperation,
+        Debug.Log(qrMessage);
+        await APIManager.ExecuteRequest("", queryOperation,
             (message, succeed) => {
                 try {
                     if (succeed) {

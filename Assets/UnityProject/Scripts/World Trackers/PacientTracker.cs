@@ -43,9 +43,10 @@ public class PacientTracker : MonoBehaviour {
     }
 
     public bool UpdateActiveEmotion(string emotionName) {
+        /*
         for (byte index = 0; index < 26; index++) {
             if (emotionsList.categorical[index].name.Equals(emotionName)) {
-                emotionSpriteRenderer.sprite = emotionsList.categorical[index].sprite;
+                emotionSpriteRenderer. = emotionsList.categorical[index].sprite;
 
                 activeEmotionIndex = index;
 
@@ -53,9 +54,9 @@ public class PacientTracker : MonoBehaviour {
             }
         }
 
-
+         */
         return false;
-
+       
     }
 
 }

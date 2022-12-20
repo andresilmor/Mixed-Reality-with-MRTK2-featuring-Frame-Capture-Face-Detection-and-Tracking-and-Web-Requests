@@ -54,7 +54,7 @@ public static class APIManager {
 
     [Header("API Address:")]
     //string address = "websocketProtocol://192.168.1.238:8000";
-    [SerializeField] static string ip = "c9ce-193-136-194-58.eu.ngrok.io";
+    [SerializeField] static string ip = "ef9e-193-136-194-58.eu.ngrok.io";
     [SerializeField] static string port = ""; //For when used with localhost server :8000
 
     [Header("Root Paths:")]
@@ -202,11 +202,11 @@ public static class APIManager {
     }
 
     public static void CloseAllWebSockets() {
-        if (wsLiveDetection.IsOpen) { 
+        if (wsLiveDetection != null && wsLiveDetection.IsOpen) { 
             wsLiveDetection.Close(); 
         }
 
-        if (wsConnections != null) {
+        if (wsConnections != null && wsConnections.Count > 0) {
             foreach (WebSocket ws in wsConnections)
                 ws.Close();
         }
@@ -298,12 +298,12 @@ public static class APIManager {
             using (HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => OnRequestFinished(action, request, response))) {
                 request.DisableCache = true;
 
-                request.SetHeader("Content-Type", "application/json; charset=UTF-8");
+                request.SetHeader("Content-Type", "application/json");
                 request.SetHeader("Accept", "application/json");
                 request.SetHeader("Keep-Alive", "timeout = 2, max = 20");
-
-                if (token != null)
-                    request.SetHeader("Authorization", token);
+                Debug.Log(token);
+                if (token != "")
+                    request.SetHeader("Authorization", token.Trim());
 
                 request.RawData = Encoding.UTF8.GetBytes(jsonData);
                 request.Send();

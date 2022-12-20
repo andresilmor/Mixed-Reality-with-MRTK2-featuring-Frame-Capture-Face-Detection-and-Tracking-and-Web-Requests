@@ -213,3 +213,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   graphicUserInterface: {fileID: 11400000, guid: 61cc6a5d39d640a478a4e806e877ce63, type: 2}
   uiPool: {fileID: 458620962}
+  OpenWindowClip: {fileID: 8300000, guid: 4075162bd7e8d9b4387ba77aeb751a0d, type: 3}
+  CloseWindowClip: {fileID: 8300000, guid: 291bf9326e517b0489c2ee53d0a6a63f, type: 3}
+  NotificationClip: {fileID: 8300000, guid: 82bb32b8900f55c488f190d835ffcd99, type: 3}

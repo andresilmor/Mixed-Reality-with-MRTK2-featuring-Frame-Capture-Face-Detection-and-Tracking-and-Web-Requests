@@ -27,16 +27,16 @@ public class UIStacker : MonoBehaviour {
     }
 
 
-    public bool PopWindow(out UIWindow windowToPool) {
+    public bool PopWindow(out UIWindow windowToPool, AudioSource closeCallerAudioSource) {
         if (WindowStack.Count == 1) {
             windowToPool = WindowStack.Pop();
-            windowToPool.Exit();
+            windowToPool.Exit(closeCallerAudioSource);
             return true;
 
         }
 
         windowToPool = WindowStack.Pop();
-        windowToPool.Exit();
+        windowToPool.Exit(closeCallerAudioSource);
         UIWindow next = WindowStack.Peek();
         if (true)
             next.Enter();

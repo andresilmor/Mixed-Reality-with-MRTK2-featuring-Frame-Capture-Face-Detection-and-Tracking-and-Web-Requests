@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1102806071722091305}
   - component: {fileID: 1102806071722091304}
   m_Layer: 0
-  m_Name: Action Button
+  m_Name: ActionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 1102806071781053985}
   - component: {fileID: 1102806071781053986}
   m_Layer: 0
-  m_Name: Button Group
+  m_Name: ButtonGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -512,7 +512,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102806071781053984}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.2030196, y: -0.26389375, z: -0.7663502}
+  m_LocalPosition: {x: -0.2030196, y: -0.26389375, z: -0.95}
   m_LocalScale: {x: 5.442884, y: 10.033983, z: 100}
   m_Children:
   - {fileID: 1102806071722091303}
@@ -579,7 +579,6 @@ GameObject:
   - component: {fileID: 1102806071783211241}
   - component: {fileID: 1102806071783211240}
   - component: {fileID: 1102806071783211239}
-  - component: {fileID: 1102806071783211238}
   - component: {fileID: 1102806071783211237}
   - component: {fileID: 3118566471708448679}
   - component: {fileID: 2058488178411371202}
@@ -599,7 +598,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102806071783211235}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.0304, y: 0.0111, z: 0}
   m_LocalScale: {x: 0.1837261, y: 0.09966132, z: 0.01}
   m_Children:
@@ -669,8 +668,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.99999994, z: 1}
-  m_Center: {x: 0.00000004856583, y: 0, z: 3.0616168e-17}
+  m_Size: {x: 1.0455093, y: 1.1739732, z: 0.0005}
+  m_Center: {x: 0.0020995713, y: -0.0047604353, z: 0.000000114749874}
 --- !u!114 &1102806071783211240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,7 +723,7 @@ MonoBehaviour:
         m_MethodName: PlayOneShot
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 72d90092d0f1a734eb1cfcf71b8fa2e4, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: a16c53885bdbc54469088880ea44a9fd, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -739,7 +738,7 @@ MonoBehaviour:
         m_MethodName: PlayOneShot
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: ec33d8a6027c1574390812966f8aef94, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: bcae4cbce6135d84b9b04ee9e5b909f4, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -752,23 +751,6 @@ MonoBehaviour:
   onHoverExited:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1102806071783211238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1102806071783211235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b3e6359c9750ad4fb8a05c9b8704d7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handType: 3
-  proximityType: 3
-  executionOrder: 0
-  constraintOnRotation: 5
-  useLocalSpaceForConstraint: 0
 --- !u!114 &1102806071783211237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -795,6 +777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f20ec5b326403f4d9445fa32fe26e68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isNotification: 0
   PrePushAction:
     m_PersistentCalls:
       m_Calls: []
@@ -938,12 +921,12 @@ MonoBehaviour:
   rotateStarted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 2058488178411371202}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: PlayOneShot
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 765efbcf7ca1773488edcc8ab6ba4923, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: a16c53885bdbc54469088880ea44a9fd, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -953,12 +936,12 @@ MonoBehaviour:
   rotateStopped:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 2058488178411371202}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: PlayOneShot
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 9d90886bb6646244e852a0acb1de3a3b, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: bcae4cbce6135d84b9b04ee9e5b909f4, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -968,12 +951,12 @@ MonoBehaviour:
   scaleStarted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 2058488178411371202}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: PlayOneShot
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: bdc1f15a0c976854780adcd7e56cfb3e, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: a16c53885bdbc54469088880ea44a9fd, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -983,12 +966,12 @@ MonoBehaviour:
   scaleStopped:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 2058488178411371202}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: PlayOneShot
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 23a78d131feb8774ebe5dd1ea221933e, type: 3}
+          m_ObjectArgument: {fileID: 8300000, guid: bcae4cbce6135d84b9b04ee9e5b909f4, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1068,7 +1051,7 @@ GameObject:
   - component: {fileID: 1102806072080350632}
   - component: {fileID: 1102806072080350631}
   m_Layer: 0
-  m_Name: Close Button
+  m_Name: CloseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2266,7 +2249,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102806073169047872}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 6.4028427e-10}
   m_LocalScale: {x: 0.77707845, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1102806071847850899}
@@ -2540,7 +2523,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102806073505069078}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0039, y: 0.0006, z: 0.00070000015}
+  m_LocalPosition: {x: -0.0039, y: 0.0006, z: 0.0007}
   m_LocalScale: {x: 0.09832544, y: 0.057403643, z: 0.023060001}
   m_Children: []
   m_Father: {fileID: 1102806073844214421}
@@ -2636,7 +2619,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102806073565735324}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0018, y: 0.0011, z: 0.00070000015}
+  m_LocalPosition: {x: -0.0018, y: 0.0011, z: 0.0006999997}
   m_LocalScale: {x: 0.077575415, y: 0.031353354, z: 0.023060001}
   m_Children: []
   m_Father: {fileID: 1102806071847850899}

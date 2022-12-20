@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Graphic User Interface
   m_EditorClassIdentifier: 
   _windows:
-  - name: Header_TwoButtons_00
+  - windowType: 1
     window: {fileID: 7351710451413509655, guid: 320c3886c6cae114095f21387da22e64, type: 3}
     components:
     - name: Title
@@ -24,17 +24,17 @@ MonoBehaviour:
       path: Header/Subtitle
     - name: TopButtonText
       type: 0
-      path: Button Group/Top Button/ButtonVisual/TextMeshPro
+      path: ButtonGroup/TopButton/ButtonVisual/TextMeshPro
     - name: TopButton
       type: 1
-      path: Button Group/Top Button
+      path: ButtonGroup/TopButton
     - name: BotButtonText
       type: 0
-      path: Button Group/Bot Button/ButtonVisual/TextMeshPro
+      path: ButtonGroup/BotButton/ButtonVisual/TextMeshPro
     - name: BotButton
       type: 1
-      path: Button Group/Bot Button
-  - name: Header_OneButtonAndClose
+      path: ButtonGroup/BotButton
+  - windowType: 0
     window: {fileID: 1102806071783211235, guid: 40886c5a1d156a14c9a4f498c1683926, type: 3}
     components:
     - name: Title
@@ -45,10 +45,19 @@ MonoBehaviour:
       path: Header/Description
     - name: ActionButtonText
       type: 0
-      path: Button Group/Action Button/ButtonVisual/TextMeshPro
+      path: ButtonGroup/ActionButton/ButtonVisual/TextMeshPro
     - name: ActionButton
       type: 1
-      path: Button Group/Action Button
+      path: ButtonGroup/ActionButton
     - name: CloseButton
       type: 1
-      path: Button Group/Close Button
+      path: ButtonGroup/CloseButton
+  - windowType: 2
+    window: {fileID: 2372899748573223654, guid: e940e7f5a496e7d4a91da3d9a798d2d5, type: 3}
+    components:
+    - name: Emotion
+      type: 2
+      path: Scalable/EmotionDisplayContainer/EmotionDisplay
+    - name: ProfileButton
+      type: 1
+      path: Scalable/ProfileButton

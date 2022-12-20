@@ -8,13 +8,14 @@ using UnityEngine.Events;
 
 [DisallowMultipleComponent]
 public class UIWindow : MonoBehaviour {
-    public string designation { get; set; }
+    public WindowType windowType { get; set; }
     public bool wasInstantiated { get; private set; }
+    public bool isNotification = false;
+
     public UIStacker stacker { get; set; }
 
     public Dictionary<string, object> components = new Dictionary<string, object>();
     public Dictionary<string, string> componentsContent = new Dictionary<string, string>();
-
 
     [Header("Events:")]
     [SerializeField] UnityEvent PrePushAction;
@@ -22,18 +23,25 @@ public class UIWindow : MonoBehaviour {
     [SerializeField] UnityEvent PrePopAction;
     [SerializeField] UnityEvent PostPopAction;
 
+    private AudioSource audioSource;
+
+    private void Start() {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(isNotification ? UIManager.Instance.NotificationClip : UIManager.Instance.OpenWindowClip);
+
+    }
+
     public void DefineComponents(GraphicUserInterfaceScriptableObject.data uiData) {
-        Debug.Log("Defining");
-        Debug.Log(uiData is null);
-        Debug.Log(uiData.name);
         foreach (GraphicUserInterfaceScriptableObject.windowComponents component in uiData.components) {
-            Debug.Log(component.name);
             switch (component.type) {
-                case GraphicUserInterfaceScriptableObject.componentType.Text:
+                case GUIComponentType.Text:
                     components.Add(component.name, gameObject.transform.Find(component.path).gameObject.GetComponent<TextMeshPro>());
                     break;
-                case GraphicUserInterfaceScriptableObject.componentType.Button:
+                case GUIComponentType.Button:
                     components.Add(component.name, gameObject.transform.Find(component.path).gameObject.GetComponent<Interactable>());
+                    break;
+                case GUIComponentType.Material:
+                    components.Add(component.name, gameObject.transform.Find(component.path).gameObject.GetComponent<MeshRenderer>());
                     break;
 
             }
@@ -42,26 +50,37 @@ public class UIWindow : MonoBehaviour {
 
     }
 
-
     public void Enter(bool wasInstantiated = false) {
         PrePushAction?.Invoke();
-
 
         this.wasInstantiated = wasInstantiated;
 
         gameObject.SetActive(true);
 
         PostPushAction?.Invoke();
+
     }
 
-    public void Exit() {
+    public void Exit(AudioSource closeCallerAudioSource = null) {
         PrePopAction?.Invoke();
 
-        gameObject.SetActive(false);
+        Debug.Log(closeCallerAudioSource != null);
+        if (closeCallerAudioSource != null) 
+            StartCoroutine(WaitForAudioFinish(closeCallerAudioSource));
+        else
+            gameObject.SetActive(false);
 
         PostPopAction?.Invoke();
 
     }
+
+    private IEnumerator WaitForAudioFinish(AudioSource closeCallerAudioSource) {
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitWhile(() => closeCallerAudioSource.isPlaying);
+        gameObject.SetActive(false);
+
+    }
+
 
     public void UpdateContent(string key, string content) {
         try {
