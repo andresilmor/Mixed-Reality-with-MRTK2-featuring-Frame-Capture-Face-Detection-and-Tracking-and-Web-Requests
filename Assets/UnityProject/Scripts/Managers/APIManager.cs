@@ -173,6 +173,23 @@ public static class APIManager {
         }
     }
 
+    public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<string, DetectionType> action) {
+        try {
+            WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + port + websocketPath + path));
+
+            newConnection.OnMessage += (WebSocket webSocket, string message) => {
+                if (message.Length > 6)
+                    action?.Invoke(message, detectionType);
+            };
+
+            ConfigWebsocketGeneric(path, newConnection);
+
+        } catch (Exception e) {
+            Debugger.AddText("Error: " + e.Message.ToString());
+        }
+
+    }
+
     public static void CreateWebSocketConnection(string path, Action<string> action) {
         try {
             WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + port + websocketPath + path));
@@ -182,22 +199,27 @@ public static class APIManager {
                     action?.Invoke(message);
             };
 
-            newConnection.OnOpen += (WebSocket webSocket) => {
-                webSocket.Send("Connection Opened");
-            };
-
-            newConnection.OnClosed += (WebSocket webSocket, UInt16 code, string message) => {
-                wsConnections.Remove(newConnection);
-
-            };
-
-            newConnection.Open();
-
-            AddWebSocket(path, newConnection);
+            ConfigWebsocketGeneric(path, newConnection);
 
         } catch (Exception e) {
             Debugger.AddText("Error: " + e.Message.ToString());
         }
+
+    }
+
+    private static void ConfigWebsocketGeneric(string path, WebSocket newConnection) {
+        newConnection.OnOpen += (WebSocket webSocket) => {
+            webSocket.Send("Connection Opened");
+        };
+
+        newConnection.OnClosed += (WebSocket webSocket, UInt16 code, string message) => {
+            wsConnections.Remove(newConnection);
+
+        };
+
+        newConnection.Open();
+
+        AddWebSocket(path, newConnection);
 
     }
 

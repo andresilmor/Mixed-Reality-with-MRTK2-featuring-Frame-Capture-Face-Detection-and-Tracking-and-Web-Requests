@@ -134,7 +134,7 @@ public class AppCommandCenter : MonoBehaviour {
 
         MineField();
 
-        //await MLManager.ToggleLiveDetection();
+        await MLManager.ToggleLiveDetection();
         StartCoroutine(WarmApplication());
 
     }

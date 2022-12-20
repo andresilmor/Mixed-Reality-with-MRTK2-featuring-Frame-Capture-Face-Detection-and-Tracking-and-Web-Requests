@@ -17,7 +17,7 @@ public static class MLManager
         AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
 #endif
 
-        APIManager.CreateWebSocketConnection(APIManager.mlLiveDetection, MLManager.MapPredictions);
+        APIManager.CreateWebSocketLiveDetection(APIManager.mlLiveDetection, DetectionType.Person, MLManager.MapDetections);
 
         return APIManager.wsLiveDetection != null;
 
@@ -59,15 +59,8 @@ public static class MLManager
                             wsTemp.Open();
                         }
 
-                        wsTemp.Send("Sending");
                         wsTemp.Send(JsonUtility.ToJson(frame));
-                        wsTemp.Send("Sended");
-                        /*
-                        ws.Send("Sending");
-                        ws.Send(JsonUtility.ToJson(frame));
-                        ws.Send("Sended");
-                        */
-                        
+                                          
 
                     }
                     else
@@ -86,84 +79,108 @@ public static class MLManager
 
     }
 
-    public static async void MapPredictions(string predictions) {
+    public static async void MapDetections(string predictions, DetectionType detectionType) {
         Debugger.AddText("HERE");
         try {
             List<DetectionsList> results = JsonConvert.DeserializeObject<List<DetectionsList>>(
                 JsonConvert.DeserializeObject(predictions).ToString());
         
-            Vector3 facePos = Vector3.zero;
-            Vector3 bodyPos = Vector3.zero;
+            Vector3 worldPosition = Vector3.zero;
 
-            foreach (Detection detection in results[0].list) {
-                GetWorldPositionByRaycast(out facePos, out bodyPos, detection);
+            switch (detectionType) {
+                case DetectionType.Person:
+                    foreach (Detection detection in results[0].list) {
+                        GetWorldPosition(out worldPosition, detection);
 
-                try {
+                        try {
 
-                    BinaryTree.Node node = AppCommandCenter.Instance.liveTrackers.Find(detection.id);
-                    Debugger.AddText(AppCommandCenter.Instance.liveTrackers.GetTreeDepth().ToString());
+                            BinaryTree.Node node = AppCommandCenter.Instance.liveTrackers.Find(detection.id);
+                            Debugger.AddText(AppCommandCenter.Instance.liveTrackers.GetTreeDepth().ToString());
 
-                    if (node is null) {
-                        Debugger.AddText("NEW ON TREE");
-                        TrackerHandler newTracker = TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, facePos, TrackerType.PacientTracker);
+                            if (node is null) {
+                                Debugger.AddText("NEW ON TREE");
+                                TrackerHandler newTracker = TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, worldPosition, TrackerType.PacientTracker);
 
-                        //newTracker.gameObject.name = detection.id.ToString();
-                        newTracker.SetIdentifier(detection.id);
+                                //newTracker.gameObject.name = detection.id.ToString();
+                                newTracker.SetIdentifier(detection.id);
 
-                        /*if (newTracker is PacientTracker)
-                            (newTracker as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0].ToString());
-                        */
+                                /*if (newTracker is PacientTracker)
+                                    (newTracker as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0].ToString());
+                                */
 
-                        GameObject detectionTooltip = UnityEngine.Object.Instantiate(AppCommandCenter.Instance._detectionName, facePos + new Vector3(0, 0.10f, 0), Quaternion.identity);
+                                GameObject detectionTooltip = UnityEngine.Object.Instantiate(AppCommandCenter.Instance._detectionName, worldPosition + new Vector3(0, 0.10f, 0), Quaternion.identity);
 
-                        detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
+                                detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
 
-                        AppCommandCenter.Instance.liveTrackers.Add(detection.id, newTracker);
-
-                        GameObject three = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
-                        three.GetComponent<Renderer>().material.color = Color.red;
+                                AppCommandCenter.Instance.liveTrackers.Add(detection.id, newTracker);
 
 
+                            } else {
+                                Debugger.AddText("ALREADY EXISTS ON TREE");
+                                /*SEARCH BINARY TREE BY IDENTIFIER, ALSO LOCK WHILE CHANGING
+                                if (node.data is PacientTracker) {
+                                    (node.data as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0]);
+                                    //(node.GraphQLData as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
 
-                    } else {
-                        Debugger.AddText("ALREADY EXISTS ON TREE");
-                        /*SEARCH BINARY TREE BY IDENTIFIER, ALSO LOCK WHILE CHANGING
-                        if (node.data is PacientTracker) {
-                            (node.data as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0]);
-                            //(node.GraphQLData as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
+                                }
+                                */
 
+                            }
+                        } catch (Exception ex) {
+                            Debugger.AddText(ex.Message);
                         }
-                        */
 
                     }
-                } catch (Exception ex) {
-                    Debugger.AddText(ex.Message);
-                }
-
+                    break;
+            
             }
+            
         } catch (Exception error) {
             Debugger.AddText("Error: " + error.Message.ToString());
 
         }
 
-
-
-        return;
     }
 
-    private static void GetWorldPositionByRaycast(out Vector3 facePos, out Vector3 bodyPos, Detection detection) {
+    private static void GetWorldPosition(out Vector3 worldPosition, Detection detection) {
+        Vector3 worldPosRaycast = GetFaceWorldPositionByRaycast(detection);
+
+        worldPosition = worldPosRaycast;
+        return;
+        Vector3 worldPosCalculation = GetWorldPositionCalculation(detection);
+
+        if (Vector3.Distance(worldPosRaycast, MRWorld.tempExtrinsic.Position) < Vector3.Distance(worldPosCalculation, MRWorld.tempExtrinsic.Position)) {
+            worldPosition = worldPosRaycast;
+            return;
+
+        }
+
+        worldPosition = worldPosCalculation;
+
+    }
+
+    private static Vector3 GetWorldPositionCalculation(Detection detection) {
+        throw new NotImplementedException();
+    }
+
+    private static Vector3 GetFaceWorldPositionByRaycast(Detection detection) {
         Vector2 unprojectionOffset = MRWorld.GetUnprojectionOffset(detection.bodyCenter.y);
-        bodyPos = MRWorld.GetWorldPositionOfPixel(new Point(detection.bodyCenter.x, detection.bodyCenter.y), unprojectionOffset, (uint)(detection.faceRect.x2 - detection.faceRect.x1));
+        Vector3 bodyPos = MRWorld.GetWorldPositionOfPixel(new Point(detection.bodyCenter.x, detection.bodyCenter.y), unprojectionOffset, (uint)(detection.faceRect.x2 - detection.faceRect.x1));
 
         unprojectionOffset = MRWorld.GetUnprojectionOffset(detection.faceRect.y1 + ((detection.faceRect.y2 - detection.faceRect.y1) * 0.5f));
-
-        facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, detection.faceRect), unprojectionOffset, (uint)(detection.faceRect.x2 - detection.faceRect.x1), null, 31, true, AppCommandCenter.Instance._detectionName);
+        Vector3 facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, detection.faceRect), unprojectionOffset, (uint)(detection.faceRect.x2 - detection.faceRect.x1), null, 31, true, AppCommandCenter.Instance._detectionName);
 
         if (Vector3.Distance(bodyPos, MRWorld.tempExtrinsic.Position) < Vector3.Distance(facePos, MRWorld.tempExtrinsic.Position)) {
             facePos.x = bodyPos.x;
             facePos.z = bodyPos.z;
 
         }
+
+
+        GameObject FaceWorldPositionByRaycast = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
+        FaceWorldPositionByRaycast.GetComponent<Renderer>().material.color = Color.red;
+
+        return facePos;
 
     }
 }

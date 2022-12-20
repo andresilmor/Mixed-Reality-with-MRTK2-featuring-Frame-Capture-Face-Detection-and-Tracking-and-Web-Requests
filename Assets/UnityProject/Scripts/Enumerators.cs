@@ -20,5 +20,10 @@ public enum TrackerType {
 
 }
 
+public enum DetectionType {
+    Person
+
+}
+
 
 
