@@ -9,8 +9,8 @@ public enum GUIComponentType {
 }
 
 public enum WindowType {
-    Header_OneButtonAndClose,
-    Header_TwoButtons_00,
+    HeaderOneButtonAndClose,
+    HeaderTwoButtons00,
     PersonMarker
 
 }

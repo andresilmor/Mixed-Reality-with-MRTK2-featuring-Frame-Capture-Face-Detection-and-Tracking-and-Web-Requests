@@ -15,7 +15,7 @@ using Windows.Media.Capture.Frames;
 using Windows.Media.MediaProperties;
 #endif
 
-public class FrameHandler
+public class CameraFrameReader
 {
 	public struct Frame
 	{
@@ -45,9 +45,8 @@ public class FrameHandler
 		{
 			lock (this)
 			{
-				_lastFrame.extrinsic = new CameraExtrinsic(_lastFrame.mediaFrameReference.CoordinateSystem, MRWorld.worldOrigin);
+				_lastFrame.extrinsic = new CameraExtrinsic(_lastFrame.mediaFrameReference.CoordinateSystem, MRWorld.WorldOrigin);
 				_lastFrame.intrinsic = new CameraIntrinsic(_lastFrame.mediaFrameReference.VideoMediaFrame);
-				_lastFrame.frameMat = GenerateCVMat(_lastFrame.mediaFrameReference);
 				return _lastFrame;
 			}
 		}
@@ -55,6 +54,7 @@ public class FrameHandler
 		{
 			lock (this)
 			{
+				_lastFrame.frameMat = GenerateCVMat(value.mediaFrameReference);
 				_lastFrame = value;
 			}
 		}
@@ -81,7 +81,7 @@ public class FrameHandler
 		}
 	}
 
-	private FrameHandler(MediaCapture mediaCapture = null, MediaFrameSource mediaFrameSource = null, MediaFrameReader mediaFrameReader = null)
+	private CameraFrameReader(MediaCapture mediaCapture = null, MediaFrameSource mediaFrameSource = null, MediaFrameReader mediaFrameReader = null)
 	{
 		this.mediaCapture = mediaCapture;
 		this.mediaFrameSource = mediaFrameSource;
@@ -94,7 +94,7 @@ public class FrameHandler
 		}
 	}
 
-	public static async Task<FrameHandler> CreateAsync(int width = 1504, int height = 846) //Default values anyway, if not defined the "outputSize" in "mediaCapture.CreateFrameReaderAsync"
+	public static async Task<CameraFrameReader> CreateAsync(int width = 1504, int height = 846) //Default values anyway, if not defined the "outputSize" in "mediaCapture.CreateFrameReaderAsync"
 	{
 		MediaCapture mediaCapture = null;
 		MediaFrameReader mediaFrameReader = null;
@@ -126,7 +126,7 @@ public class FrameHandler
 		if (selectedGroup == null || selectedSourceInfo == null)
 		{
 			Debug.Log("Failed to find Group and SourceInfo");
-			return new FrameHandler();
+			return new CameraFrameReader();
 		}
 
 		// Create settings 
@@ -155,7 +155,7 @@ public class FrameHandler
 		catch (Exception e)
 		{
 			Debug.Log($"Failed to initilise mediacaptrue {e.ToString()}");
-			return new FrameHandler();
+			return new CameraFrameReader();
 		}
 
 		
@@ -182,12 +182,12 @@ public class FrameHandler
 		if (status == MediaFrameReaderStartStatus.Success)
 		{
 			Debug.Log("MediaFrameReaderStartStatus == Success");
-			return new FrameHandler(mediaCapture, selectedSource, mediaFrameReader);
+			return new CameraFrameReader(mediaCapture, selectedSource, mediaFrameReader);
 		}
 		else
 		{
 			Debug.Log($"MediaFrameReaderStartStatus != Success; {status}");
-			return new FrameHandler();
+			return new CameraFrameReader();
 		}
 	}
 
@@ -226,7 +226,7 @@ public class FrameHandler
 
 #if ENABLE_WINMD_SUPPORT
     /// <summary>
-    /// Extracts the image according to the <see cref="ColorFormat"/> and invokes the <see cref="FrameArrived"/> event containing a <see cref="CameraFrame"/>.
+    /// Extracts the image according to the <see cref="ColorFormat"/> and invokes the <see cref="FrameArrived"/> event containing a <see cref="CameraFrameReader"/>.
     /// </summary>
     public unsafe Mat GenerateCVMat(MediaFrameReference frameReference, bool toDispose = false, int frameWidth = 1504, int frameHeight = 846) {
         
@@ -249,8 +249,8 @@ public class FrameHandler
                 MatUtils.copyToMat((IntPtr)inputBytes, _bitmap); // Copies Pixel Data Array to OpenCV Mat data.
                 //int thisFrameCount = Interlocked.Increment(ref FrameCount);
                 
-                //CameraFrame cameraFrame = new CameraFrame(_bitmap, intrinsic, extrinsic, FrameWidth, FrameHeight, (uint)thisFrameCount, _format);
-                //FrameArrivedEventArgs eventArgs = new FrameArrivedEventArgs(cameraFrame);
+                //CameraFrameReader CameraFrameReader = new CameraFrameReader(_bitmap, intrinsic, extrinsic, FrameWidth, FrameHeight, (uint)thisFrameCount, _format);
+                //FrameArrivedEventArgs eventArgs = new FrameArrivedEventArgs(CameraFrameReader);
                 //FrameArrived?.Invoke(this, eventArgs);
             }
             

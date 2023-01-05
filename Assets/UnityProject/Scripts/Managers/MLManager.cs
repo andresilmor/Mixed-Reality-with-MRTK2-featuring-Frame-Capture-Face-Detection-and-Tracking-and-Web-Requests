@@ -1,12 +1,25 @@
 using Newtonsoft.Json;
 using OpenCVForUnity.CoreModule;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using BestHTTP.WebSocket;
 using System.Threading.Tasks;
+
+using BestHTTP.WebSocket;
+using UnityEngine.UIElements;
+using static MongoDB.Bson.Serialization.Serializers.SerializerHelper;
+using UnityEngine.InputSystem.HID;
+
+#if ENABLE_WINMD_SUPPORT
+using Windows.Media.Capture.Frames;
+using Windows.Foundation;
+using Windows.Perception.Spatial;
+using Windows.Media.Devices.Core;
+using Windows.Media.Capture;
+using Windows.Graphics.Holographic;
+using Windows.Graphics.Imaging;
+#endif
 
 public static class MLManager
 {
@@ -14,7 +27,7 @@ public static class MLManager
 
     public static async Task<bool> ToggleLiveDetection() {
 #if ENABLE_WINMD_SUPPORT
-        AppCommandCenter.frameHandler = await FrameHandler.CreateAsync();
+        AppCommandCenter.CameraFrameReader = await CameraFrameReader.CreateAsync();
 #endif
 
         APIManager.CreateWebSocketLiveDetection(APIManager.mlLiveDetection, DetectionType.Person, MLManager.MapDetections);
@@ -26,7 +39,7 @@ public static class MLManager
     public static async void AnalyseFrame() {
         Debugger.SetFieldView();
 #if ENABLE_WINMD_SUPPORT
-        var lastFrame = AppCommandCenter.frameHandler.LastFrame;
+        var lastFrame = AppCommandCenter.CameraFrameReader.LastFrame;
         if (lastFrame.mediaFrameReference != null)
         {
             try
@@ -108,9 +121,12 @@ public static class MLManager
                                     (newTracker as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0].ToString());
                                 */
 
-                                GameObject detectionTooltip = UnityEngine.Object.Instantiate(AppCommandCenter.Instance._detectionName, worldPosition + new Vector3(0, 0.10f, 0), Quaternion.identity);
+                                AppCommandCenter.Instance.compareWith = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), worldPosition, Quaternion.identity);
+                                AppCommandCenter.Instance.compareWith.GetComponent<Renderer>().material.color = UnityEngine.Color.blue;
 
-                                detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
+                                //GameObject detectionTooltip = UnityEngine.Object.Instantiate(AppCommandCenter.Instance._detectionName, worldPosition + new Vector3(0, 0.10f, 0), Quaternion.identity);
+
+                                //detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
 
                                 AppCommandCenter.Instance.liveTrackers.Add(detection.id, newTracker);
 
@@ -143,32 +159,9 @@ public static class MLManager
     }
 
     private static void GetWorldPosition(out Vector3 worldPosition, Detection detection) {
-        Vector3 worldPosRaycast = GetFaceWorldPositionByRaycast(detection);
+        Vector3 bodyPos = GetWorldPositionByRaycast(new OpenCVForUnity.CoreModule.Point(detection.bodyCenter.x, detection.bodyCenter.y));
 
-        worldPosition = worldPosRaycast;
-        return;
-        Vector3 worldPosCalculation = GetWorldPositionCalculation(detection);
-
-        if (Vector3.Distance(worldPosRaycast, MRWorld.tempExtrinsic.Position) < Vector3.Distance(worldPosCalculation, MRWorld.tempExtrinsic.Position)) {
-            worldPosition = worldPosRaycast;
-            return;
-
-        }
-
-        worldPosition = worldPosCalculation;
-
-    }
-
-    private static Vector3 GetWorldPositionCalculation(Detection detection) {
-        throw new NotImplementedException();
-    }
-
-    private static Vector3 GetFaceWorldPositionByRaycast(Detection detection) {
-        Vector2 unprojectionOffset = MRWorld.GetUnprojectionOffset(detection.bodyCenter.y);
-        Vector3 bodyPos = MRWorld.GetWorldPositionOfPixel(new Point(detection.bodyCenter.x, detection.bodyCenter.y), unprojectionOffset, (uint)(detection.faceRect.x2 - detection.faceRect.x1));
-
-        unprojectionOffset = MRWorld.GetUnprojectionOffset(detection.faceRect.y1 + ((detection.faceRect.y2 - detection.faceRect.y1) * 0.5f));
-        Vector3 facePos = MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, detection.faceRect), unprojectionOffset, (uint)(detection.faceRect.x2 - detection.faceRect.x1), null, 31, true, AppCommandCenter.Instance._detectionName);
+        Vector3 facePos = GetWorldPositionByRaycast(detection.faceRect);
 
         if (Vector3.Distance(bodyPos, MRWorld.tempExtrinsic.Position) < Vector3.Distance(facePos, MRWorld.tempExtrinsic.Position)) {
             facePos.x = bodyPos.x;
@@ -176,11 +169,108 @@ public static class MLManager
 
         }
 
+        LineDrawer.Draw(MRWorld.tempExtrinsic.Position, facePos, UnityEngine.Color.green);
 
-        GameObject FaceWorldPositionByRaycast = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), facePos, Quaternion.identity);
-        FaceWorldPositionByRaycast.GetComponent<Renderer>().material.color = Color.red;
+        worldPosition = Vector3.zero;
+        worldPosition.x += facePos.x;
+        worldPosition.y += facePos.y;
 
-        return facePos;
+        Vector3 worldPosCalculated = GetWorldPositionCalculation(detection.faceRect);
+
+        worldPosition.z += worldPosCalculated.z;
+
+        LineDrawer.Draw(MRWorld.tempExtrinsic.Position, worldPosition, UnityEngine.Color.blue);
 
     }
+
+
+    //Base:
+    // (C#) https://github.com/cookieofcode/hololens2-unity-uwp-starter/blob/main/Unity/Assets/Scripts/HoloFaceTracker.cs   
+    // (C++) https://github.com/microsoft/Windows-universal-samples/tree/main/Samples/HolographicFaceTracking/cpp
+    private static Vector3 GetWorldPositionCalculation(BoxRect boxRect) {
+
+#if ENABLE_WINMD_SUPPORT
+        VideoMediaFrameFormat videoFormat = AppCommandCenter.CameraFrameReader.LastFrame.mediaFrameReference.VideoMediaFrame.VideoFormat;
+        SpatialCoordinateSystem cameraCoordinateSystem = AppCommandCenter.CameraFrameReader.LastFrame.mediaFrameReference.CoordinateSystem;
+        CameraIntrinsics cameraIntrinsics = AppCommandCenter.CameraFrameReader.LastFrame.mediaFrameReference.VideoMediaFrame.CameraIntrinsics;
+
+        System.Numerics.Matrix4x4? cameraToWorld = cameraCoordinateSystem.TryGetTransformTo(MRWorld.WorldOrigin);
+
+        if (!cameraToWorld.HasValue) {
+            return Vector3.zero;
+
+        }
+
+        float textureWidthInv = 1.0f / videoFormat.Width;
+        float textureHeightInv = 1.0f / videoFormat.Height;
+
+#endif
+
+        int paddingForFaceRect = 24;
+        float averageFaceWidthInMeters = 0.132f;
+
+#if ENABLE_WINMD_SUPPORT
+        float pixelsPerMeterAlongX = cameraIntrinsics.FocalLength.X;
+        float averagePixelsForFaceAt1Meter = pixelsPerMeterAlongX * averageFaceWidthInMeters;
+
+        BitmapBounds bestRect = new BitmapBounds();
+        System.Numerics.Vector3 bestRectPositionInCameraSpace = System.Numerics.Vector3.Zero;
+
+        float bestDotProduct = -1.0f;
+
+#endif
+
+        long faceWidth = Convert.ToInt64(boxRect.x2 - boxRect.x1);
+        Debugger.AddText("Face Width: " + faceWidth);
+        long centerX = Convert.ToInt64(boxRect.x1) + faceWidth / 2u;
+
+        long faceHeight = Convert.ToInt64(boxRect.y2 - boxRect.y1);
+        long centerY = Convert.ToInt64(boxRect.y1) + faceHeight / 2u;
+
+#if ENABLE_WINMD_SUPPORT
+        Windows.Foundation.Point faceRectCenterPoint = new Windows.Foundation.Point(centerX, centerY);
+
+        System.Numerics.Vector2 centerOfFace = cameraIntrinsics.UnprojectAtUnitDepth(faceRectCenterPoint);
+
+        System.Numerics.Vector3 vectorTowardsFace = System.Numerics.Vector3.Normalize(new System.Numerics.Vector3(centerOfFace.X, centerOfFace.Y, -1.0f));
+        
+        float estimatedFaceDepth = averagePixelsForFaceAt1Meter / faceWidth;
+
+        float dotFaceWithGaze = System.Numerics.Vector3.Dot(vectorTowardsFace, -System.Numerics.Vector3.UnitZ);
+
+        System.Numerics.Vector3 targetPositionInCameraSpace = vectorTowardsFace * estimatedFaceDepth;
+
+        if (dotFaceWithGaze > bestDotProduct) {
+            bestDotProduct = dotFaceWithGaze;
+            //bestRect = faceRect;
+            bestRectPositionInCameraSpace = targetPositionInCameraSpace;
+            
+        }
+
+        System.Numerics.Vector3 bestRectPositionInWorldSpace = System.Numerics.Vector3.Transform(bestRectPositionInCameraSpace, cameraToWorld.Value);
+
+        Vector3 positon = NumericsConversionExtensions.ToUnity(bestRectPositionInWorldSpace);
+        
+        
+        return positon;
+
+#endif
+
+        return Vector3.zero;
+    }
+
+
+   
+    private static Vector3 GetWorldPositionByRaycast(OpenCVForUnity.CoreModule.Point boxCenter) {
+        Vector2 unprojectionOffset = MRWorld.GetUnprojectionOffset((float)boxCenter.y);
+        return MRWorld.GetWorldPositionOfPixel(boxCenter, unprojectionOffset);
+
+    }
+
+    private static Vector3 GetWorldPositionByRaycast(BoxRect boxRect) {
+        Vector2 unprojectionOffset = MRWorld.GetUnprojectionOffset(boxRect.y1 + ((boxRect.y2 - boxRect.y1) * 0.5f));
+        return MRWorld.GetWorldPositionOfPixel(MRWorld.GetBoundingBoxTarget(MRWorld.tempExtrinsic, boxRect), unprojectionOffset);
+
+    }
+
 }

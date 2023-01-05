@@ -192,7 +192,7 @@ public static class TrackerManager {
                     //Debugger.AddText("2");
 #if ENABLE_WINMD_SUPPORT
 
-                tracker.update(AppCommandCenter.frameHandler.LastFrame.frameMat, boundingBox);
+                tracker.update(AppCommandCenter.CameraFrameReader.LastFrame.frameMat, boundingBox);
 #endif
                 //Debugger.AddText(boundingBox.ToString());
 

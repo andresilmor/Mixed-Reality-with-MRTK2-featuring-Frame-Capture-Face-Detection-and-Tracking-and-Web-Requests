@@ -54,12 +54,14 @@ public class AppCommandCenter : MonoBehaviour {
     [SerializeField] public GameObject _detectionName;
     [SerializeField] GameObject _general;
 
+    public GameObject tester;
+    public GameObject compareWith;
 
     // Attr's for the Machine Learning and detections
-    private static FrameHandler _frameHandler = null;
-    public static FrameHandler frameHandler {
+    private static CameraFrameReader _frameHandler = null;
+    public static CameraFrameReader CameraFrameReader {
         get { return AppCommandCenter._frameHandler; }
-        set { if (AppCommandCenter.frameHandler == null) AppCommandCenter._frameHandler = value; }
+        set { if (AppCommandCenter.CameraFrameReader == null) AppCommandCenter._frameHandler = value; }
     }
     
 
@@ -146,12 +148,21 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
     //Test start code
+
+    public void ComparePosition() {
+        Debugger.ClearText();
+        Debugger.AddText("Dist X: " + Mathf.Abs(tester.transform.position.x - compareWith.transform.position.x));
+        Debugger.AddText("Dist Y: " + Mathf.Abs(tester.transform.position.y - compareWith.transform.position.y));
+        Debugger.AddText("Dist Z: " + Mathf.Abs(tester.transform.position.z - compareWith.transform.position.z));
+
+    }
+
     private void MineField() {
         DateTime testDT = DateTime.Now;
         testDT  = testDT.Add(new TimeSpan(0, 0, 5));
         Debug.Log("=> " + testDT.ToString());
         TimedEventManager.AddUpdateTimedEvent("3c764a20-629c-4be9-b19b-5f87bddd60d5", new TimedEventHandler(testDT, () => {
-            UIWindow timerOverNotification = UIManager.Instance.OpenWindow(WindowType.Header_OneButtonAndClose, stackerName: "Time Over Notification", isNotification: true);
+            UIWindow timerOverNotification = UIManager.Instance.OpenWindow(WindowType.HeaderOneButtonAndClose, stackerName: "Time Over Notification", isNotification: true);
             (timerOverNotification.components["Title"] as TextMeshPro).text = "Time Over";
             (timerOverNotification.components["Description"] as TextMeshPro).text = "Yay, time over";
             (timerOverNotification.components["ActionButtonText"] as TextMeshPro).text = "Locate Pacient";
@@ -174,7 +185,7 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
     private static void StartApplication() {
-        UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.Header_TwoButtons_00, stackerName: "Login Window");
+        UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.HeaderTwoButtons00, stackerName: "Login Window");
 
         (loginWindow.components["Title"] as TextMeshPro).text = "Welcome Caregiver";
         (loginWindow.components["Subtitle"] as TextMeshPro).text = "Select Login Method";

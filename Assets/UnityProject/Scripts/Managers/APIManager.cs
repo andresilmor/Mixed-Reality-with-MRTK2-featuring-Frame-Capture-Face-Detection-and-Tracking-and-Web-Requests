@@ -51,10 +51,9 @@ public static class APIManager {
     [SerializeField] static string websocketProtocol = "wss://";
     [SerializeField] static string httpProtocol = "https://";
 
-
     [Header("API Address:")]
     //string address = "websocketProtocol://192.168.1.238:8000";
-    [SerializeField] static string ip = "ef9e-193-136-194-58.eu.ngrok.io";
+    [SerializeField] static string ip = "d345-193-136-194-58.eu.ngrok.io";
     [SerializeField] static string port = ""; //For when used with localhost server :8000
 
     [Header("Root Paths:")]
