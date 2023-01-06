@@ -125,6 +125,7 @@ public static class TrackerManager {
                     PacientTracker pacientTracker = newVisualTracker.gameObject.GetComponent<PacientTracker>();
                     pacientTracker.TrackerHandler = newTracker;
                     pacientTracker.WindowContainer = newVisualTracker;
+                    newTracker.TrackerEntity = pacientTracker;
                     break;
 
                 default:

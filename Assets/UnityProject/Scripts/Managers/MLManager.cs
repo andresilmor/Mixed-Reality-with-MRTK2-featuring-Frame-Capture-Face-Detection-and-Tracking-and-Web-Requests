@@ -122,7 +122,10 @@ public static class MLManager
                             } else {
                                 Debugger.AddText("ALREADY EXISTS ON TREE");
 
-                                //TrackerManager.LiveTrackers[detection.id]
+                                (TrackerManager.LiveTrackers[detection.id].TrackerEntity as PacientTracker).UpdateActiveEmotion("Anger");
+
+
+
 
                                 /*SEARCH BINARY TREE BY IDENTIFIER, ALSO LOCK WHILE CHANGING
                                 if (node.data is PacientTracker) {

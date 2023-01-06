@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(UIWindow))]
 public class PacientTracker : MonoBehaviour, ITrackerEntity  {
     [SerializeField] EmotionsListScriptableObject emotionsList;
+
     private int activeEmotionIndex = -1;
 
     private TrackerHandler _trackerHandler;
@@ -35,8 +36,11 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
 
     public bool UpdateActiveEmotion(string emotionName) {
         foreach (EmotionsListScriptableObject.data data in emotionsList.categorical) {
-            if (data.name == emotionName) { 
-                (WindowContainer.components["Emotion"] as MeshRenderer).material = data.material;
+            if (data.name == emotionName) {
+                Debugger.AddText("Found it");
+                (WindowContainer.components["EmotionDisplay"] as MeshRenderer).materials[0] = data.material;
+
+                Debugger.AddText("Changed it?");
                 return true;
 
             }

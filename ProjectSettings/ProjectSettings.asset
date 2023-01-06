@@ -154,6 +154,13 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -586,11 +593,11 @@ PlayerSettings:
   metroCertificateNotAfter: 8027f65b40a9d901
   metroApplicationDescription: MR_M
   wsaImages:
-    65636: Assets/UnityProject/Sprites/Logos/App Logo/logo50x50.png
-    65661: Assets/UnityProject/Sprites/Logos/App Logo/logo63x63.png
-    65686: Assets/UnityProject/Sprites/Logos/App Logo/logo75x75.png
-    65736: Assets/UnityProject/Sprites/Logos/App Logo/logo100x100.png
-    65936: Assets/UnityProject/Sprites/Logos/App Logo/logo200x200.png
+    65636: Assets/UnityProject/Sprites/Logos/App Logo/50x50.png
+    65661: Assets/UnityProject/Sprites/Logos/App Logo/63x63.png
+    65686: Assets/UnityProject/Sprites/Logos/App Logo/75x75.png
+    65736: Assets/UnityProject/Sprites/Logos/App Logo/100x100.png
+    65936: Assets/UnityProject/Sprites/Logos/App Logo/200x200.png
     2031632: Assets/UnityProject/Sprites/Logos/App Logo/16x16.png
     2031640: Assets/UnityProject/Sprites/Logos/App Logo/24x24.png
     2031648: Assets/UnityProject/Sprites/Logos/App Logo/32x32.png

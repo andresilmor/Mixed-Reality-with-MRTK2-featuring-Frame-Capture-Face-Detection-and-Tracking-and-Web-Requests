@@ -22,10 +22,4 @@ public class EmotionsListScriptableObject : ScriptableObject {
         }
     }
 
-    [SerializeField] data[] _continuous;
-    public data[] continuous {
-        get {
-            return _continuous;
-        }
-    }
 }
