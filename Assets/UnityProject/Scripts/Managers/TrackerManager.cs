@@ -6,20 +6,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.UIElements;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
+public interface ITrackerEntity {}
+
+
 public static class TrackerManager {
 
-    public static List<TrackerHandler> trackers;
+    private static Dictionary<string, TrackerHandler> _liveTrackers = new Dictionary<string, TrackerHandler>();  
+    public static Dictionary<string, TrackerHandler> LiveTrackers {
+        get { return _liveTrackers; }
+        private set { _liveTrackers = value; }
+    }
 
     public static TrackerHandler CreateTracker(BoxRect boxRect, Mat frame, Vector3 mrPosition, TrackerType trackerType) {
-        if (trackers == null)
-            TrackerManager.trackers = new List<TrackerHandler>();
-   
+        if (LiveTrackers == null)
+            LiveTrackers = new Dictionary<string, TrackerHandler>();
 
+        Debugger.AddText("Create Tracker");
         Point top = new Point(boxRect.x1, boxRect.y1);
         Point bottom = new Point(boxRect.x2, boxRect.y2);
 
@@ -48,18 +56,15 @@ public static class TrackerManager {
 
         // ------------------------------------ DANGER ZONE --------------------------------------------- //
         Debugger.AddText("Pre Create");
-        GameObject newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.PersonMarker, mrPosition, Quaternion.identity).gameObject;
-        //newVisualTracker.transform.LookAt(AppCommandCenter.cameraMain.transform);
+        UIWindow newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, mrPosition, Quaternion.identity);
+        newVisualTracker.transform.LookAt(AppCommandCenter.cameraMain.transform);
         Debugger.AddText("Pro Create");
+        Debugger.AddText("Width T: " + _region.width.ToString());
 
-        Debugger.AddText("Pos: " + mrPosition.ToString());
-        Debugger.AddText("Width: " + (boxRect.x2 - boxRect.x1));
-        Debugger.AddText("Height: " + (boxRect.y2 - boxRect.y1));
+        //Debugger.AddText("Pos: " + mrPosition.ToString());
+        //Debugger.AddText("Width: " + (boxRect.x2 - boxRect.x1));
+        //Debugger.AddText("Height: " + (boxRect.y2 - boxRect.y1));
 
-
-        //GameObject newVisualTracker = UnityEngine.Object.Instantiate(visualMarker, mrPosition, Quaternion.LookRotation(AppCommandCenter.cameraMain.transform.position, Vector3.up));
-
-        //Vector3 tempPos = mrPosition;
 
 
         #region Backup 00
@@ -106,36 +111,22 @@ public static class TrackerManager {
         //newVisualTracker.GetComponent<PacientTracker>().SetMarkerVisibility(true);
 
         #endregion
-
-        if (newVisualTracker == null)
-            Debugger.AddText("visual tracker is null");
         // mice
         // ---------------------------------------------------------------------------------------------- //
 
-        TrackerHandler newTracker = newVisualTracker.AddComponent<TrackerHandler>();
 
+        TrackerHandler newTracker = newVisualTracker.gameObject.AddComponent<TrackerHandler>();
+        Debugger.AddText("1");
         // NOT NICE
         try {
             switch (trackerType) {
                 case TrackerType.PacientTracker:
-                    trackerCSRT.init(frame, _region);
-                    //PacientTracker pacientMarker = newVisualTracker.GetComponent<PacientTracker>();
-                    //Debugger.AddText((pacientMarker != null).ToString());
-                   
-
-                    
                     newTracker = new TrackerHandler(trackerCSRT, TrackerType.PacientTracker);
-                    //pacientMarker.trackerHandler = newTracker;
-                   
-
-
-
-                    //newPerson = new Pacient(newVisualTracker.GetComponent<PacientTracker>(), trackerCSRT);
-                    //(newPerson as Pacient).trackerHandler.trackerSetting.tracker
-
-
-                    //newPerson = new Pacient(trackerMOSSE);
+                    PacientTracker pacientTracker = newVisualTracker.gameObject.GetComponent<PacientTracker>();
+                    pacientTracker.TrackerHandler = newTracker;
+                    pacientTracker.WindowContainer = newVisualTracker;
                     break;
+
                 default:
                     return null;
 
@@ -143,8 +134,14 @@ public static class TrackerManager {
         } catch (Exception e) {
             Debugger.AddText(e.Message);
         }
+        Debugger.AddText("------");
 
-        trackers.Add(newTracker);
+        Debugger.AddText("Frame: " + (frame is null).ToString());
+        Debugger.AddText("Region: " + (_region is null).ToString());
+        Debugger.AddText("Region Test: " + _region.width);
+        Debugger.AddText("Tracker: " + (trackerCSRT is null).ToString());
+
+        trackerCSRT.init(frame, _region);
         Debugger.AddText("Over tracker create");
         return newTracker;
 
@@ -154,12 +151,8 @@ public static class TrackerManager {
 
 
     public static bool UpdateTrackers() {
-
-        if (trackers.Count == 0)
+        if (_liveTrackers.Count <= 0)
             return false;
-        else
-            Debugger.AddText("trackers count: " + trackers.Count);
-
 
         /* Tracker CSRT
         for (int i = 0; i < trackers.Count; i++)

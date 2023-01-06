@@ -23,7 +23,7 @@ using Windows.Graphics.Imaging;
 
 public static class MLManager
 {
-    private static Mat tempFrameMat;
+    private static Mat tempFrameMat = null;
 
     public static async Task<bool> ToggleLiveDetection() {
 #if ENABLE_WINMD_SUPPORT
@@ -50,8 +50,10 @@ public static class MLManager
                     {
                         byte[] byteArray = await Parser.ToByteArray(videoFrame.SoftwareBitmap);
                         
-                        
-                        tempFrameMat = lastFrame.frameMat;
+                        Debugger.AddText("1 Frame: " + (tempFrameMat is null).ToString());
+                        tempFrameMat = CameraFrameReader.GenerateCVMat(lastFrame.mediaFrameReference);
+                        Debugger.AddText("2 Frame: " + (tempFrameMat is null).ToString());
+
 
                         videoFrame.SoftwareBitmap.Dispose();
                         //Debug.Log($"[### DEBUG ###] byteArray Size = {byteArray.Length}");
@@ -107,32 +109,21 @@ public static class MLManager
 
                         try {
 
-                            BinaryTree.Node node = AppCommandCenter.Instance.liveTrackers.Find(detection.id);
-                            Debugger.AddText(AppCommandCenter.Instance.liveTrackers.GetTreeDepth().ToString());
+                            if (!TrackerManager.LiveTrackers.ContainsKey(detection.id)) {
 
-                            if (node is null) {
                                 Debugger.AddText("NEW ON TREE");
+
                                 TrackerHandler newTracker = TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, worldPosition, TrackerType.PacientTracker);
 
-                                //newTracker.gameObject.name = detection.id.ToString();
                                 newTracker.SetIdentifier(detection.id);
-
-                                /*if (newTracker is PacientTracker)
-                                    (newTracker as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0].ToString());
-                                */
-
-                                AppCommandCenter.Instance.compareWith = UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), worldPosition, Quaternion.identity);
-                                AppCommandCenter.Instance.compareWith.GetComponent<Renderer>().material.color = UnityEngine.Color.blue;
-
-                                //GameObject detectionTooltip = UnityEngine.Object.Instantiate(AppCommandCenter.Instance._detectionName, worldPosition + new Vector3(0, 0.10f, 0), Quaternion.identity);
-
-                                //detectionTooltip.GetComponent<TextMeshPro>().SetText(detection.id.ToString());
-
-                                AppCommandCenter.Instance.liveTrackers.Add(detection.id, newTracker);
+                                TrackerManager.LiveTrackers.Add(detection.id, newTracker);
 
 
                             } else {
                                 Debugger.AddText("ALREADY EXISTS ON TREE");
+
+                                //TrackerManager.LiveTrackers[detection.id]
+
                                 /*SEARCH BINARY TREE BY IDENTIFIER, ALSO LOCK WHILE CHANGING
                                 if (node.data is PacientTracker) {
                                     (node.data as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0]);
@@ -171,14 +162,16 @@ public static class MLManager
 
         LineDrawer.Draw(MRWorld.tempExtrinsic.Position, facePos, UnityEngine.Color.green);
 
-        worldPosition = Vector3.zero;
-        worldPosition.x += facePos.x;
-        worldPosition.y += facePos.y;
 
         Vector3 worldPosCalculated = GetWorldPositionCalculation(detection.faceRect);
 
-        worldPosition.z += worldPosCalculated.z;
 
+        worldPosition = new Vector3(facePos.x, facePos.y, worldPosCalculated.z);
+        /*worldPosition.x += facePos.x;
+        worldPosition.y += facePos.y;
+
+        worldPosition.z += worldPosCalculated.z;
+        */
         LineDrawer.Draw(MRWorld.tempExtrinsic.Position, worldPosition, UnityEngine.Color.blue);
 
     }

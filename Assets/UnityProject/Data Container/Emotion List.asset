@@ -15,100 +15,158 @@ MonoBehaviour:
   _categorical:
   - name: Affection
     description: Fond feelings; love; tenderness.
-    sprite: {fileID: 21300000, guid: 4995b41db556d87409d4375eceb8950b, type: 3}
+    material: {fileID: 2100000, guid: 1cc8374bcbc1db846bb8224a0ec86c4a, type: 2}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Anger
     description: Intense displeasure or rage; furious; resentful.
-    sprite: {fileID: 21300000, guid: be74b6984e65a2e419010137390912dd, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Annoyance
     description: Bothered by something or someone; irritated; impatient; frustrated.
-    sprite: {fileID: 21300000, guid: 97e9f8ac40abe1d42bf4ccf193003836, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Anticipation
     description: State of looking forward; hoping on or getting prepared for possible
       future events.
-    sprite: {fileID: 21300000, guid: 404e6a746e75e9447b0ec33bb7f69de2, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Aversion
     description: Feeling disgust, dislike, repulsion; feeling hate.
-    sprite: {fileID: 21300000, guid: ff862e86826d13b4db9ef235b7882aa3, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Confidence
     description: Feeling of being certain; conviction that an outcome will be favorable;
       encouraged; proud.
-    sprite: {fileID: 21300000, guid: 6aac3da1146468348955abcb5ddf1eb4, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Disapproval
     description: Feeling that something is wrong or reprehensible; contempt; hostile.
-    sprite: {fileID: 21300000, guid: ebb618be18286d24e807f69b056754cc, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Disconnection
     description: Feeling not interested in the main event of the surrounding; indifferent;
       bored; distracted.
-    sprite: {fileID: 21300000, guid: 2c4535e7ee5c31645a03caeccb946187, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Disquietment
     description: Nervous; worried; upset; anxious; tense; pressured; alarmed.
-    sprite: {fileID: 21300000, guid: b41bc0c1cc3d4574a95c88a394d214bf, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Doubt-Confusion
     description: Difficulty to understand or decide; thinking about different options.
-    sprite: {fileID: 21300000, guid: fda5e9f3450f7b04babe9352f6945bcd, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Embarrassment
     description: Feeling ashamed or guilty.
-    sprite: {fileID: 21300000, guid: 56d6ab538baebe54a9c0de501bb4e72b, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Engagement
     description: Paying attention to something; absorbed into something; curious;
       interested.
-    sprite: {fileID: 21300000, guid: 0da26fd496d51424990cb6c2c448b04c, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Esteem
     description: Feelings of favorable opinion or judgment; respect; admiration;
       gratefulness.
-    sprite: {fileID: 21300000, guid: 17319e07580a03d4cabb9eb3e876b509, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Excitement
     description: Feeling enthusiasm; stimulated; energetic.
-    sprite: {fileID: 21300000, guid: 4713071da74d5c8478100468ce68244f, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Fatigue
     description: Weariness; tiredness; sleepy.
-    sprite: {fileID: 21300000, guid: 903d7054808b643488b2fd21d32bf954, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Fear
     description: Feeling suspicious or afraid of danger, threat, evil or pain; horror.
-    sprite: {fileID: 21300000, guid: d7bbf9ac1bf209c468039f8249af6ad9, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Happiness
     description: Feeling delighted; feeling enjoyment or amusement.
-    sprite: {fileID: 21300000, guid: ef5a41a3fe17b854cadd4a76e9dcd85e, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Pain
     description: Physical suffering.
-    sprite: {fileID: 21300000, guid: 42eb00ce193f6334db60a8e234da68b1, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Peace
     description: Well being and relaxed; no worry; having positive thoughts or sensations;
       satisfied.
-    sprite: {fileID: 21300000, guid: a6f02c88dc019244cacd9843f2956b53, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Pleasure
     description: Feeling of delight in the senses.
-    sprite: {fileID: 21300000, guid: a6ffb64fbe9092141b3b2e45a3b6615f, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Sadness
     description: Feeling unhappy, sorrow, disappointed, or discouraged.
-    sprite: {fileID: 21300000, guid: 61b54c23b14d35542a943e8fa9738c16, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Sensitivity
     description: Feeling of being physically or emotionally wounded; feeling delicate
       or vulnerable.
-    sprite: {fileID: 21300000, guid: f24c5a35225c35e419083aa811dedf08, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Suffering
     description: Psychological or emotional pain; distressed; anguished.
-    sprite: {fileID: 21300000, guid: 0cc2b7baba7f2324ab9d63fa05b1b2bf, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Surprise
     description: Sudden discovery of something unexpected.
-    sprite: {fileID: 21300000, guid: 695c1510097a7ab40b5a2053f4726704, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Sympathy
     description: "State of sharing others\u2019 emotions, goals or troubles; supportive;
       compassionate."
-    sprite: {fileID: 21300000, guid: 0c35bed25bcf3864bb902b8f1350a8e5, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Yearning
     description: Strong desire to have something; jealous; envious; lust.
-    sprite: {fileID: 21300000, guid: 3b91a4872a95292449c0b067f1dfb72d, type: 3}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   _continuous:
   - name: Valence
     description: This dimension measures how positive or pleasant an emotion is.
       It ranges from negative to positive.
-    sprite: {fileID: 0}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Arousal
     description: This dimension measures the agitation level of the person. It ranges
       from non-active / in calm to agitated / ready to act.
-    sprite: {fileID: 0}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}
   - name: Dominance
     description: This dimension measures the control level of the situation by the
       person. It ranges from submissive / non-control to dominant / in-control.
-    sprite: {fileID: 0}
+    material: {fileID: 0}
+    localPosition: {x: 0, y: 0, z: 0}
+    localScale: {x: 0, y: 0, z: 0}

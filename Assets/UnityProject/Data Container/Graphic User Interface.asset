@@ -55,9 +55,9 @@ MonoBehaviour:
   - windowType: 2
     window: {fileID: 2372899748573223654, guid: e940e7f5a496e7d4a91da3d9a798d2d5, type: 3}
     components:
-    - name: Emotion
-      type: 2
-      path: Scalable/EmotionDisplayContainer/EmotionDisplay
+    - name: EmotionDisplay
+      type: 3
+      path: BoundingBox/EmotionDisplayContainer/EmotionDisplay
     - name: ProfileButton
       type: 1
-      path: Scalable/ProfileButton
+      path: BoundingBox/ProfileButton

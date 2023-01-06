@@ -25,7 +25,7 @@ public class CameraFrameReader
 		/// <summary>
 		/// Frame image data in format OpenCV
 		/// </summary>
-		public Mat frameMat;
+		//public Mat frameMat;
 		public CameraExtrinsic extrinsic;
 		public CameraIntrinsic intrinsic;
 	}
@@ -54,7 +54,7 @@ public class CameraFrameReader
 		{
 			lock (this)
 			{
-				_lastFrame.frameMat = GenerateCVMat(value.mediaFrameReference);
+				//_lastFrame.frameMat = GenerateCVMat(value.mediaFrameReference);
 				_lastFrame = value;
 			}
 		}
@@ -228,8 +228,8 @@ public class CameraFrameReader
     /// <summary>
     /// Extracts the image according to the <see cref="ColorFormat"/> and invokes the <see cref="FrameArrived"/> event containing a <see cref="CameraFrameReader"/>.
     /// </summary>
-    public unsafe Mat GenerateCVMat(MediaFrameReference frameReference, bool toDispose = false, int frameWidth = 1504, int frameHeight = 846) {
-        
+    public static unsafe Mat GenerateCVMat(MediaFrameReference frameReference, bool toDispose = false, int frameWidth = 1504, int frameHeight = 846) {
+        Debugger.AddText("Called");
         
         SoftwareBitmap softwareBitmap = frameReference.VideoMediaFrame?.GetVideoFrame().SoftwareBitmap;
         
@@ -269,7 +269,7 @@ public class CameraFrameReader
 		MediaFrameReference frame = sender.TryAcquireLatestFrame();
         if (frame != null){
 				LastFrame = new Frame
-				{mediaFrameReference = frame, extrinsic = null, intrinsic = null, frameMat = null};
+				{mediaFrameReference = frame, extrinsic = null, intrinsic = null};
 				_lastFrameCapturedTimestamp = DateTime.Now;
 
             }

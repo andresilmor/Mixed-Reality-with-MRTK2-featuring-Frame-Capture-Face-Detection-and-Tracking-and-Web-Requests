@@ -3,60 +3,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class PacientTracker : MonoBehaviour {
+[RequireComponent(typeof(UIWindow))]
+public class PacientTracker : MonoBehaviour, ITrackerEntity  {
     [SerializeField] EmotionsListScriptableObject emotionsList;
-    [SerializeField] SpriteRenderer emotionSpriteRenderer = null;
     private int activeEmotionIndex = -1;
 
-    public TrackerHandler trackerHandler;
+    private TrackerHandler _trackerHandler;
+    public TrackerHandler TrackerHandler {
+        get { return _trackerHandler; }
+        set {
+            _trackerHandler = value;
+            if (value != null) 
+                _trackerHandler.TrackerEntity = this;
+        
+        }
+    }
 
-    [SerializeField] GameObject markerRect;
+    public UIWindow WindowContainer;
 
     public string id = "";
     
-
     public PacientTracker(TrackerHandler trackerHandler = null) {
-        this.trackerHandler = trackerHandler;
+        this.TrackerHandler = trackerHandler;
     }
 
-    private void Start() {
-        if (emotionsList.categorical.Length != 26) {
-            Debug.Log("Emotions Listed < 26");
-        }
-    }
-    /*
-    private void SetupEmotionsSprites()
-    {
-        emotionSpriteRenderer = gameObject.transform.GetChild(1).gameObject;
-
-    }
-    */
 
     void FixedUpdate() {
         this.gameObject.transform.LookAt(AppCommandCenter.cameraMain.transform.position);
 
     }
 
-    public void SetMarkerVisibility(bool to) {
-        markerRect.GetComponent<SpriteRenderer>().enabled = to;
-    }
-
     public bool UpdateActiveEmotion(string emotionName) {
-        /*
-        for (byte index = 0; index < 26; index++) {
-            if (emotionsList.categorical[index].name.Equals(emotionName)) {
-                emotionSpriteRenderer. = emotionsList.categorical[index].sprite;
-
-                activeEmotionIndex = index;
-
+        foreach (EmotionsListScriptableObject.data data in emotionsList.categorical) {
+            if (data.name == emotionName) { 
+                (WindowContainer.components["Emotion"] as MeshRenderer).material = data.material;
                 return true;
-            }
-        }
 
-         */
+            }
+
+        }
         return false;
-       
+
     }
 
 }

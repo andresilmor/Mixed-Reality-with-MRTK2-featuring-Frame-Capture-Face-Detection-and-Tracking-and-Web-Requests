@@ -147,8 +147,12 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: -6617678826438391476, guid: 22d5abde2cbdd27438134548302635f9, type: 2}
-  - {fileID: 1757240611378375247, guid: a66648ca6d2551e47a2bb553fe5014f8, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -573,7 +577,7 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: MRM
+  metroPackageName: CareXRIS
   metroPackageVersion: 1.0.0.0
   metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
@@ -587,6 +591,36 @@ PlayerSettings:
     65686: Assets/UnityProject/Sprites/Logos/App Logo/logo75x75.png
     65736: Assets/UnityProject/Sprites/Logos/App Logo/logo100x100.png
     65936: Assets/UnityProject/Sprites/Logos/App Logo/logo200x200.png
+    2031632: Assets/UnityProject/Sprites/Logos/App Logo/16x16.png
+    2031640: Assets/UnityProject/Sprites/Logos/App Logo/24x24.png
+    2031648: Assets/UnityProject/Sprites/Logos/App Logo/32x32.png
+    2031664: Assets/UnityProject/Sprites/Logos/App Logo/48x48.png
+    2031716: Assets/UnityProject/Sprites/Logos/App Logo/44x44.png
+    2031741: Assets/UnityProject/Sprites/Logos/App Logo/55x55.png
+    2031766: Assets/UnityProject/Sprites/Logos/App Logo/66x66.png
+    2031816: Assets/UnityProject/Sprites/Logos/App Logo/88x88.png
+    2031872: Assets/UnityProject/Sprites/Logos/App Logo/256x256.png
+    2032016: Assets/UnityProject/Sprites/Logos/App Logo/176x176.png
+    2097252: Assets/UnityProject/Sprites/Logos/App Logo/71x71.png
+    2097277: Assets/UnityProject/Sprites/Logos/App Logo/89x89.png
+    2097302: Assets/UnityProject/Sprites/Logos/App Logo/107x107.png
+    2097352: Assets/UnityProject/Sprites/Logos/App Logo/142x142.png
+    2097552: Assets/UnityProject/Sprites/Logos/App Logo/284x284.png
+    2162788: Assets/UnityProject/Sprites/Logos/App Logo/150x150.png
+    2162813: Assets/UnityProject/Sprites/Logos/App Logo/188x188.png
+    2162838: Assets/UnityProject/Sprites/Logos/App Logo/225x225.png
+    2162888: Assets/UnityProject/Sprites/Logos/App Logo/300x300.png
+    2163088: Assets/UnityProject/Sprites/Logos/App Logo/600x600.png
+    2228324: Assets/UnityProject/Sprites/Logos/App Logo/310x310.png
+    2228349: Assets/UnityProject/Sprites/Logos/App Logo/388x388.png
+    2228374: Assets/UnityProject/Sprites/Logos/App Logo/465x465.png
+    2228424: Assets/UnityProject/Sprites/Logos/App Logo/620x620.png
+    2228624: Assets/UnityProject/Sprites/Logos/App Logo/1240x1240.png
+    2293860: Assets/UnityProject/Sprites/Logos/App Logo/310x150.png
+    2293885: Assets/UnityProject/Sprites/Logos/App Logo/388x188.png
+    2293910: Assets/UnityProject/Sprites/Logos/App Logo/465x225.png
+    2293960: Assets/UnityProject/Sprites/Logos/App Logo/620x300.png
+    2294160: Assets/UnityProject/Sprites/Logos/App Logo/1240x600.png
   metroTileShortName: CareXR IS
   metroTileShowName: 0
   metroMediumTileShowName: 0

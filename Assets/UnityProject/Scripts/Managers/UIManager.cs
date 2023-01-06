@@ -87,8 +87,6 @@ public class UIManager : MonoBehaviour {
             foreach (var data in graphicUserInterface.windows) {
                 if (data.windowType.Equals(toOpen)) {
                     window = Instantiate(data.window, position, rotation, stacker.gameObject.transform).GetComponent<UIWindow>();
-                    Debug.Log(data is null);
-                    Debug.Log(data.components.Count);
                     window.DefineComponents(data);
                     break;
 

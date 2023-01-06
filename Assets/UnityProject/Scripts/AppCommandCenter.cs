@@ -19,14 +19,11 @@ using System.Linq;
 using static BestHTTP.SecureProtocol.Org.BouncyCastle.Math.EC.ECCurve;
 using UnityEngine.SceneManagement;
 using Microsoft.MixedReality.Toolkit;
+using Unity.XR.OpenVR;
 
 
 [DisallowMultipleComponent]
 public class AppCommandCenter : MonoBehaviour {
-
-    // TODO change variable names: PublicVariable, _privateVariable, normalVariable
-
-    public BinaryTree liveTrackers { get; private set; }
 
     private static Camera _cameraMain;
     public static Camera cameraMain {
@@ -54,14 +51,11 @@ public class AppCommandCenter : MonoBehaviour {
     [SerializeField] public GameObject _detectionName;
     [SerializeField] GameObject _general;
 
-    public GameObject tester;
-    public GameObject compareWith;
-
     // Attr's for the Machine Learning and detections
-    private static CameraFrameReader _frameHandler = null;
+    private static CameraFrameReader _cameraFrameReader = null;
     public static CameraFrameReader CameraFrameReader {
-        get { return AppCommandCenter._frameHandler; }
-        set { if (AppCommandCenter.CameraFrameReader == null) AppCommandCenter._frameHandler = value; }
+        get { return AppCommandCenter._cameraFrameReader; }
+        set { if (AppCommandCenter.CameraFrameReader == null) AppCommandCenter._cameraFrameReader = value; }
     }
     
 
@@ -127,10 +121,6 @@ public class AppCommandCenter : MonoBehaviour {
         Debug.Log(AppCommandCenter.cameraMain.transform.position.ToString());
         SetDebugger();
 
-        Debugger.AddText("Debug 2");
-        liveTrackers = new BinaryTree();
-
-
         if (!SceneManager.GetSceneByName("UI").isLoaded)
             await SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
 
@@ -144,16 +134,6 @@ public class AppCommandCenter : MonoBehaviour {
     private IEnumerator WarmApplication() {
         yield return new WaitForSeconds(1);
         StartApplication();
-
-    }
-
-    //Test start code
-
-    public void ComparePosition() {
-        Debugger.ClearText();
-        Debugger.AddText("Dist X: " + Mathf.Abs(tester.transform.position.x - compareWith.transform.position.x));
-        Debugger.AddText("Dist Y: " + Mathf.Abs(tester.transform.position.y - compareWith.transform.position.y));
-        Debugger.AddText("Dist Z: " + Mathf.Abs(tester.transform.position.z - compareWith.transform.position.z));
 
     }
 
@@ -209,6 +189,7 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
     void Update() {
+        return;
         if (!justStop) {
 
 #if ENABLE_WINMD_SUPPORT

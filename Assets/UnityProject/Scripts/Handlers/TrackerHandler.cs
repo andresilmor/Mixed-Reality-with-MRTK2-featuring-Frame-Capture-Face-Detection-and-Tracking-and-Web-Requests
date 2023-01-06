@@ -19,6 +19,7 @@ public class TrackerHandler : MonoBehaviour
 
     public string TrackerIdentifier { get; private set; }
     public TrackerType TrackerType { get; private set; }    
+    public ITrackerEntity TrackerEntity { get; set; }   
      
     /*
     public TrackerHandler(Tracker tracker) // FOR CSRT

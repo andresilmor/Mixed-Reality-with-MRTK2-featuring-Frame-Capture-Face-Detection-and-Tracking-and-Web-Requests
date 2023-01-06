@@ -2,6 +2,7 @@ using Microsoft.MixedReality.Toolkit.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,7 +28,8 @@ public class UIWindow : MonoBehaviour {
 
     private void Start() {
         audioSource = GetComponent<AudioSource>();
-        audioSource.PlayOneShot(isNotification ? UIManager.Instance.NotificationClip : UIManager.Instance.OpenWindowClip);
+        if (audioSource != null) 
+            audioSource.PlayOneShot(isNotification ? UIManager.Instance.NotificationClip : UIManager.Instance.OpenWindowClip);
 
     }
 
@@ -41,6 +43,9 @@ public class UIWindow : MonoBehaviour {
                     components.Add(component.name, gameObject.transform.Find(component.path).gameObject.GetComponent<Interactable>());
                     break;
                 case GUIComponentType.Material:
+                    components.Add(component.name, gameObject.transform.Find(component.path).gameObject.GetComponent<Material>());
+                    break;
+                case GUIComponentType.MeshRenderer:
                     components.Add(component.name, gameObject.transform.Find(component.path).gameObject.GetComponent<MeshRenderer>());
                     break;
 

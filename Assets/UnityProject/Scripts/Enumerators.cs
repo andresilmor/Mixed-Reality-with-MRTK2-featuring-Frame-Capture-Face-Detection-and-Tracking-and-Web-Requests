@@ -4,14 +4,15 @@ using UnityEngine;
 public enum GUIComponentType {
     Text,
     Button,
-    Material
+    Material,
+    MeshRenderer
 
 }
 
 public enum WindowType {
     HeaderOneButtonAndClose,
     HeaderTwoButtons00,
-    PersonMarker
+    PacientMarker
 
 }
 
