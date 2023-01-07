@@ -38,9 +38,11 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
         foreach (EmotionsListScriptableObject.data data in emotionsList.categorical) {
             if (data.name == emotionName) {
                 Debugger.AddText("Found it");
-                (WindowContainer.components["EmotionDisplay"] as MeshRenderer).materials[0] = data.material;
-
+                (WindowContainer.components["EmotionDisplay"] as MeshRenderer).material = data.material;
+                (WindowContainer.components["EmotionDisplay"] as MeshRenderer).gameObject.transform.localPosition = data.localPosition;
+                (WindowContainer.components["EmotionDisplay"] as MeshRenderer).gameObject.transform.localScale = data.localScale;
                 Debugger.AddText("Changed it?");
+
                 return true;
 
             }

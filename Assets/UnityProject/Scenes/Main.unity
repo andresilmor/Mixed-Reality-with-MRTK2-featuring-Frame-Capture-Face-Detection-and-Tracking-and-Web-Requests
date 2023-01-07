@@ -233,10 +233,10 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.32
-  m_Range: 10
+  m_Intensity: 0.2
+  m_Range: 1000
   m_SpotAngle: 179
-  m_InnerSpotAngle: 21.80208
+  m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -319,8 +319,6 @@ MonoBehaviour:
   _lineForTest: {fileID: 7438048857545862999, guid: 7c129ff77fddcb3458036b064d83fe08, type: 3}
   _detectionName: {fileID: 7846235075062323456, guid: 5c5fcddbea03ecb439f9ce040d8c16ae, type: 3}
   _general: {fileID: 0}
-  tester: {fileID: 0}
-  compareWith: {fileID: 0}
 --- !u!4 &794339292
 Transform:
   m_ObjectHideFlags: 0

@@ -16,157 +16,138 @@ MonoBehaviour:
   - name: Affection
     description: Fond feelings; love; tenderness.
     material: {fileID: 2100000, guid: 1cc8374bcbc1db846bb8224a0ec86c4a, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.202, y: 0.054, z: 0}
+    localScale: {x: 0.4913128, y: 0.3374919, z: 1}
   - name: Anger
     description: Intense displeasure or rage; furious; resentful.
     material: {fileID: 2100000, guid: 17140930eed45134f9839999d9245f2d, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.16, y: 0.0805, z: 0}
+    localScale: {x: 0.3840415, y: 0.3876134, z: 1}
   - name: Annoyance
     description: Bothered by something or someone; irritated; impatient; frustrated.
     material: {fileID: 2100000, guid: b50b5a009ecb5e54ea2a3aec10ed8866, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.221, y: 0.04, z: 0}
+    localScale: {x: 0.8808838, y: 0.431812, z: 1}
   - name: Anticipation
     description: State of looking forward; hoping on or getting prepared for possible
       future events.
     material: {fileID: 2100000, guid: 3be7b46e591fbfa418833cd23d63ea47, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1633, y: 0.0256, z: 0}
+    localScale: {x: 0.6263687, y: 0.2805935, z: 1}
   - name: Aversion
     description: Feeling disgust, dislike, repulsion; feeling hate.
     material: {fileID: 2100000, guid: b5891972389d2df419b13817b0de38e3, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.159, y: 0.0256, z: 0}
+    localScale: {x: 0.3875596, y: 0.2801954, z: 1}
   - name: Confidence
     description: Feeling of being certain; conviction that an outcome will be favorable;
       encouraged; proud.
     material: {fileID: 2100000, guid: 75955bade66ca3645aeb6153a2d2cd38, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.159, y: 0.0256, z: 0}
+    localScale: {x: 0.3875596, y: 0.2801954, z: 1}
   - name: Disapproval
     description: Feeling that something is wrong or reprehensible; contempt; hostile.
     material: {fileID: 2100000, guid: a9f93bd5046b80442b09bc056faa4173, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.159, y: 0.0285, z: 0}
+    localScale: {x: 0.4227501, y: 0.2859394, z: 1}
   - name: Disconnection
     description: Feeling not interested in the main event of the surrounding; indifferent;
       bored; distracted.
     material: {fileID: 2100000, guid: 9910e27ddade4f245ac6b9a801058734, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.159, y: 0.0285, z: 0}
+    localScale: {x: 0.4227501, y: 0.2859394, z: 1}
   - name: Disquietment
     description: Nervous; worried; upset; anxious; tense; pressured; alarmed.
     material: {fileID: 2100000, guid: e66d4d290b8d25b45947180725d31229, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.159, y: 0.0226, z: 0}
+    localScale: {x: 0.3843686, y: 0.2859394, z: 1}
   - name: Doubt-Confusion
     description: Difficulty to understand or decide; thinking about different options.
     material: {fileID: 2100000, guid: 620670fcf71fe034a819a5fff917e925, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.159, y: 0.0226, z: 0}
+    localScale: {x: 0.3843686, y: 0.2859394, z: 1}
   - name: Embarrassment
     description: Feeling ashamed or guilty.
     material: {fileID: 2100000, guid: 1de713269abb3104eac9fcc99e089ffa, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1704, y: 0.0226, z: 0}
+    localScale: {x: 0.4131733, y: 0.2860537, z: 1}
   - name: Engagement
     description: Paying attention to something; absorbed into something; curious;
       interested.
     material: {fileID: 2100000, guid: db652548327a2b94b8c1f48688da001b, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.158, y: -0.0029, z: 0}
+    localScale: {x: 0.3858605, y: 0.3357486, z: 1}
   - name: Esteem
     description: Feelings of favorable opinion or judgment; respect; admiration;
       gratefulness.
     material: {fileID: 2100000, guid: f59b01bc0ab1ddf4aa15fcf5b21439ac, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1456, y: 0.0654, z: 0}
+    localScale: {x: 0.4203276, y: 0.3597664, z: 1}
   - name: Excitement
     description: Feeling enthusiasm; stimulated; energetic.
     material: {fileID: 2100000, guid: 9f99912f02bd59442944faeec90c6378, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.171, y: 0.0873, z: 0}
+    localScale: {x: 0.4063906, y: 0.405061, z: 1}
   - name: Fatigue
     description: Weariness; tiredness; sleepy.
     material: {fileID: 2100000, guid: 95d1d62b6a076cb469801be54517e9fa, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1589, y: 0.0254, z: 0}
+    localScale: {x: 0.3839393, y: 0.2817433, z: 1}
   - name: Fear
     description: Feeling suspicious or afraid of danger, threat, evil or pain; horror.
     material: {fileID: 2100000, guid: 4e41d91f672c8db40b06e912a500d984, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1589, y: 0.0134, z: 0}
+    localScale: {x: 0.3839393, y: 0.3839393, z: 1}
   - name: Happiness
     description: Feeling delighted; feeling enjoyment or amusement.
     material: {fileID: 2100000, guid: 4bfa5f7fba7b4ba47af797dd85817672, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1596, y: 0.0254, z: 0}
+    localScale: {x: 0.3844, y: 0.2791834, z: 1}
   - name: Pain
     description: Physical suffering.
     material: {fileID: 2100000, guid: f1ae0c5bd7a41764bb5cd21573f9cf68, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1824, y: 0.0391, z: 0}
+    localScale: {x: 0.4311046, y: 0.3053771, z: 1}
   - name: Peace
     description: Well being and relaxed; no worry; having positive thoughts or sensations;
       satisfied.
     material: {fileID: 2100000, guid: 2c7544b60e3d03648b35033f1fece984, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1824, y: 0.0391, z: 0}
+    localScale: {x: 0.4311046, y: 0.3053771, z: 1}
   - name: Pleasure
     description: Feeling of delight in the senses.
     material: {fileID: 2100000, guid: 4860884a1d500214b8847fe7eaf6fe87, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1846, y: 0.0254, z: 0}
+    localScale: {x: 0.4311046, y: 0.2826799, z: 1}
   - name: Sadness
     description: Feeling unhappy, sorrow, disappointed, or discouraged.
     material: {fileID: 2100000, guid: e96534caa602db64091dc3bf6c186abf, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1846, y: 0.0254, z: 0}
+    localScale: {x: 0.4311046, y: 0.2826799, z: 1}
   - name: Sensitivity
     description: Feeling of being physically or emotionally wounded; feeling delicate
       or vulnerable.
     material: {fileID: 2100000, guid: e10b5b24a7e820b4ab86edb2b7c7e659, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1846, y: 0.0254, z: 0}
+    localScale: {x: 0.4311046, y: 0.2826799, z: 1}
   - name: Suffering
     description: Psychological or emotional pain; distressed; anguished.
     material: {fileID: 2100000, guid: 9e578e3e5df37c04ba318562fd54c63d, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.1948, y: 0.0511, z: 0}
+    localScale: {x: 0.4874323, y: 0.3329818, z: 1}
   - name: Surprise
     description: Sudden discovery of something unexpected.
     material: {fileID: 2100000, guid: 5c93420c47c40104daf4f33df6fb9b13, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.183, y: 0.0171, z: 0}
+    localScale: {x: 0.4294189, y: 0.2991307, z: 1}
   - name: Sympathy
     description: "State of sharing others\u2019 emotions, goals or troubles; supportive;
       compassionate."
     material: {fileID: 2100000, guid: 7af863d244dff6342ba7a3a3418de761, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.183, y: 0.0258, z: 0}
+    localScale: {x: 0.4294189, y: 0.279942, z: 1}
   - name: Yearning
     description: Strong desire to have something; jealous; envious; lust.
     material: {fileID: 2100000, guid: c4b10bc8fbeadf041b7ddd8ba74f57a8, type: 2}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
-  _continuous:
-  - name: Valence
-    description: This dimension measures how positive or pleasant an emotion is.
-      It ranges from negative to positive.
-    material: {fileID: 0}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
-  - name: Arousal
-    description: This dimension measures the agitation level of the person. It ranges
-      from non-active / in calm to agitated / ready to act.
-    material: {fileID: 0}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
-  - name: Dominance
-    description: This dimension measures the control level of the situation by the
-      person. It ranges from submissive / non-control to dominant / in-control.
-    material: {fileID: 0}
-    localPosition: {x: 0, y: 0, z: 0}
-    localScale: {x: 0, y: 0, z: 0}
+    localPosition: {x: -0.183, y: 0.0258, z: 0}
+    localScale: {x: 0.4294189, y: 0.279942, z: 1}

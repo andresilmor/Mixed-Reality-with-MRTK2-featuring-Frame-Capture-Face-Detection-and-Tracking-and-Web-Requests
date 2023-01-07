@@ -50,9 +50,9 @@ public static class MLManager
                     {
                         byte[] byteArray = await Parser.ToByteArray(videoFrame.SoftwareBitmap);
                         
-                        Debugger.AddText("1 Frame: " + (tempFrameMat is null).ToString());
+                        //Debugger.AddText("1 Frame: " + (tempFrameMat is null).ToString());
                         tempFrameMat = CameraFrameReader.GenerateCVMat(lastFrame.mediaFrameReference);
-                        Debugger.AddText("2 Frame: " + (tempFrameMat is null).ToString());
+                        //Debugger.AddText("2 Frame: " + (tempFrameMat is null).ToString());
 
 
                         videoFrame.SoftwareBitmap.Dispose();
@@ -95,7 +95,6 @@ public static class MLManager
     }
 
     public static async void MapDetections(string predictions, DetectionType detectionType) {
-        Debugger.AddText("HERE");
         try {
             List<DetectionsList> results = JsonConvert.DeserializeObject<List<DetectionsList>>(
                 JsonConvert.DeserializeObject(predictions).ToString());
@@ -163,21 +162,34 @@ public static class MLManager
 
         }
 
+
         LineDrawer.Draw(MRWorld.tempExtrinsic.Position, facePos, UnityEngine.Color.green);
+
 
 
         Vector3 worldPosCalculated = GetWorldPositionCalculation(detection.faceRect);
 
 
-        worldPosition = new Vector3(facePos.x, facePos.y, worldPosCalculated.z);
-        /*worldPosition.x += facePos.x;
-        worldPosition.y += facePos.y;
+        LineDrawer.Draw(MRWorld.tempExtrinsic.Position, worldPosCalculated, UnityEngine.Color.red);
 
-        worldPosition.z += worldPosCalculated.z;
-        */
+        worldPosition = new Vector3(facePos.x, facePos.y, worldPosCalculated.z);
+
+        Vector3 lerpedPosition = LerpByDistance(MRWorld.tempExtrinsic.Position, facePos, Vector3.Distance(MRWorld.tempExtrinsic.Position, worldPosition));
+
+        LineDrawer.Draw(MRWorld.tempExtrinsic.Position, lerpedPosition, UnityEngine.Color.yellow);
+
+        worldPosition = Vector3.Distance(MRWorld.tempExtrinsic.Position, worldPosition) < Vector3.Distance(MRWorld.tempExtrinsic.Position, lerpedPosition) ? worldPosition : lerpedPosition;
+
         LineDrawer.Draw(MRWorld.tempExtrinsic.Position, worldPosition, UnityEngine.Color.blue);
 
     }
+
+    public static Vector3 LerpByDistance(Vector3 A, Vector3 B, float x) {
+        Vector3 P = x * Vector3.Normalize(B - A) + A;
+        return P;
+
+    }
+
 
 
     //Base:

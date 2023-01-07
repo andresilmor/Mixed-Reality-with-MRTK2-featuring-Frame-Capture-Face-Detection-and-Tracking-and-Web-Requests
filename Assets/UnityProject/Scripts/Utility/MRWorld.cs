@@ -116,7 +116,7 @@ public static class MRWorld {
             unprojectionOffset = new Vector2(0, -0.12f);
             Debugger.AddText("Unprojection A");
         } else {
-            unprojectionOffset = new Vector2(0, -0.12f);
+            unprojectionOffset = new Vector2(0, -0.07f);
             Debugger.AddText("Unprojection B");
 
         }

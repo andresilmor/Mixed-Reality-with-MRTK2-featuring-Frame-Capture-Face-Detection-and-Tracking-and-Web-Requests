@@ -22,7 +22,7 @@ PlayerSettings:
   m_SplashScreenOverlayOpacity: 1
   m_SplashScreenAnimation: 1
   m_SplashScreenLogoStyle: 1
-  m_SplashScreenDrawMode: 0
+  m_SplashScreenDrawMode: 1
   m_SplashScreenBackgroundAnimationZoom: 1
   m_SplashScreenLogoAnimationZoom: 1
   m_SplashScreenBackgroundLandscapeAspect: 1
@@ -39,7 +39,11 @@ PlayerSettings:
     y: 0
     width: 1
     height: 1
-  m_SplashScreenLogos: []
+  m_SplashScreenLogos:
+  - logo: {fileID: 10404, guid: 0000000000000000e000000000000000, type: 0}
+    duration: 2
+  - logo: {fileID: 21300000, guid: 6f5822c92d0e14f4c9e95c86a3afa2b3, type: 3}
+    duration: 2.5
   m_VirtualRealitySplashScreen: {fileID: 2800000, guid: 6f5822c92d0e14f4c9e95c86a3afa2b3, type: 3}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1920
@@ -136,6 +140,13 @@ PlayerSettings:
     Others: 1
   bundleVersion: 1.0
   preloadedAssets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -598,6 +609,11 @@ PlayerSettings:
     65686: Assets/UnityProject/Sprites/Logos/App Logo/75x75.png
     65736: Assets/UnityProject/Sprites/Logos/App Logo/100x100.png
     65936: Assets/UnityProject/Sprites/Logos/App Logo/200x200.png
+    131172: Assets/UnityProject/Sprites/Logos/App Logo/620x300 1.png
+    131197: Assets/UnityProject/Sprites/Logos/App Logo/775x375.png
+    131222: Assets/UnityProject/Sprites/Logos/App Logo/930x450.png
+    131272: Assets/UnityProject/Sprites/Logos/App Logo/1240x600 1.png
+    131472: Assets/UnityProject/Sprites/Logos/App Logo/2480x1200.png
     2031632: Assets/UnityProject/Sprites/Logos/App Logo/16x16.png
     2031640: Assets/UnityProject/Sprites/Logos/App Logo/24x24.png
     2031648: Assets/UnityProject/Sprites/Logos/App Logo/32x32.png
@@ -638,8 +654,8 @@ PlayerSettings:
   metroDefaultTileSize: 1
   metroTileForegroundText: 2
   metroTileBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21568628, a: 0}
-  metroSplashScreenBackgroundColor: {r: 0.12941177, g: 0.17254902, b: 0.21568628, a: 1}
-  metroSplashScreenUseBackgroundColor: 0
+  metroSplashScreenBackgroundColor: {r: 0.9843137, g: 0.9843137, b: 0.9843137, a: 0}
+  metroSplashScreenUseBackgroundColor: 1
   platformCapabilities:
     WindowsStoreApps:
       GazeInput: True
