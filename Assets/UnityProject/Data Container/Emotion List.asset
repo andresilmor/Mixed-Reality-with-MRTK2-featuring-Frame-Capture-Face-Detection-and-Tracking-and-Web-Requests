@@ -21,8 +21,8 @@ MonoBehaviour:
   - name: Anger
     description: Intense displeasure or rage; furious; resentful.
     material: {fileID: 2100000, guid: 17140930eed45134f9839999d9245f2d, type: 2}
-    localPosition: {x: -0.16, y: 0.0805, z: 0}
-    localScale: {x: 0.3840415, y: 0.3876134, z: 1}
+    localPosition: {x: -0.183, y: 0.076, z: 0}
+    localScale: {x: 0.4294189, y: 0.3710732, z: 1}
   - name: Annoyance
     description: Bothered by something or someone; irritated; impatient; frustrated.
     material: {fileID: 2100000, guid: b50b5a009ecb5e54ea2a3aec10ed8866, type: 2}
