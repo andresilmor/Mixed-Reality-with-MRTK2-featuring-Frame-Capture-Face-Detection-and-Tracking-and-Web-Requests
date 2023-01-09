@@ -8,12 +8,12 @@ using RectCV = OpenCVForUnity.CoreModule.Rect;
 
 public class TrackerHandler : MonoBehaviour 
 {
-    TrackerSetting _trackerSetting;
-    public TrackerSetting trackerSetting
+    TrackerSetting _trackerSettings;
+    public TrackerSetting TrackerSettings
     {
         get
         {
-            return _trackerSetting;
+            return _trackerSettings;
         }
     }
 
@@ -25,7 +25,7 @@ public class TrackerHandler : MonoBehaviour
     public TrackerHandler(Tracker tracker) // FOR CSRT
     {
 
-        //_trackerSetting = new TrackerSetting(tracker);
+        //_trackerSettings = new TrackerSetting(tracker);
 
         Debugger.AddText("TrackerHandler created");
     }
@@ -33,7 +33,7 @@ public class TrackerHandler : MonoBehaviour
 
     public TrackerHandler(legacy_TrackerMOSSE tracker) // FOR MOSSE
     {
-        //_trackerSetting = new TrackerSetting(tracker);
+        //_trackerSettings = new TrackerSetting(tracker);
 
         Debugger.AddText("TrackerHandler MOSSE created");
     }
@@ -41,7 +41,7 @@ public class TrackerHandler : MonoBehaviour
 
     public TrackerHandler(int id, legacy_TrackerCSRT tracker = null) // FOR Legacy_CSRT
     {
-        _trackerSetting = new TrackerSetting(tracker);
+        _trackerSettings = new TrackerSetting(tracker);
 
         this.id = id;
 
@@ -51,11 +51,20 @@ public class TrackerHandler : MonoBehaviour
 
     public TrackerHandler(legacy_TrackerCSRT tracker, TrackerType type, string uuid = "") // FOR Legacy_CSRT
     {
-        _trackerSetting = new TrackerSetting(tracker);
+        _trackerSettings = new TrackerSetting(tracker);
         TrackerIdentifier = uuid;
         TrackerType = type;
    
     }
+
+    public void UpdateTracker(BoxRect boxRect, Mat newMat) {
+        RectCV region = new RectCV(new Point(boxRect.x1, boxRect.y1), new Point(boxRect.x2, boxRect.y2));
+        Rect2d _region = new Rect2d(region.tl(), region.size());
+
+        TrackerSettings.tracker.init(newMat, _region);
+
+    }
+
 
     public void SetIdentifier(string uuid) {
         TrackerIdentifier = uuid.Trim();
@@ -65,7 +74,7 @@ public class TrackerHandler : MonoBehaviour
     /*
     public TrackerHandler(legacy_TrackerCSRT tracker) // FOR Legacy_CSRT
     {
-        _trackerSetting = new TrackerSetting(tracker);
+        _trackerSettings = new TrackerSetting(tracker);
         id = -1;
 
         Debugger.AddText("TrackerHandler legacy CSRT created");
@@ -73,15 +82,15 @@ public class TrackerHandler : MonoBehaviour
 
     public void UpdateOneTracker(FaceRect faceRect, Mat frame)
     {
-        this._trackerSetting.isUpdating = true;
+        this._trackerSettings.isUpdating = true;
 
         Point top = new Point(faceRect.x1, faceRect.y1);
         Point bottom = new Point(faceRect.x2, faceRect.y2);
 
         RectCV region = new RectCV(top, bottom);
         Rect2d _region = new Rect2d(region.tl(), region.size());
-        this._trackerSetting.tracker.update(frame, _region);
-        this._trackerSetting.isUpdating = false
+        this._trackerSettings.tracker.update(frame, _region);
+        this._trackerSettings.isUpdating = false
             ;
     }
 

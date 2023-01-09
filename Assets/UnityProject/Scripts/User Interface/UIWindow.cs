@@ -33,6 +33,19 @@ public class UIWindow : MonoBehaviour {
 
     }
 
+    public void SetPosition(Vector3 position, bool lookToCamera) { 
+        gameObject.transform.position = position;
+
+        if (lookToCamera)
+            LookToCamera();
+
+    }
+    public void LookToCamera() {
+        gameObject.transform.LookAt(AppCommandCenter.cameraMain.transform.position);
+
+    }
+
+
     public void DefineComponents(GraphicUserInterfaceScriptableObject.data uiData) {
         foreach (GraphicUserInterfaceScriptableObject.windowComponents component in uiData.components) {
             switch (component.type) {

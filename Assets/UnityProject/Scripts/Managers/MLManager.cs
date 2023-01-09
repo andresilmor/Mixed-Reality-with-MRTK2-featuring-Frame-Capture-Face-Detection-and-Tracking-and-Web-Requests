@@ -10,6 +10,8 @@ using BestHTTP.WebSocket;
 using UnityEngine.UIElements;
 using static MongoDB.Bson.Serialization.Serializers.SerializerHelper;
 using UnityEngine.InputSystem.HID;
+using OpenCVForUnity.VideoModule;
+using UnityEngine.Playables;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Media.Capture.Frames;
@@ -109,9 +111,7 @@ public static class MLManager
                         try {
 
                             if (!TrackerManager.LiveTrackers.ContainsKey(detection.id)) {
-
-                                Debugger.AddText("NEW ON TREE");
-
+                                
                                 TrackerHandler newTracker = TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, worldPosition, TrackerType.PacientTracker);
 
                                 newTracker.SetIdentifier(detection.id);
@@ -119,27 +119,24 @@ public static class MLManager
 
 
                             } else {
-                                Debugger.AddText("ALREADY EXISTS ON TREE");
 
-                                (TrackerManager.LiveTrackers[detection.id].TrackerEntity as PacientTracker).UpdateActiveEmotion("Anger");
+                                lock (TrackerManager.LiveTrackers[detection.id]) {
+                                    (TrackerManager.LiveTrackers[detection.id].TrackerEntity as PacientTracker).UpdateActiveEmotion("Anger");
 
+                                    TrackerManager.LiveTrackers[detection.id].UpdateTracker(detection.faceRect, tempFrameMat);
 
-
-
-                                /*SEARCH BINARY TREE BY IDENTIFIER, ALSO LOCK WHILE CHANGING
-                                if (node.data is PacientTracker) {
-                                    (node.data as PacientTracker).UpdateActiveEmotion(detection.emotions.categorical[0]);
-                                    //(node.GraphQLData as Pacient).UpdateOneTracker(detection.faceRect, tempFrameMat);
-
+                                    (TrackerManager.LiveTrackers[detection.id].TrackerEntity as PacientTracker).Window.SetPosition(worldPosition, true);
                                 }
-                                */
 
                             }
+
                         } catch (Exception ex) {
                             Debugger.AddText(ex.Message);
+
                         }
 
                     }
+
                     break;
             
             }
@@ -189,8 +186,6 @@ public static class MLManager
         return P;
 
     }
-
-
 
     //Base:
     // (C#) https://github.com/cookieofcode/hololens2-unity-uwp-starter/blob/main/Unity/Assets/Scripts/HoloFaceTracker.cs   

@@ -1,15 +1,8 @@
-using Microsoft.MixedReality.Toolkit.UI;
 using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.TrackingModule;
-using OpenCVForUnity.VideoModule;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Unity.XR.OpenVR;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
-using UnityEngine.UIElements;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
 public interface ITrackerEntity {}
@@ -23,7 +16,7 @@ public static class TrackerManager {
         private set { _liveTrackers = value; }
     }
 
-    public static TrackerHandler CreateTracker(BoxRect boxRect, Mat frame, Vector3 mrPosition, TrackerType trackerType) {
+    public static TrackerHandler CreateTracker(BoxRect boxRect, Mat frame, Vector3 worldPosition, TrackerType trackerType) {
         if (LiveTrackers == null)
             LiveTrackers = new Dictionary<string, TrackerHandler>();
 
@@ -56,12 +49,12 @@ public static class TrackerManager {
 
         // ------------------------------------ DANGER ZONE --------------------------------------------- //
         Debugger.AddText("Pre Create");
-        UIWindow newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, mrPosition, Quaternion.identity);
+        UIWindow newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, worldPosition, Quaternion.identity);
         newVisualTracker.transform.LookAt(AppCommandCenter.cameraMain.transform);
         Debugger.AddText("Pro Create");
         Debugger.AddText("Width T: " + _region.width.ToString());
 
-        //Debugger.AddText("Pos: " + mrPosition.ToString());
+        //Debugger.AddText("Pos: " + worldPosition.ToString());
         //Debugger.AddText("Width: " + (boxRect.x2 - boxRect.x1));
         //Debugger.AddText("Height: " + (boxRect.y2 - boxRect.y1));
 
@@ -97,8 +90,8 @@ public static class TrackerManager {
          Debugger.AddText("LayForward");
 #endif
 
-        layForwardTop.z = mrPosition.z;
-        layForwardBottom.z = mrPosition.z;
+        layForwardTop.z = worldPosition.z;
+        layForwardBottom.z = worldPosition.z;
 
         Debugger.AddText("PositionZ");
         AppCommandCenter.Strech(newVisualTracker, layForwardBottom, layForwardTop, true);
@@ -124,7 +117,7 @@ public static class TrackerManager {
                     newTracker = new TrackerHandler(trackerCSRT, TrackerType.PacientTracker);
                     PacientTracker pacientTracker = newVisualTracker.gameObject.GetComponent<PacientTracker>();
                     pacientTracker.TrackerHandler = newTracker;
-                    pacientTracker.WindowContainer = newVisualTracker;
+                    pacientTracker.Window = newVisualTracker;
                     newTracker.TrackerEntity = pacientTracker;
                     break;
 
