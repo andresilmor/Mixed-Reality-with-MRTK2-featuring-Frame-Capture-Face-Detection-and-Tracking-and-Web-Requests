@@ -10,6 +10,8 @@ using UnityEngine.UIElements;
 using Windows.Perception.Spatial;
 using Microsoft.MixedReality.OpenXR;
 using Windows.Graphics.Imaging;
+using Windows.Media.Capture.Frames;
+using Windows.Media.Devices.Core;
 #endif
 
 public static class MRWorld {
@@ -108,7 +110,7 @@ public static class MRWorld {
     }
 #endif
 
-
+    // TODO: Dynamic offset, the higher the distance of the point to the camerera the lower it needs to go, actual value ~= 1m 
     public static Vector2 GetUnprojectionOffset(float posY) {
         Vector2 unprojectionOffset = Vector2.zero;
         if (posY > AppCommandCenter.cameraMain.pixelHeight / 2) // Got by trial and error / Negative = UP / Positive = Down
@@ -170,10 +172,140 @@ public static class MRWorld {
 
     }
 
+    // ----------------------------------------------------------------------------------------------------------------//
+    // ----------------------------------------------------------------------------------------------------------------//
+    // ----------------------------------------------------------------------------------------------------------------//
+    // ----------------------------------------------------------------------------------------------------------------//
+    // ----------------------------------------------------------------------------------------------------------------//    
 
-    public static float ConvertPixelDistToPoint(float pixelDist) {
-        return 0; ///elDist * pixelPointRatio.distPoint) / pixelPointRatio.distPixel) * 0.25f;
+    public static void GetWorldPosition(out Vector3 worldPosition, Detection detection) {
+        Vector3 bodyPos = GetWorldPositionByRaycast(new OpenCVForUnity.CoreModule.Point(detection.bodyCenter.x, detection.bodyCenter.y));
+
+        Vector3 facePos = GetWorldPositionByRaycast(detection.faceRect);
+
+        if (Vector3.Distance(bodyPos, tempExtrinsic.Position) < Vector3.Distance(facePos, tempExtrinsic.Position)) {
+            facePos.x = bodyPos.x;
+            facePos.z = bodyPos.z;
+
+        }
+
+        LineDrawer.Draw(tempExtrinsic.Position, facePos, UnityEngine.Color.green);
+
+
+        Vector3 worldPosCalculated = GetWorldPositionCalculation(detection.faceRect);
+        LineDrawer.Draw(tempExtrinsic.Position, worldPosCalculated, UnityEngine.Color.red);
+
+
+        worldPosition = new Vector3(facePos.x, facePos.y, worldPosCalculated.z);
+
+
+        Vector3 lerpedPosition = LerpByDistance(tempExtrinsic.Position, facePos, Vector3.Distance(tempExtrinsic.Position, worldPosition));
+        LineDrawer.Draw(tempExtrinsic.Position, lerpedPosition, UnityEngine.Color.yellow);
+
+
+        worldPosition = Vector3.Distance(tempExtrinsic.Position, worldPosition) < Vector3.Distance(tempExtrinsic.Position, lerpedPosition) ? LerpByDistance(tempExtrinsic.Position, facePos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)) : lerpedPosition;
+
+
+
+        LineDrawer.Draw(tempExtrinsic.Position, worldPosition, UnityEngine.Color.blue);
+
     }
+
+    public static Vector3 LerpByDistance(Vector3 A, Vector3 B, float x) {
+        Vector3 P = x * Vector3.Normalize(B - A) + A;
+        return P;
+
+    }
+
+    //Base:
+    // (C#) https://github.com/cookieofcode/hololens2-unity-uwp-starter/blob/main/Unity/Assets/Scripts/HoloFaceTracker.cs   
+    // (C++) https://github.com/microsoft/Windows-universal-samples/tree/main/Samples/HolographicFaceTracking/cpp
+    private static Vector3 GetWorldPositionCalculation(BoxRect boxRect) {
+
+#if ENABLE_WINMD_SUPPORT
+        VideoMediaFrameFormat videoFormat = AppCommandCenter.CameraFrameReader.LastFrame.mediaFrameReference.VideoMediaFrame.VideoFormat;
+        SpatialCoordinateSystem cameraCoordinateSystem = AppCommandCenter.CameraFrameReader.LastFrame.mediaFrameReference.CoordinateSystem;
+        CameraIntrinsics cameraIntrinsics = AppCommandCenter.CameraFrameReader.LastFrame.mediaFrameReference.VideoMediaFrame.CameraIntrinsics;
+
+        System.Numerics.Matrix4x4? cameraToWorld = cameraCoordinateSystem.TryGetTransformTo(WorldOrigin);
+
+        if (!cameraToWorld.HasValue) {
+            return Vector3.zero;
+
+        }
+
+        float textureWidthInv = 1.0f / videoFormat.Width;
+        float textureHeightInv = 1.0f / videoFormat.Height;
+
+#endif
+
+        int paddingForFaceRect = 24;
+        float averageFaceWidthInMeters = 0.132f;
+
+#if ENABLE_WINMD_SUPPORT
+        float pixelsPerMeterAlongX = cameraIntrinsics.FocalLength.X;
+        float averagePixelsForFaceAt1Meter = pixelsPerMeterAlongX * averageFaceWidthInMeters;
+
+        BitmapBounds bestRect = new BitmapBounds();
+        System.Numerics.Vector3 bestRectPositionInCameraSpace = System.Numerics.Vector3.Zero;
+
+        float bestDotProduct = -1.0f;
+
+#endif
+
+        long faceWidth = Convert.ToInt64(boxRect.x2 - boxRect.x1);
+        long centerX = Convert.ToInt64(boxRect.x1) + faceWidth / 2u;
+
+        long faceHeight = Convert.ToInt64(boxRect.y2 - boxRect.y1);
+        long centerY = Convert.ToInt64(boxRect.y1) + faceHeight / 2u;
+
+#if ENABLE_WINMD_SUPPORT
+        Windows.Foundation.Point faceRectCenterPoint = new Windows.Foundation.Point(centerX, centerY);
+
+        System.Numerics.Vector2 centerOfFace = cameraIntrinsics.UnprojectAtUnitDepth(faceRectCenterPoint);
+
+        System.Numerics.Vector3 vectorTowardsFace = System.Numerics.Vector3.Normalize(new System.Numerics.Vector3(centerOfFace.X, centerOfFace.Y, -1.0f));
+        
+        float estimatedFaceDepth = averagePixelsForFaceAt1Meter / faceWidth;
+
+        float dotFaceWithGaze = System.Numerics.Vector3.Dot(vectorTowardsFace, -System.Numerics.Vector3.UnitZ);
+
+        System.Numerics.Vector3 targetPositionInCameraSpace = vectorTowardsFace * estimatedFaceDepth;
+
+        if (dotFaceWithGaze > bestDotProduct) {
+            bestDotProduct = dotFaceWithGaze;
+            //bestRect = faceRect;
+            bestRectPositionInCameraSpace = targetPositionInCameraSpace;
+            
+        }
+
+        System.Numerics.Vector3 bestRectPositionInWorldSpace = System.Numerics.Vector3.Transform(bestRectPositionInCameraSpace, cameraToWorld.Value);
+
+        Vector3 positon = NumericsConversionExtensions.ToUnity(bestRectPositionInWorldSpace);
+        
+        
+        return positon;
+
+#endif
+
+        return Vector3.zero;
+    }
+
+
+
+    private static Vector3 GetWorldPositionByRaycast(OpenCVForUnity.CoreModule.Point boxCenter) {
+        Vector2 unprojectionOffset = GetUnprojectionOffset((float)boxCenter.y);
+        return GetWorldPositionOfPixel(boxCenter, unprojectionOffset);
+
+    }
+
+    private static Vector3 GetWorldPositionByRaycast(BoxRect boxRect) {
+        Vector2 unprojectionOffset = GetUnprojectionOffset(boxRect.y1 + ((boxRect.y2 - boxRect.y1) * 0.5f));
+        return GetWorldPositionOfPixel(GetBoundingBoxTarget(tempExtrinsic, boxRect), unprojectionOffset);
+
+    }
+
+
 
 
     // ATTENTION TO THIS IS FOR BOUNDIG BOX
@@ -182,67 +314,31 @@ public static class MRWorld {
 
         Vector3 layForward = Vector3.zero;
 
-        Vector3 cameraPosition = MRWorld.tempExtrinsic.Position;
+        Vector3 cameraPosition = tempExtrinsic.Position;
         Vector3 position = Vector3.zero;
         try {
 #if ENABLE_WINMD_SUPPORT
         Windows.Foundation.Point target = pointCV.ToWindowsPoint();
         
         if (debug) {
-            layForward = MRWorld.GetLayForward( Vector3.zero, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
+            layForward = GetLayForward( Vector3.zero, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
             
-            position = MRWorld.GetPosition(cameraPosition, layForward, layer);
+            position = GetPosition(cameraPosition, layForward, layer);
             if (toInstantiate != null) {
                 UnityEngine.Object.Instantiate(toInstantiate, cameraPosition, Quaternion.identity);
                 UnityEngine.Object.Instantiate(toInstantiate, position, Quaternion.identity);
             }
         }
-        layForward = MRWorld.GetLayForward(unprojectionOffset, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
+        layForward = GetLayForward(unprojectionOffset, target, MRWorld.tempExtrinsic, MRWorld.tempIntrinsic);
       
 
-        return MRWorld.GetPosition(cameraPosition, layForward, layer);  
+        return GetPosition(cameraPosition, layForward, layer);  
 #endif
         } catch (Exception e) {
             Debugger.AddText(e.Message);
         }
 
         return position;
-
-        /*
-
-        if (results[0].list[0].box.centerY > AppCommandCenter.cameraMain.pixelHeight / 2) {
-            cubeOffsetInWorldSpace = new System.Numerics.Vector3(0.0f, 0.12f, 0.0f);
-            position = (bestRectPositionInWorldspace - cubeOffsetInWorldSpace).ToUnity();
-            _debugText.text = _debugText.text + "\nNew PositionOffset X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
-            two = Instantiate(Debugger.GetCubeForTest(), position, Quaternion.identity);
-            LineDrawer.Draw(cameraPosition,  position, Color.cyan);
-
-        } else {
-        
-            cubeOffsetInWorldSpace = new System.Numerics.Vector3(0.0f, 0.25f, 0.0f);
-            position = (bestRectPositionInWorldspace - cubeOffsetInWorldSpace).ToUnity();
-            _debugText.text = _debugText.text + "\nNew PositionOffset X: " + position.x.ToString("f9") + " | Y: " + position.y.ToString("f9") + " | Z: " + position.z.ToString("f9");
-            two = Instantiate(Debugger.GetCubeForTest(), position, Quaternion.identity);
-            LineDrawer.Draw(cameraPosition,  position, Color.green);
-        }
-        */
-
-
-
-
-        // tEST END
-
-
-
-        //MRWorld.tempExtrinsic = null;
-
-        //MRWorld.tempIntrinsic = null;
-
-
-
-
-
-
 
     }
 

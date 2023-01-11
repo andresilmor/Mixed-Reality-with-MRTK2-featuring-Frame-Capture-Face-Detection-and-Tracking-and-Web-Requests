@@ -5,7 +5,8 @@ public enum GUIComponentType {
     Text,
     Button,
     Material,
-    MeshRenderer
+    MeshRenderer,
+    Generic
 
 }
 

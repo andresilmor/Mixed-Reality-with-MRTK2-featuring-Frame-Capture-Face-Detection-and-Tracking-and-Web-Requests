@@ -12,6 +12,7 @@ public class TimedEventHandler {
 
     private Action finishedAction = null;
 
+    public bool TimeRunOut { get; private set; }
 
     public Coroutine timerCoroutine { get; private set; }
     public Coroutine timerDisplayCoroutine { get; private set; }
@@ -22,6 +23,7 @@ public class TimedEventHandler {
         this.timerEnd = timerEnd;
 
         finishedAction = action;
+        TimeRunOut = false;
 
         timerCoroutine = AppCommandCenter.Instance.StartCoroutine(Timer());
 
@@ -34,6 +36,7 @@ public class TimedEventHandler {
         Debug.Log("Timer Start");
         yield return new WaitForSeconds(Convert.ToSingle(this.secondsToFinish));
         Debug.Log("Timer Over");
+        TimeRunOut = true;
         finishedAction.Invoke();
 
     }

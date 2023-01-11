@@ -142,6 +142,7 @@ public class AppCommandCenter : MonoBehaviour {
         testDT  = testDT.Add(new TimeSpan(0, 0, 5));
         Debug.Log("=> " + testDT.ToString());
         TimedEventManager.AddUpdateTimedEvent("3c764a20-629c-4be9-b19b-5f87bddd60d5", new TimedEventHandler(testDT, () => {
+
             UIWindow timerOverNotification = UIManager.Instance.OpenWindow(WindowType.HeaderOneButtonAndClose, stackerName: "Time Over Notification", isNotification: true);
             (timerOverNotification.components["Title"] as TextMeshPro).text = "Time Over";
             (timerOverNotification.components["Description"] as TextMeshPro).text = "Yay, time over";
@@ -173,6 +174,8 @@ public class AppCommandCenter : MonoBehaviour {
         (loginWindow.components["BotButtonText"] as TextMeshPro).text = "QR Code";
 
         AccountManager.loginWindow = loginWindow;
+
+        loginWindow.SetPosition(new Vector3(10, 10, 10), false, false);
 
         (loginWindow.components["BotButton"] as Interactable).OnClick.AddListener(() => { 
             System.Threading.Tasks.Task<bool> task = AccountManager.LoginQR(); 

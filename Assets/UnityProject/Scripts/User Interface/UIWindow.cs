@@ -13,6 +13,8 @@ public class UIWindow : MonoBehaviour {
     public bool wasInstantiated { get; private set; }
     public bool isNotification = false;
 
+    private Vector3? moveTo = null;
+
     public UIStacker stacker { get; set; }
 
     public Dictionary<string, object> components = new Dictionary<string, object>();
@@ -33,13 +35,20 @@ public class UIWindow : MonoBehaviour {
 
     }
 
-    public void SetPosition(Vector3 position, bool lookToCamera) { 
-        gameObject.transform.position = position;
+    public void SetPosition(Vector3 position, bool lookToCamera = true, bool instantMove = true) {
+        if (instantMove) {
+            moveTo = null;
+            gameObject.transform.position = position; Debugger.AddText("instant move");
+            if (lookToCamera)
+                LookToCamera();
 
-        if (lookToCamera)
-            LookToCamera();
+            return;
+
+        }
+        moveTo = position;
 
     }
+
     public void LookToCamera() {
         gameObject.transform.LookAt(AppCommandCenter.cameraMain.transform.position);
 
@@ -60,6 +69,9 @@ public class UIWindow : MonoBehaviour {
                     break;
                 case GUIComponentType.MeshRenderer:
                     components.Add(component.name, gameObject.transform.Find(component.path).gameObject.GetComponent<MeshRenderer>());
+                    break;
+                case GUIComponentType.Generic:
+                    components.Add(component.name, gameObject.transform.Find(component.path).gameObject);
                     break;
 
             }
@@ -106,6 +118,15 @@ public class UIWindow : MonoBehaviour {
         } catch (Exception e) {
             Debug.LogException(e);
         }
+    }
+
+    void Update() {
+        if (moveTo != null && !gameObject.transform.position.Equals(moveTo))
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, (Vector3)moveTo, 2.0f * Time.deltaTime);
+        else
+            moveTo = null;
+
+
     }
 
 
