@@ -101,12 +101,20 @@ public static class MLManager
         
             Vector3 worldPosition = Vector3.zero;
 
+            TrackerManager.ToUpdate = false;
+
             switch (detectionType) {
                 case DetectionType.Person:
                     foreach (Detection detection in results[0].list) {
                         MRWorld.GetWorldPosition(out worldPosition, detection);
-
+                        Debugger.AddText("1 Position: " + worldPosition.ToString("0.############"));
                         try {
+                            Debugger.AddText("1 Width: " + (detection.faceRect.x2 - detection.faceRect.x1) );
+                            Debugger.AddText("1 Height: " + (detection.faceRect.y2 - detection.faceRect.y1) );
+                            Debugger.AddText("1 X: " + (detection.faceRect.x1));
+                            Debugger.AddText("1 Y: " + (detection.faceRect.y1) );
+                            Debugger.AddText("1 Mat Widht" + tempFrameMat.width());
+                            Debugger.AddText("1 Mat Height" + tempFrameMat.height());
 
                             if (!TrackerManager.LiveTrackers.ContainsKey(detection.id)) {
                                 
@@ -120,7 +128,7 @@ public static class MLManager
                                 lock (TrackerManager.LiveTrackers[detection.id]) {
                                     (TrackerManager.LiveTrackers[detection.id].TrackerEntity as PacientTracker).UpdateActiveEmotion("Anger");
 
-                                    TrackerManager.LiveTrackers[detection.id].UpdateTracker(detection.faceRect, tempFrameMat);
+                                    TrackerManager.LiveTrackers[detection.id].RestartTracker(detection.faceRect, tempFrameMat);
 
                                     (TrackerManager.LiveTrackers[detection.id].TrackerEntity as PacientTracker).Window.SetPosition(worldPosition, instantMove: false);
 
@@ -144,7 +152,14 @@ public static class MLManager
                     break;
             
             }
-            
+
+            TrackerManager.ToUpdate = true;
+            if (TrackerManager.TrackersUpdater == null) {
+                TrackerManager.TrackersUpdater = AppCommandCenter.Instance.StartCoroutine(TrackerManager.UpdateTrackers());
+                Debugger.AddText("Updater Started");
+
+            }
+
         } catch (Exception error) {
             Debugger.AddText("Error: " + error.Message.ToString());
 

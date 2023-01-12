@@ -211,6 +211,34 @@ public static class MRWorld {
 
     }
 
+    public static void GetWorldPosition(out Vector3 worldPosition, Rect2d boxRect) {
+        worldPosition = Vector3.zero;
+       
+        Vector3 hitPos = GetWorldPositionByRaycast(new OpenCVForUnity.CoreModule.Point(boxRect.x + (boxRect.width / 2), boxRect.y + (boxRect.height / 2)));
+
+        LineDrawer.Draw(tempExtrinsic.Position, hitPos, UnityEngine.Color.green);
+
+
+        Vector3 worldPosCalculated = GetWorldPositionCalculation(new BoxRect((int)boxRect.x, (int)boxRect.y, (int)boxRect.x + (int)boxRect.width, (int)boxRect.y+(int)boxRect.height));
+        LineDrawer.Draw(tempExtrinsic.Position, worldPosCalculated, UnityEngine.Color.red);
+
+
+        worldPosition = new Vector3(hitPos.x, hitPos.y, worldPosCalculated.z);
+        LineDrawer.Draw(tempExtrinsic.Position, worldPosition, UnityEngine.Color.blue);
+
+
+        Vector3 lerpedPosition = LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, worldPosition));
+        LineDrawer.Draw(tempExtrinsic.Position, lerpedPosition, UnityEngine.Color.yellow);
+
+
+        worldPosition = Vector3.Distance(tempExtrinsic.Position, worldPosition) < Vector3.Distance(tempExtrinsic.Position, lerpedPosition) ? LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)) : lerpedPosition;
+
+
+
+      
+
+    }
+
     public static Vector3 LerpByDistance(Vector3 A, Vector3 B, float x) {
         Vector3 P = x * Vector3.Normalize(B - A) + A;
         return P;

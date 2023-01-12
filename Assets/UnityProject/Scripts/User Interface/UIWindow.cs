@@ -36,6 +36,7 @@ public class UIWindow : MonoBehaviour {
     }
 
     public void SetPosition(Vector3 position, bool lookToCamera = true, bool instantMove = true) {
+        Debugger.AddText("Setting position to: " + position.ToString());
         if (instantMove) {
             moveTo = null;
             gameObject.transform.position = position; Debugger.AddText("instant move");

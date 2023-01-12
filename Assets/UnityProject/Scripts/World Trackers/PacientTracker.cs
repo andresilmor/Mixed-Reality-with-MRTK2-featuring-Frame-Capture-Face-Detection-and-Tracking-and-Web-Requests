@@ -52,4 +52,8 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
 
     }
 
+    public UIWindow GetBindedWindow() {
+        return Window;
+
+    }
 }

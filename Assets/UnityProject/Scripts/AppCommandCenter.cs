@@ -58,9 +58,7 @@ public class AppCommandCenter : MonoBehaviour {
         set { if (AppCommandCenter.CameraFrameReader == null) AppCommandCenter._cameraFrameReader = value; }
     }
     
-
-    private bool justStop = false;
-    private byte timeToStop = 0;
+    public byte timeToStop = 0;
 
     public string ShowNetworkInterfaces() {
         IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();
@@ -175,6 +173,8 @@ public class AppCommandCenter : MonoBehaviour {
 
         AccountManager.loginWindow = loginWindow;
 
+        //TrackerManager.TrackersUpdater = AppCommandCenter.Instance.StartCoroutine(tesdt());
+        
         loginWindow.SetPosition(new Vector3(10, 10, 10), false, false);
 
         (loginWindow.components["BotButton"] as Interactable).OnClick.AddListener(() => { 
@@ -192,17 +192,13 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
     void Update() {
-        return;
-        if (!justStop) {
+        if (timeToStop > 4) {
+            if (TrackerManager.TrackersUpdater != null) { 
+                Debugger.AddText("Updater stopped");
+                StopCoroutine(TrackerManager.TrackersUpdater);
+                TrackerManager.TrackersUpdater = null;
 
-#if ENABLE_WINMD_SUPPORT
-            bool wasUpdated = TrackerManager.UpdateTrackers();
-            if (wasUpdated) {
-                timeToStop++;
-                if (timeToStop >= 20)
-                    justStop = true;
             }
-#endif
 
         }
 

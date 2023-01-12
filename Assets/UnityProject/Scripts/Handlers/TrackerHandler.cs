@@ -57,11 +57,20 @@ public class TrackerHandler : MonoBehaviour
    
     }
 
-    public void UpdateTracker(BoxRect boxRect, Mat newMat) {
+    public void RestartTracker(BoxRect boxRect, Mat newMat) {
         RectCV region = new RectCV(new Point(boxRect.x1, boxRect.y1), new Point(boxRect.x2, boxRect.y2));
         Rect2d _region = new Rect2d(region.tl(), region.size());
 
         TrackerSettings.tracker.init(newMat, _region);
+
+    }
+
+    public void UpdateTracker(Rect2d boxRect, Mat newMat) {
+        Debugger.AddText("IM HERE!!!!!!!!");
+        Debugger.AddText("Mat Widht" + newMat.width());
+        Debugger.AddText("Mat Height" + newMat.height());
+        TrackerSettings.tracker.update(newMat, boxRect);
+        Debugger.AddText("STILL HERE!!!!!!!!");
 
     }
 
