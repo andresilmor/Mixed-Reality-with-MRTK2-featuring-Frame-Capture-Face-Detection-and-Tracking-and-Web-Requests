@@ -7,7 +7,7 @@ using Realms;
 using System.Linq;
 using System.Threading.Tasks;
 
-public static class NotificationsManager {
+public static class NotificationManager {
     public static List<TimedEventHandler> timedEventsList { get; private set; }
 
 
