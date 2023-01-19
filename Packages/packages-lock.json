@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.microsoft.mixedreality.openxr": {
-      "version": "file:MixedReality/com.microsoft.mixedreality.openxr-1.6.0.tgz",
+      "version": "file:MixedReality/com.microsoft.mixedreality.openxr-1.7.0.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
@@ -12,28 +12,28 @@
       }
     },
     "com.microsoft.mixedreality.toolkit.examples": {
-      "version": "file:MixedReality/com.microsoft.mixedreality.toolkit.examples-2.8.2.tgz",
+      "version": "file:MixedReality/com.microsoft.mixedreality.toolkit.examples-2.8.3.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
-        "com.microsoft.mixedreality.toolkit.foundation": "2.8.2",
-        "com.microsoft.mixedreality.toolkit.extensions": "2.8.2"
+        "com.microsoft.mixedreality.toolkit.foundation": "2.8.3",
+        "com.microsoft.mixedreality.toolkit.extensions": "2.8.3"
       }
     },
     "com.microsoft.mixedreality.toolkit.extensions": {
-      "version": "file:MixedReality/com.microsoft.mixedreality.toolkit.extensions-2.8.2.tgz",
+      "version": "file:MixedReality/com.microsoft.mixedreality.toolkit.extensions-2.8.3.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
-        "com.microsoft.mixedreality.toolkit.foundation": "2.8.2"
+        "com.microsoft.mixedreality.toolkit.foundation": "2.8.3"
       }
     },
     "com.microsoft.mixedreality.toolkit.foundation": {
-      "version": "file:MixedReality/com.microsoft.mixedreality.toolkit.foundation-2.8.2.tgz",
+      "version": "file:MixedReality/com.microsoft.mixedreality.toolkit.foundation-2.8.3.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
-        "com.microsoft.mixedreality.toolkit.standardassets": "2.8.2"
+        "com.microsoft.mixedreality.toolkit.standardassets": "2.8.3"
       }
     },
     "com.microsoft.mixedreality.toolkit.planefinding": {
@@ -43,7 +43,7 @@
       "dependencies": {}
     },
     "com.microsoft.mixedreality.toolkit.standardassets": {
-      "version": "file:MixedReality/com.microsoft.mixedreality.toolkit.standardassets-2.8.2.tgz",
+      "version": "file:MixedReality/com.microsoft.mixedreality.toolkit.standardassets-2.8.3.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
@@ -51,11 +51,11 @@
       }
     },
     "com.microsoft.mixedreality.toolkit.tools": {
-      "version": "file:MixedReality/com.microsoft.mixedreality.toolkit.tools-2.8.2.tgz",
+      "version": "file:MixedReality/com.microsoft.mixedreality.toolkit.tools-2.8.3.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {
-        "com.microsoft.mixedreality.toolkit.foundation": "2.8.2"
+        "com.microsoft.mixedreality.toolkit.foundation": "2.8.3"
       }
     },
     "com.microsoft.mixedreality.worldlockingsamples": {
