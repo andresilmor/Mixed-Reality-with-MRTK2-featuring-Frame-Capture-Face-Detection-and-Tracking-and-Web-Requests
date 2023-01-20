@@ -24,7 +24,7 @@ public static class AccountManager {
             _isLogged = value;
             if (_isLogged) {
                 foreach (MemberOf memberOf in RealmManager.realm.Find<UserEntity>(currentUserUUID).MemberOf) {
-                    NotificationManager.SetupMedicationAlerts(memberOf.Institution.UUID);
+                    NotificationsManager.SetupMedicationAlerts(memberOf.Institution.UUID);
 
                 }
 
