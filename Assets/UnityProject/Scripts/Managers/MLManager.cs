@@ -48,14 +48,17 @@ public static class MLManager
                 {
                     if (videoFrame != null && videoFrame.SoftwareBitmap != null)
                     {
+                        Debugger.AddText("1");
                         byte[] byteArray = await Parser.ToByteArray(videoFrame.SoftwareBitmap);
                         
                         //Debugger.AddText("1 Frame: " + (tempFrameMat is null).ToString());
+                        Debugger.AddText("2");
                         tempFrameMat = CameraFrameReader.GenerateCVMat(lastFrame.mediaFrameReference);
-                        //Debugger.AddText("2 Frame: " + (tempFrameMat is null).ToString());
+                        Debugger.AddText("2 Frame: " + (tempFrameMat is null).ToString());
 
 
                         videoFrame.SoftwareBitmap.Dispose();
+                         Debugger.AddText("3");
                         //Debug.Log($"[### DEBUG ###] byteArray Size = {byteArray.Length}");
                       
                         UnityEngine.Object.Instantiate(Debugger.GetSphereForTest(), AppCommandCenter.cameraMain.transform.position, Quaternion.identity);
@@ -65,6 +68,7 @@ public static class MLManager
                         //this.tempIntrinsic = lastFrame.intrinsic;
                         MRWorld.UpdateExtInt(lastFrame.extrinsic, lastFrame.intrinsic);
                         
+                        Debugger.AddText("4");
                         FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)));
                         WebSocket wsTemp = APIManager.GetWebSocket(APIManager.mlLiveDetection);
                         if (wsTemp.IsOpen)
@@ -73,7 +77,9 @@ public static class MLManager
                         {
                             wsTemp.Open();
                         }
-
+                        wsTemp.Send("Sended");
+                        Debugger.AddText("Sended");
+                        Debugger.AddText(JsonUtility.ToJson(frame));
                         wsTemp.Send(JsonUtility.ToJson(frame));
                                           
 

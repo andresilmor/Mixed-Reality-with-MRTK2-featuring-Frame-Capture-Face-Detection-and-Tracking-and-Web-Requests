@@ -53,7 +53,7 @@ public static class APIManager {
 
     [Header("API Address:")]
     //string address = "websocketProtocol://192.168.1.238:8000";
-    [SerializeField] static string ip = "d345-193-136-194-58.eu.ngrok.io";
+    [SerializeField] static string ip = "9ee0-193-136-194-58.eu.ngrok.io";
     [SerializeField] static string port = ""; //For when used with localhost server :8000
 
     [Header("Root Paths:")]
@@ -174,14 +174,25 @@ public static class APIManager {
 
     public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<string, DetectionType> action) {
         try {
+            wsLiveDetection = new WebSocket(new Uri("ws://34.242.60.234/ws"));
+
+            wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {
+                Debug.Log("dsadas: " + message.ToString());
+            };
+            wsLiveDetection.Open();
+            
+
+            /*
             WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + port + websocketPath + path));
 
             newConnection.OnMessage += (WebSocket webSocket, string message) => {
+                Debugger.AddText(message);
                 if (message.Length > 6)
                     action?.Invoke(message, detectionType);
             };
 
             ConfigWebsocketGeneric(path, newConnection);
+            */
 
         } catch (Exception e) {
             Debugger.AddText("Error: " + e.Message.ToString());

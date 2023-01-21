@@ -155,10 +155,20 @@ public class AppCommandCenter : MonoBehaviour {
 
             });
 
+            if (!APIManager.wsLiveDetection.IsOpen) {
+                Debug.Log("nop opened");
+                APIManager.wsLiveDetection.Open();
+            }
+            APIManager.wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {
+                Debug.Log("dsadas: " + message.ToString());
+            };
+
+            APIManager.wsLiveDetection.Send("sadasda");
+            Debug.Log(TimedEventManager.GetTimedEventTimeLeft("TEST"));
+
 
         }));
 
-        Debug.Log(TimedEventManager.GetTimedEventTimeLeft("TEST"));
 
 
     }
