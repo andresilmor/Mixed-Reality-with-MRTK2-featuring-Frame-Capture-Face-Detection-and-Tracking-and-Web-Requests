@@ -20,7 +20,7 @@ using static BestHTTP.SecureProtocol.Org.BouncyCastle.Math.EC.ECCurve;
 using UnityEngine.SceneManagement;
 using Microsoft.MixedReality.Toolkit;
 using Unity.XR.OpenVR;
-
+using System.IO;
 
 [DisallowMultipleComponent]
 public class AppCommandCenter : MonoBehaviour {
@@ -139,6 +139,8 @@ public class AppCommandCenter : MonoBehaviour {
         DateTime testDT = DateTime.Now;
         testDT  = testDT.Add(new TimeSpan(0, 0, 5));
         Debug.Log("=> " + testDT.ToString());
+
+
         TimedEventManager.AddUpdateTimedEvent("3c764a20-629c-4be9-b19b-5f87bddd60d5", new TimedEventHandler(testDT, () => {
 
             UIWindow timerOverNotification = UIManager.Instance.OpenWindow(WindowType.HeaderOneButtonAndClose, stackerName: "Time Over Notification", isNotification: true);
@@ -159,11 +161,18 @@ public class AppCommandCenter : MonoBehaviour {
                 Debug.Log("nop opened");
                 APIManager.wsLiveDetection.Open();
             }
-            APIManager.wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {
-                Debug.Log("dsadas: " + message.ToString());
-            };
 
-            APIManager.wsLiveDetection.Send("sadasda");
+            APIManager.wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {
+                Debugger.AddText("Text: " + message.ToString());
+
+            };
+            APIManager.wsLiveDetection.OnBinary += (WebSocket webSocket, byte[] data) => {
+                Debug.Log("Binary");
+                Debugger.AddText(data.Length.ToString());
+               
+            
+            };
+            
             Debug.Log(TimedEventManager.GetTimedEventTimeLeft("TEST"));
 
 

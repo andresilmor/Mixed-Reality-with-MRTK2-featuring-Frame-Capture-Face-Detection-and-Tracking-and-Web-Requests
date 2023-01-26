@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Globalization;
+using System.IO;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Graphics.Imaging;
@@ -35,6 +36,13 @@ public static class Parser {
         DateTime dateTime = DateTime.Parse(realmDateTime);
 
         return dateTime;
+
+    }
+
+    public static Byte[] ProtoSerialize<T>(T record) where T : class {
+        using var stream = new MemoryStream();
+        ProtoBuf.Serializer.Serialize(stream, record);
+        return stream.ToArray();
 
     }
 

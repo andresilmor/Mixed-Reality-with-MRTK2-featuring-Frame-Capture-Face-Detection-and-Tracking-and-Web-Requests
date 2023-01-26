@@ -72,3 +72,12 @@ Update Mode: updateDependencies
 
 The following packages were updated:
   com.unity.xr.openxr from version 1.5.1 to 1.5.3
+
+=== Mon Jan 23 16:50:01 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.collab-proxy from version 1.17.6 to 1.17.7
+  com.unity.probuilder from version 4.5.2 to 5.0.3

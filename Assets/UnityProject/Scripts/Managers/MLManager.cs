@@ -38,6 +38,8 @@ public static class MLManager
 
     public static async void AnalyseFrame() {
         Debugger.SetFieldView();
+
+
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = AppCommandCenter.CameraFrameReader.LastFrame;
         if (lastFrame.mediaFrameReference != null)
@@ -69,6 +71,7 @@ public static class MLManager
                         MRWorld.UpdateExtInt(lastFrame.extrinsic, lastFrame.intrinsic);
                         
                         Debugger.AddText("4");
+                        /*
                         FrameCapture frame = new FrameCapture(Parser.Base64ToJson(Convert.ToBase64String(byteArray)));
                         WebSocket wsTemp = APIManager.GetWebSocket(APIManager.mlLiveDetection);
                         if (wsTemp.IsOpen)
@@ -81,7 +84,11 @@ public static class MLManager
                         Debugger.AddText("Sended");
                         Debugger.AddText(JsonUtility.ToJson(frame));
                         wsTemp.Send(JsonUtility.ToJson(frame));
-                                          
+                        */
+                        ImageInferenceRequest message = new ImageInferenceRequest();
+                        message.image = byteArray;
+                        
+                        APIManager.wsLiveDetection.Send(Parser.ProtoSerialize<ImageInferenceRequest>(message));
 
                     }
                     else
