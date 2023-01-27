@@ -42,6 +42,8 @@ using BestHTTP.Caching;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using System.Threading;
 using UnityEngine.UIElements;
+using System.IO;
+using System.Linq;
 
 public static class APIManager {
 
@@ -174,10 +176,19 @@ public static class APIManager {
 
     public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<string, DetectionType> action) {
         try {
-            wsLiveDetection = new WebSocket(new Uri("ws://52.18.36.87/ws"));
+            wsLiveDetection = new WebSocket(new Uri("ws://63.33.203.169/ws"));
+
 
             wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {
-                Debug.Log("dsadas: " + message.ToString());
+                Debugger.AddText("Text: " + message.ToString());
+
+            };
+            wsLiveDetection.OnBinary += (WebSocket webSocket, byte[] data) => {
+                Debugger.AddText("Binary");
+                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<TestingProto>(new MemoryStream(data)).nome.ToArray()[0]);
+                Debugger.AddText(data.Length.ToString());
+
+
             };
             wsLiveDetection.Open();
             

@@ -149,7 +149,8 @@ public class AppCommandCenter : MonoBehaviour {
             (timerOverNotification.components["ActionButtonText"] as TextMeshPro).text = "Locate Pacient";
             (timerOverNotification.components["ActionButton"] as Interactable).OnClick.AddListener(() => {
                 Debugger.AddText("Ok im calling");
-                MLManager.AnalyseFrame();
+                APIManager.wsLiveDetection.Send("oi");
+                //MLManager.AnalyseFrame();
 
             });
             (timerOverNotification.components["CloseButton"] as Interactable).OnClick.AddListener(() => {
@@ -161,17 +162,6 @@ public class AppCommandCenter : MonoBehaviour {
                 Debug.Log("nop opened");
                 APIManager.wsLiveDetection.Open();
             }
-
-            APIManager.wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {
-                Debugger.AddText("Text: " + message.ToString());
-
-            };
-            APIManager.wsLiveDetection.OnBinary += (WebSocket webSocket, byte[] data) => {
-                Debug.Log("Binary");
-                Debugger.AddText(data.Length.ToString());
-               
-            
-            };
             
             Debug.Log(TimedEventManager.GetTimedEventTimeLeft("TEST"));
 

@@ -7,10 +7,10 @@ public class Detection
 {
     public string id;
     public BodyCenter bodyCenter;
-    public FaceRect faceRect;
+    public FaceRectOld faceRect;
     public Emotions emotions;
 
-    public Detection(string id, BodyCenter bodyCenter, FaceRect faceRect, Emotions emotions)
+    public Detection(string id, BodyCenter bodyCenter, FaceRectOld faceRect, Emotions emotions)
     {
         this.id = id;
         this.bodyCenter = bodyCenter;

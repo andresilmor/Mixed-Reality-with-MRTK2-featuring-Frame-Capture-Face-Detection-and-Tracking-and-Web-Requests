@@ -89,7 +89,7 @@ public class TrackerHandler : MonoBehaviour
         Debugger.AddText("TrackerHandler legacy CSRT created");
     }
 
-    public void UpdateOneTracker(FaceRect faceRect, Mat frame)
+    public void UpdateOneTracker(FaceRectOld faceRect, Mat frame)
     {
         this._trackerSettings.isUpdating = true;
 
