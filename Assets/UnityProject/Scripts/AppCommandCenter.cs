@@ -149,8 +149,8 @@ public class AppCommandCenter : MonoBehaviour {
             (timerOverNotification.components["ActionButtonText"] as TextMeshPro).text = "Locate Pacient";
             (timerOverNotification.components["ActionButton"] as Interactable).OnClick.AddListener(() => {
                 Debugger.AddText("Ok im calling");
-                APIManager.wsLiveDetection.Send("oi");
-                //MLManager.AnalyseFrame();
+                //APIManager.wsLiveDetection.Send("oi");
+                MLManager.AnalyseFrame();
 
             });
             (timerOverNotification.components["CloseButton"] as Interactable).OnClick.AddListener(() => {

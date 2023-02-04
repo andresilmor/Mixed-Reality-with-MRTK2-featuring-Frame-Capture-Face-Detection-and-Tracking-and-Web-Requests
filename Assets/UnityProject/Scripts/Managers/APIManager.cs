@@ -174,7 +174,7 @@ public static class APIManager {
         }
     }
 
-    public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<string, DetectionType> action) {
+    public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<DetectionsList, DetectionType> action) {
         try {
             wsLiveDetection = new WebSocket(new Uri("ws://63.33.203.169/ws"));
 
@@ -185,9 +185,32 @@ public static class APIManager {
             };
             wsLiveDetection.OnBinary += (WebSocket webSocket, byte[] data) => {
                 Debugger.AddText("Binary");
-                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<TestingProto>(new MemoryStream(data)).nome.ToArray()[0]);
+                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray().Length);
+                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].uuid);
                 Debugger.AddText(data.Length.ToString());
 
+                List<Detection> detections = new List<Detection>();
+
+                foreach (PacientAndEmotionDetected pacient in ProtoBuf.Serializer.Deserialize<PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()) {
+                    detections.Add(new Detection(
+                            id: pacient.uuid,
+                            bodyCenter: new BodyCenter(
+                                    x: (int)pacient.bodyCenter.x,
+                                    y: (int)pacient.bodyCenter.y
+                                ),
+                            faceRect: new FaceRectOld(
+                                    x1: (int)pacient.faceRect.x1,
+                                    x2: (int)pacient.faceRect.x2,
+                                    y1: (int)pacient.faceRect.y1,
+                                    y2: (int)pacient.faceRect.y2
+                                ),
+                            emotions: new Emotions(
+                                    continuous: new string[] { "eqweqw" },
+                                    categorical: new string[] { "Anger" }
+                                )
+                        ));
+                }
+                action?.Invoke(new DetectionsList("Pacients", list: detections), detectionType);
 
             };
             wsLiveDetection.Open();

@@ -107,10 +107,10 @@ public static class MLManager
 
     }
 
-    public static async void MapDetections(string predictions, DetectionType detectionType) {
+    public static async void MapDetections(DetectionsList predictions, DetectionType detectionType) {
         try {
-            List<DetectionsList> results = JsonConvert.DeserializeObject<List<DetectionsList>>(
-                JsonConvert.DeserializeObject(predictions).ToString());
+            //List<DetectionsList> results = JsonConvert.DeserializeObject<List<DetectionsList>>(
+                //JsonConvert.DeserializeObject(predictions).ToString());
         
             Vector3 worldPosition = Vector3.zero;
 
@@ -118,7 +118,7 @@ public static class MLManager
 
             switch (detectionType) {
                 case DetectionType.Person:
-                    foreach (Detection detection in results[0].list) {
+                    foreach (Detection detection in predictions.list) {
                         MRWorld.GetWorldPosition(out worldPosition, detection);
                         Debugger.AddText("1 Position: " + worldPosition.ToString("0.############"));
                         try {
