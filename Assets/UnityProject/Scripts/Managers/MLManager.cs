@@ -107,18 +107,20 @@ public static class MLManager
 
     }
 
-    public static async void MapDetections(DetectionsList predictions, DetectionType detectionType) {
+    public static async void MapDetections(string predictions, DetectionType detectionType) {
         try {
-            //List<DetectionsList> results = JsonConvert.DeserializeObject<List<DetectionsList>>(
-                //JsonConvert.DeserializeObject(predictions).ToString());
+            PersonAndEmotionsInferenceReply.DetectionsList results = JsonConvert.DeserializeObject<PersonAndEmotionsInferenceReply.DetectionsList>(
+                JsonConvert.DeserializeObject(predictions).ToString());
+
+            Debugger.AddText(results.ToString());
         
             Vector3 worldPosition = Vector3.zero;
-
+            Debugger.AddText("Test: " + results.detections[0].uuid);
             TrackerManager.ToUpdate = false;
 
             switch (detectionType) {
                 case DetectionType.Person:
-                    foreach (Detection detection in predictions.list) {
+                    foreach (PersonAndEmotionsInferenceReply.Detection detection in results.detections) {
                         MRWorld.GetWorldPosition(out worldPosition, detection);
                         Debugger.AddText("1 Position: " + worldPosition.ToString("0.############"));
                         try {
@@ -129,21 +131,21 @@ public static class MLManager
                             Debugger.AddText("1 Mat Widht" + tempFrameMat.width());
                             Debugger.AddText("1 Mat Height" + tempFrameMat.height());
 
-                            if (!TrackerManager.LiveTrackers.ContainsKey(detection.id)) {
+                            if (!TrackerManager.LiveTrackers.ContainsKey(detection.uuid)) {
                                 
                                 TrackerHandler newTracker = TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, worldPosition, TrackerType.PacientTracker);
 
-                                newTracker.SetIdentifier(detection.id);
-                                TrackerManager.LiveTrackers.Add(detection.id, newTracker);
+                                newTracker.SetIdentifier(detection.uuid);
+                                TrackerManager.LiveTrackers.Add(detection.uuid, newTracker);
 
                             } else {
 
-                                lock (TrackerManager.LiveTrackers[detection.id]) {
-                                    (TrackerManager.LiveTrackers[detection.id].TrackerEntity as PacientTracker).UpdateActiveEmotion("Anger");
+                                lock (TrackerManager.LiveTrackers[detection.uuid]) {
+                                    (TrackerManager.LiveTrackers[detection.uuid].TrackerEntity as PacientTracker).UpdateActiveEmotion("Anger");
 
-                                    TrackerManager.LiveTrackers[detection.id].RestartTracker(detection.faceRect, tempFrameMat);
+                                    TrackerManager.LiveTrackers[detection.uuid].RestartTracker(detection.faceRect, tempFrameMat);
 
-                                    (TrackerManager.LiveTrackers[detection.id].TrackerEntity as PacientTracker).Window.SetPosition(worldPosition, instantMove: false);
+                                    (TrackerManager.LiveTrackers[detection.uuid].TrackerEntity as PacientTracker).Window.SetPosition(worldPosition, instantMove: false);
 
                                     
 
@@ -151,9 +153,9 @@ public static class MLManager
 
                             }
 
-                            TimedEventHandler timedEvent = TimedEventManager.GetTimedEvent(detection.id);
+                            TimedEventHandler timedEvent = TimedEventManager.GetTimedEvent(detection.uuid);
                             if (timedEvent != null)
-                                ((TrackerManager.LiveTrackers[detection.id].TrackerEntity as PacientTracker).Window.components["NotificationAlert"] as GameObject).SetActive(timedEvent.TimeRunOut);
+                                ((TrackerManager.LiveTrackers[detection.uuid].TrackerEntity as PacientTracker).Window.components["NotificationAlert"] as GameObject).SetActive(timedEvent.TimeRunOut);
 
                         } catch (Exception ex) {
                             Debugger.AddText(ex.Message);
@@ -166,12 +168,12 @@ public static class MLManager
             
             }
 
-            TrackerManager.ToUpdate = true;
-            if (TrackerManager.TrackersUpdater == null) {
-                TrackerManager.TrackersUpdater = AppCommandCenter.Instance.StartCoroutine(TrackerManager.UpdateTrackers());
-                Debugger.AddText("Updater Started");
+            //TrackerManager.ToUpdate = true;
+            //if (TrackerManager.TrackersUpdater == null) {
+                //TrackerManager.TrackersUpdater = AppCommandCenter.Instance.StartCoroutine(TrackerManager.UpdateTrackers());
+                //Debugger.AddText("Updater Started");
 
-            }
+            //}
 
         } catch (Exception error) {
             Debugger.AddText("Error: " + error.Message.ToString());

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Scriptable Object/Emotions List")]
+[CreateAssetMenu(menuName = "Scriptable Object/EmotionsDetected List")]
 public class EmotionsListScriptableObject : ScriptableObject {
 
     [System.Serializable]

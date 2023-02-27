@@ -45,6 +45,7 @@ using UnityEngine.UIElements;
 using System.IO;
 using System.Linq;
 
+
 public static class APIManager {
 
     #region API Meta Data
@@ -174,21 +175,37 @@ public static class APIManager {
         }
     }
 
-    public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<DetectionsList, DetectionType> action) {
+    public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<string, DetectionType> action) {
         try {
             wsLiveDetection = new WebSocket(new Uri("ws://63.33.203.169/ws"));
 
 
             wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {
-                Debugger.AddText("Text: " + message.ToString());
+                Debugger.AddText("Herwe");
+                if (message.Length > 6) {
+                    Debugger.AddText(message);
+                    action?.Invoke(message, detectionType);
+                }
 
             };
             wsLiveDetection.OnBinary += (WebSocket webSocket, byte[] data) => {
+                /*
                 Debugger.AddText("Binary");
-                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray().Length);
-                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].uuid);
-                Debugger.AddText(data.Length.ToString());
+                try { 
+                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray().Length);
+                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].uuid);
+                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].faceRect.x1);
+                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].emotionsDetected.continuous["Valence"].ToString());
+                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].emotionsDetected.categorical.ToArray()[0]);
+                    Debug.Log(ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).GetType());
+                } catch (Exception ex) {
+                    Debugger.AddText(ex.Message);
+                }
 
+
+
+
+              
                 List<Detection> detections = new List<Detection>();
 
                 foreach (PacientAndEmotionDetected pacient in ProtoBuf.Serializer.Deserialize<PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()) {
@@ -199,19 +216,19 @@ public static class APIManager {
                                     y: (int)pacient.bodyCenter.y
                                 ),
                             faceRect: new FaceRectOld(
-                                    x1: (int)pacient.faceRect.x1,
+                                    x1: (int)pacient.faceRect.x1, 
                                     x2: (int)pacient.faceRect.x2,
                                     y1: (int)pacient.faceRect.y1,
                                     y2: (int)pacient.faceRect.y2
                                 ),
-                            emotions: new Emotions(
+                            emotions: new EmotionsDetected(
                                     continuous: new string[] { "eqweqw" },
                                     categorical: new string[] { "Anger" }
                                 )
                         ));
                 }
                 action?.Invoke(new DetectionsList("Pacients", list: detections), detectionType);
-
+                */
             };
             wsLiveDetection.Open();
             
