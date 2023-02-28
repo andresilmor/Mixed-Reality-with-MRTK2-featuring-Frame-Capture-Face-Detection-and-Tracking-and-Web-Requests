@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.XR.OpenXR.Input;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Perception.Spatial;
@@ -118,7 +119,7 @@ public static class MRWorld {
             unprojectionOffset = new Vector2(0, -0.12f);
             Debugger.AddText("Unprojection A");
         } else {
-            unprojectionOffset = new Vector2(0, -0.07f);
+            unprojectionOffset = new Vector2(0, (-0.07f));
             Debugger.AddText("Unprojection B");
 
         }
@@ -197,7 +198,8 @@ public static class MRWorld {
 
 
         Vector3 worldPosCalculated = GetWorldPositionByCalculation(detection.faceRect);
-        //LineDrawer.Draw(tempExtrinsic.Position, worldPosCalculated, UnityEngine.Color.red);
+        Debugger.AddText("Calculated distance: " + Vector3.Distance(tempExtrinsic.Position, worldPosCalculated).ToString("0.############"));
+        LineDrawer.Draw(tempExtrinsic.Position, worldPosCalculated, UnityEngine.Color.green);
 
         Debugger.AddText("Pos Calculated:  " + worldPosCalculated.ToString("0.############"));
 
@@ -208,15 +210,28 @@ public static class MRWorld {
         Vector3 lerpedPosition = LerpByDistance(tempExtrinsic.Position, facePos, Vector3.Distance(tempExtrinsic.Position, worldPosition));
 
         Debugger.AddText("Lerped  Position:  " + lerpedPosition.ToString("0.############"));
-        //LineDrawer.Draw(tempExtrinsic.Position, lerpedPosition, UnityEngine.Color.blue);
+        LineDrawer.Draw(tempExtrinsic.Position, lerpedPosition, UnityEngine.Color.blue);
 
 
         worldPosition = Vector3.Distance(tempExtrinsic.Position, worldPosition) < Vector3.Distance(tempExtrinsic.Position, lerpedPosition) ? LerpByDistance(tempExtrinsic.Position, facePos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)) : lerpedPosition;
 
         Debugger.AddText("Lerped  Position 2:  " + LerpByDistance(tempExtrinsic.Position, facePos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)).ToString("0.############"));
         LineDrawer.Draw(tempExtrinsic.Position, LerpByDistance(tempExtrinsic.Position, facePos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)), UnityEngine.Color.green);
+        Debugger.AddText("Final distance: " + Vector3.Distance(tempExtrinsic.Position, worldPosition).ToString("0.############"));
         Debugger.AddText("Final Position:  " + worldPosition.ToString("0.############"));
-        LineDrawer.Draw(tempExtrinsic.Position, worldPosition, UnityEngine.Color.red);
+        LineDrawer.Draw(tempExtrinsic.Position, worldPosition, UnityEngine.Color.yellow);
+
+        Vector3 testWorldPosition = worldPosition;
+        if (testWorldPosition.y > AppCommandCenter.cameraMain.pixelHeight / 2) // Got by trial and error / Negative = UP / Positive = Down
+        {
+            testWorldPosition.y = testWorldPosition.y;
+        } else {
+            testWorldPosition.y = (Vector3.Distance(tempExtrinsic.Position, testWorldPosition) * -0.07f) / 0.7654663f;
+            LineDrawer.Draw(tempExtrinsic.Position, testWorldPosition, UnityEngine.Color.red);
+
+
+        }
+
 
     }
 
