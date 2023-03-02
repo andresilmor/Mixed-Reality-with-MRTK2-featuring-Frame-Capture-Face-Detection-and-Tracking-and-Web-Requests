@@ -114,16 +114,33 @@ public static class MRWorld {
     // TODO: Dynamic offset, the higher the distance of the point to the camerera the lower it needs to go, actual value ~= 1m 
     public static Vector2 GetUnprojectionOffset(float posY) {
         Vector2 unprojectionOffset = Vector2.zero;
+
+
+        unprojectionOffset = new Vector2(0, 0);
+
+        /*
         if (posY > AppCommandCenter.cameraMain.pixelHeight / 2) // Got by trial and error / Negative = UP / Positive = Down
         {
             unprojectionOffset = new Vector2(0, -0.12f);
+            unprojectionOffset = new Vector2(0, 0);
+            Debugger.AddText("unprojectionOffset: " + unprojectionOffset.ToString("0.############"));
             Debugger.AddText("Unprojection A");
         } else {
-            unprojectionOffset = new Vector2(0, (-0.07f));
             Debugger.AddText("Unprojection B");
+            Debugger.AddText("distance: " + ((float)distance).ToString("0.############"));
+            float distBlocks = (float)distance / 0.5706405f;
+            Debugger.AddText("distBlocks: " + distBlocks.ToString("0.############"));
 
+            float prediction = distBlocks * -0.07f;
+            unprojectionOffset = new Vector2(0, prediction);
+
+            Debugger.AddText("unprojectionOffset: " + unprojectionOffset.ToString("0.############")); 
+            unprojectionOffset = new Vector2(0, 0);
+            Debugger.AddText("unprojectionOffset: " + unprojectionOffset.ToString("0.############"));
+            //unprojectionOffset = new Vector2(0, -0.07f);
+            Debugger.AddText("Unprojection ---------------");
         }
-
+        */
         return unprojectionOffset;
 
     }
@@ -179,48 +196,60 @@ public static class MRWorld {
     // ----------------------------------------------------------------------------------------------------------------//
     // ----------------------------------------------------------------------------------------------------------------//    
 
+
+    // Used ON MACHINE LEARNINGGGGG
     public static void GetWorldPosition(out Vector3 worldPosition, PersonAndEmotionsInferenceReply.Detection detection) {
-        Vector3 bodyPos = GetWorldPositionByRaycast(new OpenCVForUnity.CoreModule.Point(detection.bodyCenter.x, detection.bodyCenter.y));
+        // Keep at bay xd
+        //Vector3 bodyPos = GetWorldPositionDirection(new OpenCVForUnity.CoreModule.Point(detection.bodyCenter.x, detection.bodyCenter.y));
 
-        Vector3 facePos = GetWorldPositionByRaycast(detection.faceRect);
+        Debugger.AddText("ML Get World Position: ");
 
-        /*if (Vector3.Distance(bodyPos, tempExtrinsic.Position) < Vector3.Distance(facePos, tempExtrinsic.Position)) {
-            facePos.x = bodyPos.x;
-            facePos.z = bodyPos.z;
+        Vector3 worldPosDist = GetWorldPositionDistance(detection.faceRect);
+        Debugger.AddText("Calculated distance: " + Vector3.Distance(tempExtrinsic.Position, worldPosDist).ToString("0.############"));
+        LineDrawer.Draw(tempExtrinsic.Position, worldPosDist, UnityEngine.Color.green);
+
+
+        Debugger.AddText("Modifed height: " + ((detection.faceRect.y2 - detection.faceRect.y1) * 0.5).ToString("0.############"));
+        Debugger.AddText("Y2: " + detection.faceRect.y2.ToString("0.############"));
+        //detection.faceRect.y2 = detection.faceRect.y2 - (int)((detection.faceRect.y2 - detection.faceRect.y1) * 0.5);
+
+        Vector3 hitPoint = GetWorldPositionDirection(detection.faceRect);
+        LineDrawer.Draw(tempExtrinsic.Position, hitPoint, UnityEngine.Color.red);
+        Debugger.AddText("Y position: " + hitPoint.y.ToString("0.############"));
+        /*if (Vector3.Distance(bodyPos, tempExtrinsic.Position) < Vector3.Distance(hitPoint, tempExtrinsic.Position)) {
+            hitPoint.x = bodyPos.x;
+            hitPoint.z = bodyPos.z;
 
         }*/
-        Debugger.AddText("Starting Positions: ");
-        Debugger.AddText("Camera:  " + tempExtrinsic.Position.ToString("0.############"));
-        Debugger.AddText("RayCast Face:  " + facePos.ToString("0.############"));
-        Debugger.AddText("RayCast Body:  " + bodyPos.ToString("0.############"));
-
-        //LineDrawer.Draw(tempExtrinsic.Position, facePos, UnityEngine.Color.green);
+        //Debugger.AddText("Starting Positions: ");
+        //Debugger.AddText("Camera:  " + tempExtrinsic.Position.ToString("0.############"));
+        //Debugger.AddText("RayCast Face:  " + hitPoint.ToString("0.############"));
+        //Debugger.AddText("RayCast Body:  " + bodyPos.ToString("0.############"));
 
 
-        Vector3 worldPosCalculated = GetWorldPositionByCalculation(detection.faceRect);
-        Debugger.AddText("Calculated distance: " + Vector3.Distance(tempExtrinsic.Position, worldPosCalculated).ToString("0.############"));
-        LineDrawer.Draw(tempExtrinsic.Position, worldPosCalculated, UnityEngine.Color.green);
-
-        Debugger.AddText("Pos Calculated:  " + worldPosCalculated.ToString("0.############"));
 
 
-        worldPosition = new Vector3(facePos.x, facePos.y, worldPosCalculated.z);
-        Debugger.AddText("World Position:  " + worldPosition.ToString("0.############"));
+        //Debugger.AddText("Pos Calculated:  " + worldPosDist.ToString("0.############"));
 
-        Vector3 lerpedPosition = LerpByDistance(tempExtrinsic.Position, facePos, Vector3.Distance(tempExtrinsic.Position, worldPosition));
 
-        Debugger.AddText("Lerped  Position:  " + lerpedPosition.ToString("0.############"));
+        worldPosition = new Vector3(hitPoint.x, hitPoint.y, worldPosDist.z);
+        //Debugger.AddText("World Position:  " + worldPosition.ToString("0.############"));
+        LineDrawer.Draw(tempExtrinsic.Position, hitPoint, UnityEngine.Color.magenta);
+
+        Vector3 lerpedPosition = LerpByDistance(tempExtrinsic.Position, hitPoint, Vector3.Distance(tempExtrinsic.Position, worldPosition));
+
+        //Debugger.AddText("Lerped  Position:  " + lerpedPosition.ToString("0.############"));
         LineDrawer.Draw(tempExtrinsic.Position, lerpedPosition, UnityEngine.Color.blue);
 
 
-        worldPosition = Vector3.Distance(tempExtrinsic.Position, worldPosition) < Vector3.Distance(tempExtrinsic.Position, lerpedPosition) ? LerpByDistance(tempExtrinsic.Position, facePos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)) : lerpedPosition;
+        worldPosition = Vector3.Distance(tempExtrinsic.Position, worldPosition) < Vector3.Distance(tempExtrinsic.Position, lerpedPosition) ? LerpByDistance(tempExtrinsic.Position, hitPoint, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)) : lerpedPosition;
 
-        Debugger.AddText("Lerped  Position 2:  " + LerpByDistance(tempExtrinsic.Position, facePos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)).ToString("0.############"));
-        LineDrawer.Draw(tempExtrinsic.Position, LerpByDistance(tempExtrinsic.Position, facePos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)), UnityEngine.Color.green);
+        //Debugger.AddText("Lerped  Position 2:  " + LerpByDistance(tempExtrinsic.Position, hitPoint, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)).ToString("0.############"));
+        LineDrawer.Draw(tempExtrinsic.Position, LerpByDistance(tempExtrinsic.Position, hitPoint, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)), UnityEngine.Color.green);
         Debugger.AddText("Final distance: " + Vector3.Distance(tempExtrinsic.Position, worldPosition).ToString("0.############"));
         Debugger.AddText("Final Position:  " + worldPosition.ToString("0.############"));
         LineDrawer.Draw(tempExtrinsic.Position, worldPosition, UnityEngine.Color.yellow);
-
+        /*
         Vector3 testWorldPosition = worldPosition;
         if (testWorldPosition.y > AppCommandCenter.cameraMain.pixelHeight / 2) // Got by trial and error / Negative = UP / Positive = Down
         {
@@ -230,42 +259,47 @@ public static class MRWorld {
             LineDrawer.Draw(tempExtrinsic.Position, testWorldPosition, UnityEngine.Color.red);
 
 
-        }
+        }*/
 
 
     }
 
+    // Used ON the Tracking
     public static void GetWorldPosition(out Vector3 worldPosition, Rect2d boxRect) {
+        Debugger.AddText("Tracking Get World Position: ");
         worldPosition = Vector3.zero;
-       
-        Vector3 hitPos = GetWorldPositionByRaycast(new OpenCVForUnity.CoreModule.Point(boxRect.x + (boxRect.width / 2), boxRect.y + (boxRect.height / 2)));
+
+        Vector3 worldPosDist = GetWorldPositionDistance(new BoxRect((int)boxRect.x, (int)boxRect.y, (int)boxRect.x + (int)boxRect.width, (int)boxRect.y + (int)boxRect.height));
+        Debugger.AddText("Calculated:  " + worldPosDist.ToString("0.############"));
+        LineDrawer.Draw(tempExtrinsic.Position, worldPosDist, UnityEngine.Color.green);
+
+
+        Vector3 hitPos = GetWorldPositionDirection(new OpenCVForUnity.CoreModule.Point(boxRect.x + (boxRect.width / 2), boxRect.y + (boxRect.height / 2)));
+        LineDrawer.Draw(tempExtrinsic.Position, hitPos, UnityEngine.Color.red);
 
         Debugger.AddText("Tracker Starting Positions: ");
         Debugger.AddText("Camera:  " + tempExtrinsic.Position.ToString("0.############"));
         Debugger.AddText("RayCast:  " + hitPos.ToString("0.############"));
-        //LineDrawer.Draw(tempExtrinsic.Position, hitPos, UnityEngine.Color.green);
 
 
 
-        Vector3 worldPosCalculated = GetWorldPositionByCalculation(new BoxRect((int)boxRect.x, (int)boxRect.y, (int)boxRect.x + (int)boxRect.width, (int)boxRect.y+(int)boxRect.height));
-        Debugger.AddText("Calculated:  " + worldPosCalculated.ToString("0.############"));
-        //LineDrawer.Draw(tempExtrinsic.Position, worldPosCalculated, UnityEngine.Color.red);
+        
 
 
-        worldPosition = new Vector3(hitPos.x, hitPos.y, worldPosCalculated.z);
-        Debugger.AddText("HitPos Z Changed:  " + worldPosition.ToString("0.############"));
+        worldPosition = new Vector3(hitPos.x, hitPos.y, worldPosDist.z);
+        //Debugger.AddText("HitPos Z Changed:  " + worldPosition.ToString("0.############"));
         //LineDrawer.Draw(tempExtrinsic.Position, worldPosition, UnityEngine.Color.blue);
 
 
         Vector3 lerpedPosition = LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, worldPosition));
-        Debugger.AddText("LerpedPosition:  " + lerpedPosition.ToString("0.############"));
-        LineDrawer.Draw(tempExtrinsic.Position, lerpedPosition, UnityEngine.Color.red);
+        //Debugger.AddText("LerpedPosition:  " + lerpedPosition.ToString("0.############"));
+        LineDrawer.Draw(tempExtrinsic.Position, lerpedPosition, UnityEngine.Color.yellow);
 
 
         worldPosition = Vector3.Distance(tempExtrinsic.Position, worldPosition) < Vector3.Distance(tempExtrinsic.Position, lerpedPosition) ? LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)) : lerpedPosition;
 
-        Debugger.AddText("Second LerpedPosition:  " + LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)).ToString("0.############"));
-        Debugger.AddText("Final World Positon:  " + worldPosition.ToString("0.############"));
+        //Debugger.AddText("Second LerpedPosition:  " + LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)).ToString("0.############"));
+        //Debugger.AddText("Final World Positon:  " + worldPosition.ToString("0.############"));
         LineDrawer.Draw(tempExtrinsic.Position, LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)), UnityEngine.Color.blue);
 
 
@@ -282,7 +316,8 @@ public static class MRWorld {
     //Base:
     // (C#) https://github.com/cookieofcode/hololens2-unity-uwp-starter/blob/main/Unity/Assets/Scripts/HoloFaceTracker.cs   
     // (C++) https://github.com/microsoft/Windows-universal-samples/tree/main/Samples/HolographicFaceTracking/cpp
-    private static Vector3 GetWorldPositionByCalculation(BoxRect boxRect) {
+    // Old Name: GetWorldPositionByCalculation
+    private static Vector3 GetWorldPositionDistance(BoxRect boxRect) {
 
 #if ENABLE_WINMD_SUPPORT
         VideoMediaFrameFormat videoFormat = AppCommandCenter.CameraFrameReader.LastFrame.mediaFrameReference.VideoMediaFrame.VideoFormat;
@@ -354,14 +389,15 @@ public static class MRWorld {
     }
 
 
-
-    private static Vector3 GetWorldPositionByRaycast(OpenCVForUnity.CoreModule.Point boxCenter) {
+    // Old Name: GetWorldPositionByRaycast
+    private static Vector3 GetWorldPositionDirection(OpenCVForUnity.CoreModule.Point boxCenter) {
         Vector2 unprojectionOffset = GetUnprojectionOffset((float)boxCenter.y);
         return GetWorldPositionOfPixel(boxCenter, unprojectionOffset);
 
     }
 
-    private static Vector3 GetWorldPositionByRaycast(BoxRect boxRect) {
+    // Old Name: GetWorldPositionByRaycast
+    private static Vector3 GetWorldPositionDirection(BoxRect boxRect) {
         Vector2 unprojectionOffset = GetUnprojectionOffset(boxRect.y1 + ((boxRect.y2 - boxRect.y1) * 0.5f));
         return GetWorldPositionOfPixel(GetBoundingBoxTarget(tempExtrinsic, boxRect), unprojectionOffset);
 
