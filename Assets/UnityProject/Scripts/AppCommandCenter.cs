@@ -21,6 +21,7 @@ using UnityEngine.SceneManagement;
 using Microsoft.MixedReality.Toolkit;
 using Unity.XR.OpenVR;
 using System.IO;
+using BestHTTP.SecureProtocol.Org.BouncyCastle.Utilities;
 
 
 [DisallowMultipleComponent]
@@ -60,6 +61,11 @@ public class AppCommandCenter : MonoBehaviour {
     }
     
     public byte timeToStop = 0;
+
+    //..........................................
+    public GameObject screenTest;
+    //..........................................
+
 
     public string ShowNetworkInterfaces() {
         IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();
@@ -127,7 +133,9 @@ public class AppCommandCenter : MonoBehaviour {
 
         await MLManager.ToggleLiveDetection();
         StartCoroutine(SetupApplication());
-
+        Texture2D tex = new Texture2D(222, 2222, TextureFormat.RGB24, false);
+        
+        AppCommandCenter.Instance.screenTest.GetComponent<Renderer>().material.mainTexture = tex;
     }
 
     // TODO: Refactorate code of related to scenes for something alike "SceneManager" ????
@@ -234,7 +242,7 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
     void Update() {
-        /*
+       
         if (timeToStop > 4) {
             if (TrackerManager.TrackersUpdater != null) { 
                 Debugger.AddText("Updater stopped");
@@ -243,7 +251,7 @@ public class AppCommandCenter : MonoBehaviour {
 
             }
 
-        }*/
+        }
 
     }
 

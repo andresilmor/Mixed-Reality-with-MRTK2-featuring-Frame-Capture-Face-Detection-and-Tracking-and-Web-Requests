@@ -1,4 +1,5 @@
 using OpenCVForUnity.CoreModule;
+using OpenCVForUnity.ImgprocModule;
 using OpenCVForUnity.TrackingModule;
 using System;
 using System.Collections;
@@ -6,6 +7,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
+
+#if ENABLE_WINMD_SUPPORT
+using Windows.Media.Capture.Frames;
+#endif
 
 public interface ITrackerEntity {
     public UIWindow GetBindedWindow();
@@ -33,7 +38,7 @@ public static class TrackerManager {
         Point top = new Point(boxRect.x1, boxRect.y1);
         Point bottom = new Point(boxRect.x2, boxRect.y2);
 
-        RectCV region = new RectCV(top, bottom);
+        //RectCV region = new RectCV(top, bottom);
 
         #region Backup 01
         /* Tracker CSRT
@@ -53,7 +58,10 @@ public static class TrackerManager {
 
         #endregion 
 
-        legacy_TrackerCSRT trackerCSRT = legacy_TrackerCSRT.create();
+        TrackerCSRT trackerCSRT = TrackerCSRT.create(new TrackerCSRT_Params());
+
+        MatOfPoint selectedPointMat = new MatOfPoint(top, bottom);
+        OpenCVForUnity.CoreModule.Rect region = Imgproc.boundingRect(selectedPointMat);
         Rect2d _region = new Rect2d(region.tl(), region.size());
 
         // ------------------------------------ DANGER ZONE --------------------------------------------- //
@@ -61,7 +69,7 @@ public static class TrackerManager {
         UIWindow newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, worldPosition, Quaternion.identity);
         newVisualTracker.transform.LookAt(AppCommandCenter.cameraMain.transform);
         Debugger.AddText("Pro Create");
-        Debugger.AddText("Width T: " + _region.width.ToString());
+        Debugger.AddText("Height Frame: " + frame.height().ToString());
 
         //Debugger.AddText("Pos: " + worldPosition.ToString());
         //Debugger.AddText("Width: " + (boxRect.x2 - boxRect.x1));
@@ -123,7 +131,8 @@ public static class TrackerManager {
         try {
             switch (trackerType) {
                 case TrackerType.PacientTracker:
-                    newTracker = new TrackerHandler(trackerCSRT, TrackerType.PacientTracker);
+                    newTracker = new TrackerHandler(new TrackerHandler.TrackerSetting(
+                        trackerCSRT, null, region, frame.height(), false), TrackerType.PacientTracker);
                     PacientTracker pacientTracker = newVisualTracker.gameObject.GetComponent<PacientTracker>();
                     pacientTracker.TrackerHandler = newTracker;
                     pacientTracker.Window = newVisualTracker;
@@ -144,16 +153,24 @@ public static class TrackerManager {
         Debugger.AddText("Region Test: " + _region.width);
         Debugger.AddText("Tracker: " + (trackerCSRT is null).ToString());
 
-        trackerCSRT.init(frame, _region);
+        trackerCSRT.init(frame, region);
         Debugger.AddText("Over tracker create");
         return newTracker;
 
     }
 
+#if ENABLE_WINMD_SUPPORT
+    public static void UpdateTrackers(MediaFrameReader sender, MediaFrameArrivedEventArgs args) {
+        Debugger.AddText("I'm Here tyo xd");
+    }
+#endif
+
     public static IEnumerator UpdateTrackers() {
         Debugger.AddText("Yo");
+         
         while (true) {
-            Debugger.AddText("Ma Men");
+            if (_liveTrackers.Count > 0) { 
+                Debugger.AddText("Ma Men");
             foreach (KeyValuePair<string, TrackerHandler> tracker in _liveTrackers) {
                 Debugger.AddText("I need to?");
                 if (ToUpdate) {
@@ -166,10 +183,17 @@ public static class TrackerManager {
                         Debugger.AddText("Updater X: " + tracker.Value.TrackerSettings.boundingBox.x);
                         Debugger.AddText("Updater Height: " + tracker.Value.TrackerSettings.boundingBox.height);
                         Debugger.AddText("Updater Y: " + tracker.Value.TrackerSettings.boundingBox.y);
+                            OpenCVForUnity.CoreModule.Rect rect = null;
 #if ENABLE_WINMD_SUPPORT
-                    tracker.Value.UpdateTracker(tracker.Value.TrackerSettings.boundingBox, CameraFrameReader.GenerateCVMat(AppCommandCenter.CameraFrameReader.LastFrame.mediaFrameReference));
+                    rect = tracker.Value.UpdateTracker(tracker.Value.TrackerSettings.boundingBox, CameraFrameReader.GenerateCVMat(AppCommandCenter.CameraFrameReader.LastFrame.mediaFrameReference));
 #endif
-                        Debugger.AddText("bY");
+                            if (rect == null) {
+                                tracker.Value.Updated = false;
+                                continue;
+                            }
+                            tracker.Value.Updated = true;
+                            tracker.Value.TrackerSettings = new TrackerHandler.TrackerSetting(tracker.Value.TrackerSettings.tracker, null, rect, tracker.Value.TrackerSettings.FrameHeight);
+                            Debugger.AddText("bY");
                     }
 
                     Vector3 worldPositon;
@@ -178,7 +202,7 @@ public static class TrackerManager {
                     Debugger.AddText("Updater Width: " + tracker.Value.TrackerSettings.boundingBox.width);
                     Debugger.AddText("Updater X: " + tracker.Value.TrackerSettings.boundingBox.x);
                     Debugger.AddText("Updater Height: " + tracker.Value.TrackerSettings.boundingBox.height);
-                    Debugger.AddText("Updater Y: " + tracker.Value.TrackerSettings.boundingBox.y);
+                    Debugger.AddText("Modified Y: " + tracker.Value.TrackerSettings.boundingBox.y);
                     MRWorld.GetWorldPosition(out worldPositon, tracker.Value.TrackerSettings.boundingBox);
                     Debugger.AddText("Position: " + worldPositon.ToString("0.############"));
 
@@ -193,12 +217,14 @@ public static class TrackerManager {
                 }
 
             }
+            }
 
             if (_liveTrackers.Count > 0)
                 AppCommandCenter.Instance.timeToStop += 1;
 
             yield return new WaitForEndOfFrame();
-            Debugger.AddText("Round: " + AppCommandCenter.Instance.timeToStop);
+            if (_liveTrackers.Count > 0)
+                Debugger.AddText("Round: " + AppCommandCenter.Instance.timeToStop);
          
 
         }

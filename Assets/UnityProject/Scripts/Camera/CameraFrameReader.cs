@@ -13,7 +13,16 @@ using Windows.Graphics.Imaging;
 using Windows.Media.Devices.Core;
 using Windows.Media.Capture.Frames;
 using Windows.Media.MediaProperties;
+using System.Threading;
 #endif
+
+public class FrameArrivedEventArgs {
+    public CameraFrame Frame;
+
+    public FrameArrivedEventArgs(CameraFrame frame) {
+        Frame = frame;
+    }
+}
 
 public class CameraFrameReader
 {
@@ -30,7 +39,15 @@ public class CameraFrameReader
 		public CameraIntrinsic intrinsic;
 	}
 
+    public event EventHandler<FrameArrivedEventArgs> FrameArrived;
 
+    private void TestingAction(object sender, FrameArrivedEventArgs e) {
+		Debugger.AddText("Testing Event Invoke: " + e.Frame.FrameCount);
+    }
+
+    public int FrameCount;
+    public int FrameHeight { get; set; }
+    public int FrameWidth { get; set; }
 
 #if ENABLE_WINMD_SUPPORT
 	MediaCapture mediaCapture;
@@ -81,15 +98,24 @@ public class CameraFrameReader
 		}
 	}
 
-	private CameraFrameReader(MediaCapture mediaCapture = null, MediaFrameSource mediaFrameSource = null, MediaFrameReader mediaFrameReader = null)
+	private CameraFrameReader(MediaCapture mediaCapture = null, MediaFrameSource mediaFrameSource = null, MediaFrameReader mediaFrameReader = null, int? width = null, int? height = null)
 	{
 		this.mediaCapture = mediaCapture;
 		this.mediaFrameSource = mediaFrameSource;
 		this.mediaFrameReader = mediaFrameReader;
 
+		if (width != null && height != null) {
+			Debugger.AddText("Width Original: " + ((int)width).ToString());
+			FrameHeight = (int)height;
+			//FrameWidth = PadTo64((int)width);
+			FrameWidth = (int)width;
+			Debugger.AddText("Width Assigned: " + FrameWidth.ToString());
+		}
+
 		if (this.mediaFrameReader != null)
 		{
 			Debug.Log("+= setting");
+			//this.FrameArrived += TestingAction;
 			this.mediaFrameReader.FrameArrived += onFrameArrived;
 		}
 	}
@@ -182,7 +208,7 @@ public class CameraFrameReader
 		if (status == MediaFrameReaderStartStatus.Success)
 		{
 			Debug.Log("MediaFrameReaderStartStatus == Success");
-			return new CameraFrameReader(mediaCapture, selectedSource, mediaFrameReader);
+			return new CameraFrameReader(mediaCapture, selectedSource, mediaFrameReader, width, height);
 		}
 		else
 		{
@@ -224,17 +250,25 @@ public class CameraFrameReader
 		
         }
 
+    private int PadTo64(int frameWidth) {
+        if (frameWidth % 64 == 0) return frameWidth;
+        int paddedFrameWidth = ((frameWidth >> 6) + 1) << 6;
+        return paddedFrameWidth;
+    }
+
 #if ENABLE_WINMD_SUPPORT
     /// <summary>
     /// Extracts the image according to the <see cref="ColorFormat"/> and invokes the <see cref="FrameArrived"/> event containing a <see cref="CameraFrameReader"/>.
     /// </summary>
-    public static unsafe Mat GenerateCVMat(MediaFrameReference frameReference, bool toDispose = false, int frameWidth = 1504, int frameHeight = 846) {
-        Debugger.AddText("Called");
+    public static unsafe Mat GenerateCVMat(MediaFrameReference frameReference,  bool toDispose = false, int frameWidth = 1504, int frameHeight = 846) {
+        //Debugger.AddText("GenerateCVMat Called");
         
         SoftwareBitmap softwareBitmap = frameReference.VideoMediaFrame?.GetVideoFrame().SoftwareBitmap;
         
 
-        Mat _bitmap = new Mat(frameHeight, frameWidth, CvType.CV_8UC1);
+        //Mat _bitmap = new Mat((int)(frameHeight * 3 * 0.5f) , frameWidth, CvType.CV_8UC1);
+
+        Mat _bitmap = new Mat((int)frameHeight , (int)frameWidth, CvType.CV_8UC4);
         if (softwareBitmap != null)
         {
             
@@ -268,11 +302,40 @@ public class CameraFrameReader
 	{
 		MediaFrameReference frame = sender.TryAcquireLatestFrame();
         if (frame != null){
+				// Works
 				LastFrame = new Frame
 				{mediaFrameReference = frame, extrinsic = null, intrinsic = null};
 				_lastFrameCapturedTimestamp = DateTime.Now;
+				//Debugger.AddText("Frame Not Null");
 
-            }
+				// ---------------------	DANGER ZONE		-------------------------
+				
+				try {
+				
+
+				CameraExtrinsic extrinsic = new CameraExtrinsic(frame.CoordinateSystem, MRWorld.WorldOrigin);
+                CameraIntrinsic intrinsic = new CameraIntrinsic(frame.VideoMediaFrame);
+
+				int thisFrameCount = Interlocked.Increment(ref FrameCount);
+
+				CameraFrame cameraFrame = new CameraFrame(GenerateCVMat(frame), 
+					intrinsic, extrinsic, FrameWidth, FrameHeight, (uint)thisFrameCount);
+                FrameArrivedEventArgs eventArgs = new FrameArrivedEventArgs(cameraFrame);
+                FrameArrived?.Invoke(this, eventArgs);
+
+				} catch (Exception ex) {
+					Debugger.AddText("Error: {ex.Message}");
+				}
+
+				
+
+				// ---------------------	DANGER ZONE		-------------------------
+
+
+
+        } else {
+			//Debugger.AddText("Frame ISSSS Null");
+		}
 	}
 	
 #endif

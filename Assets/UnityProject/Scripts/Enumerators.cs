@@ -28,4 +28,11 @@ public enum DetectionType {
 }
 
 
+public enum ColorFormat {
+    Grayscale,
+    RGB,
+    Unknown
+}
+
+
 

@@ -1,4 +1,5 @@
 using OpenCVForUnity.CoreModule;
+using PersonAndEmotionsInferenceReply;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -209,10 +210,13 @@ public static class MRWorld {
         LineDrawer.Draw(tempExtrinsic.Position, worldPosDist, UnityEngine.Color.green);
 
 
-        Debugger.AddText("Modifed height: " + ((detection.faceRect.y2 - detection.faceRect.y1) * 0.5).ToString("0.############"));
+        Debugger.AddText("Modifed height: " + ((detection.faceRect.y2 - detection.faceRect.y1) * 0.25).ToString("0.############"));
         Debugger.AddText("Y2: " + detection.faceRect.y2.ToString("0.############"));
-        //detection.faceRect.y2 = detection.faceRect.y2 - (int)((detection.faceRect.y2 - detection.faceRect.y1) * 0.5);
 
+        int partitionToRemove = (int)((detection.faceRect.y2 - detection.faceRect.y1) * 0.25);
+        detection.faceRect.y2 -= partitionToRemove;
+
+        Debugger.AddText("Y2 Modifed: " + detection.faceRect.y2.ToString("0.############"));
         Vector3 hitPoint = GetWorldPositionDirection(detection.faceRect);
         LineDrawer.Draw(tempExtrinsic.Position, hitPoint, UnityEngine.Color.red);
         Debugger.AddText("Y position: " + hitPoint.y.ToString("0.############"));
@@ -260,17 +264,18 @@ public static class MRWorld {
 
 
         }*/
-
+        detection.faceRect.y2 += partitionToRemove;
+        Debugger.AddText("Y2 Original: " + detection.faceRect.y2.ToString("0.############"));
 
     }
 
     // Used ON the Tracking
-    public static void GetWorldPosition(out Vector3 worldPosition, Rect2d boxRect) {
-        Debugger.AddText("Tracking Get World Position: ");
+    public static void GetWorldPosition(out Vector3 worldPosition, OpenCVForUnity.CoreModule.Rect boxRect) {
+    
         worldPosition = Vector3.zero;
 
-        Vector3 worldPosDist = GetWorldPositionDistance(new BoxRect((int)boxRect.x, (int)boxRect.y, (int)boxRect.x + (int)boxRect.width, (int)boxRect.y + (int)boxRect.height));
-        Debugger.AddText("Calculated:  " + worldPosDist.ToString("0.############"));
+        Vector3 worldPosDist = GetWorldPositionDistance(new BoxRect((int)boxRect.x, (int)boxRect.y, (int)boxRect.x + (int)boxRect.width, (int)boxRect.y + (int)((boxRect.height * 0.25f) * 3)));
+
         LineDrawer.Draw(tempExtrinsic.Position, worldPosDist, UnityEngine.Color.green);
 
 

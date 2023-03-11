@@ -12,11 +12,17 @@ using static MongoDB.Bson.Serialization.Serializers.SerializerHelper;
 using UnityEngine.InputSystem.HID;
 using OpenCVForUnity.VideoModule;
 using UnityEngine.Playables;
+using Microsoft.MixedReality.Toolkit.UI;
+using OpenCVForUnity.ImgprocModule;
+using UnityEngine.Experimental.GlobalIllumination;
+using System.IO;
+using UnityEngine.XR.ARSubsystems;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Foundation;
 using Windows.Perception.Spatial;
 using Windows.Media.Capture;
+using Windows.Media.Capture.Frames;
 using Windows.Graphics.Holographic;
 using Windows.Graphics.Imaging;
 #endif
@@ -25,20 +31,36 @@ public static class MLManager
 {
     private static Mat tempFrameMat = null;
 
+    private static bool stop = false;
+
     public static async Task<bool> ToggleLiveDetection() {
 #if ENABLE_WINMD_SUPPORT
+        Debugger.AddText("Step One");
         AppCommandCenter.CameraFrameReader = await CameraFrameReader.CreateAsync();
+        Debugger.AddText("Step Two");
+
+        await FaceDetectionManager.Initialize();
+
 #endif
 
-        APIManager.CreateWebSocketLiveDetection(APIManager.mlLiveDetection, DetectionType.Person, MLManager.MapDetections);
+        //AppCommandCenter.CameraFrameReader.FrameArrived += CameraServiceOnFrameArrivedSync;
 
+        APIManager.CreateWebSocketLiveDetection(APIManager.mlLiveDetection, DetectionType.Person, MLManager.MapDetections);
+        Debugger.AddText("Back");
         return APIManager.wsLiveDetection != null;
 
     }
 
+    private static void CameraServiceOnFrameArrivedSync(object sender, FrameArrivedEventArgs e) {
+        if (!stop) { 
+            Debugger.AddText("Trigger Event");
+            stop = true;
+
+        }
+    }
+
     public static async void AnalyseFrame() {
         Debugger.SetFieldView();
-
 
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = AppCommandCenter.CameraFrameReader.LastFrame;
@@ -128,15 +150,47 @@ public static class MLManager
                             Debugger.AddText("1 Height: " + (detection.faceRect.y2 - detection.faceRect.y1) );
                             Debugger.AddText("1 X: " + (detection.faceRect.x1));
                             Debugger.AddText("1 Y: " + (detection.faceRect.y1) );
-                            Debugger.AddText("1 Mat Widht" + tempFrameMat.width());
-                            Debugger.AddText("1 Mat Height" + tempFrameMat.height());
+                            Debugger.AddText("1 Mat Widht " + tempFrameMat.width());
+                            Debugger.AddText("1 Mat Height " + tempFrameMat.height());
+                            Debugger.AddText("1 Data Path " + Application.dataPath);
 
+                            Mat forTest = new Mat();
+                            tempFrameMat.copyTo(forTest);
+                            Debugger.AddText("Mat copy height: " + forTest.height());
+                            return;
                             if (!TrackerManager.LiveTrackers.ContainsKey(detection.uuid)) {
                                 
                                 TrackerHandler newTracker = TrackerManager.CreateTracker(detection.faceRect, tempFrameMat, worldPosition, TrackerType.PacientTracker);
 
                                 newTracker.SetIdentifier(detection.uuid);
                                 TrackerManager.LiveTrackers.Add(detection.uuid, newTracker);
+
+                                // ----------------------------------------------------------------------------------------------
+                                // DANGER ZONE
+
+                                //Texture2D texture = new Texture2D(forTest.cols(), forTest.rows(), TextureFormat.RGB24, false);
+
+                                //OpenCVForUnity.UnityUtils.Utils.matToTexture2D(forTest, texture);
+
+                                //AppCommandCenter.Instance.screenTest.GetComponent<Renderer>().material.mainTexture = texture;
+                                //AppCommandCenter.Instance.screenTest.transform.localScale = new Vector3(forTest.cols(), forTest.rows(), 1);
+
+
+                                //Imgproc.rectangle(forTest, newTracker.TrackerSettings.boundingBox.tl(), newTracker.TrackerSettings.boundingBox.br(), new Scalar(255, 0, 255), 2, 1, 0);
+                                //OpenCVForUnity.UnityUtils.Utils.matToTexture2D(forTest, texture);
+
+                                //Debugger.AddText("Start save");
+
+                                //var bytes = texture.EncodeToPNG();
+
+                                
+                                // ----------------------------------------------------------------------------------------------
+
+                                //Texture2D tex = new Texture2D(forTest.cols(), forTest.rows(), TextureFormat.RGB24, false);
+                                //tex.LoadImage(bytes);
+                                //AppCommandCenter.Instance.screenTest.GetComponent<Renderer>().material.mainTexture = tex;
+                                Debugger.AddText("Saved! ");
+
 
                             } else {
 
@@ -168,12 +222,12 @@ public static class MLManager
             
             }
 
-            //TrackerManager.ToUpdate = true;
-            //if (TrackerManager.TrackersUpdater == null) {
-                //TrackerManager.TrackersUpdater = AppCommandCenter.Instance.StartCoroutine(TrackerManager.UpdateTrackers());
-                //Debugger.AddText("Updater Started");
+            TrackerManager.ToUpdate = true;
+            if (TrackerManager.TrackersUpdater == null) {
+                TrackerManager.TrackersUpdater = AppCommandCenter.Instance.StartCoroutine(TrackerManager.UpdateTrackers());
+                Debugger.AddText("Updater Started");
 
-            //}
+            }
 
         } catch (Exception error) {
             Debugger.AddText("Error: " + error.Message.ToString());

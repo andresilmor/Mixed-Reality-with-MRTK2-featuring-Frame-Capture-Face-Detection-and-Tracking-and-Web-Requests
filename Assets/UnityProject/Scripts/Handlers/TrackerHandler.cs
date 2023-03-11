@@ -1,9 +1,12 @@
 using OpenCVForUnity.CoreModule;
+using OpenCVForUnity.ImgprocModule;
 using OpenCVForUnity.TrackingModule;
 using OpenCVForUnity.VideoModule;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
 public class TrackerHandler : MonoBehaviour 
@@ -15,7 +18,11 @@ public class TrackerHandler : MonoBehaviour
         {
             return _trackerSettings;
         }
+
+        set { _trackerSettings = value; }
     }
+
+    public bool Updated = true;
 
     public string TrackerIdentifier { get; private set; }
     public TrackerType TrackerType { get; private set; }    
@@ -49,28 +56,38 @@ public class TrackerHandler : MonoBehaviour
     }
     */
 
-    public TrackerHandler(legacy_TrackerCSRT tracker, TrackerType type, string uuid = "") // FOR Legacy_CSRT
+    public TrackerHandler(TrackerSetting trackerSetting, TrackerType type, string uuid = "") // FOR Legacy_CSRT
     {
-        _trackerSettings = new TrackerSetting(tracker);
+        _trackerSettings = trackerSetting;
         TrackerIdentifier = uuid;
         TrackerType = type;
    
     }
 
     public void RestartTracker(BoxRect boxRect, Mat newMat) {
-        RectCV region = new RectCV(new Point(boxRect.x1, boxRect.y1), new Point(boxRect.x2, boxRect.y2));
-        Rect2d _region = new Rect2d(region.tl(), region.size());
+        //RectCV region = new RectCV(new Point(boxRect.x1, boxRect.y1), new Point(boxRect.x2, boxRect.y2));
+        //Rect2d _region = new Rect2d(region.tl(), region.size());
 
-        TrackerSettings.tracker.init(newMat, _region);
+        Point top = new Point(boxRect.x1, boxRect.y1);
+        Point bottom = new Point(boxRect.x2, boxRect.y2);
+
+        TrackerCSRT trackerCSRT = TrackerCSRT.create(new TrackerCSRT_Params());
+
+        MatOfPoint selectedPointMat = new MatOfPoint(top, bottom);
+        OpenCVForUnity.CoreModule.Rect region = Imgproc.boundingRect(selectedPointMat);
+
+        TrackerSettings.tracker.init(newMat, region);
 
     }
 
-    public void UpdateTracker(Rect2d boxRect, Mat newMat) {
+    public OpenCVForUnity.CoreModule.Rect UpdateTracker( OpenCVForUnity.CoreModule.Rect boxRect, Mat newMat) {
         Debugger.AddText("IM HERE!!!!!!!!");
         Debugger.AddText("Mat Widht" + newMat.width());
         Debugger.AddText("Mat Height" + newMat.height());
-        TrackerSettings.tracker.update(newMat, boxRect);
+        OpenCVForUnity.CoreModule.Rect rect = new OpenCVForUnity.CoreModule.Rect();
+        bool wasUpdated = TrackerSettings.tracker.update(newMat, rect);
         Debugger.AddText("STILL HERE!!!!!!!!");
+        return wasUpdated ? rect : null;
 
     }
 
@@ -132,17 +149,20 @@ public class TrackerHandler : MonoBehaviour
     // Tracker CSRT
     public struct TrackerSetting
     {
-        public legacy_TrackerCSRT tracker;
+        public TrackerCSRT tracker;
         public Scalar lineColor;
-        public Rect2d boundingBox;
+        //public Rect2d boundingBox;
+        public OpenCVForUnity.CoreModule.Rect boundingBox;
+        public int FrameHeight;
         public bool isUpdating;
 
-        public TrackerSetting(legacy_TrackerCSRT tracker, Scalar lineColor = null)
-        {
-            this.tracker = tracker;
-            this.lineColor = lineColor == null ? new Scalar(0, 255, 0) : lineColor;
-            this.boundingBox = new Rect2d();
-            this.isUpdating = false;
+
+
+        public TrackerSetting(TrackerCSRT tracker, Scalar lineColor, OpenCVForUnity.CoreModule.Rect boundingBox, int frameHeight, bool isUpdating = false) {
+            this.tracker = tracker ?? throw new ArgumentNullException(nameof(tracker));
+            this.lineColor = lineColor == null ? new Scalar(0, 255, 0) : lineColor; this.boundingBox = boundingBox ?? throw new ArgumentNullException(nameof(boundingBox));
+            FrameHeight = frameHeight;
+            this.isUpdating = isUpdating;
         }
 
         public void Dispose()

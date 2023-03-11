@@ -177,7 +177,7 @@ public static class APIManager {
 
     public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<string, DetectionType> action) {
         try {
-            wsLiveDetection = new WebSocket(new Uri("ws://63.33.203.169/ws"));
+            wsLiveDetection = new WebSocket(new Uri("ws://54.78.117.129/ws"));
 
 
             wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {
