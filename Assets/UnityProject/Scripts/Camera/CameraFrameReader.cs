@@ -319,7 +319,7 @@ public class CameraFrameReader
 				int thisFrameCount = Interlocked.Increment(ref FrameCount);
 
 				CameraFrame cameraFrame = new CameraFrame(GenerateCVMat(frame), 
-					intrinsic, extrinsic, FrameWidth, FrameHeight, (uint)thisFrameCount);
+					intrinsic, extrinsic, FrameWidth, FrameHeight, (uint)thisFrameCount, frame);
                 FrameArrivedEventArgs eventArgs = new FrameArrivedEventArgs(cameraFrame);
                 FrameArrived?.Invoke(this, eventArgs);
 

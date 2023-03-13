@@ -6,8 +6,18 @@ using OpenCVForUnity.ImgcodecsModule;
 using OpenCVForUnity.ImgprocModule;
 using System;
 
+
+#if ENABLE_WINMD_SUPPORT
+using Windows.Media.Capture.Frames;
+#endif
+
 public class CameraFrame : IDisposable
     {
+
+#if ENABLE_WINMD_SUPPORT
+        public readonly MediaFrameReference MediaFrameReference;
+#endif
+
         /// <summary>
         /// Contains the image data as OpenCV <seealso cref="Mat"/>.
         /// </summary>
@@ -43,7 +53,9 @@ public class CameraFrame : IDisposable
         /// </summary>
         public ColorFormat Format;
 
-        public CameraFrame(Mat mat, CameraIntrinsic intrinsic, CameraExtrinsic extrinsic, int width, int height, uint frameCount, ColorFormat format = ColorFormat.RGB)
+#if ENABLE_WINMD_SUPPORT
+
+        public CameraFrame(Mat mat, CameraIntrinsic intrinsic, CameraExtrinsic extrinsic, int width, int height, uint frameCount, MediaFrameReference mediaFrameReference = null, ColorFormat format = ColorFormat.RGB)
         {
             if (mat == null) throw new ArgumentNullException(nameof(mat));
             if (intrinsic == null) throw new ArgumentNullException(nameof(intrinsic));
@@ -55,11 +67,14 @@ public class CameraFrame : IDisposable
             Height = height;
             FrameCount = frameCount;
             Format = format;
+            MediaFrameReference = mediaFrameReference;
 
         
         }
 
-        public void Dispose()
+#endif
+
+    public void Dispose()
         {
             Mat?.Dispose();
         }

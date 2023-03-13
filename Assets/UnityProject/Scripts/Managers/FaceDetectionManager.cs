@@ -364,8 +364,13 @@ public static class FaceDetectionManager {
                 //Debug.Log ("detect faces " + rects [i]);
                 //Imgproc.rectangle(rgbaMat, new Point(rects[i].x, rects[i].y), new Point(rects[i].x + rects[i].width, rects[i].y + rects[i].height), new Scalar(255, 0, 0, 255), 2);
                 Vector3 worldPosition = Vector3.zero;
-                Debugger.AddText("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height);
-                MRWorld.GetWorldPosition(out worldPosition, new Rect(rects[i].x, rects[i].y, rects[i].width, rects[i].height));
+                Debugger.AddText("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
+#if ENABLE_WINMD_SUPPORT
+                Debugger.AddText("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height +
+                    " | Frame is " + (e.Frame.MediaFrameReference == null).ToString());
+                   
+#endif
+
 
             }
 
@@ -375,7 +380,7 @@ public static class FaceDetectionManager {
         
         }
 
-        //hasFinished = true;
+        hasFinished = true;
 
     }
 
