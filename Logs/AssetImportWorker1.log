@@ -1,0 +1,19 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.16f1 (4016570cf34f) revision 4200023'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19044) 64bit Core' Language: 'en' Physical Memory: 32678 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files (x86)\ProjetoIntegrado_Multimedia_AndreMoreira\Unity Editors\2021.3.16f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+D:/PC/Desktop/IP/Rep/MR_M
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+49347
+Successfully changed project path to: D:/PC/Desktop/IP/Rep/MR_M

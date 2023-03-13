@@ -203,11 +203,11 @@ public static class TrackerManager {
                     Debugger.AddText("Updater X: " + tracker.Value.TrackerSettings.boundingBox.x);
                     Debugger.AddText("Updater Height: " + tracker.Value.TrackerSettings.boundingBox.height);
                     Debugger.AddText("Modified Y: " + tracker.Value.TrackerSettings.boundingBox.y);
-                    MRWorld.GetWorldPosition(out worldPositon, tracker.Value.TrackerSettings.boundingBox);
-                    Debugger.AddText("Position: " + worldPositon.ToString("0.############"));
+                    //MRWorld.GetWorldPosition(out worldPositon, tracker.Value.TrackerSettings.boundingBox);
+                    //Debugger.AddText("Position: " + worldPositon.ToString("0.############"));
 
                     try { 
-                        tracker.Value.TrackerEntity.GetBindedWindow().SetPosition(worldPositon, true);
+                        //tracker.Value.TrackerEntity.GetBindedWindow().SetPosition(worldPositon, true);
 
                     } catch(Exception ex) {
                         Debugger.AddText("Binded Window Error: " + ex.Message);

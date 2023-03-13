@@ -143,20 +143,18 @@ public static class MLManager
             switch (detectionType) {
                 case DetectionType.Person:
                     foreach (PersonAndEmotionsInferenceReply.Detection detection in results.detections) {
-                        MRWorld.GetWorldPosition(out worldPosition, detection);
-                        Debugger.AddText("1 Position: " + worldPosition.ToString("0.############"));
+                        //MRWorld.GetWorldPosition(out worldPosition, detection.faceRect);
+                        //Debugger.AddText("1 Position: " + worldPosition.ToString("0.############"));
                         try {
                             Debugger.AddText("1 Width: " + (detection.faceRect.x2 - detection.faceRect.x1) );
                             Debugger.AddText("1 Height: " + (detection.faceRect.y2 - detection.faceRect.y1) );
-                            Debugger.AddText("1 X: " + (detection.faceRect.x1));
-                            Debugger.AddText("1 Y: " + (detection.faceRect.y1) );
+                            Debugger.AddText("1 X1: " + (detection.faceRect.x1));
+                            Debugger.AddText("1 Y1: " + (detection.faceRect.y1) );
+                            Debugger.AddText("1 X2: " + (detection.faceRect.x2));
+                            Debugger.AddText("1 Y2: " + (detection.faceRect.y2));
                             Debugger.AddText("1 Mat Widht " + tempFrameMat.width());
                             Debugger.AddText("1 Mat Height " + tempFrameMat.height());
-                            Debugger.AddText("1 Data Path " + Application.dataPath);
 
-                            Mat forTest = new Mat();
-                            tempFrameMat.copyTo(forTest);
-                            Debugger.AddText("Mat copy height: " + forTest.height());
                             return;
                             if (!TrackerManager.LiveTrackers.ContainsKey(detection.uuid)) {
                                 
