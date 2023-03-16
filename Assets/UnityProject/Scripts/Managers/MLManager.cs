@@ -51,19 +51,35 @@ public static class MLManager
 
     }
 
-    private static void CameraServiceOnFrameArrivedSync(object sender, FrameArrivedEventArgs e) {
-        if (!stop) { 
-            Debugger.AddText("Trigger Event");
-            stop = true;
-
-        }
-    }
 
     public static async void AnalyseFrame() {
         Debugger.SetFieldView();
+        Debugger.AddText("Before snapshot");
+
+        List<FaceDetectionManager.TrackedObject> trackedObjects = FaceDetectionManager.GetTrackedObjects();
+
+        foreach (FaceDetectionManager.TrackedObject tracked in trackedObjects)
+            Debugger.AddText("Snapshot rect is null? " + (tracked.rectSnapshot is null));
+
+        FaceDetectionManager.CreateSnapshot();
+        Debugger.AddText("After snapshot");
+
+        trackedObjects = FaceDetectionManager.GetTrackedObjects();
+
+
+        foreach (FaceDetectionManager.TrackedObject tracked in trackedObjects)
+            Debugger.AddText("Snapshot rect is null? " + (tracked.rectSnapshot is null));
+
+
+        Debugger.AddText("Done snapshot");
+
+        return;
 
 #if ENABLE_WINMD_SUPPORT
         var lastFrame = AppCommandCenter.CameraFrameReader.LastFrame;
+
+
+
         if (lastFrame.mediaFrameReference != null)
         {
             try

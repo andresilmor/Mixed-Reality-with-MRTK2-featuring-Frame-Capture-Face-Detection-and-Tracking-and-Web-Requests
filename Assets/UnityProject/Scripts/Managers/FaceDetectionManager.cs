@@ -29,6 +29,7 @@ public static class FaceDetectionManager {
     private static bool testing = true;
 
 
+    private static bool createSnapshot = false;
 
 
 
@@ -273,6 +274,24 @@ public static class FaceDetectionManager {
         trackedObjects.Clear();
     }
 
+
+    public static void CreateSnapshot() {
+        try {
+            for (int i = 0; i < trackedObjects.Count; i++)
+                trackedObjects[i].rectSnapshot = trackedObjects[i].lastPositions[trackedObjects[i].lastPositions.Count - 1];
+        
+        } catch (Exception ex) {
+            Debugger.AddText("Error (CreateSnapshot): " + ex.Message);
+
+        }
+    }
+
+    public static List<TrackedObject> GetTrackedObjects() {
+        return trackedObjects;
+
+    }
+
+
     private static void UpdateDetections(object sender, FrameArrivedEventArgs e) {
 
         if (!hasFinished)
@@ -375,20 +394,16 @@ public static class FaceDetectionManager {
                 //Imgproc.rectangle(rgbaMat, new Point(rects[i].x, rects[i].y), new Point(rects[i].x + rects[i].width, rects[i].y + rects[i].height), new Scalar(255, 0, 0, 255), 2);
                 Vector3 worldPosition = Vector3.zero;
                 //Debugger.AddText("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
-#if ENABLE_WINMD_SUPPORT
-         
-                   
-#endif
+
                 if (testing) { 
                     MRWorld.GetWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
-                    Debugger.AddText("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
-                    Debugger.AddText("Camera Position when detected: " + e.Frame.Extrinsic.Position );
+                    //Debugger.AddText("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
+                    //Debugger.AddText("Camera Position when detected: " + e.Frame.Extrinsic.Position );
 
                     testing = false;
 
                 }
             }
-
 
         } catch (Exception ex) {
             Debugger.AddText("Error A: " + ex.Message);
@@ -885,12 +900,15 @@ public static class FaceDetectionManager {
         public float coeffObjectSpeedUsingInPrediction;
     };
 
-    private class TrackedObject {
+    public class TrackedObject {
         public PositionsVector lastPositions;
         public int numDetectedFrames;
         public int numFramesNotDetected;
         public int id;
         static private int _id = 0;
+
+        public Rect rectSnapshot = null;
+
 
         public TrackedObject(OpenCVForUnity.CoreModule.Rect rect) {
             lastPositions = new PositionsVector();

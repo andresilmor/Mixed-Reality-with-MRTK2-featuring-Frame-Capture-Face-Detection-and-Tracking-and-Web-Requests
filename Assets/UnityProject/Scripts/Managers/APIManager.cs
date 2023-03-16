@@ -181,10 +181,10 @@ public static class APIManager {
 
 
             wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {
-                Debugger.AddText("Herwe");
+                Debugger.AddText("Here");
                 if (message.Length > 6) {
                     Debugger.AddText(message);
-                    action?.Invoke(message, detectionType);
+                    //action?.Invoke(message, detectionType);
                 }
 
             };
