@@ -17,6 +17,8 @@ using System.Threading.Tasks;
 using UnityEngine.XR.ARSubsystems;
 using PersonAndEmotionsInferenceReply;
 
+
+//Embedded Detection
 public static class FaceDetectionManager {
     /// <summary>
     /// The gray mat.
@@ -26,10 +28,10 @@ public static class FaceDetectionManager {
 
 
 
-    private static bool testing = true;
+    public static bool testing = true;
 
 
-    private static bool createSnapshot = false;
+    public static bool isAnalysingFrame = false;
 
 
 
@@ -277,9 +279,12 @@ public static class FaceDetectionManager {
 
     public static void CreateSnapshot() {
         try {
-            for (int i = 0; i < trackedObjects.Count; i++)
+            for (int i = 0; i < trackedObjects.Count; i++) { 
                 trackedObjects[i].rectSnapshot = trackedObjects[i].lastPositions[trackedObjects[i].lastPositions.Count - 1];
-        
+                Debugger.AddText("Snapshot (" + i + ")|  x1 : " + trackedObjects[i].rectSnapshot.x + "|  y1 : " + trackedObjects[i].rectSnapshot.y + " | x2 : " + (trackedObjects[i].rectSnapshot.x + trackedObjects[i].rectSnapshot.width) + " | y2 : "+ (trackedObjects[i].rectSnapshot.y + trackedObjects[i].rectSnapshot.height));
+
+
+            }
         } catch (Exception ex) {
             Debugger.AddText("Error (CreateSnapshot): " + ex.Message);
 
@@ -288,6 +293,37 @@ public static class FaceDetectionManager {
 
     public static List<TrackedObject> GetTrackedObjects() {
         return trackedObjects;
+
+    }
+
+    static bool RectContainsPoint(Rect rect, int x, int y) {
+        if (x > rect.x && x < (rect.x + rect.width) &&
+            y > rect.y && y < (rect.y + rect.height))
+            return true;
+
+        return false;
+    }
+
+
+    public static void ValidateDetections(List<PersonAndEmotionsInferenceReply.Detection> detections) {
+        foreach (PersonAndEmotionsInferenceReply.Detection detection in detections) {
+            for (int i = 0; i < trackedObjects.Count; i++) {
+                if (trackedObjects[i].rectSnapshot is null)
+                    continue;
+
+                if (RectContainsPoint(trackedObjects[i].rectSnapshot, detection.faceRect.x1 + (int)((detection.faceRect.x2 - detection.faceRect.x1) * 0.5), detection.faceRect.y1 + (int)((detection.faceRect.y2 - detection.faceRect.y1) * 0.5))) {
+                    Debugger.AddText("Yup");
+                    trackedObjects[i].rectSnapshot = null;
+                } else {
+                    Debugger.AddText("wTF");
+                }
+
+            }
+
+        }
+
+        isAnalysingFrame = false;
+
 
     }
 
@@ -388,7 +424,20 @@ public static class FaceDetectionManager {
             UpdateTrackedObjects(detectedObjectsInRegions);
             GetObjects(resultObjects);
 
+            
+
+
+
             rects = resultObjects.ToArray();
+
+
+            if (!isAnalysingFrame && rects.Length > 0) { 
+                isAnalysingFrame = true;
+                CreateSnapshot();
+                MLManager.AnalyseFrame(e.Frame);
+
+            }
+
             for (int i = 0; i < rects.Length; i++) {
                 //Debug.Log ("detect faces " + rects [i]);
                 //Imgproc.rectangle(rgbaMat, new Point(rects[i].x, rects[i].y), new Point(rects[i].x + rects[i].width, rects[i].y + rects[i].height), new Scalar(255, 0, 0, 255), 2);
@@ -396,7 +445,7 @@ public static class FaceDetectionManager {
                 //Debugger.AddText("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
 
                 if (testing) { 
-                    MRWorld.GetWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
+                    MRWorld.GetFaceWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
                     //Debugger.AddText("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
                     //Debugger.AddText("Camera Position when detected: " + e.Frame.Extrinsic.Position );
 

@@ -203,7 +203,7 @@ public static class TrackerManager {
                     Debugger.AddText("Updater X: " + tracker.Value.TrackerSettings.boundingBox.x);
                     Debugger.AddText("Updater Height: " + tracker.Value.TrackerSettings.boundingBox.height);
                     Debugger.AddText("Modified Y: " + tracker.Value.TrackerSettings.boundingBox.y);
-                    //MRWorld.GetWorldPosition(out worldPositon, tracker.Value.TrackerSettings.boundingBox);
+                    //MRWorld.GetFaceWorldPosition(out worldPositon, tracker.Value.TrackerSettings.boundingBox);
                     //Debugger.AddText("Position: " + worldPositon.ToString("0.############"));
 
                     try { 

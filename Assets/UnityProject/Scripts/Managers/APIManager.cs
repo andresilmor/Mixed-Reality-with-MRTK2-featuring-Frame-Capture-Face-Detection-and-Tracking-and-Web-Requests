@@ -175,22 +175,25 @@ public static class APIManager {
         }
     }
 
-    public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<string, DetectionType> action) {
+    public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<List<PersonAndEmotionsInferenceReply.Detection>> action) {
         try {
             wsLiveDetection = new WebSocket(new Uri("ws://54.78.117.129/ws"));
 
 
             wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {
-                Debugger.AddText("Here");
+
                 if (message.Length > 6) {
-                    Debugger.AddText(message);
-                    //action?.Invoke(message, detectionType);
+                    if (detectionType == DetectionType.Person) {
+                        action?.Invoke(JsonConvert.DeserializeObject<PersonAndEmotionsInferenceReply.DetectionsList>(
+                JsonConvert.DeserializeObject(message).ToString()).detections);
+
+                    }
                 }
 
             };
             wsLiveDetection.OnBinary += (WebSocket webSocket, byte[] data) => {
-                /*
                 Debugger.AddText("Binary");
+                /*
                 try { 
                 Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray().Length);
                 Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].uuid);
