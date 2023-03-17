@@ -148,6 +148,8 @@ public static class FaceDetectionManager {
 
     private static bool hasFinished = true;
 
+    private static Rect[] analysisResult;
+
     private static void Setup() {
         // Step 2
 
@@ -306,34 +308,50 @@ public static class FaceDetectionManager {
     }
 
 
-    public static void ValidateDetections(List<PersonAndEmotionsInferenceReply.Detection> detections) {
-        foreach (PersonAndEmotionsInferenceReply.Detection detection in detections) {
-            for (int i = 0; i < trackedObjects.Count; i++) {
-                if (trackedObjects[i].rectSnapshot is null)
-                    continue;
+    public static void ProcessResults(List<PersonAndEmotionsInferenceReply.Detection> detections) {
 
-                if (RectContainsPoint(trackedObjects[i].rectSnapshot, detection.faceRect.x1 + (int)((detection.faceRect.x2 - detection.faceRect.x1) * 0.5), detection.faceRect.y1 + (int)((detection.faceRect.y2 - detection.faceRect.y1) * 0.5))) {
-                    Debugger.AddText("Yup");
+        analysisResult = new Rect[detections.Count];
+        try { 
 
-                    if (trackedObjects[i].trackerEntity is null) {
-                        Debugger.AddText("Creating");
-                        UIWindow newMarker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, null, Quaternion.identity);
-                        trackedObjects[i].trackerEntity = newMarker.gameObject.GetComponent<PacientTracker>();
-                        (trackedObjects[i].trackerEntity as PacientTracker).Window = newMarker;
-                        (trackedObjects[i].trackerEntity as PacientTracker).id = detection.uuid;
-                        Debugger.AddText("Created");
+            for (int i = 0; i < detections.Count; i += 1) {
+                analysisResult[i] = new Rect(
+                    detections[i].faceRect.x1,
+                    detections[i].faceRect.y1,
+                    detections[i].faceRect.x2 - detections[i].faceRect.x1,
+                    detections[i].faceRect.y2 - detections[i].faceRect.y1);
+
+                for (int j = 0; i < trackedObjects.Count; i++) {
+                    if (trackedObjects[i].rectSnapshot is null)
+                        continue;
+
+                    if (RectContainsPoint(trackedObjects[j].rectSnapshot, detections[i].faceRect.x1 + (int)((detections[i].faceRect.x2 - detections[i].faceRect.x1) * 0.5), detections[i].faceRect.y1 + (int)((detections[i].faceRect.y2 - detections[i].faceRect.y1) * 0.5))) {
+                        Debugger.AddText("Yup");
+
+                        if (trackedObjects[i].trackerEntity is null) {
+                            Debugger.AddText("Creating");
+                            UIWindow newMarker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, null, Quaternion.identity);
+                            trackedObjects[i].trackerEntity = newMarker.gameObject.GetComponent<PacientTracker>();
+                            (trackedObjects[i].trackerEntity as PacientTracker).Window = newMarker;
+                            (trackedObjects[i].trackerEntity as PacientTracker).id = detections[i].uuid;
+                            Debugger.AddText("Created");
+                        }
+
+                        trackedObjects[i].rectSnapshot = null;
+                    } else {
+                        Debugger.AddText("wTF");
                     }
 
-                    trackedObjects[i].rectSnapshot = null;
-                } else {
-                    Debugger.AddText("wTF");
                 }
 
             }
 
-        }
+            didUpdateTheDetectionResult = true;
+            isAnalysingFrame = false;
 
-        isAnalysingFrame = false;
+        } catch (Exception ex) {
+            Debugger.AddText("Error (ProcessResults): " + ex.Message);  
+
+        }
 
 
     }
@@ -376,7 +394,7 @@ public static class FaceDetectionManager {
                 didUpdateTheDetectionResult = false;
 
                 //Debug.Log("DetectionBasedTracker::process: get _rectsWhereRegions were got from resultDetect");
-                rectsWhereRegions = detectionResult.toArray();
+                rectsWhereRegions = analysisResult;
 
                 /*
                 rects = rectsWhereRegions;
@@ -442,7 +460,7 @@ public static class FaceDetectionManager {
             rects = resultObjects.ToArray();
 
 
-            if (!isAnalysingFrame && rects.Length > 0) { 
+            if (!isAnalysingFrame) { 
                 isAnalysingFrame = true;
                 CreateSnapshot();
                 MLManager.AnalyseFrame(e.Frame);
@@ -583,7 +601,7 @@ public static class FaceDetectionManager {
 #if !UNITY_WEBGL
     private static void ThreadWorker() {
         isThreadRunning = true;
-
+        return;
         while (!shouldStopThread) {
             if (!shouldDetectInMultiThread)
                 continue;
