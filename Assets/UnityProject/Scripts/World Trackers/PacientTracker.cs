@@ -24,15 +24,7 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
 
     public string id = "";
     
-    public PacientTracker(TrackerHandler trackerHandler = null) {
-        this.TrackerHandler = trackerHandler;
-    }
-
-
-    void FixedUpdate() {
-        this.gameObject.transform.LookAt(AppCommandCenter.cameraMain.transform.position);
-
-    }
+    public PacientTracker() { }
 
     public bool UpdateActiveEmotion(string emotionName) {
         foreach (EmotionsListScriptableObject.data data in emotionsList.categorical) {

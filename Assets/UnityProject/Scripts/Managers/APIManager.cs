@@ -177,7 +177,7 @@ public static class APIManager {
 
     public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<List<PersonAndEmotionsInferenceReply.Detection>> action) {
         try {
-            wsLiveDetection = new WebSocket(new Uri("ws://54.78.117.129/ws"));
+            wsLiveDetection = new WebSocket(new Uri("ws://3.253.129.173/ws"));
 
 
             wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {

@@ -152,7 +152,7 @@ public static class MRWorld {
             return Vector3.zero;
         }*/
         RaycastHit hit;
-        if (!Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, 1 << layer)) // TODO: Check -1
+        if (!Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, 31)) // TODO: Check -1
         {
 #if ENABLE_WINMD_SUPPORT
                 Debugger.AddText("Raycast failed. Probably no spatial mesh provided.");
@@ -164,9 +164,9 @@ public static class MRWorld {
         //frame.Dispose(); // TODO: Check disposal
 
         //UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), hit.point, Quaternion.identity);
-        Debugger.AddText("Hit Point: " + hit.point.ToString());
-        Debugger.AddText("Origin Point: " + cameraPosition.ToString());
-        Debugger.AddText("Target Point: " + (layForward * -1f).ToString());
+        //Debugger.AddText("Hit Point: " + hit.point.ToString());
+        //Debugger.AddText("Origin Point: " + cameraPosition.ToString());
+        //Debugger.AddText("Target Point: " + (layForward * -1f).ToString());
         return hit.point;
     }
 
@@ -247,7 +247,7 @@ public static class MRWorld {
         //LineDrawer.Draw(cameraFrame.Extrinsic.Position, LerpByDistance(cameraFrame.Extrinsic.Position, hitPoint, Vector3.Distance(cameraFrame.Extrinsic.Position, lerpedPosition)), UnityEngine.Color.green);
         //Debugger.AddText("Final distance: " + Vector3.Distance(cameraFrame.Extrinsic.Position, worldPosition).ToString("0.############"));
         //Debugger.AddText("Final Position:  " + worldPosition.ToString("0.############"));
-        LineDrawer.Draw(cameraFrame.Extrinsic.Position, worldPosition, UnityEngine.Color.red);
+        //LineDrawer.Draw(cameraFrame.Extrinsic.Position, worldPosition, UnityEngine.Color.red);
         /*
         Vector3 testWorldPosition = worldPosition;
         if (testWorldPosition.y > AppCommandCenter.cameraMain.pixelHeight / 2) // Got by trial and error / Negative = UP / Positive = Down
@@ -260,7 +260,7 @@ public static class MRWorld {
 
         }*/
         boxRect.y2 += partitionToRemove;
-        Debugger.AddText("Y2 Original: " + boxRect.y2.ToString("0.############"));
+        //Debugger.AddText("Y2 Original: " + boxRect.y2.ToString("0.############"));
        
     }
 
@@ -273,15 +273,15 @@ public static class MRWorld {
 
         Vector3 worldPosDist = GetWorldPositionDistance(boundingBox);
 
-        LineDrawer.Draw(tempExtrinsic.Position, worldPosDist, UnityEngine.Color.green);
+        //LineDrawer.Draw(tempExtrinsic.Position, worldPosDist, UnityEngine.Color.green);
 
 
         Vector3 hitPos = GetWorldPositionDirection(new OpenCVForUnity.CoreModule.Point(boxRect.x + (boxRect.width / 2), boxRect.y + (boxRect.height / 2)));
-        LineDrawer.Draw(tempExtrinsic.Position, hitPos, UnityEngine.Color.red);
+        //LineDrawer.Draw(tempExtrinsic.Position, hitPos, UnityEngine.Color.red);
 
-        Debugger.AddText("Tracker Starting Positions: ");
-        Debugger.AddText("Camera:  " + tempExtrinsic.Position.ToString("0.############"));
-        Debugger.AddText("RayCast:  " + hitPos.ToString("0.############"));
+        //Debugger.AddText("Tracker Starting Positions: ");
+        //Debugger.AddText("Camera:  " + tempExtrinsic.Position.ToString("0.############"));
+        //Debugger.AddText("RayCast:  " + hitPos.ToString("0.############"));
 
 
 
@@ -294,13 +294,13 @@ public static class MRWorld {
 
         Vector3 lerpedPosition = LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, worldPosition));
         
-        LineDrawer.Draw(tempExtrinsic.Position, lerpedPosition, UnityEngine.Color.yellow);
+        //LineDrawer.Draw(tempExtrinsic.Position, lerpedPosition, UnityEngine.Color.yellow);
 
 
         worldPosition = Vector3.Distance(tempExtrinsic.Position, worldPosition) < Vector3.Distance(tempExtrinsic.Position, lerpedPosition) ? LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)) : lerpedPosition;
 
         
-        LineDrawer.Draw(tempExtrinsic.Position, LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)), UnityEngine.Color.blue);
+        //LineDrawer.Draw(tempExtrinsic.Position, LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)), UnityEngine.Color.blue);
 
 
 
@@ -399,7 +399,7 @@ public static class MRWorld {
     // Old Name: GetWorldPositionByRaycast
     private static Vector3 GetWorldPositionDirection(BoxRect boxRect, CameraFrame cameraFrame = null) {
         Vector2 unprojectionOffset = GetUnprojectionOffset(boxRect.y1 + ((boxRect.y2 - boxRect.y1) * 0.5f));
-        Debugger.AddText("Unprojection setted");
+        //Debugger.AddText("Unprojection setted");
         return GetWorldPositionOfPixel(GetBoundingBoxTarget(cameraFrame.Extrinsic, boxRect), unprojectionOffset, cameraFrame);
 
     }

@@ -16,6 +16,7 @@ using PositionsVector = System.Collections.Generic.List<OpenCVForUnity.CoreModul
 using System.Threading.Tasks;
 using UnityEngine.XR.ARSubsystems;
 using PersonAndEmotionsInferenceReply;
+using UnityEngine.Rendering;
 
 
 //Embedded Detection
@@ -313,6 +314,16 @@ public static class FaceDetectionManager {
 
                 if (RectContainsPoint(trackedObjects[i].rectSnapshot, detection.faceRect.x1 + (int)((detection.faceRect.x2 - detection.faceRect.x1) * 0.5), detection.faceRect.y1 + (int)((detection.faceRect.y2 - detection.faceRect.y1) * 0.5))) {
                     Debugger.AddText("Yup");
+
+                    if (trackedObjects[i].trackerEntity is null) {
+                        Debugger.AddText("Creating");
+                        UIWindow newMarker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, null, Quaternion.identity);
+                        trackedObjects[i].trackerEntity = newMarker.gameObject.GetComponent<PacientTracker>();
+                        (trackedObjects[i].trackerEntity as PacientTracker).Window = newMarker;
+                        (trackedObjects[i].trackerEntity as PacientTracker).id = detection.uuid;
+                        Debugger.AddText("Created");
+                    }
+
                     trackedObjects[i].rectSnapshot = null;
                 } else {
                     Debugger.AddText("wTF");
@@ -438,6 +449,22 @@ public static class FaceDetectionManager {
 
             }
 
+            Vector3 worldPosition;
+            for (int i = 0; i < rects.Length; i++) {
+
+                if (trackedObjects[i].trackerEntity != null) {
+                    MRWorld.GetFaceWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
+                    (trackedObjects[i].trackerEntity as PacientTracker).Window.gameObject.SetActive(true);
+                    (trackedObjects[i].trackerEntity as PacientTracker).Window.SetPosition(worldPosition);
+
+
+                }
+
+                
+
+                    
+            }
+            /*
             for (int i = 0; i < rects.Length; i++) {
                 //Debug.Log ("detect faces " + rects [i]);
                 //Imgproc.rectangle(rgbaMat, new Point(rects[i].x, rects[i].y), new Point(rects[i].x + rects[i].width, rects[i].y + rects[i].height), new Scalar(255, 0, 0, 255), 2);
@@ -448,11 +475,11 @@ public static class FaceDetectionManager {
                     MRWorld.GetFaceWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
                     //Debugger.AddText("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
                     //Debugger.AddText("Camera Position when detected: " + e.Frame.Extrinsic.Position );
-
+                    UIWindow newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, worldPosition, Quaternion.identity);
                     testing = false;
 
                 }
-            }
+            }*/
 
         } catch (Exception ex) {
             Debugger.AddText("Error A: " + ex.Message);
@@ -463,101 +490,6 @@ public static class FaceDetectionManager {
 
     }
 
-    /*
-    void Test() {
-        if (webCamTextureToMatHelper.IsPlaying() && webCamTextureToMatHelper.DidUpdateThisFrame()) {
-
-            Mat rgbaMat = webCamTextureToMatHelper.GetMat();
-
-            if (cascade == null || cascade4Thread == null) {
-                Imgproc.putText(rgbaMat, "model file is not loaded.", new Point(5, rgbaMat.rows() - 30), Imgproc.FONT_HERSHEY_SIMPLEX, 0.7, new Scalar(255, 255, 255, 255), 2, Imgproc.LINE_AA, false);
-                Imgproc.putText(rgbaMat, "Please read console message.", new Point(5, rgbaMat.rows() - 10), Imgproc.FONT_HERSHEY_SIMPLEX, 0.7, new Scalar(255, 255, 255, 255), 2, Imgproc.LINE_AA, false);
-
-                Utils.matToTexture2D(rgbaMat, texture);
-                return;
-            }
-
-            Imgproc.cvtColor(rgbaMat, grayMat, Imgproc.COLOR_RGBA2GRAY);
-            Imgproc.equalizeHist(grayMat, grayMat);
-
-            if (!shouldDetectInMultiThread) {
-                grayMat.copyTo(grayMat4Thread);
-
-                shouldDetectInMultiThread = true;
-            }
-
-            OpenCVForUnity.CoreModule.Rect[] rects;
-
-            if (didUpdateTheDetectionResult) {
-                didUpdateTheDetectionResult = false;
-
-                //Debug.Log("DetectionBasedTracker::process: get _rectsWhereRegions were got from resultDetect");
-                rectsWhereRegions = detectionResult.toArray();
-
-                rects = rectsWhereRegions;
-                for (int i = 0; i < rects.Length; i++) {
-                    Imgproc.rectangle(rgbaMat, new Point(rects[i].x, rects[i].y), new Point(rects[i].x + rects[i].width, rects[i].y + rects[i].height), new Scalar(0, 0, 255, 255), 2);
-                }
-
-            } else {
-                //Debug.Log("DetectionBasedTracker::process: get _rectsWhereRegions from previous positions");
-                rectsWhereRegions = new Rect[trackedObjects.Count];
-
-                for (int i = 0; i < trackedObjects.Count; i++) {
-                    int n = trackedObjects[i].lastPositions.Count;
-                    //if (n > 0) UnityEngine.Debug.LogError("n > 0 is false");
-
-                    Rect r = trackedObjects[i].lastPositions[n - 1].clone();
-                    if (r.area() == 0) {
-                        Debug.Log("DetectionBasedTracker::process: ERROR: ATTENTION: strange algorithm's behavior: trackedObjects[i].rect() is empty");
-                        continue;
-                    }
-
-                    //correction by speed of rectangle
-                    if (n > 1) {
-                        Point center = CenterRect(r);
-                        Point center_prev = CenterRect(trackedObjects[i].lastPositions[n - 2]);
-                        Point shift = new Point((center.x - center_prev.x) * innerParameters.coeffObjectSpeedUsingInPrediction,
-                                          (center.y - center_prev.y) * innerParameters.coeffObjectSpeedUsingInPrediction);
-
-                        r.x += (int)Math.Round(shift.x);
-                        r.y += (int)Math.Round(shift.y);
-                    }
-                    rectsWhereRegions[i] = r;
-                }
-
-                rects = rectsWhereRegions;
-                for (int i = 0; i < rects.Length; i++) {
-                    Imgproc.rectangle(rgbaMat, new Point(rects[i].x, rects[i].y), new Point(rects[i].x + rects[i].width, rects[i].y + rects[i].height), new Scalar(0, 255, 0, 255), 2);
-                }
-            }
-
-            detectedObjectsInRegions.Clear();
-            if (rectsWhereRegions.Length > 0) {
-
-                int len = rectsWhereRegions.Length;
-                for (int i = 0; i < len; i++) {
-                    DetectInRegion(grayMat, rectsWhereRegions[i], detectedObjectsInRegions);
-                }
-            }
-
-            UpdateTrackedObjects(detectedObjectsInRegions);
-            GetObjects(resultObjects);
-
-            rects = resultObjects.ToArray();
-            for (int i = 0; i < rects.Length; i++) {
-                //Debug.Log ("detect faces " + rects [i]);
-                Imgproc.rectangle(rgbaMat, new Point(rects[i].x, rects[i].y), new Point(rects[i].x + rects[i].width, rects[i].y + rects[i].height), new Scalar(255, 0, 0, 255), 2);
-            }
-
-#if UNITY_WEBGL
-                Imgproc.putText (rgbaMat, "WebGL platform does not support multi-threading.", new Point (5, rgbaMat.rows () - 10), Imgproc.FONT_HERSHEY_SIMPLEX, 0.5, new Scalar (255, 255, 255, 255), 1, Imgproc.LINE_AA, false);
-#endif
-
-            Utils.matToTexture2D(rgbaMat, texture);
-        }
-    }
-    */
 
     private static void DetectInRegion(Mat img, Rect r, List<Rect> detectedObjectsInRegions) {
         Rect r0 = new Rect(new Point(), img.size());
@@ -957,6 +889,7 @@ public static class FaceDetectionManager {
         static private int _id = 0;
 
         public Rect rectSnapshot = null;
+        public ITrackerEntity trackerEntity = null;
 
 
         public TrackedObject(OpenCVForUnity.CoreModule.Rect rect) {

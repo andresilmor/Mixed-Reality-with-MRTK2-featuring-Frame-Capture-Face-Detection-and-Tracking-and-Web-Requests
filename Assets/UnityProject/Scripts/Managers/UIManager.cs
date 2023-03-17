@@ -67,7 +67,7 @@ public class UIManager : MonoBehaviour {
 
     }
 
-    public UIWindow OpenWindowAt(WindowType toOpen, Vector3 position, Quaternion rotation, UIStacker stacker = null, string stackerName = "", bool isNotification = false) {
+    public UIWindow OpenWindowAt(WindowType toOpen, Vector3? position, Quaternion rotation, UIStacker stacker = null, string stackerName = "", bool isNotification = false) {
         if (stacker is null) {
             GameObject newGameObject = new GameObject(stackerName);
             newGameObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
@@ -81,12 +81,16 @@ public class UIManager : MonoBehaviour {
 
     }
 
-    private UIWindow InstantiateWindow(WindowType toOpen, UIStacker stacker, Vector3 position, Quaternion rotation, bool isNotification = false) {
+    private UIWindow InstantiateWindow(WindowType toOpen, UIStacker stacker, Vector3? position, Quaternion rotation, bool isNotification = false) {
         UIWindow window = WindowPool.ContainsKey(toOpen) ? WindowPool[toOpen].First() : null;
         if (!window) {
             foreach (var data in graphicUserInterface.windows) {
                 if (data.windowType.Equals(toOpen)) {
-                    window = Instantiate(data.window, position, rotation, stacker.gameObject.transform).GetComponent<UIWindow>();
+                    window = Instantiate(data.window, position is null ? Vector3.zero : (Vector3)position, rotation, stacker.gameObject.transform).GetComponent<UIWindow>();
+
+                    if (position is null)
+                        window.gameObject.SetActive(false);
+
                     window.DefineComponents(data);
                     break;
 
