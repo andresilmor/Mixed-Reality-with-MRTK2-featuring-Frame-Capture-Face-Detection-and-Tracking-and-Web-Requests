@@ -16,13 +16,13 @@ public class UIStacker : MonoBehaviour {
         if (WindowStack.Count > 0) {
             UIWindow current = WindowStack.Peek();
             if (true) {
-                current.Exit();
+                current.Close();
             }
 
         }
 
         WindowStack.Push(window);
-        window.Enter();
+        window.Open();
 
     }
 
@@ -30,16 +30,16 @@ public class UIStacker : MonoBehaviour {
     public bool PopWindow(out UIWindow windowToPool, AudioSource closeCallerAudioSource) {
         if (WindowStack.Count == 1) {
             windowToPool = WindowStack.Pop();
-            windowToPool.Exit(closeCallerAudioSource);
+            windowToPool.Close(closeCallerAudioSource);
             return true;
 
         }
 
         windowToPool = WindowStack.Pop();
-        windowToPool.Exit(closeCallerAudioSource);
+        windowToPool.Close(closeCallerAudioSource);
         UIWindow next = WindowStack.Peek();
         if (true)
-            next.Enter();
+            next.Open();
         return false;
 
 

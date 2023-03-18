@@ -284,7 +284,7 @@ public static class FaceDetectionManager {
         try {
             for (int i = 0; i < trackedObjects.Count; i++) { 
                 trackedObjects[i].rectSnapshot = trackedObjects[i].lastPositions[trackedObjects[i].lastPositions.Count - 1];
-                Debugger.AddText("Snapshot (" + i + ")|  x1 : " + trackedObjects[i].rectSnapshot.x + "|  y1 : " + trackedObjects[i].rectSnapshot.y + " | x2 : " + (trackedObjects[i].rectSnapshot.x + trackedObjects[i].rectSnapshot.width) + " | y2 : "+ (trackedObjects[i].rectSnapshot.y + trackedObjects[i].rectSnapshot.height));
+                //Debugger.AddText("Snapshot (" + i + ")|  x1 : " + trackedObjects[i].rectSnapshot.x + "|  y1 : " + trackedObjects[i].rectSnapshot.y + " | x2 : " + (trackedObjects[i].rectSnapshot.x + trackedObjects[i].rectSnapshot.width) + " | y2 : "+ (trackedObjects[i].rectSnapshot.y + trackedObjects[i].rectSnapshot.height));
 
 
             }
@@ -325,7 +325,7 @@ public static class FaceDetectionManager {
                         continue;
 
                     if (RectContainsPoint(trackedObjects[j].rectSnapshot, detections[i].faceRect.x1 + (int)((detections[i].faceRect.x2 - detections[i].faceRect.x1) * 0.5), detections[i].faceRect.y1 + (int)((detections[i].faceRect.y2 - detections[i].faceRect.y1) * 0.5))) {
-                        Debugger.AddText("Yup");
+                        //Debugger.AddText("Yup");
 
                         if (trackedObjects[i].trackerEntity is null) {
                             Debugger.AddText("Creating");
@@ -333,12 +333,15 @@ public static class FaceDetectionManager {
                             trackedObjects[i].trackerEntity = newMarker.gameObject.GetComponent<PacientTracker>();
                             (trackedObjects[i].trackerEntity as PacientTracker).Window = newMarker;
                             (trackedObjects[i].trackerEntity as PacientTracker).id = detections[i].uuid;
+
+                            trackedObjects[i].meshRenderer = (trackedObjects[i].trackerEntity as PacientTracker).Window.gameObject.GetComponent<MeshRenderer
+                                >();
                             Debugger.AddText("Created");
                         }
 
                         trackedObjects[i].rectSnapshot = null;
                     } else {
-                        Debugger.AddText("wTF");
+                        //Debugger.AddText("wTF");
                     }
 
                 }
@@ -469,18 +472,17 @@ public static class FaceDetectionManager {
 
             Vector3 worldPosition;
             for (int i = 0; i < rects.Length; i++) {
-
                 if (trackedObjects[i].trackerEntity != null) {
-                    MRWorld.GetFaceWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
-                    (trackedObjects[i].trackerEntity as PacientTracker).Window.gameObject.SetActive(true);
-                    (trackedObjects[i].trackerEntity as PacientTracker).Window.SetPosition(worldPosition);
+                    if (!(trackedObjects[i].trackerEntity as PacientTracker).Window.gameObject.activeInHierarchy)
+                        (trackedObjects[i].trackerEntity as PacientTracker).Window.gameObject.SetActive(true);
+                    if (trackedObjects[i].meshRenderer.isVisible) {
+                        MRWorld.GetFaceWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
+                        (trackedObjects[i].trackerEntity as PacientTracker).Window.SetPosition(worldPosition, false);
 
+                    }
 
                 }
 
-                
-
-                    
             }
             /*
             for (int i = 0; i < rects.Length; i++) {
@@ -781,6 +783,7 @@ public static class FaceDetectionManager {
                 //Rect r = it.lastPositions [numpos - 1];
                 //Debug.Log("DetectionBasedTracker::updateTrackedObjects: deleted object " + r.x + " " + r.y + " " + r.width + " " + r.height);
 
+                UIManager.Instance.CloseWindow((it.trackerEntity as PacientTracker).Window.stacker);
                 trackedObjects.Remove(it);
                 Debugger.AddText("Removed");
 
@@ -908,6 +911,8 @@ public static class FaceDetectionManager {
 
         public Rect rectSnapshot = null;
         public ITrackerEntity trackerEntity = null;
+
+        public MeshRenderer meshRenderer = null;
 
 
         public TrackedObject(OpenCVForUnity.CoreModule.Rect rect) {

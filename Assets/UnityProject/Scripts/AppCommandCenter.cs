@@ -41,6 +41,7 @@ public class AppCommandCenter : MonoBehaviour {
 
     [Header("Config:")]
     [SerializeField] GameObject controllers;
+    public Transform DetectionDistanceLimit;
 
 
     //[field:SerializeField] x {get; private set;}
@@ -62,9 +63,6 @@ public class AppCommandCenter : MonoBehaviour {
     
     public byte timeToStop = 0;
 
-    //..........................................
-    public GameObject screenTest;
-    //..........................................
 
 
     public string ShowNetworkInterfaces() {
@@ -133,9 +131,6 @@ public class AppCommandCenter : MonoBehaviour {
 
         await MLManager.ToggleLiveDetection();
         StartCoroutine(SetupApplication());
-        Texture2D tex = new Texture2D(222, 2222, TextureFormat.RGB24, false);
-        
-        AppCommandCenter.Instance.screenTest.GetComponent<Renderer>().material.mainTexture = tex;
     }
 
     // TODO: Refactorate code of related to scenes for something alike "SceneManager" ????
@@ -214,7 +209,6 @@ public class AppCommandCenter : MonoBehaviour {
 
     private static void StartApplication() {
         UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.HeaderTwoButtons00, stackerName: "Login Window");
-
         (loginWindow.components["Title"] as TextMeshPro).text = "Welcome Caregiver";
         (loginWindow.components["Subtitle"] as TextMeshPro).text = "Select Login Method";
         (loginWindow.components["TopButtonText"] as TextMeshPro).text = "Keyboard";

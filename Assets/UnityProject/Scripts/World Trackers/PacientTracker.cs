@@ -20,6 +20,10 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
         }
     }
 
+    private void FixedUpdate() {
+        gameObject.transform.LookAt(AppCommandCenter.cameraMain.transform);
+    }
+
     public UIWindow Window;
 
     public string id = "";

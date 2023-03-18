@@ -82,18 +82,18 @@ public class UIWindow : MonoBehaviour {
 
     }
 
-    public void Enter(bool wasInstantiated = false) {
+    public void Open(bool wasInstantiated = false) {
         PrePushAction?.Invoke();
 
         this.wasInstantiated = wasInstantiated;
 
-        gameObject.SetActive(true);
+        
 
         PostPushAction?.Invoke();
 
     }
 
-    public void Exit(AudioSource closeCallerAudioSource = null) {
+    public void Close(AudioSource closeCallerAudioSource = null) {
         PrePopAction?.Invoke();
 
         Debug.Log(closeCallerAudioSource != null);

@@ -54,7 +54,7 @@ public static class MLManager
 
     public static async void AnalyseFrame(CameraFrame cameraFrame) {
         //Debugger.SetFieldView();
-        Debugger.AddText("Starting analyse");
+        //Debugger.AddText("Starting analyse");
 
 
 #if ENABLE_WINMD_SUPPORT
@@ -74,8 +74,8 @@ public static class MLManager
                         
                         videoFrame.SoftwareBitmap.Dispose();
                        
-                        UnityEngine.Object.Instantiate(Debugger.GetSphereForTest(), AppCommandCenter.cameraMain.transform.position, Quaternion.identity);
-                        UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), cameraFrame.Extrinsic.Position, Quaternion.identity);
+                        //UnityEngine.Object.Instantiate(Debugger.GetSphereForTest(), AppCommandCenter.cameraMain.transform.position, Quaternion.identity);
+                        //UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), cameraFrame.Extrinsic.Position, Quaternion.identity);
                        
                         ImageInferenceRequest request = new ImageInferenceRequest();
                         request.image = byteArray;

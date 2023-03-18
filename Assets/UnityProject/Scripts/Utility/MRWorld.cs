@@ -151,8 +151,11 @@ public static class MRWorld {
             Debugger.AddText("Error: Not Main Thread");
             return Vector3.zero;
         }*/
+
+        AppCommandCenter.Instance.DetectionDistanceLimit.position = cameraPosition;
+
         RaycastHit hit;
-        if (!Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, 31)) // TODO: Check -1
+        if (!Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, (1 << 30) | (1 << 31))) // TODO: Check -1
         {
 #if ENABLE_WINMD_SUPPORT
                 Debugger.AddText("Raycast failed. Probably no spatial mesh provided.");
@@ -241,7 +244,9 @@ public static class MRWorld {
         //LineDrawer.Draw(cameraFrame.Extrinsic.Position, lerpedPosition, UnityEngine.Color.blue);
 
 
-        worldPosition = Vector3.Distance(cameraFrame.Extrinsic.Position, worldPosition) < Vector3.Distance(cameraFrame.Extrinsic.Position, lerpedPosition) ? LerpByDistance(cameraFrame.Extrinsic.Position, hitPoint, Vector3.Distance(cameraFrame.Extrinsic.Position, lerpedPosition)) : lerpedPosition;
+        //worldPosition = Vector3.Distance(cameraFrame.Extrinsic.Position, worldPosition) < Vector3.Distance(cameraFrame.Extrinsic.Position, lerpedPosition) ? LerpByDistance(cameraFrame.Extrinsic.Position, hitPoint, Vector3.Distance(cameraFrame.Extrinsic.Position, lerpedPosition)) : lerpedPosition;
+
+        worldPosition = lerpedPosition;
 
         //Debugger.AddText("Lerped  Position 2:  " + LerpByDistance(tempExtrinsic.Position, hitPoint, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)).ToString("0.############"));
         //LineDrawer.Draw(cameraFrame.Extrinsic.Position, LerpByDistance(cameraFrame.Extrinsic.Position, hitPoint, Vector3.Distance(cameraFrame.Extrinsic.Position, lerpedPosition)), UnityEngine.Color.green);
@@ -269,39 +274,7 @@ public static class MRWorld {
     
         worldPosition = Vector3.zero;
 
-        BoxRect boundingBox = new BoxRect((int)boxRect.x, (int)boxRect.y, (int)boxRect.x + (int)boxRect.width, (int)boxRect.y + (int)boxRect.height);
-
-        Vector3 worldPosDist = GetWorldPositionDistance(boundingBox);
-
-        //LineDrawer.Draw(tempExtrinsic.Position, worldPosDist, UnityEngine.Color.green);
-
-
-        Vector3 hitPos = GetWorldPositionDirection(new OpenCVForUnity.CoreModule.Point(boxRect.x + (boxRect.width / 2), boxRect.y + (boxRect.height / 2)));
-        //LineDrawer.Draw(tempExtrinsic.Position, hitPos, UnityEngine.Color.red);
-
-        //Debugger.AddText("Tracker Starting Positions: ");
-        //Debugger.AddText("Camera:  " + tempExtrinsic.Position.ToString("0.############"));
-        //Debugger.AddText("RayCast:  " + hitPos.ToString("0.############"));
-
-
-
         
-
-
-        worldPosition = new Vector3(hitPos.x, hitPos.y, worldPosDist.z);
-        
-
-
-        Vector3 lerpedPosition = LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, worldPosition));
-        
-        //LineDrawer.Draw(tempExtrinsic.Position, lerpedPosition, UnityEngine.Color.yellow);
-
-
-        worldPosition = Vector3.Distance(tempExtrinsic.Position, worldPosition) < Vector3.Distance(tempExtrinsic.Position, lerpedPosition) ? LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)) : lerpedPosition;
-
-        
-        //LineDrawer.Draw(tempExtrinsic.Position, LerpByDistance(tempExtrinsic.Position, hitPos, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)), UnityEngine.Color.blue);
-
 
 
 
@@ -336,7 +309,7 @@ public static class MRWorld {
 
 #endif
 
-        int paddingForFaceRect = 24;
+        int paddingForFaceRect = 12; // 24
         float averageFaceWidthInMeters = 0.132f;
 
 #if ENABLE_WINMD_SUPPORT

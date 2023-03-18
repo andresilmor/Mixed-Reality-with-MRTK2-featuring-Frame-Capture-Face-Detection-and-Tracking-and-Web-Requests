@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour {
         Vector3 position;
         if (stacker is null) {
             position = AppCommandCenter.cameraMain.transform.position;
-            position.z += 0.50f;
+            position.z += 0.40f;
             position.y += -0.105f;
 
             GameObject newGameObject = new GameObject(stackerName);
