@@ -310,7 +310,7 @@ public static class MRWorld {
 #endif
 
         int paddingForFaceRect = 12; // 24
-        float averageFaceWidthInMeters = 0.122f; // 0.132f
+        float averageFaceWidthInMeters = 0.144f; // 0.132f
 
 #if ENABLE_WINMD_SUPPORT
         float pixelsPerMeterAlongX = cameraFrame.Intrinsic.FocalLength.x;

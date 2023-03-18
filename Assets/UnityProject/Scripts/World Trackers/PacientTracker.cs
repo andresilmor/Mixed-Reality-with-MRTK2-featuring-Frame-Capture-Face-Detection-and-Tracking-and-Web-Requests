@@ -57,8 +57,11 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
 
     public void UpdatePosition(Vector3 newPosition) {
         //newPosition.z += (Window.gameObject.transform.position.z > 0 ? 1.12f : -1.12f);
-        if (Vector3.Distance(Window.gameObject.transform.position, newPosition) > 0.035f)
+        if (Vector3.Distance(Window.gameObject.transform.position, newPosition) > 0.045f) {
+            //Debugger.AddText("Pos: " + newPosition.ToString("0.##########") + "| Dist: " + Vector3.Distance(Window.gameObject.transform.position, newPosition).ToString("0.##########"));
             gameObject.transform.position = newPosition;
+
+        }
 
 
     }

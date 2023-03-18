@@ -17,7 +17,7 @@ public static class Debugger
 
     public static void ClearText()
     {
-        //_debugText.text = "";
+        //debugText.text = "";
     }
 
     public static GameObject GetCubeForTest()
