@@ -477,7 +477,7 @@ public static class FaceDetectionManager {
                         (trackedObjects[i].trackerEntity as PacientTracker).Window.gameObject.SetActive(true);
                     if (trackedObjects[i].meshRenderer.isVisible) {
                         MRWorld.GetFaceWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
-                        (trackedObjects[i].trackerEntity as PacientTracker).Window.SetPosition(worldPosition, false);
+                        (trackedObjects[i].trackerEntity as PacientTracker).UpdatePosition(worldPosition);
 
                     }
 

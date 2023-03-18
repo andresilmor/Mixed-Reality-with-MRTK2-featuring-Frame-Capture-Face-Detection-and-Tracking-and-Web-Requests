@@ -2,6 +2,8 @@ using OpenCVForUnity.TrackingModule;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Realms.ChangeSet;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(UIWindow))]
 public class PacientTracker : MonoBehaviour, ITrackerEntity  {
@@ -52,4 +54,13 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
         return Window;
 
     }
+
+    public void UpdatePosition(Vector3 newPosition) {
+        //newPosition.z += (Window.gameObject.transform.position.z > 0 ? 1.12f : -1.12f);
+        if (Vector3.Distance(Window.gameObject.transform.position, newPosition) > 0.035f)
+            gameObject.transform.position = newPosition;
+
+
+    }
+    
 }
