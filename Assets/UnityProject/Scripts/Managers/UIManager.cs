@@ -88,9 +88,6 @@ public class UIManager : MonoBehaviour {
                 if (data.windowType.Equals(toOpen)) {
                     window = Instantiate(data.window, position is null ? Vector3.zero : (Vector3)position, rotation, stacker.gameObject.transform).GetComponent<UIWindow>();
 
-                    if (position is null)
-                        window.gameObject.SetActive(false);
-
                     window.DefineComponents(data);
                     break;
 

@@ -328,21 +328,31 @@ public static class FaceDetectionManager {
                         //Debugger.AddText("Yup");
 
                         if (trackedObjects[i].trackerEntity is null) {
-                            Debugger.AddText("Creating");
                             UIWindow newMarker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, null, Quaternion.identity);
+                            Debugger.AddText("Marker is active? " + (newMarker.gameObject.activeInHierarchy).ToString());
+
+
+                            newMarker.gameObject.SetActive(true);
                             trackedObjects[i].trackerEntity = newMarker.gameObject.GetComponent<PacientTracker>();
                             (trackedObjects[i].trackerEntity as PacientTracker).Window = newMarker;
                             (trackedObjects[i].trackerEntity as PacientTracker).id = detections[i].uuid;
 
-                            trackedObjects[i].meshRenderer = (trackedObjects[i].trackerEntity as PacientTracker).Window.gameObject.GetComponent<MeshRenderer
-                                >();
+                            trackedObjects[i].IsNew = true;
+                            trackedObjects[i].meshRenderer = newMarker.gameObject.GetComponent<MeshRenderer>();
+
+                            (trackedObjects[i].trackerEntity as PacientTracker).UpdateActiveEmotion(detections[i].emotionsDetected.categorical[0]);
                             Debugger.AddText("Created");
+
+                        } else {
+                            if (trackedObjects[i].meshRenderer.isVisible) {
+                                Debugger.AddText("Updated");
+                                (trackedObjects[i].trackerEntity as PacientTracker).UpdateActiveEmotion(detections[i].emotionsDetected.categorical[0]);
+                            }
                         }
 
                         trackedObjects[i].rectSnapshot = null;
-                    } else {
-                        //Debugger.AddText("wTF");
-                    }
+
+                    } 
 
                 }
 
@@ -395,7 +405,8 @@ public static class FaceDetectionManager {
 
             if (didUpdateTheDetectionResult) {
                 didUpdateTheDetectionResult = false;
-
+                if (analysisResult.Length > 0) 
+                    Debugger.AddText("New detections: " + analysisResult.Length);
                 //Debug.Log("DetectionBasedTracker::process: get _rectsWhereRegions were got from resultDetect");
                 rectsWhereRegions = analysisResult;
 
@@ -463,7 +474,7 @@ public static class FaceDetectionManager {
             rects = resultObjects.ToArray();
 
 
-            if (!isAnalysingFrame) { 
+            if (!isAnalysingFrame) { // ???????????????????????????????????
                 isAnalysingFrame = true;
                 CreateSnapshot();
                 MLManager.AnalyseFrame(e.Frame);
@@ -473,13 +484,16 @@ public static class FaceDetectionManager {
             Vector3 worldPosition;
             for (int i = 0; i < rects.Length; i++) {
                 if (trackedObjects[i].trackerEntity != null) {
-                    if (!(trackedObjects[i].trackerEntity as PacientTracker).Window.gameObject.activeInHierarchy)
-                        (trackedObjects[i].trackerEntity as PacientTracker).Window.gameObject.SetActive(true);
-                    if (trackedObjects[i].meshRenderer.isVisible) {
+                    if (trackedObjects[i].meshRenderer.isVisible || trackedObjects[i].IsNew) {
                         MRWorld.GetFaceWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
                         (trackedObjects[i].trackerEntity as PacientTracker).UpdatePosition(worldPosition);
 
-                    }
+                        if (trackedObjects[i].IsNew) { 
+                            trackedObjects[i].IsNew = false;
+                            Debugger.AddText("Not anymore");
+                        }
+
+                    }                    
 
                 }
 
@@ -909,6 +923,7 @@ public static class FaceDetectionManager {
         public int id;
         static private int _id = 0;
 
+        public bool IsNew = true;
         public Rect rectSnapshot = null;
         public ITrackerEntity trackerEntity = null;
 

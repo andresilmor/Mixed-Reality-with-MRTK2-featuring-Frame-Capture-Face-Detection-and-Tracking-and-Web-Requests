@@ -127,8 +127,7 @@ public class AppCommandCenter : MonoBehaviour {
         //if (!SceneManager.GetSceneByName("UI").isLoaded)
         //    await SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
 
-        MineField();
-
+        MineField();    
         await MLManager.ToggleLiveDetection();
         StartCoroutine(SetupApplication());
     }

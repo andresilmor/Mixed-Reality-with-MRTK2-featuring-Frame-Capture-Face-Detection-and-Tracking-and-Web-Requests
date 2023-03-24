@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emotionsList: {fileID: 11400000, guid: 6ad1eebe47a9dcc459d7f97bcb800aa3, type: 2}
-  Window: {fileID: 0}
+  Window: {fileID: 2372899748573223653}
   id: 
 --- !u!1 &2372899748578997346
 GameObject:

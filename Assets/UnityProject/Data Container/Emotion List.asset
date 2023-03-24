@@ -32,8 +32,8 @@ MonoBehaviour:
     description: State of looking forward; hoping on or getting prepared for possible
       future events.
     material: {fileID: 2100000, guid: 3be7b46e591fbfa418833cd23d63ea47, type: 2}
-    localPosition: {x: -0.1633, y: 0.0256, z: 0}
-    localScale: {x: 0.6263687, y: 0.2805935, z: 1}
+    localPosition: {x: -0.186, y: 0.0653, z: 0}
+    localScale: {x: 0.6410754, y: 0.4099077, z: 1}
   - name: Aversion
     description: Feeling disgust, dislike, repulsion; feeling hate.
     material: {fileID: 2100000, guid: b5891972389d2df419b13817b0de38e3, type: 2}
