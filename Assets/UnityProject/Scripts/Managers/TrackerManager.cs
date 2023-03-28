@@ -15,7 +15,7 @@ using Windows.Media.Capture.Frames;
 public interface ITrackerEntity {
     public UIWindow GetBindedWindow();
 
-    public void UpdatePosition(Vector3 newPosition);
+    public void UpdatePosition(Vector3 newPosition, CameraFrame cameraFrame = null);
 
 }
 

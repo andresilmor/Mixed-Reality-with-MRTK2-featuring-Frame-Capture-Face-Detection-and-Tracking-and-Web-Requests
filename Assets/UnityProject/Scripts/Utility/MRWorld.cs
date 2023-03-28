@@ -152,14 +152,19 @@ public static class MRWorld {
             return Vector3.zero;
         }*/
 
-        AppCommandCenter.Instance.DetectionDistanceLimit.position = cameraPosition;
 
         RaycastHit hit;
-        if (!Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, (1 << 30) | (1 << 31))) // TODO: Check -1
+
+        int layerSpatialAwareness = 31;
+        int layerSafeGuard = 30;
+        if (!Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, 1 << layerSpatialAwareness)) // TODO: Check -1
         {
+            AppCommandCenter.Instance.DetectionDistanceLimit.position = cameraPosition;
+
+            Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, 1 << layerSafeGuard);
 #if ENABLE_WINMD_SUPPORT
                 Debugger.AddText("Raycast failed. Probably no spatial mesh provided.");
-                return Vector3.positiveInfinity;
+                //return Vector3.positiveInfinity;
 #else
             Debug.LogWarning("Raycast failed. Probably no spatial mesh provided. Use Holographic Remoting or HoloLens."); // TODO: Check mesh simulation
 #endif

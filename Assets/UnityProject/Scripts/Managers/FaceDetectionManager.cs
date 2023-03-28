@@ -405,8 +405,6 @@ public static class FaceDetectionManager {
 
             if (didUpdateTheDetectionResult) {
                 didUpdateTheDetectionResult = false;
-                if (analysisResult.Length > 0) 
-                    Debugger.AddText("New detections: " + analysisResult.Length);
                 //Debug.Log("DetectionBasedTracker::process: get _rectsWhereRegions were got from resultDetect");
                 rectsWhereRegions = analysisResult;
 
@@ -486,12 +484,10 @@ public static class FaceDetectionManager {
                 if (trackedObjects[i].trackerEntity != null) {
                     if (trackedObjects[i].meshRenderer.isVisible || trackedObjects[i].IsNew) {
                         MRWorld.GetFaceWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
-                        (trackedObjects[i].trackerEntity as PacientTracker).UpdatePosition(worldPosition);
+                        (trackedObjects[i].trackerEntity as PacientTracker).UpdatePosition(worldPosition, e.Frame);
 
-                        if (trackedObjects[i].IsNew) { 
+                        if (trackedObjects[i].IsNew) 
                             trackedObjects[i].IsNew = false;
-                            Debugger.AddText("Not anymore");
-                        }
 
                     }                    
 

@@ -76,6 +76,15 @@ public class CameraExtrinsic
         }
 #endif
 
+    public Quaternion GetRotation() {
+        Vector3 position = viewFromWorld.GetColumn(3);
+        Vector4 forward = viewFromWorld.GetColumn(2);
+        Vector4 upwards = viewFromWorld.GetColumn(1);
+        return Quaternion.LookRotation(forward, upwards);
+
+    }
+
+
     public override string ToString()
     {
         Vector3 position = viewFromWorld.GetColumn(3);
