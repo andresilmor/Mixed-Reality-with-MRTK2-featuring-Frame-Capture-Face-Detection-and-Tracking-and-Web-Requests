@@ -118,6 +118,12 @@ public class AppCommandCenter : MonoBehaviour {
 
         StartCoroutine(LoadAdditiveScenes());
 
+#if ENABLE_WINMD_SUPPORT
+        if (AppCommandCenter.CameraFrameReader == null)
+            AppCommandCenter.CameraFrameReader = await CameraFrameReader.CreateAsync();
+
+#endif
+
     }
 
     // TODO: Refactorate code of related to scenes for something alike "SceneManager" ????
@@ -198,7 +204,6 @@ public class AppCommandCenter : MonoBehaviour {
 
     private static void StartApplication() {
         UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.HeaderTwoButtons00, new LoginView(), stackerName: "Login Window");
-        AccountManager.loginWindow = loginWindow;
 
     }
     

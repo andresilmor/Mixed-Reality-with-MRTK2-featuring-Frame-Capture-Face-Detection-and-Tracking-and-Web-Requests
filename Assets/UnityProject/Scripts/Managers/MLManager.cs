@@ -45,7 +45,6 @@ public static class MLManager
 
 
 #if ENABLE_WINMD_SUPPORT
-        AppCommandCenter.CameraFrameReader = await CameraFrameReader.CreateAsync();
 
         await FaceDetectionManager.Initialize();
 

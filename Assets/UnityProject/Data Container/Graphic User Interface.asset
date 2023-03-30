@@ -42,7 +42,7 @@ MonoBehaviour:
       path: Header/Title
     - name: Description
       type: 0
-      path: Header/Description
+      path: Content/Description
     - name: ActionButtonText
       type: 0
       path: ButtonGroup/ActionButton/ButtonVisual/TextMeshPro

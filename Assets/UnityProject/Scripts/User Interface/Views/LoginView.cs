@@ -24,6 +24,11 @@ public class LoginView : IUIView
         return true;
     }
 
+
+    /// <summary>
+    /// Method that validade the window type provided/required and proceeds to bind actions and texts
+    /// </summary>
+    /// <param name="window"></param>
     public void Bind(UIWindow window) {
         if (ValidWindow(window)) {
             BindActions(window, true);
@@ -33,8 +38,17 @@ public class LoginView : IUIView
 
     }
  
+
+    /// <summary>
+    /// Method that validates window type provided/required, if necessary, and proceeds to bind actions to interactables
+    /// </summary>
+    /// <param name="window"></param>
+    /// <param name="alreadyValidated"></param>
     public void BindActions(UIWindow window, bool alreadyValidated = false) {
         if (alreadyValidated || ValidWindow(window)) {
+
+            // Reads QR Code to get credentials for validation
+            AccountManager.loginWindow = window;
             (window.components["BotButton"] as Interactable).OnClick.AddListener(() => {
                 System.Threading.Tasks.Task<bool> task = AccountManager.LoginQR();
             });
@@ -43,6 +57,12 @@ public class LoginView : IUIView
 
     }
 
+
+    /// <summary>
+    /// Method that validates window type provided/required, if necessary, and proceeds to bind texts, and fill static/pre-defined information
+    /// </summary>
+    /// <param name="window"></param>
+    /// <param name="alreadyValidated"></param>
     public void BindTexts(UIWindow window, bool alreadyValidated = false) {
         if (alreadyValidated || ValidWindow(window)) {
             (window.components["Title"] as TextMeshPro).text = "Welcome Caregiver";

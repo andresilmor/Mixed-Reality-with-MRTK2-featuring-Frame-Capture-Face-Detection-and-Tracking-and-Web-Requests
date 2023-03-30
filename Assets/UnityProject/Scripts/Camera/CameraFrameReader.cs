@@ -306,12 +306,17 @@ public class CameraFrameReader
 
     void onFrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
 	{
+
+		if (FrameArrived.GetInvocationList().Length <= 0)
+			return;
+
 		MediaFrameReference frame = sender.TryAcquireLatestFrame();
         if (frame != null){
 				// Works
-				LastFrame = new Frame
+				/*LastFrame = new Frame
 				{mediaFrameReference = frame, extrinsic = null, intrinsic = null};
 				_lastFrameCapturedTimestamp = DateTime.Now;
+				*/
 				//Debug.Log("Frame Not Null");
 
 				// ---------------------	DANGER ZONE		-------------------------

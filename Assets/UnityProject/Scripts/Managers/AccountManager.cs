@@ -55,15 +55,19 @@ public static class AccountManager {
 
         }
 
-        QRCodesManager.Instance.StartQRTracking();
-        QRCodesManager.Instance.QRCodeAdded += LoginQRCode;
+        QRCodeReaderManager.DetectQRCodes(1.5f);
+        Debug.Log("yO");
+
+        //QRCodesManager.Instance.StartQRTracking();
+        //QRCodesManager.Instance.QRCodeAdded += LoginQRCode;
 
         return true;
     }
 
     async private static void LoginQRCode(object sender, QRCodeEventArgs<Microsoft.MixedReality.QR.QRCode> args) {
         //improve
-        if (requesting || QRCodesManager.Instance.lastSeen?.Data == args.Data) {
+        Debug.Log("Here.");
+        if (requesting || QRCodesManager.Instance.lastSeen.Data.Data.Equals(args.Data.Data)) {
             Debug.Log("Old QRCode.");
             return;
         }
@@ -83,6 +87,8 @@ public static class AccountManager {
             new APIManager.FieldParams("password", "\"" + qrMessage["password"] + "\""),
         });
         Debug.Log(qrMessage.ToString());
+        return;
+
         await APIManager.ExecuteRequest("", queryOperation,
             (message, succeed) => {
                 try {

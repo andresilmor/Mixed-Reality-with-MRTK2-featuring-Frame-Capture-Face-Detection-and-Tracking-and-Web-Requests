@@ -29,17 +29,17 @@ public static class MRDebug
                 break;
 
             case LogType.Warning:
-                preText = "||WARNING|| ";
+                preText = "|WARNING| ";
                 _warningLogs.Add(System.DateTime.Now + " | " + text + "\n");
                 break;
 
             case LogType.Error:
-                preText = "|>|ERROR|<| ";
+                preText = "|ERROR| ";
                 _errorLogs.Add(System.DateTime.Now + " | " + text + "\n");
                 break;
 
             case LogType.Fatal:
-                preText = "|||FATAL||| ";
+                preText = "|FATAL| ";
                 _fatalLogs.Add(System.DateTime.Now + " | " + text + "\n");
                 break;
 
@@ -50,7 +50,7 @@ public static class MRDebug
         _logs.Add(text);
 
         if (_debugConsole != null)
-            _debugConsole.text = _debugConsole.text + "\n" + text;
+            _debugConsole.text = _debugConsole.text + text;
 
     }
 

@@ -10,24 +10,28 @@ public enum GUIComponentType {
 
 }
 
+[SerializeField]
 public enum WindowType {
     HeaderOneButtonAndClose,
     HeaderTwoButtons00,
-    PacientMarker
+    PacientMarker,
+    DebugConsole
 
 }
 
+[SerializeField]
 public enum TrackerType {
     PacientTracker
 
 }
 
+[SerializeField]
 public enum DetectionType {
     Person
 
 }
 
-
+[SerializeField]
 public enum ColorFormat {
     Grayscale,
     RGB,
@@ -35,7 +39,7 @@ public enum ColorFormat {
 
 }
 
-
+[SerializeField]
 public enum LogType {
     Info,
     Warning,
