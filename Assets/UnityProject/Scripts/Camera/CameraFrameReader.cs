@@ -16,6 +16,12 @@ using Windows.Media.MediaProperties;
 using System.Threading;
 #endif
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 public class FrameArrivedEventArgs {
     public CameraFrame Frame;
 
@@ -42,7 +48,7 @@ public class CameraFrameReader
     public event EventHandler<FrameArrivedEventArgs> FrameArrived;
 
     private void TestingAction(object sender, FrameArrivedEventArgs e) {
-		Debugger.AddText("Testing Event Invoke: " + e.Frame.FrameCount);
+		Debug.Log("Testing Event Invoke: " + e.Frame.FrameCount);
     }
 
     public int FrameCount;
@@ -105,11 +111,11 @@ public class CameraFrameReader
 		this.mediaFrameReader = mediaFrameReader;
 
 		if (width != null && height != null) {
-			Debugger.AddText("Width Original: " + ((int)width).ToString());
+			Debug.Log("Width Original: " + ((int)width).ToString());
 			FrameHeight = (int)height;
 			//FrameWidth = PadTo64((int)width);
 			FrameWidth = (int)width;
-			Debugger.AddText("Width Assigned: " + FrameWidth.ToString());
+			Debug.Log("Width Assigned: " + FrameWidth.ToString());
 		}
 
 		if (this.mediaFrameReader != null)
@@ -261,7 +267,7 @@ public class CameraFrameReader
     /// Extracts the image according to the <see cref="ColorFormat"/> and invokes the <see cref="FrameArrived"/> event containing a <see cref="CameraFrameReader"/>.
     /// </summary>
     public static unsafe Mat GenerateCVMat(MediaFrameReference frameReference,  bool toDispose = false, int frameWidth = 1504, int frameHeight = 846) {
-        //Debugger.AddText("GenerateCVMat Called");
+        //Debug.Log("GenerateCVMat Called");
         
         SoftwareBitmap softwareBitmap = frameReference.VideoMediaFrame?.GetVideoFrame().SoftwareBitmap;
         
@@ -306,7 +312,7 @@ public class CameraFrameReader
 				LastFrame = new Frame
 				{mediaFrameReference = frame, extrinsic = null, intrinsic = null};
 				_lastFrameCapturedTimestamp = DateTime.Now;
-				//Debugger.AddText("Frame Not Null");
+				//Debug.Log("Frame Not Null");
 
 				// ---------------------	DANGER ZONE		-------------------------
 				
@@ -324,7 +330,7 @@ public class CameraFrameReader
                 FrameArrived?.Invoke(this, eventArgs);
 
 				} catch (Exception ex) {
-					Debugger.AddText("Error: {ex.Message}");
+					Debug.Log("Error: {ex.Message}");
 				}
 
 				
@@ -334,7 +340,7 @@ public class CameraFrameReader
 
 
         } else {
-			//Debugger.AddText("Frame ISSSS Null");
+			//Debug.Log("Frame ISSSS Null");
 		}
 	}
 	

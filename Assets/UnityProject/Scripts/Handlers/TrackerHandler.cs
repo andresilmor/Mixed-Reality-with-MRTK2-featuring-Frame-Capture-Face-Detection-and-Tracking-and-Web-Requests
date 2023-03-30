@@ -9,6 +9,12 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 public class TrackerHandler : MonoBehaviour 
 {
     TrackerSetting _trackerSettings;
@@ -34,7 +40,7 @@ public class TrackerHandler : MonoBehaviour
 
         //_trackerSettings = new TrackerSetting(tracker);
 
-        Debugger.AddText("TrackerHandler created");
+        Debug.Log("TrackerHandler created");
     }
 
 
@@ -42,7 +48,7 @@ public class TrackerHandler : MonoBehaviour
     {
         //_trackerSettings = new TrackerSetting(tracker);
 
-        Debugger.AddText("TrackerHandler MOSSE created");
+        Debug.Log("TrackerHandler MOSSE created");
     }
 
 
@@ -52,7 +58,7 @@ public class TrackerHandler : MonoBehaviour
 
         this.id = id;
 
-        Debugger.AddText("TrackerHandler legacy CSRT created");
+        Debug.Log("TrackerHandler legacy CSRT created");
     }
     */
 
@@ -81,12 +87,12 @@ public class TrackerHandler : MonoBehaviour
     }
 
     public OpenCVForUnity.CoreModule.Rect UpdateTracker( OpenCVForUnity.CoreModule.Rect boxRect, Mat newMat) {
-        Debugger.AddText("IM HERE!!!!!!!!");
-        Debugger.AddText("Mat Widht" + newMat.width());
-        Debugger.AddText("Mat Height" + newMat.height());
+        Debug.Log("IM HERE!!!!!!!!");
+        Debug.Log("Mat Widht" + newMat.width());
+        Debug.Log("Mat Height" + newMat.height());
         OpenCVForUnity.CoreModule.Rect rect = new OpenCVForUnity.CoreModule.Rect();
         bool wasUpdated = TrackerSettings.tracker.update(newMat, rect);
-        Debugger.AddText("STILL HERE!!!!!!!!");
+        Debug.Log("STILL HERE!!!!!!!!");
         return wasUpdated ? rect : null;
 
     }
@@ -103,7 +109,7 @@ public class TrackerHandler : MonoBehaviour
         _trackerSettings = new TrackerSetting(tracker);
         id = -1;
 
-        Debugger.AddText("TrackerHandler legacy CSRT created");
+        Debug.Log("TrackerHandler legacy CSRT created");
     }
 
     public void UpdateOneTracker(FaceRectOld faceRect, Mat frame)

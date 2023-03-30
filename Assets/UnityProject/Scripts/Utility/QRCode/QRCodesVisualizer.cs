@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace Microsoft.MixedReality.SampleQRCodes
 {
     public class QRCodesVisualizer : MonoBehaviour

@@ -7,6 +7,12 @@ using Newtonsoft.Json.Linq;
 using System.Runtime.CompilerServices;
 using System.Linq;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 public static class RealmManager {
 
     private static RealmConfiguration realmConfig = new RealmConfiguration {

@@ -18,6 +18,12 @@ using UnityEngine.XR.ARSubsystems;
 using PersonAndEmotionsInferenceReply;
 using UnityEngine.Rendering;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 
 //Embedded Detection
 public static class FaceDetectionManager {
@@ -184,11 +190,11 @@ public static class FaceDetectionManager {
     /// </summary>
     async public static Task<bool> Initialize() {
 
-        Debugger.AddText("InitializeFaceDetection");
+        Debug.Log("InitializeFaceDetection");
         // Step 3  // Here i get map
 
         if (AppCommandCenter.CameraFrameReader is null) {
-            Debugger.AddText("Error (InitializeFaceDetection): CameraFrameReader is null");
+            Debug.Log("Error (InitializeFaceDetection): CameraFrameReader is null");
             return false;
 
         }
@@ -231,21 +237,21 @@ public static class FaceDetectionManager {
 
             if (string.IsNullOrEmpty(lbp_cascade_filepath)) {
 
-                Debugger.AddText(LBP_CASCADE_FILENAME + " is not loaded. Please move from “OpenCVForUnity/StreamingAssets/OpenCVForUnity/” to “Assets/StreamingAssets/OpenCVForUnity/” folder.");
+                Debug.Log(LBP_CASCADE_FILENAME + " is not loaded. Please move from “OpenCVForUnity/StreamingAssets/OpenCVForUnity/” to “Assets/StreamingAssets/OpenCVForUnity/” folder.");
             } else {
                 cascade = new CascadeClassifier(lbp_cascade_filepath);
             }
 
-            Debugger.AddText("Step (InitializeFaceDetection): InitThread");
+            Debug.Log("Step (InitializeFaceDetection): InitThread");
             InitThread();
 
-            Debugger.AddText("Step (InitializeFaceDetection): Assign Event");
+            Debug.Log("Step (InitializeFaceDetection): Assign Event");
             AppCommandCenter.CameraFrameReader.FrameArrived += UpdateDetections;
 
             return true;
 
         } catch (Exception ex) {
-            Debugger.AddText("Error (InitializeFaceDetection): " + ex.Message);
+            Debug.Log("Error (InitializeFaceDetection): " + ex.Message);
             return false;
 
         }
@@ -256,7 +262,7 @@ public static class FaceDetectionManager {
     /// Raises the webcam texture to mat helper disposed event.
     /// </summary>
     public static void Stop() {
-        Debugger.AddText("OnWebCamTextureToMatHelperDisposed");
+        Debug.Log("OnWebCamTextureToMatHelperDisposed");
 
 #if !UNITY_WEBGL
         StopThread();
@@ -284,12 +290,12 @@ public static class FaceDetectionManager {
         try {
             for (int i = 0; i < trackedObjects.Count; i++) { 
                 trackedObjects[i].rectSnapshot = trackedObjects[i].lastPositions[trackedObjects[i].lastPositions.Count - 1];
-                //Debugger.AddText("Snapshot (" + i + ")|  x1 : " + trackedObjects[i].rectSnapshot.x + "|  y1 : " + trackedObjects[i].rectSnapshot.y + " | x2 : " + (trackedObjects[i].rectSnapshot.x + trackedObjects[i].rectSnapshot.width) + " | y2 : "+ (trackedObjects[i].rectSnapshot.y + trackedObjects[i].rectSnapshot.height));
+                //Debug.Log("Snapshot (" + i + ")|  x1 : " + trackedObjects[i].rectSnapshot.x + "|  y1 : " + trackedObjects[i].rectSnapshot.y + " | x2 : " + (trackedObjects[i].rectSnapshot.x + trackedObjects[i].rectSnapshot.width) + " | y2 : "+ (trackedObjects[i].rectSnapshot.y + trackedObjects[i].rectSnapshot.height));
 
 
             }
         } catch (Exception ex) {
-            Debugger.AddText("Error (CreateSnapshot): " + ex.Message);
+            Debug.Log("Error (CreateSnapshot): " + ex.Message);
 
         }
     }
@@ -325,11 +331,11 @@ public static class FaceDetectionManager {
                         continue;
 
                     if (RectContainsPoint(trackedObjects[j].rectSnapshot, detections[i].faceRect.x1 + (int)((detections[i].faceRect.x2 - detections[i].faceRect.x1) * 0.5), detections[i].faceRect.y1 + (int)((detections[i].faceRect.y2 - detections[i].faceRect.y1) * 0.5))) {
-                        //Debugger.AddText("Yup");
+                        //Debug.Log("Yup");
 
                         if (trackedObjects[i].trackerEntity is null) {
                             UIWindow newMarker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, null, Quaternion.identity);
-                            Debugger.AddText("Marker is active? " + (newMarker.gameObject.activeInHierarchy).ToString());
+                            Debug.Log("Marker is active? " + (newMarker.gameObject.activeInHierarchy).ToString());
 
 
                             newMarker.gameObject.SetActive(true);
@@ -341,11 +347,11 @@ public static class FaceDetectionManager {
                             trackedObjects[i].meshRenderer = newMarker.gameObject.GetComponent<MeshRenderer>();
 
                             (trackedObjects[i].trackerEntity as PacientTracker).UpdateActiveEmotion(detections[i].emotionsDetected.categorical[0]);
-                            Debugger.AddText("Created");
+                            Debug.Log("Created");
 
                         } else {
                             if (trackedObjects[i].meshRenderer.isVisible) {
-                                Debugger.AddText("Updated");
+                                Debug.Log("Updated");
                                 (trackedObjects[i].trackerEntity as PacientTracker).UpdateActiveEmotion(detections[i].emotionsDetected.categorical[0]);
                             }
                         }
@@ -362,7 +368,7 @@ public static class FaceDetectionManager {
             isAnalysingFrame = false;
 
         } catch (Exception ex) {
-            Debugger.AddText("Error (ProcessResults): " + ex.Message);  
+            Debug.Log("Error (ProcessResults): " + ex.Message);  
 
         }
 
@@ -380,13 +386,13 @@ public static class FaceDetectionManager {
         try {
             if (grayMat is null) {
                 grayMat = new Mat(e.Frame.Mat.rows(), e.Frame.Mat.cols(), CvType.CV_8UC1);
-                Debugger.AddText("Setting grayMat Height: " + grayMat.height() + " | Width: " + grayMat.width());
-                Debugger.AddText("grayMat type: " + grayMat.type());
-                Debugger.AddText("FrameMat type: " + e.Frame.Mat.type());
+                Debug.Log("Setting grayMat Height: " + grayMat.height() + " | Width: " + grayMat.width());
+                Debug.Log("grayMat type: " + grayMat.type());
+                Debug.Log("FrameMat type: " + e.Frame.Mat.type());
             }
 
             if (cascade == null || cascade4Thread == null) {
-                Debugger.AddText("Someone is null -_-");
+                Debug.Log("Someone is null -_-");
                 return;
             }
 
@@ -425,7 +431,7 @@ public static class FaceDetectionManager {
 
                     Rect r = trackedObjects[i].lastPositions[n - 1].clone();
                     if (r.area() == 0) {
-                        Debugger.AddText("DetectionBasedTracker::process: ERROR: ATTENTION: strange algorithm's behavior: trackedObjects[i].rect() is empty");
+                        Debug.Log("DetectionBasedTracker::process: ERROR: ATTENTION: strange algorithm's behavior: trackedObjects[i].rect() is empty");
                         continue;
                     }
 
@@ -499,12 +505,12 @@ public static class FaceDetectionManager {
                 //Debug.Log ("detect faces " + rects [i]);
                 //Imgproc.rectangle(rgbaMat, new Point(rects[i].x, rects[i].y), new Point(rects[i].x + rects[i].width, rects[i].y + rects[i].height), new Scalar(255, 0, 0, 255), 2);
                 Vector3 worldPosition = Vector3.zero;
-                //Debugger.AddText("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
+                //Debug.Log("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
 
                 if (testing) { 
                     MRWorld.GetFaceWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
-                    //Debugger.AddText("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
-                    //Debugger.AddText("Camera Position when detected: " + e.Frame.Extrinsic.Position );
+                    //Debug.Log("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
+                    //Debug.Log("Camera Position when detected: " + e.Frame.Extrinsic.Position );
                     UIWindow newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, worldPosition, Quaternion.identity);
                     testing = false;
 
@@ -512,7 +518,7 @@ public static class FaceDetectionManager {
             }*/
 
         } catch (Exception ex) {
-            Debugger.AddText("Error A: " + ex.Message);
+            Debug.Log("Error A: " + ex.Message);
         
         }
 
@@ -529,7 +535,7 @@ public static class FaceDetectionManager {
         r1 = Rect.intersect(r0, r1);
 
         if (r1 != null && (r1.width <= 0) || (r1.height <= 0)) {
-            Debugger.AddText("DetectionBasedTracker::detectInRegion: Empty intersection");
+            Debug.Log("DetectionBasedTracker::detectInRegion: Empty intersection");
             return;
         }
 
@@ -568,7 +574,7 @@ public static class FaceDetectionManager {
         grayMat4Thread = new Mat();
 
         if (string.IsNullOrEmpty(haar_cascade_filepath)) {
-            Debugger.AddText(HAAR_CASCADE_FILENAME + " is not loaded. Please move from “OpenCVForUnity/StreamingAssets/OpenCVForUnity/” to “Assets/StreamingAssets/OpenCVForUnity/” folder.");
+            Debug.Log(HAAR_CASCADE_FILENAME + " is not loaded. Please move from “OpenCVForUnity/StreamingAssets/OpenCVForUnity/” to “Assets/StreamingAssets/OpenCVForUnity/” folder.");
         } else {
             cascade4Thread = new CascadeClassifier(haar_cascade_filepath);
         }
@@ -595,7 +601,7 @@ public static class FaceDetectionManager {
             ThreadPool.QueueUserWorkItem(_ => action());
 #endif
 
-        Debugger.AddText("Thread Start");
+        Debug.Log("Thread Start");
     }
 
     private static void StopThread() {
@@ -607,7 +613,7 @@ public static class FaceDetectionManager {
         while (isThreadRunning) {
             //Wait threading stop
         }
-        Debugger.AddText("Thread Stop");
+        Debug.Log("Thread Stop");
     }
 
 #if !UNITY_WEBGL
@@ -651,7 +657,7 @@ public static class FaceDetectionManager {
             cascade4Thread.detectMultiScale(grayMat4Thread, objects, 1.1, 2, Objdetect.CASCADE_SCALE_IMAGE, // TODO: objdetect.CV_HAAR_SCALE_IMAGE
                 new Size(grayMat4Thread.height() * 0.2, grayMat4Thread.height() * 0.2), new Size());
         } else {
-            //Debugger.AddText("Detecting IS NULL? ");
+            //Debug.Log("Detecting IS NULL? ");
 
         }
 
@@ -660,7 +666,7 @@ public static class FaceDetectionManager {
 
         /*
         if(detectionResult.toArray().Length >0 ) {
-            Debugger.AddText("Detected: " + detectionResult.toArray().Length);
+            Debug.Log("Detected: " + detectionResult.toArray().Length);
         }*/
 
         Thread.Sleep(500);
@@ -709,7 +715,7 @@ public static class FaceDetectionManager {
             int bestArea = -1;
 
             int numpositions = (int)curObject.lastPositions.Count;
-            //Debugger.AddText("ID: " + curObject.id);
+            //Debug.Log("ID: " + curObject.id);
 
             //if (numpositions > 0) UnityEngine.Debug.LogError("numpositions > 0 is false");
 
@@ -795,7 +801,7 @@ public static class FaceDetectionManager {
 
                 UIManager.Instance.CloseWindow((it.trackerEntity as PacientTracker).Window.stacker);
                 trackedObjects.Remove(it);
-                Debugger.AddText("Removed");
+                Debug.Log("Removed");
 
             } else {
                 t++;

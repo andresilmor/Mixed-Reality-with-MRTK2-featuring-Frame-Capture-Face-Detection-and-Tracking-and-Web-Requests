@@ -4,6 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
 
 
 /// <summary>

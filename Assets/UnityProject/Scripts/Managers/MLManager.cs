@@ -27,6 +27,12 @@ using Windows.Graphics.Holographic;
 using Windows.Graphics.Imaging;
 #endif
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 public static class MLManager
 {
     private static Mat tempFrameMat = null;
@@ -46,15 +52,15 @@ public static class MLManager
 #endif
 
         //AppCommandCenter.CameraFrameReader.FrameArrived += CameraServiceOnFrameArrivedSync;
-        Debugger.AddText("Back");
+        Debug.Log("Back");
         return APIManager.wsLiveDetection != null;
 
     }
 
 
     public static async void AnalyseFrame(CameraFrame cameraFrame) {
-        //Debugger.SetFieldView();
-        //Debugger.AddText("Starting analyse");
+        //MRDebug.DrawFieldView();
+        //Debug.Log("Starting analyse");
 
 
 #if ENABLE_WINMD_SUPPORT
@@ -74,8 +80,8 @@ public static class MLManager
                         
                         videoFrame.SoftwareBitmap.Dispose();
                        
-                        //UnityEngine.Object.Instantiate(Debugger.GetSphereForTest(), AppCommandCenter.cameraMain.transform.position, Quaternion.identity);
-                        //UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), cameraFrame.Extrinsic.Position, Quaternion.identity);
+                        //UnityEngine.Object.Instantiate(MRDebug.GetSphereForTest(), AppCommandCenter.cameraMain.transform.position, Quaternion.identity);
+                        //UnityEngine.Object.Instantiate(MRDebug.GetCubeForTest(), cameraFrame.Extrinsic.Position, Quaternion.identity);
                        
                         ImageInferenceRequest request = new ImageInferenceRequest();
                         request.image = byteArray;
@@ -104,10 +110,10 @@ public static class MLManager
             PersonAndEmotionsInferenceReply.DetectionsList results = JsonConvert.DeserializeObject<PersonAndEmotionsInferenceReply.DetectionsList>(
                 JsonConvert.DeserializeObject(predictions).ToString());
 
-            Debugger.AddText("Response: " + results.ToString());
+            Debug.Log("Response: " + results.ToString());
         
             //Vector3 worldPosition = Vector3.zero;
-            //Debugger.AddText("Test: " + results.detections[0].uuid);
+            //Debug.Log("Test: " + results.detections[0].uuid);
             //TrackerManager.ToUpdate = false;
 
             FaceDetectionManager.isAnalysingFrame = false;
@@ -121,16 +127,16 @@ public static class MLManager
                 case DetectionType.Person:
                     foreach (PersonAndEmotionsInferenceReply.Detection detection in results.detections) {
                         //MRWorld.GetFaceWorldPosition(out worldPosition, detection.faceRect);
-                        //Debugger.AddText("1 Position: " + worldPosition.ToString("0.############"));
+                        //Debug.Log("1 Position: " + worldPosition.ToString("0.############"));
                         try {
-                            Debugger.AddText("1 Width: " + (detection.faceRect.x2 - detection.faceRect.x1) );
-                            Debugger.AddText("1 Height: " + (detection.faceRect.y2 - detection.faceRect.y1) );
-                            Debugger.AddText("1 X1: " + (detection.faceRect.x1));
-                            Debugger.AddText("1 Y1: " + (detection.faceRect.y1) );
-                            Debugger.AddText("1 X2: " + (detection.faceRect.x2));
-                            Debugger.AddText("1 Y2: " + (detection.faceRect.y2));
-                            Debugger.AddText("1 Mat Widht " + tempFrameMat.width());
-                            Debugger.AddText("1 Mat Height " + tempFrameMat.height());
+                            Debug.Log("1 Width: " + (detection.faceRect.x2 - detection.faceRect.x1) );
+                            Debug.Log("1 Height: " + (detection.faceRect.y2 - detection.faceRect.y1) );
+                            Debug.Log("1 X1: " + (detection.faceRect.x1));
+                            Debug.Log("1 Y1: " + (detection.faceRect.y1) );
+                            Debug.Log("1 X2: " + (detection.faceRect.x2));
+                            Debug.Log("1 Y2: " + (detection.faceRect.y2));
+                            Debug.Log("1 Mat Widht " + tempFrameMat.width());
+                            Debug.Log("1 Mat Height " + tempFrameMat.height());
 
                             return;
                             if (!TrackerManager.LiveTrackers.ContainsKey(detection.uuid)) {
@@ -154,7 +160,7 @@ public static class MLManager
                                 //Imgproc.rectangle(forTest, newTracker.TrackerSettings.boundingBox.tl(), newTracker.TrackerSettings.boundingBox.br(), new Scalar(255, 0, 255), 2, 1, 0);
                                 //OpenCVForUnity.UnityUtils.Utils.matToTexture2D(forTest, texture);
 
-                                //Debugger.AddText("Start save");
+                                //Debug.Log("Start save");
 
                                 //var bytes = texture.EncodeToPNG();
 
@@ -164,7 +170,7 @@ public static class MLManager
                                 //Texture2D tex = new Texture2D(forTest.cols(), forTest.rows(), TextureFormat.RGB24, false);
                                 //tex.LoadImage(bytes);
                                 //AppCommandCenter.Instance.screenTest.GetComponent<Renderer>().material.mainTexture = tex;
-                                Debugger.AddText("Saved! ");
+                                Debug.Log("Saved! ");
 
 
                             } else {
@@ -187,7 +193,7 @@ public static class MLManager
                                 ((TrackerManager.LiveTrackers[detection.uuid].TrackerEntity as PacientTracker).Window.components["NotificationAlert"] as GameObject).SetActive(timedEvent.TimeRunOut);
 
                         } catch (Exception ex) {
-                            Debugger.AddText(ex.Message);
+                            Debug.Log(ex.Message);
 
                         }
 
@@ -200,12 +206,12 @@ public static class MLManager
             TrackerManager.ToUpdate = true;
             if (TrackerManager.TrackersUpdater == null) {
                 TrackerManager.TrackersUpdater = AppCommandCenter.Instance.StartCoroutine(TrackerManager.UpdateTrackers());
-                Debugger.AddText("Updater Started");
+                Debug.Log("Updater Started");
 
             }
 
         } catch (Exception error) {
-            Debugger.AddText("Error: " + error.Message.ToString());
+            Debug.Log("Error: " + error.Message.ToString());
 
         }
 

@@ -45,6 +45,12 @@ using UnityEngine.UIElements;
 using System.IO;
 using System.Linq;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 
 public static class APIManager {
 
@@ -192,17 +198,17 @@ public static class APIManager {
 
             };
             wsLiveDetection.OnBinary += (WebSocket webSocket, byte[] data) => {
-                Debugger.AddText("Binary");
+                Debug.Log("Binary");
                 /*
                 try { 
-                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray().Length);
-                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].uuid);
-                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].faceRect.x1);
-                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].emotionsDetected.continuous["Valence"].ToString());
-                Debugger.AddText("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].emotionsDetected.categorical.ToArray()[0]);
+                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray().Length);
+                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].uuid);
+                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].faceRect.x1);
+                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].emotionsDetected.continuous["Valence"].ToString());
+                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].emotionsDetected.categorical.ToArray()[0]);
                     Debug.Log(ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).GetType());
                 } catch (Exception ex) {
-                    Debugger.AddText(ex.Message);
+                    Debug.Log(ex.Message);
                 }
 
 
@@ -240,7 +246,7 @@ public static class APIManager {
             WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + port + websocketPath + path));
 
             newConnection.OnMessage += (WebSocket webSocket, string message) => {
-                Debugger.AddText(message);
+                Debug.Log(message);
                 if (message.Length > 6)
                     action?.Invoke(message, detectionType);
             };
@@ -249,7 +255,7 @@ public static class APIManager {
             */
 
         } catch (Exception e) {
-            Debugger.AddText("Error: " + e.Message.ToString());
+            Debug.Log("Error: " + e.Message.ToString());
         }
 
     }
@@ -266,7 +272,7 @@ public static class APIManager {
             ConfigWebsocketGeneric(path, newConnection);
 
         } catch (Exception e) {
-            Debugger.AddText("Error: " + e.Message.ToString());
+            Debug.Log("Error: " + e.Message.ToString());
         }
 
     }

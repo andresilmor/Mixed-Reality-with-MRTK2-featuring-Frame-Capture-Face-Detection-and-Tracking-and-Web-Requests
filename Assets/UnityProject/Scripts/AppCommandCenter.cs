@@ -3,25 +3,18 @@ using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using OpenCVForUnity.CoreModule;
-using OpenCVForUnity.TrackingModule;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.HID;
-using UnityEngine.UIElements;
-
 using System.Net.NetworkInformation;
-using Microsoft.MixedReality.SampleQRCodes;
-using System.Linq;
-using static BestHTTP.SecureProtocol.Org.BouncyCastle.Math.EC.ECCurve;
 using UnityEngine.SceneManagement;
-using Microsoft.MixedReality.Toolkit;
-using Unity.XR.OpenVR;
-using System.IO;
-using BestHTTP.SecureProtocol.Org.BouncyCastle.Utilities;
+
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
 
 
 [DisallowMultipleComponent]
@@ -34,7 +27,6 @@ public class AppCommandCenter : MonoBehaviour {
                 cameraMain = Camera.main;
             return _cameraMain;
         }
-
         private set { _cameraMain = value; }
 
     }
@@ -43,8 +35,6 @@ public class AppCommandCenter : MonoBehaviour {
     [SerializeField] GameObject controllers;
     public Transform DetectionDistanceLimit;
 
-
-    //[field:SerializeField] x {get; private set;}
 
     [Header("Debugger:")]
     [SerializeField] TextMeshPro _debugText;
@@ -66,6 +56,7 @@ public class AppCommandCenter : MonoBehaviour {
 
 
     public string ShowNetworkInterfaces() {
+        Debug.Log("dasdas");
         IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();
         NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
         string info = "";
@@ -121,19 +112,16 @@ public class AppCommandCenter : MonoBehaviour {
     async void Start()
 #endif
     {
-        Debug.Log(AppCommandCenter.cameraMain.transform.position.ToString());
         SetDebugger();
-
-        //if (!SceneManager.GetSceneByName("UI").isLoaded)
-        //    await SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
-
         MineField();    
-        await MLManager.ToggleLiveDetection();
-        StartCoroutine(SetupApplication());
+        //await MLManager.ToggleLiveDetection();
+
+        StartCoroutine(LoadAdditiveScenes());
+
     }
 
     // TODO: Refactorate code of related to scenes for something alike "SceneManager" ????
-    private IEnumerator SetupApplication() {
+    private IEnumerator LoadAdditiveScenes() {
         //Load Additive Scenes
         yield return StartCoroutine(LoadAddititiveScene("UI"));
 
@@ -146,9 +134,10 @@ public class AppCommandCenter : MonoBehaviour {
 
         //Begin to load the Scene you specify
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+
         //Don't let the Scene activate until you allow it to
         asyncOperation.allowSceneActivation = false;
-        Debug.Log("Pro :" + asyncOperation.progress);
+
         //When the load is still in progress, output the Text and progress bar
         while (!asyncOperation.isDone) {
             //Output the current progress
@@ -164,25 +153,26 @@ public class AppCommandCenter : MonoBehaviour {
             }
 
             yield return null;
+
         }
+
     }
 
 
+    private void MineField() { // For features test / Out-flow
+        //DateTime testDT = DateTime.Now;
+        //testDT  = testDT.Add(new TimeSpan(0, 0, 5));
+        //Debug.Log("=> " + testDT.ToString());
 
-    private void MineField() {
-        DateTime testDT = DateTime.Now;
-        testDT  = testDT.Add(new TimeSpan(0, 0, 5));
-        Debug.Log("=> " + testDT.ToString());
 
-
-        TimedEventManager.AddUpdateTimedEvent("3c764a20-629c-4be9-b19b-5f87bddd60d5", new TimedEventHandler(testDT, () => {
+        /*TimedEventManager.AddUpdateTimedEvent("3c764a20-629c-4be9-b19b-5f87bddd60d5", new TimedEventHandler(testDT, () => {
 
             UIWindow timerOverNotification = UIManager.Instance.OpenWindow(WindowType.HeaderOneButtonAndClose, stackerName: "Time Over Notification", isNotification: true);
             (timerOverNotification.components["Title"] as TextMeshPro).text = "Medication Alert";
             (timerOverNotification.components["Description"] as TextMeshPro).text = "Pacient, Tiago Monteiro, have medication to take at 12:30.";
             (timerOverNotification.components["ActionButtonText"] as TextMeshPro).text = "Locate Pacient";
             (timerOverNotification.components["ActionButton"] as Interactable).OnClick.AddListener(() => {
-                Debugger.AddText("Ok im calling");
+                Debug.Log("Ok im calling");
                 //APIManager.wsLiveDetection.Send("oi");
                 //MLManager.AnalyseFrame();
 
@@ -200,51 +190,37 @@ public class AppCommandCenter : MonoBehaviour {
             Debug.Log(TimedEventManager.GetTimedEventTimeLeft("TEST"));
 
 
-        }));
+        }));*/
 
 
 
     }
 
     private static void StartApplication() {
-        UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.HeaderTwoButtons00, stackerName: "Login Window");
-        (loginWindow.components["Title"] as TextMeshPro).text = "Welcome Caregiver";
-        (loginWindow.components["Subtitle"] as TextMeshPro).text = "Select Login Method";
-        (loginWindow.components["TopButtonText"] as TextMeshPro).text = "Keyboard";
-        (loginWindow.components["BotButtonText"] as TextMeshPro).text = "QR Code";
-
+        UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.HeaderTwoButtons00, new LoginView(), stackerName: "Login Window");
         AccountManager.loginWindow = loginWindow;
-
-        //TrackerManager.TrackersUpdater = AppCommandCenter.Instance.StartCoroutine(tesdt());
-        
-        //loginWindow.SetPosition(new Vector3(10, 10, 10), false, false);
-
-        (loginWindow.components["BotButton"] as Interactable).OnClick.AddListener(() => { 
-            System.Threading.Tasks.Task<bool> task = AccountManager.LoginQR(); 
-        });
-
 
     }
     
     private void SetDebugger() {
-        Debugger.SetCubeForTest(_cubeForTest);
-        Debugger.SetSphereForTest(_sphereForTest);
-        Debugger.SetDebugText(_debugText);
+        MRDebug.SetCubeForTest(_cubeForTest);
+        MRDebug.SetSphereForTest(_sphereForTest);
+        MRDebug.BindDebugConsole(_debugText);
         LineDrawer.SetDrawLine(_lineForTest);
 
     }
 
     void Update() {
-       
+       /*
         if (timeToStop > 4) {
             if (TrackerManager.TrackersUpdater != null) { 
-                Debugger.AddText("Updater stopped");
+                Debug.Log("Updater stopped");
                 StopCoroutine(TrackerManager.TrackersUpdater);
                 TrackerManager.TrackersUpdater = null;
 
             }
 
-        }
+        }*/
 
     }
 

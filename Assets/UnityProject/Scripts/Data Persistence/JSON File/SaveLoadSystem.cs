@@ -4,6 +4,12 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 public static class SaveLoadSystem
 {
     [SerializeField] static string savePath => $"{Application.persistentDataPath}/Data";

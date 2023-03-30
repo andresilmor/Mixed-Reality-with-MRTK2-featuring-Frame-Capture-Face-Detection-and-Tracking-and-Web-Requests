@@ -6,6 +6,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
+
 [RequireComponent(typeof(MixedRealitySceneContent))]
 [DisallowMultipleComponent]
 public class UIManager : MonoBehaviour {
@@ -44,7 +51,7 @@ public class UIManager : MonoBehaviour {
 
     }
 
-    public UIWindow OpenWindow(WindowType toOpen, UIStacker stacker = null, string stackerName = "", bool isNotification = false) {
+    public UIWindow OpenWindow(WindowType toOpen, IUIView uiView, UIStacker stacker = null, string stackerName = "", bool isNotification = false) {
 
         Vector3 position;
         if (stacker is null) {
@@ -63,7 +70,7 @@ public class UIManager : MonoBehaviour {
 
         }
 
-        return InstantiateWindow(toOpen, stacker, position, Quaternion.identity, isNotification);
+        return InstantiateWindow(toOpen, uiView, stacker, position, Quaternion.identity, isNotification);
 
     }
 
@@ -77,18 +84,22 @@ public class UIManager : MonoBehaviour {
 
         } 
 
-        return InstantiateWindow(toOpen, stacker, position, rotation, isNotification);
+        return InstantiateWindow(toOpen, null, stacker, position, rotation, isNotification);
 
     }
 
-    private UIWindow InstantiateWindow(WindowType toOpen, UIStacker stacker, Vector3? position, Quaternion rotation, bool isNotification = false) {
+    private UIWindow InstantiateWindow(WindowType toOpen, IUIView uiView, UIStacker stacker, Vector3? position, Quaternion rotation, bool isNotification = false) {
         UIWindow window = WindowPool.ContainsKey(toOpen) ? WindowPool[toOpen].First() : null;
         if (!window) {
             foreach (var data in graphicUserInterface.windows) {
                 if (data.windowType.Equals(toOpen)) {
                     window = Instantiate(data.window, position is null ? Vector3.zero : (Vector3)position, rotation, stacker.gameObject.transform).GetComponent<UIWindow>();
 
+                    window.WindowType = toOpen;
+                    window.BindedView = uiView;
                     window.DefineComponents(data);
+                    window.BindedView.Bind(window);
+
                     break;
 
                 }
@@ -102,7 +113,7 @@ public class UIManager : MonoBehaviour {
         }
 
         window.stacker = stacker;
-        window.windowType = toOpen;
+        window.WindowType = toOpen;
         window.isNotification = isNotification;
         stacker.PushWindow(window);
 
@@ -116,10 +127,10 @@ public class UIManager : MonoBehaviour {
         if (windowToPool != null) {
             windowToPool.gameObject.transform.SetParent(uiPool.transform);
 
-            if (!WindowPool.ContainsKey(windowToPool.windowType))
-                WindowPool.Add(windowToPool.windowType, new List<UIWindow>());
+            if (!WindowPool.ContainsKey(windowToPool.WindowType))
+                WindowPool.Add(windowToPool.WindowType, new List<UIWindow>());
 
-            WindowPool[windowToPool.windowType].Add(windowToPool);
+            WindowPool[windowToPool.WindowType].Add(windowToPool);
 
         }
 

@@ -16,6 +16,12 @@ using Windows.Media.Capture.Frames;
 using Windows.Media.Devices.Core;
 #endif
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 public static class MRWorld {
 
     public static CameraExtrinsic tempExtrinsic = null;
@@ -124,22 +130,22 @@ public static class MRWorld {
         {
             unprojectionOffset = new Vector2(0, -0.12f);
             unprojectionOffset = new Vector2(0, 0);
-            Debugger.AddText("unprojectionOffset: " + unprojectionOffset.ToString("0.############"));
-            Debugger.AddText("Unprojection A");
+            Debug.Log("unprojectionOffset: " + unprojectionOffset.ToString("0.############"));
+            Debug.Log("Unprojection A");
         } else {
-            Debugger.AddText("Unprojection B");
-            Debugger.AddText("distance: " + ((float)distance).ToString("0.############"));
+            Debug.Log("Unprojection B");
+            Debug.Log("distance: " + ((float)distance).ToString("0.############"));
             float distBlocks = (float)distance / 0.5706405f;
-            Debugger.AddText("distBlocks: " + distBlocks.ToString("0.############"));
+            Debug.Log("distBlocks: " + distBlocks.ToString("0.############"));
 
             float prediction = distBlocks * -0.07f;
             unprojectionOffset = new Vector2(0, prediction);
 
-            Debugger.AddText("unprojectionOffset: " + unprojectionOffset.ToString("0.############")); 
+            Debug.Log("unprojectionOffset: " + unprojectionOffset.ToString("0.############")); 
             unprojectionOffset = new Vector2(0, 0);
-            Debugger.AddText("unprojectionOffset: " + unprojectionOffset.ToString("0.############"));
+            Debug.Log("unprojectionOffset: " + unprojectionOffset.ToString("0.############"));
             //unprojectionOffset = new Vector2(0, -0.07f);
-            Debugger.AddText("Unprojection ---------------");
+            Debug.Log("Unprojection ---------------");
         }
         */
         return unprojectionOffset;
@@ -148,7 +154,7 @@ public static class MRWorld {
 
     public static Vector3 GetPosition(Vector3 cameraPosition, Vector3 layForward, int layer) {
         /*if (!Microsoft.MixedReality.Toolkit.Utilities.SyncContextUtility.IsMainThread) {
-            Debugger.AddText("Error: Not Main Thread");
+            Debug.Log("Error: Not Main Thread");
             return Vector3.zero;
         }*/
 
@@ -163,7 +169,7 @@ public static class MRWorld {
 
             Physics.Raycast(cameraPosition, layForward * -1f, out hit, Mathf.Infinity, 1 << layerSafeGuard);
 #if ENABLE_WINMD_SUPPORT
-                Debugger.AddText("Raycast failed. Probably no spatial mesh provided.");
+                Debug.Log("Raycast failed. Probably no spatial mesh provided.");
                 //return Vector3.positiveInfinity;
 #else
             Debug.LogWarning("Raycast failed. Probably no spatial mesh provided. Use Holographic Remoting or HoloLens."); // TODO: Check mesh simulation
@@ -171,10 +177,10 @@ public static class MRWorld {
         }
         //frame.Dispose(); // TODO: Check disposal
 
-        //UnityEngine.Object.Instantiate(Debugger.GetCubeForTest(), hit.point, Quaternion.identity);
-        //Debugger.AddText("Hit Point: " + hit.point.ToString());
-        //Debugger.AddText("Origin Point: " + cameraPosition.ToString());
-        //Debugger.AddText("Target Point: " + (layForward * -1f).ToString());
+        //UnityEngine.Object.Instantiate(MRDebug.GetCubeForTest(), hit.point, Quaternion.identity);
+        //Debug.Log("Hit Point: " + hit.point.ToString());
+        //Debug.Log("Origin Point: " + cameraPosition.ToString());
+        //Debug.Log("Target Point: " + (layForward * -1f).ToString());
         return hit.point;
     }
 
@@ -217,35 +223,35 @@ public static class MRWorld {
 
         Vector3 worldPosDist = GetWorldPositionDistance(boxRect, cameraFrame);
 
-        //Debugger.AddText("Calculated distance: " + Vector3.Distance(cameraFrame.Extrinsic.Position, worldPosDist).ToString("0.############"));
+        //Debug.Log("Calculated distance: " + Vector3.Distance(cameraFrame.Extrinsic.Position, worldPosDist).ToString("0.############"));
         //LineDrawer.Draw(cameraFrame.Extrinsic.Position, worldPosDist, UnityEngine.Color.green);
 
-        //Debugger.AddText("Modifed height: " + ((boxRect.y2 - boxRect.y1) * 0.25).ToString("0.############"));
-        //Debugger.AddText("Y2: " + boxRect.y2.ToString("0.############"));
+        //Debug.Log("Modifed height: " + ((boxRect.y2 - boxRect.y1) * 0.25).ToString("0.############"));
+        //Debug.Log("Y2: " + boxRect.y2.ToString("0.############"));
 
         int partitionToRemove = (int)((boxRect.y2 - boxRect.y1) * 0.3333f);
         boxRect.y2 -= partitionToRemove;
 
-        //Debugger.AddText("Y2 Modifed: " + boxRect.y2.ToString("0.############"));
+        //Debug.Log("Y2 Modifed: " + boxRect.y2.ToString("0.############"));
 
         Vector3 hitPoint = GetWorldPositionDirection(boxRect, cameraFrame);
 
         //LineDrawer.Draw(cameraFrame.Extrinsic.Position, hitPoint, UnityEngine.Color.red);
-        //Debugger.AddText("1 - Y position: " + hitPoint.y.ToString("0.############"));
-        //Debugger.AddText("1 - X position: " + hitPoint.x.ToString("0.############"));
-        //Debugger.AddText("1 - Z position: " + hitPoint.z.ToString("0.############"));
+        //Debug.Log("1 - Y position: " + hitPoint.y.ToString("0.############"));
+        //Debug.Log("1 - X position: " + hitPoint.x.ToString("0.############"));
+        //Debug.Log("1 - Z position: " + hitPoint.z.ToString("0.############"));
 
         worldPosition = new Vector3(hitPoint.x, hitPoint.y, worldPosDist.z);
                 
-        //Debugger.AddText("2 - Y position: " + worldPosition.y.ToString("0.############"));
-        //Debugger.AddText("2 - X position: " + worldPosition.x.ToString("0.############"));
-        //Debugger.AddText("2 - Z position: " + worldPosition.z.ToString("0.############"));
-        //Debugger.AddText("World Position:  " + worldPosition.ToString("0.############"));
+        //Debug.Log("2 - Y position: " + worldPosition.y.ToString("0.############"));
+        //Debug.Log("2 - X position: " + worldPosition.x.ToString("0.############"));
+        //Debug.Log("2 - Z position: " + worldPosition.z.ToString("0.############"));
+        //Debug.Log("World Position:  " + worldPosition.ToString("0.############"));
         //LineDrawer.Draw(cameraFrame.Extrinsic.Position, hitPoint, UnityEngine.Color.magenta);
 
         Vector3 lerpedPosition = LerpByDistance(cameraFrame.Extrinsic.Position, hitPoint, Vector3.Distance(cameraFrame.Extrinsic.Position, worldPosition));
 
-        //Debugger.AddText("Lerped  Position:  " + lerpedPosition.ToString("0.############"));
+        //Debug.Log("Lerped  Position:  " + lerpedPosition.ToString("0.############"));
         //LineDrawer.Draw(cameraFrame.Extrinsic.Position, lerpedPosition, UnityEngine.Color.blue);
 
 
@@ -253,10 +259,10 @@ public static class MRWorld {
 
         worldPosition = lerpedPosition;
 
-        //Debugger.AddText("Lerped  Position 2:  " + LerpByDistance(tempExtrinsic.Position, hitPoint, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)).ToString("0.############"));
+        //Debug.Log("Lerped  Position 2:  " + LerpByDistance(tempExtrinsic.Position, hitPoint, Vector3.Distance(tempExtrinsic.Position, lerpedPosition)).ToString("0.############"));
         //LineDrawer.Draw(cameraFrame.Extrinsic.Position, LerpByDistance(cameraFrame.Extrinsic.Position, hitPoint, Vector3.Distance(cameraFrame.Extrinsic.Position, lerpedPosition)), UnityEngine.Color.green);
-        //Debugger.AddText("Final distance: " + Vector3.Distance(cameraFrame.Extrinsic.Position, worldPosition).ToString("0.############"));
-        //Debugger.AddText("Final Position:  " + worldPosition.ToString("0.############"));
+        //Debug.Log("Final distance: " + Vector3.Distance(cameraFrame.Extrinsic.Position, worldPosition).ToString("0.############"));
+        //Debug.Log("Final Position:  " + worldPosition.ToString("0.############"));
         //LineDrawer.Draw(cameraFrame.Extrinsic.Position, worldPosition, UnityEngine.Color.red);
         /*
         Vector3 testWorldPosition = worldPosition;
@@ -270,7 +276,7 @@ public static class MRWorld {
 
         }*/
         boxRect.y2 += partitionToRemove;
-        //Debugger.AddText("Y2 Original: " + boxRect.y2.ToString("0.############"));
+        //Debug.Log("Y2 Original: " + boxRect.y2.ToString("0.############"));
        
     }
 
@@ -377,7 +383,7 @@ public static class MRWorld {
     // Old Name: GetWorldPositionByRaycast
     private static Vector3 GetWorldPositionDirection(BoxRect boxRect, CameraFrame cameraFrame = null) {
         Vector2 unprojectionOffset = GetUnprojectionOffset(boxRect.y1 + ((boxRect.y2 - boxRect.y1) * 0.5f));
-        //Debugger.AddText("Unprojection setted");
+        //Debug.Log("Unprojection setted");
         return GetWorldPositionOfPixel(GetBoundingBoxTarget(cameraFrame.Extrinsic, boxRect), unprojectionOffset, cameraFrame);
 
     }
@@ -387,7 +393,7 @@ public static class MRWorld {
 
     // ATTENTION TO THIS IS FOR BOUNDIG BOX
     public static Vector3 GetWorldPositionOfPixel(Point pointCV, Vector2 unprojectionOffset, CameraFrame cameraFrame, GameObject toInstantiate = null, int layer = 31, bool debug = false, GameObject debugText = null) {
-        Debugger.ClearText();
+        MRDebug.ClearConsole();
 
         Vector3 layForward = Vector3.zero;
 
@@ -412,7 +418,7 @@ public static class MRWorld {
         return GetPosition(cameraPosition, layForward, layer);  
 #endif
         } catch (Exception e) {
-            Debugger.AddText(e.Message);
+            Debug.Log(e.Message);
         }
 
         return position;

@@ -6,6 +6,12 @@ using OpenCVForUnity.ImgcodecsModule;
 using OpenCVForUnity.ImgprocModule;
 using System;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Media.Capture.Frames;

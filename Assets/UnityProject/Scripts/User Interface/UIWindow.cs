@@ -7,9 +7,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 [DisallowMultipleComponent]
 public class UIWindow : MonoBehaviour {
-    public WindowType windowType { get; set; }
+    public WindowType WindowType { get; set; }
+    public IUIView BindedView { get; set; }
+
     public bool wasInstantiated { get; private set; }
     public bool isNotification = false;
 
@@ -36,11 +44,11 @@ public class UIWindow : MonoBehaviour {
     }
 
     public void SetPosition(Vector3 position, bool lookToCamera = true, bool instantMove = true) {
-        //Debugger.AddText("Setting position to: " + position.ToString());
+        //Debug.Log("Setting position to: " + position.ToString());
         if (instantMove) {
             moveTo = null;
             gameObject.transform.position = position; 
-            //Debugger.AddText("instant move");
+            //Debug.Log("instant move");
             if (lookToCamera)
                 LookToCamera();
 

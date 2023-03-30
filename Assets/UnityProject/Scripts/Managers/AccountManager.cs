@@ -13,6 +13,12 @@ using UnityEditor;
 using System.Diagnostics.Contracts;
 using Microsoft.MixedReality.Toolkit.UI;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 public static class AccountManager {
     public static string currentUserUUID { get; private set; }
 
@@ -58,7 +64,7 @@ public static class AccountManager {
     async private static void LoginQRCode(object sender, QRCodeEventArgs<Microsoft.MixedReality.QR.QRCode> args) {
         //improve
         if (requesting || QRCodesManager.Instance.lastSeen?.Data == args.Data) {
-            Debug.LogWarning("Old QRCode.");
+            Debug.Log("Old QRCode.");
             return;
         }
 
@@ -76,7 +82,7 @@ public static class AccountManager {
             new APIManager.FieldParams("username", "\"" + qrMessage["username"] + "\""),
             new APIManager.FieldParams("password", "\"" + qrMessage["password"] + "\""),
         });
-        Debug.Log(qrMessage);
+        Debug.Log(qrMessage.ToString());
         await APIManager.ExecuteRequest("", queryOperation,
             (message, succeed) => {
                 try {
@@ -91,7 +97,7 @@ public static class AccountManager {
 
 
                         } else {
-                            Debug.LogWarning("Response empty");
+                            Debug.Log("Response empty");
 
                         }
 

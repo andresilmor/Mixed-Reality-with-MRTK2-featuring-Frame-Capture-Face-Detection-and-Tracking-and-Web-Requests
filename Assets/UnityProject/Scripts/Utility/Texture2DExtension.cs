@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 // https://doughtmw.github.io/posts/BoundingBoxUtils-Unity-2
 
 

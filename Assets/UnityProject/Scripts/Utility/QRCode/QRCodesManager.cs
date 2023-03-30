@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace Microsoft.MixedReality.SampleQRCodes {
     public static class QRCodeEventArgs {
         public static QRCodeEventArgs<TData> Create<TData>(TData data) {

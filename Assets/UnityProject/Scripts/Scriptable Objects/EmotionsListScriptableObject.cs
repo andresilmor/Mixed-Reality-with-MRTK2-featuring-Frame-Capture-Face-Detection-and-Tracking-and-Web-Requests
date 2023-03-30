@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 [CreateAssetMenu(menuName = "Scriptable Object/EmotionsDetected List")]
 public class EmotionsListScriptableObject : ScriptableObject {
 

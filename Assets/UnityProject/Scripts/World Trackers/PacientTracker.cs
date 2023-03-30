@@ -5,6 +5,12 @@ using UnityEngine;
 using static Realms.ChangeSet;
 using UnityEngine.UIElements;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 [RequireComponent(typeof(UIWindow))]
 public class PacientTracker : MonoBehaviour, ITrackerEntity  {
     [SerializeField] EmotionsListScriptableObject emotionsList;
@@ -37,26 +43,20 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
     public PacientTracker() { }
 
     public bool UpdateActiveEmotion(string emotionName) {
-        //Debugger.AddText("Emotion: " + emotionName);
+        //Debug.Log("Emotion: " + emotionName);
         foreach (EmotionsListScriptableObject.data data in emotionsList.categorical) {
             if (data.name.Equals(emotionName)) {
-                //Debugger.AddText("Found it");
                 (Window.components["EmotionDisplay"] as MeshRenderer).material = data.material;
                 (Window.components["EmotionDisplay"] as MeshRenderer).gameObject.transform.localPosition = data.localPosition;
                 (Window.components["EmotionDisplay"] as MeshRenderer).gameObject.transform.localScale = data.localScale;
-                //Debugger.AddText("Changed it?");
 
                 return true;
 
             }
 
         }
+
         return false;
-
-    }
-
-    public UIWindow GetBindedWindow() {
-        return Window;
 
     }
 

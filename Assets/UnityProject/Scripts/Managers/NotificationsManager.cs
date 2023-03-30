@@ -7,6 +7,12 @@ using Realms;
 using System.Linq;
 using System.Threading.Tasks;
 
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
+
 public static class NotificationsManager {
     public static List<TimedEventHandler> timedEventsList { get; private set; }
 
@@ -38,7 +44,7 @@ public static class NotificationsManager {
                     }
 
                 } catch (Exception e) {
-                    Debug.LogException(e);
+                    Debug.Log(e.Message);
 
                 }
 
@@ -68,9 +74,9 @@ public static class NotificationsManager {
             )) {
             if (medicationToTake.AtTime.HasValue) {
                 TimedEventManager.AddUpdateTimedEvent(medicationToTake.ID, new TimedEventHandler(Parser.NormalizeRealmDateTime(medicationToTake.AtTime.ToString()), () => { }));
-                Debug.Log(TimedEventManager.GetTimedEventTimeLeft(medicationToTake.ID));
+                Debug.Log(TimedEventManager.GetTimedEventTimeLeft(medicationToTake.ID).ToString());
 
-                Debug.Log(TimedEventManager.GetTimers(10).Count);
+                Debug.Log(TimedEventManager.GetTimers(10).Count.ToString());
 
             }
             yield return null;

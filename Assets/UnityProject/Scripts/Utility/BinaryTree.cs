@@ -1,7 +1,11 @@
 using BestHTTP.Decompression.Zlib;
 using System;
 using System.Text.RegularExpressions;
-
+#if ENABLE_WINMD_SUPPORT
+using Debug = MRDebug;
+#else
+using Debug = UnityEngine.Debug;
+#endif
 public class BinaryTree 
 {
     public BinaryTree()

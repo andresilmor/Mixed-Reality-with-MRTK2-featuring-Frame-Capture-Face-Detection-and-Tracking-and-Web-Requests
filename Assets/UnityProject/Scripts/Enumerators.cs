@@ -32,7 +32,17 @@ public enum ColorFormat {
     Grayscale,
     RGB,
     Unknown
+
 }
 
+
+public enum LogType {
+    Info,
+    Warning,
+    Error,
+    Fatal,
+    Exception
+
+}
 
 

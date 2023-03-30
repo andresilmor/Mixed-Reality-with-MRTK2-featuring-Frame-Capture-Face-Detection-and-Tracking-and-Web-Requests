@@ -3,6 +3,7 @@
 
 using UnityEngine;
 
+
 namespace Microsoft.MixedReality.SampleQRCodes.WindowsXR
 {
     internal class SpatialGraphNode

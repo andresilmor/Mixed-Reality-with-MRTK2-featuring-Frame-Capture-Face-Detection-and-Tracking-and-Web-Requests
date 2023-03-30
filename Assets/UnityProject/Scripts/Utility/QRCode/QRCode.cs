@@ -4,6 +4,7 @@
 using Microsoft.MixedReality.Toolkit.Input;
 using UnityEngine;
 
+
 namespace Microsoft.MixedReality.SampleQRCodes
 {
     [RequireComponent(typeof(SpatialGraphNodeTracker))]
