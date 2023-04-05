@@ -12,10 +12,10 @@ public enum GUIComponentType {
 
 [SerializeField]
 public enum WindowType {
-    HeaderOneButtonAndClose,
-    HeaderTwoButtons00,
-    PacientMarker,
-    DebugConsole
+    TD_1btn_Cl_00,
+    H_2btn_00,
+    Sp_ML_E_1btn_Pacient,
+    Txt_Pag_Cl_00
 
 }
 

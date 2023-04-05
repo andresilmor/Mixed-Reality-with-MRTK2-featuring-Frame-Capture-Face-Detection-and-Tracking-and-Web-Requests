@@ -334,7 +334,7 @@ public static class FaceDetectionManager {
                         //Debug.Log("Yup");
 
                         if (trackedObjects[i].trackerEntity is null) {
-                            UIWindow newMarker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, null, Quaternion.identity);
+                            UIWindow newMarker = UIManager.Instance.OpenWindowAt(WindowType.Sp_ML_E_1btn_Pacient, null, Quaternion.identity);
                             Debug.Log("Marker is active? " + (newMarker.gameObject.activeInHierarchy).ToString());
 
 
@@ -511,7 +511,7 @@ public static class FaceDetectionManager {
                     MRWorld.GetFaceWorldPosition(out worldPosition, new BoxRect((int)rects[i].x, (int)rects[i].y, (int)rects[i].x + (int)rects[i].width, (int)rects[i].y + (int)rects[i].height), e.Frame);
                     //Debug.Log("Box x1: " + rects[i].x + " | y1: " + rects[i].y + " | Width: " + rects[i].width + " | Height: " + rects[i].height );
                     //Debug.Log("Camera Position when detected: " + e.Frame.Extrinsic.Position );
-                    UIWindow newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, worldPosition, Quaternion.identity);
+                    UIWindow newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.Sp_ML_E_1btn_Pacient, worldPosition, Quaternion.identity);
                     testing = false;
 
                 }

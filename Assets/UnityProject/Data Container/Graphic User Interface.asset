@@ -45,7 +45,7 @@ MonoBehaviour:
       path: Content/Description
     - name: ActionButtonText
       type: 0
-      path: ButtonGroup/ActionButton/ButtonVisual/TextMeshPro
+      path: ButtonGroup/ActionButton/ButtonVisual/Text
     - name: ActionButton
       type: 1
       path: ButtonGroup/ActionButton

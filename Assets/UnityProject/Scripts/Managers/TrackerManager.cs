@@ -67,7 +67,7 @@ public static class TrackerManager {
 
         // ------------------------------------ DANGER ZONE --------------------------------------------- //
         Debug.Log("Pre Create");
-        UIWindow newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.PacientMarker, worldPosition, Quaternion.identity);
+        UIWindow newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.Sp_ML_E_1btn_Pacient, worldPosition, Quaternion.identity);
         newVisualTracker.transform.LookAt(AppCommandCenter.cameraMain.transform);
         Debug.Log("Pro Create");
         Debug.Log("Height Frame: " + frame.height().ToString());

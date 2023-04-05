@@ -12,7 +12,7 @@ using Debug = UnityEngine.Debug;
 
 public class LoginView : IUIView
 {
-    private const WindowType _windowTypeRequired = WindowType.HeaderTwoButtons00;
+    private const WindowType _windowTypeRequired = WindowType.H_2btn_00;
 
     private bool ValidWindow(UIWindow window) {
         if (!window.WindowType.Equals(_windowTypeRequired)) {

@@ -173,7 +173,7 @@ public class AppCommandCenter : MonoBehaviour {
 
         /*TimedEventManager.AddUpdateTimedEvent("3c764a20-629c-4be9-b19b-5f87bddd60d5", new TimedEventHandler(testDT, () => {
 
-            UIWindow timerOverNotification = UIManager.Instance.OpenWindow(WindowType.HeaderOneButtonAndClose, stackerName: "Time Over Notification", isNotification: true);
+            UIWindow timerOverNotification = UIManager.Instance.OpenWindow(WindowType.TD_1btn_Cl_00, stackerName: "Time Over Notification", isNotification: true);
             (timerOverNotification.components["Title"] as TextMeshPro).text = "Medication Alert";
             (timerOverNotification.components["Description"] as TextMeshPro).text = "Pacient, Tiago Monteiro, have medication to take at 12:30.";
             (timerOverNotification.components["ActionButtonText"] as TextMeshPro).text = "Locate Pacient";
@@ -203,7 +203,7 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
     private static void StartApplication() {
-        UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.HeaderTwoButtons00, new LoginView(), stackerName: "Login Window");
+        UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.H_2btn_00, new LoginView(), stackerName: "Login Window");
 
     }
     
