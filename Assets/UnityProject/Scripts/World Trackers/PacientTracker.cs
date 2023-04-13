@@ -17,7 +17,12 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
 
     private int activeEmotionIndex = -1;
 
+    public UIWindow Window = null;
+
     private TrackerHandler _trackerHandler;
+
+
+    public string id = "";
     public TrackerHandler TrackerHandler {
         get { return _trackerHandler; }
         set {
@@ -29,16 +34,11 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
     }
 
     private void FixedUpdate() {
-        if ((Window.components["EmotionDisplay"] as MeshRenderer).isVisible)
+        if (Window != null && (Window.components["EmotionDisplay"] as MeshRenderer).isVisible)
             gameObject.transform.LookAt(AppCommandCenter.cameraMain.transform);
         
 
     }
-
-    public UIWindow Window;
-    
-
-    public string id = "";
     
     public PacientTracker() { }
 

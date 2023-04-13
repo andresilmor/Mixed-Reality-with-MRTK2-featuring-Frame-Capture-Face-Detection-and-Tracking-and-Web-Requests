@@ -16,7 +16,7 @@ using Debug = UnityEngine.Debug;
 [DisallowMultipleComponent]
 public class UIWindow : MonoBehaviour {
     public WindowType WindowType { get; set; }
-    public IUIView BindedView { get; set; }
+    public UIView BindedView { get; set; }
 
     public bool wasInstantiated { get; private set; }
     public bool isNotification = false;

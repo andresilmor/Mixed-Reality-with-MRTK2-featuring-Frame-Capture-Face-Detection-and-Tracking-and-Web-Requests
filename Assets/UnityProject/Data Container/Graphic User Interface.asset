@@ -64,3 +64,6 @@ MonoBehaviour:
     - name: NotificationAlert
       type: 4
       path: BoundingBox/NotificationAlert
+    - name: ProfileButtonVisual
+      type: 3
+      path: BoundingBox/NotificationAlert

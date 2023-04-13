@@ -1,0 +1,697 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.16f1 (4016570cf34f) revision 4200023'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19044) 64bit Core' Language: 'en' Physical Memory: 32678 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files (x86)\ProjetoIntegrado_Multimedia_AndreMoreira\Unity Editors\2021.3.16f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker15
+-projectPath
+D:/PC/Desktop/IP/Rep/MR_M
+-logFile
+Logs/AssetImportWorker15.log
+-srvPort
+52355
+Successfully changed project path to: D:/PC/Desktop/IP/Rep/MR_M
+D:/PC/Desktop/IP/Rep/MR_M
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [5796] Host "[IP] 172.17.2.209 [Port] 0 [Flags] 2 [Guid] 2576403550 [EditorId] 2576403550 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [5796] Host "[IP] 172.17.2.209 [Port] 0 [Flags] 2 [Guid] 2576403550 [EditorId] 2576403550 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+Refreshing native plugins compatible for Editor in 145.43 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 3.86 ms.
+Initialize engine version: 2021.3.16f1 (4016570cf34f)
+[Subsystems] Discovering subsystems at path C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/PC/Desktop/IP/Rep/MR_M/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 2070 SUPER (ID=0x1e84)
+    Vendor:   NVIDIA
+    VRAM:     8011 MB
+    Driver:   27.21.14.6192
+Initialize mono
+Mono path[0] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56144
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll
+Registered in 0.008841 seconds.
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 112.53 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.13 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.624 seconds
+Domain Reload Profiling:
+	ReloadAssembly (624ms)
+		BeginReloadAssembly (61ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (467ms)
+			LoadAssemblies (59ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (100ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (25ms)
+			SetupLoadedEditorAssemblies (287ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (55ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (113ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (81ms)
+				ProcessInitializeOnLoadMethodAttributes (37ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.017319 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 105.39 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+DisplayProgressbar: Restoring NuGet Packages
+Added DLL directory D:\PC\Desktop\IP\Rep\MR_M\Assets\Packages\Microsoft.VCRTForwarders.140.1.0.7\Unity\x64 to the user search path.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+InitVCRTForwarders:.cctor () (at Assets/Packages/Microsoft.VCRTForwarders.140.1.0.7/Unity/Editor/InitVCRTForwarders.cs:53)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/Packages/Microsoft.VCRTForwarders.140.1.0.7/Unity/Editor/InitVCRTForwarders.cs Line: 53)
+
+Package Manager log level set to [2]
+Added DLL directory D:\PC\Desktop\IP\Rep\MR_M\Assets\Packages\Microsoft.MixedReality.QR.0.5.3037\Unity\x64 to the user search path.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Microsoft.MixedReality.QR.Init:.cctor () (at Assets/Packages/Microsoft.MixedReality.QR.0.5.3037/Unity/Editor/Microsoft.MixedReality.QR.Init.cs:60)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/Packages/Microsoft.MixedReality.QR.0.5.3037/Unity/Editor/Microsoft.MixedReality.QR.Init.cs Line: 60)
+
+[XR] [MROpenXR][Info   ][16:58:53.843745][tid:16a4] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][16:58:53.843811][tid:16a4] InputProvider_RegisterLifecycleProvider
+[XR] Error loading subsystem: Display (1) (header mismatch?)
+[XR] [MROpenXR][Info   ][16:58:53.844882][tid:16a4] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.7.0.0 PartA_PrivTags=33554432
+Mono: successfully reloaded assembly
+- Completed reload, in  2.033 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2034ms)
+		BeginReloadAssembly (199ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (119ms)
+		EndReloadAssembly (1735ms)
+			LoadAssemblies (93ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (263ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (73ms)
+			SetupLoadedEditorAssemblies (1264ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (13ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (105ms)
+				BeforeProcessingInitializeOnLoad (106ms)
+				ProcessInitializeOnLoadAttributes (980ms)
+				ProcessInitializeOnLoadMethodAttributes (51ms)
+				AfterProcessingInitializeOnLoad (9ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (4ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 2.11 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+Unloading 7048 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 417 unused Assets / (232.0 KB). Loaded Objects now: 7355.
+Memory consumption went from 274.8 MB to 274.5 MB.
+Total: 4.048200 ms (FindLiveObjects: 0.508000 ms CreateObjectMapping: 0.565000 ms MarkObjects: 2.680900 ms  DeleteObjects: 0.293500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 26088.326313 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Asset 6@2x.png
+  artifactKey: Guid(50ba720273d0b11468ae86d1a8101b00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Asset 6@2x.png using Guid(50ba720273d0b11468ae86d1a8101b00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21237da978087f71c75704fe3c0c260d') in 0.095737 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.270277 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Asset 6@2x.png
+  artifactKey: Guid(50ba720273d0b11468ae86d1a8101b00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Asset 6@2x.png using Guid(50ba720273d0b11468ae86d1a8101b00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d3def0990459fe79999ee69c3faf043') in 0.010084 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 21.577882 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/btn_close01.png
+  artifactKey: Guid(50ba720273d0b11468ae86d1a8101b00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/btn_close01.png using Guid(50ba720273d0b11468ae86d1a8101b00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'deee221a84bba0f0f2c42475f1d46cb2') in 0.011716 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 10.159365 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Popups
+  artifactKey: Guid(85465276040fdf944a12269e85668f42) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Popups using Guid(85465276040fdf944a12269e85668f42) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0240db4d4447e7705577bd259c84a62f') in 0.005729 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.078979 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Popups/popup10
+  artifactKey: Guid(c110775a83d1ce4419b67fd52098d026) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Popups/popup10 using Guid(c110775a83d1ce4419b67fd52098d026) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '856d71ffcfab86b5518e50b5d5abbbb0') in 0.001698 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 10.189663 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Popups/popup06
+  artifactKey: Guid(6f6ac28d38f50b043b5646cd4bfe70ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Popups/popup06 using Guid(6f6ac28d38f50b043b5646cd4bfe70ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '46344c670d47b92a7aafff13f826e11a') in 0.001645 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 15.254978 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons
+  artifactKey: Guid(82496586278ada847a5b63178c10ac16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons using Guid(82496586278ada847a5b63178c10ac16) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f2df37926c6f93616efebf1ffa181308') in 0.004845 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 18.617681 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_close00.mat
+  artifactKey: Guid(44f56f491a11fe14589aaa4ef9fd7969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_close00.mat using Guid(44f56f491a11fe14589aaa4ef9fd7969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5c8a06e5029dd908630629e8d32c89d0') in 0.305048 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.954438 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_close01.mat
+  artifactKey: Guid(44f56f491a11fe14589aaa4ef9fd7969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_close01.mat using Guid(44f56f491a11fe14589aaa4ef9fd7969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c86bcffc12f22099d75cae6a11e2fe5') in 0.009975 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.268531 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_close01.png
+  artifactKey: Guid(50ba720273d0b11468ae86d1a8101b00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_close01.png using Guid(50ba720273d0b11468ae86d1a8101b00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4bf4fed9d20f2a374981ffa6d98497e6') in 0.034513 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.651848 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_close01.mat
+  artifactKey: Guid(44f56f491a11fe14589aaa4ef9fd7969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_close01.mat using Guid(44f56f491a11fe14589aaa4ef9fd7969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6faf01ed48d8a858f9f2abc9b9caa2fe') in 1.104467 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 55.582578 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Buttons/mt_brn_01_normal.mat
+  artifactKey: Guid(5a9f4ae1cdf5afb469713f5f306a274a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Buttons/mt_brn_01_normal.mat using Guid(5a9f4ae1cdf5afb469713f5f306a274a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '484be8f11e9c016df44058f2c8bd5805') in 0.012286 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.012294 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_back_01.mat
+  artifactKey: Guid(6d8cc78fda2bf2e4c8153651b315e7a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_back_01.mat using Guid(6d8cc78fda2bf2e4c8153651b315e7a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b7243dfd3b54e62c310ba96d12c75321') in 0.012915 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_close_01.mat
+  artifactKey: Guid(c557bf6a3e24dd74b89be10affc49522) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_close_01.mat using Guid(c557bf6a3e24dd74b89be10affc49522) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5c544a869832ffabfed205a635ff6d50') in 0.022399 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_default_blank.mat
+  artifactKey: Guid(c5815aa3bc1ffc949855c6fd70c188f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_default_blank.mat using Guid(c5815aa3bc1ffc949855c6fd70c188f2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63499cc660b69a9a807e77a1407813e0') in 0.023476 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_next_01.mat
+  artifactKey: Guid(8289a3cfa281e3d4a8c7a83f539029c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_next_01.mat using Guid(8289a3cfa281e3d4a8c7a83f539029c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32be9173f0a96cd93b51679fd3670c47') in 0.022860 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 38.272484 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/Asset 7@2x.png
+  artifactKey: Guid(fecb04d91da02e846a26ac800ad2465e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/Asset 7@2x.png using Guid(fecb04d91da02e846a26ac800ad2465e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '943052de5f2d9d70ffecb3ac383c6ba2') in 0.010785 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 15.696025 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_default01.png
+  artifactKey: Guid(fecb04d91da02e846a26ac800ad2465e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_default01.png using Guid(fecb04d91da02e846a26ac800ad2465e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1ebc2976aa459cd1ae54dbd343ac21a0') in 0.011169 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 12.036030 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_default01.png
+  artifactKey: Guid(fecb04d91da02e846a26ac800ad2465e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_default01.png using Guid(fecb04d91da02e846a26ac800ad2465e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5f66d8cda5a3610cbd33c30ae08ecebb') in 0.017511 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.566442 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_default01.png
+  artifactKey: Guid(fecb04d91da02e846a26ac800ad2465e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_default01.png using Guid(fecb04d91da02e846a26ac800ad2465e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '70525243214b4093209df9a4ed033ae9') in 0.022387 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.831128 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_close01.png
+  artifactKey: Guid(50ba720273d0b11468ae86d1a8101b00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_close01.png using Guid(50ba720273d0b11468ae86d1a8101b00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '61fa95c935398506c565711b1f0241ee') in 0.018805 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 12.009087 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_default01.mat
+  artifactKey: Guid(8993a89bfaa0bb343961241a93196e34) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_default01.mat using Guid(8993a89bfaa0bb343961241a93196e34) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7e723528bb446d99a74c3fd198b310de') in 0.186517 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 24.295071 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_default01.mat
+  artifactKey: Guid(8993a89bfaa0bb343961241a93196e34) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_default01.mat using Guid(8993a89bfaa0bb343961241a93196e34) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '709ee0ce0731a1500e3d3c6b5200e0aa') in 0.011133 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 37.328160 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_close01.mat
+  artifactKey: Guid(44f56f491a11fe14589aaa4ef9fd7969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_close01.mat using Guid(44f56f491a11fe14589aaa4ef9fd7969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '980b45058f32c93ffa93b8d31ace72ab') in 0.010101 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 67.443785 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_close01.mat
+  artifactKey: Guid(44f56f491a11fe14589aaa4ef9fd7969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Buttons/mt_btn_close01.mat using Guid(44f56f491a11fe14589aaa4ef9fd7969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c4aa51d27a2493499840f9721d491429') in 0.017961 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 194.359919 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/Asset 8@2x.png
+  artifactKey: Guid(31c04ffed97f49c4b8b27c604fe0877a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/Asset 8@2x.png using Guid(31c04ffed97f49c4b8b27c604fe0877a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '843de7c6c8b1bcbd8c5bdc17141e817d') in 0.010011 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 13.720630 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_normal02.png
+  artifactKey: Guid(31c04ffed97f49c4b8b27c604fe0877a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_normal02.png using Guid(31c04ffed97f49c4b8b27c604fe0877a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c9d9391294060c68988f8864005b17fa') in 0.012223 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.350335 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_normal02.png
+  artifactKey: Guid(31c04ffed97f49c4b8b27c604fe0877a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_normal02.png using Guid(31c04ffed97f49c4b8b27c604fe0877a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52f1830c674b41563616e1af334a2796') in 0.016326 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.810212 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_normal02.png
+  artifactKey: Guid(31c04ffed97f49c4b8b27c604fe0877a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_normal02.png using Guid(31c04ffed97f49c4b8b27c604fe0877a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02d0d458cdb3ca0a083de6722109bb2c') in 0.192042 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.145364 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_normal02.mat
+  artifactKey: Guid(8ec205f602699c44298362a3870b1dd4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_normal02.mat using Guid(8ec205f602699c44298362a3870b1dd4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8aa53b6ed89173880e0d4a6e1c3025f') in 0.017391 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 172.541305 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_normal02.mat
+  artifactKey: Guid(8ec205f602699c44298362a3870b1dd4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/mt_btn_normal02.mat using Guid(8ec205f602699c44298362a3870b1dd4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '20bc06ce94a52b3f7455b537a9efbbd1') in 0.011441 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1729.722267 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_1.11.png
+  artifactKey: Guid(1e484235eb904394e81a48f99dcc0307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_1.11.png using Guid(1e484235eb904394e81a48f99dcc0307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9a219cdbd08b5ed5ce05f5c5931def7a') in 0.012978 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_4.11.png
+  artifactKey: Guid(e6d1ec6ebde0b4d49afc2ef11007de4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_4.11.png using Guid(e6d1ec6ebde0b4d49afc2ef11007de4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa6d361c09532eb032b9621699ab9fef') in 0.013574 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_6.11.png
+  artifactKey: Guid(ad8e1f98b3e2fa94b976bc1e65927390) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_6.11.png using Guid(ad8e1f98b3e2fa94b976bc1e65927390) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6bc5f32042933aca45921ff533891747') in 0.014073 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_3.11.png
+  artifactKey: Guid(e15f72538c510a84296f0e8156f802fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_3.11.png using Guid(e15f72538c510a84296f0e8156f802fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b228d3ec252904408664808477477e9') in 0.010848 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_9.11.png
+  artifactKey: Guid(b4f9318dbfe405f45be38790b290ef96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_9.11.png using Guid(b4f9318dbfe405f45be38790b290ef96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '92f1eacfa9f7e05b7ca784d26ab108dc') in 0.010688 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_8.11.png
+  artifactKey: Guid(9966fe5fd4dc0674c91aa0cdb124d6d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07_8.11.png using Guid(9966fe5fd4dc0674c91aa0cdb124d6d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a45ec88862b614901398d5aba5cacc4c') in 0.011795 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.456175 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07
+  artifactKey: Guid(f78f2907a1d0663469f16cad005f8fae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07 using Guid(f78f2907a1d0663469f16cad005f8fae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '137d0cf057ec7ce1b8790b0dab671aea') in 0.005154 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 32.502905 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_10.11.png
+  artifactKey: Guid(e104280243b17884f8a5a54abc586967) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_10.11.png using Guid(e104280243b17884f8a5a54abc586967) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6fd9f12f5bb757e3b8b9b90b791898ed') in 0.011440 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.018581 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_1.11.png
+  artifactKey: Guid(1e484235eb904394e81a48f99dcc0307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_1.11.png using Guid(1e484235eb904394e81a48f99dcc0307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dd51d77d30076ffff2ecfdbfc130e082') in 0.012031 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_6.11.png
+  artifactKey: Guid(ad8e1f98b3e2fa94b976bc1e65927390) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_6.11.png using Guid(ad8e1f98b3e2fa94b976bc1e65927390) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '368ebe469790210a2d9d248cd0a558f6') in 0.010703 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_5.11.png
+  artifactKey: Guid(01836bc58dde1c34abbc6e4a60d68149) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_5.11.png using Guid(01836bc58dde1c34abbc6e4a60d68149) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '33df00a45df2d3592bf3720a6c464f3f') in 0.010639 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_8.11.png
+  artifactKey: Guid(9966fe5fd4dc0674c91aa0cdb124d6d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_8.11.png using Guid(9966fe5fd4dc0674c91aa0cdb124d6d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c832fce042e45f8d2e58f2f66f1f550b') in 0.010185 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 15.909067 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11.mat
+  artifactKey: Guid(dfc1943b1b0920f49b078d3876f4120b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11.mat using Guid(dfc1943b1b0920f49b078d3876f4120b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd546480ff607f952839078d102607700') in 0.194333 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.581262 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 1.mat
+  artifactKey: Guid(a183fdd14e822b547a083e0d1222a60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 1.mat using Guid(a183fdd14e822b547a083e0d1222a60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9c3a055c0ffc9712cc437cc2987c8204') in 0.018530 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.404027 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 2.mat
+  artifactKey: Guid(38c5042203949dc4b81fa64b864d4c59) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 2.mat using Guid(38c5042203949dc4b81fa64b864d4c59) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b82e9b069902574d37587af7769c0d97') in 0.011594 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.634831 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 3.mat
+  artifactKey: Guid(b754fb58ed965bc4aa8751c604185412) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 3.mat using Guid(b754fb58ed965bc4aa8751c604185412) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8addced08990aa6057e642f2e6ea8245') in 0.017954 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.359119 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 4.mat
+  artifactKey: Guid(c9fcfca38ab61c14eaec955ec759c180) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 4.mat using Guid(c9fcfca38ab61c14eaec955ec759c180) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a9ed18ef246af01e6fb5116a6f5d3378') in 0.010014 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.349670 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 5.mat
+  artifactKey: Guid(9b6bfa408f93097468d607b1b56bede8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 5.mat using Guid(9b6bfa408f93097468d607b1b56bede8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e7d1ef3549d421748a4a6ca667043d1') in 0.010072 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.360353 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 6.mat
+  artifactKey: Guid(97aa9b9e0d8552a489e6b48ebdbcd0c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 6.mat using Guid(97aa9b9e0d8552a489e6b48ebdbcd0c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f6ac3730fd67c42331b49e5022a5bb1b') in 0.009919 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.340953 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 7.mat
+  artifactKey: Guid(f752827128f21644caa6e2b9a9cb3fe1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 7.mat using Guid(f752827128f21644caa6e2b9a9cb3fe1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '124be95b59fe03fd175d943c5c695a69') in 0.009485 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.301276 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 8.mat
+  artifactKey: Guid(f72000c38291cc24aab0ad5858f72ca7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 8.mat using Guid(f72000c38291cc24aab0ad5858f72ca7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a1069e35b705b61943933843fb98d8f') in 0.009430 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.419175 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 9.mat
+  artifactKey: Guid(c03b936386cfed04c96bd7e36cf91abd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11 9.mat using Guid(c03b936386cfed04c96bd7e36cf91abd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b35b0d3791f92fce3e934ce0ee767b0a') in 0.009522 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 14.688636 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_2.11.mat
+  artifactKey: Guid(38c5042203949dc4b81fa64b864d4c59) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_2.11.mat using Guid(38c5042203949dc4b81fa64b864d4c59) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6085e077c1dcbc2b012384156d060fc1') in 0.015311 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.010810 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_3.11.mat
+  artifactKey: Guid(b754fb58ed965bc4aa8751c604185412) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_3.11.mat using Guid(b754fb58ed965bc4aa8751c604185412) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '587c0c762f863f184a1be0cfb49c1960') in 0.529034 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.411024 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_4.11.mat
+  artifactKey: Guid(c9fcfca38ab61c14eaec955ec759c180) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_4.11.mat using Guid(c9fcfca38ab61c14eaec955ec759c180) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e6168a86d5a97fac84b5275f90008ce4') in 0.012982 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.310959 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_5.11.mat
+  artifactKey: Guid(9b6bfa408f93097468d607b1b56bede8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_5.11.mat using Guid(9b6bfa408f93097468d607b1b56bede8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4f7ffc4f83c043b217ff5904780a045') in 0.009224 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.829454 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_6.11.mat
+  artifactKey: Guid(97aa9b9e0d8552a489e6b48ebdbcd0c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_6.11.mat using Guid(97aa9b9e0d8552a489e6b48ebdbcd0c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e527c38a92035d52f71a1107000c0664') in 0.182116 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.432993 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_7.11.mat
+  artifactKey: Guid(f752827128f21644caa6e2b9a9cb3fe1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_7.11.mat using Guid(f752827128f21644caa6e2b9a9cb3fe1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '64c9beb893fac1db71cd9303147865cb') in 0.010983 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.924666 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_8.11.mat
+  artifactKey: Guid(f72000c38291cc24aab0ad5858f72ca7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_8.11.mat using Guid(f72000c38291cc24aab0ad5858f72ca7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71477c93fd6e3b977da4d35900e69a12') in 0.021718 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.500640 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_9.11.mat
+  artifactKey: Guid(c03b936386cfed04c96bd7e36cf91abd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_9.11.mat using Guid(c03b936386cfed04c96bd7e36cf91abd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '26a2b5aa383e20fabe0f20ab0b454432') in 0.010532 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.017906 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_10.11.mat
+  artifactKey: Guid(dfc1943b1b0920f49b078d3876f4120b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_10.11.mat using Guid(dfc1943b1b0920f49b078d3876f4120b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8eff61d80697cb5a03db2c06ea6f2fe3') in 0.022457 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.608642 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11.mat
+  artifactKey: Guid(a183fdd14e822b547a083e0d1222a60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11.mat using Guid(a183fdd14e822b547a083e0d1222a60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7e6c42e897dd23fccc7398eb44a35912') in 0.011587 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.192490 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_10.11 1.mat
+  artifactKey: Guid(e2b8f6a3c882aff409d3d2a363b303e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_10.11 1.mat using Guid(e2b8f6a3c882aff409d3d2a363b303e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1803cb5290f78dfb3ab951e3b4e46e71') in 0.018431 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.725792 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_11.11.mat
+  artifactKey: Guid(e2b8f6a3c882aff409d3d2a363b303e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_11.11.mat using Guid(e2b8f6a3c882aff409d3d2a363b303e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34abfb31abb6c12e4fef546fbbab2f4e') in 0.013240 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 531.836972 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_1.11.png
+  artifactKey: Guid(1e484235eb904394e81a48f99dcc0307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_1.11.png using Guid(1e484235eb904394e81a48f99dcc0307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '052d56aba10143a11b95dcd09580e7f4') in 0.035665 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.155173 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_2.11.png
+  artifactKey: Guid(63e927cd3c414d34d9d65a1ea6991f7c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_2.11.png using Guid(63e927cd3c414d34d9d65a1ea6991f7c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0486217887d1767f8b6fb8895ecb7ec6') in 0.032448 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.577924 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_3.11.png
+  artifactKey: Guid(e15f72538c510a84296f0e8156f802fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_3.11.png using Guid(e15f72538c510a84296f0e8156f802fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bce8897fe4df22123e809750782daabd') in 0.030200 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.930724 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_4.11.png
+  artifactKey: Guid(e6d1ec6ebde0b4d49afc2ef11007de4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_4.11.png using Guid(e6d1ec6ebde0b4d49afc2ef11007de4b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'edadcfb01cc74e7f49ccc38c6f088a3e') in 0.026445 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.220051 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_5.11.png
+  artifactKey: Guid(01836bc58dde1c34abbc6e4a60d68149) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_5.11.png using Guid(01836bc58dde1c34abbc6e4a60d68149) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e824d285a85576135f4e7d1214a4d62') in 0.040100 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.846968 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_6.11.png
+  artifactKey: Guid(ad8e1f98b3e2fa94b976bc1e65927390) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_6.11.png using Guid(ad8e1f98b3e2fa94b976bc1e65927390) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '78c6e8964a8ac9ab9680bf2f4e1607b6') in 0.030121 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.592959 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_7.11.png
+  artifactKey: Guid(cfcfe51a10b30f34e8fc76d827dd8858) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_7.11.png using Guid(cfcfe51a10b30f34e8fc76d827dd8858) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd37c5b20e9df8a6313a655dc7b10af02') in 0.032640 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.218934 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_8.11.png
+  artifactKey: Guid(9966fe5fd4dc0674c91aa0cdb124d6d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_8.11.png using Guid(9966fe5fd4dc0674c91aa0cdb124d6d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '12488c940b53192273ae7a4f3e7c2742') in 0.186763 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.258748 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_9.11.png
+  artifactKey: Guid(b4f9318dbfe405f45be38790b290ef96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_9.11.png using Guid(b4f9318dbfe405f45be38790b290ef96) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2ce10fcbc72d2d6b5247540cdabaa3a2') in 0.204918 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.805291 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_10.11.png
+  artifactKey: Guid(e104280243b17884f8a5a54abc586967) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_10.11.png using Guid(e104280243b17884f8a5a54abc586967) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3dca068b1d926fd0b7d69e5b31b4691c') in 0.033825 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.481044 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_11.11.png
+  artifactKey: Guid(cb9379a1a9f0934498b036cb3f5de3f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/popup07_11.11.png using Guid(cb9379a1a9f0934498b036cb3f5de3f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b501dedca5a04582830f7581bf6b662f') in 0.183144 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.621677 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11.mat
+  artifactKey: Guid(a183fdd14e822b547a083e0d1222a60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_1.11.mat using Guid(a183fdd14e822b547a083e0d1222a60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '487fae782386560a76373d480ee3361f') in 0.018756 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_7.11.mat
+  artifactKey: Guid(f752827128f21644caa6e2b9a9cb3fe1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_7.11.mat using Guid(f752827128f21644caa6e2b9a9cb3fe1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f6cc099ef678c53899d08f290dd2d849') in 0.008034 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_11.11.mat
+  artifactKey: Guid(e2b8f6a3c882aff409d3d2a363b303e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_11.11.mat using Guid(e2b8f6a3c882aff409d3d2a363b303e1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c04e2261f870af396b5622fe0ec1df81') in 0.012675 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_9.11.mat
+  artifactKey: Guid(c03b936386cfed04c96bd7e36cf91abd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_9.11.mat using Guid(c03b936386cfed04c96bd7e36cf91abd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b9a79374cf4a606d4fd3db2ee5b0df3a') in 0.009668 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_4.11.mat
+  artifactKey: Guid(c9fcfca38ab61c14eaec955ec759c180) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_4.11.mat using Guid(c9fcfca38ab61c14eaec955ec759c180) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '15b6a9ea9a8f75c7ad86dcbbd5cec6e0') in 0.011296 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_3.11.mat
+  artifactKey: Guid(b754fb58ed965bc4aa8751c604185412) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_3.11.mat using Guid(b754fb58ed965bc4aa8751c604185412) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4301dc996346107028349fe1015aa2c7') in 0.010483 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000020 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_5.11.mat
+  artifactKey: Guid(9b6bfa408f93097468d607b1b56bede8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07/mt_popup07_5.11.mat using Guid(9b6bfa408f93097468d607b1b56bede8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59f20c6ee3ef62c2d466c2dbb57f72a0') in 0.010894 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

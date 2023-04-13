@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1c06081a0566694e887dd77e2e28d9f, type: 3}
+  m_Name: Circle Buttons Material
+  m_EditorClassIdentifier: 
+  _buttonMaterial:
+  - name: Error
+    material: {fileID: 2100000, guid: 8073a31e3c5e338489e57421c06f3062, type: 2}
+  - name: Exception
+    material: {fileID: 2100000, guid: d52b2df4e8e096b48a7db1d170375989, type: 2}
+  - name: Fatal
+    material: {fileID: 2100000, guid: 10c99085711499a4aaddfc99a8cca4a0, type: 2}
+  - name: Info
+    material: {fileID: 2100000, guid: 6730bb17d85d88241a81313b51a8e0bd, type: 2}
+  - name: Warning
+    material: {fileID: 2100000, guid: f1aaba0d6e0c6e04c9eff7cf5001a397, type: 2}
+  - name: Profile
+    material: {fileID: 2100000, guid: ff666563b8337f14f8e5d8cb19fbe734, type: 2}

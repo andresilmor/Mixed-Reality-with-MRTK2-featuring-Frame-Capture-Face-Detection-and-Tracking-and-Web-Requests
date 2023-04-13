@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emotionsList: {fileID: 11400000, guid: 6ad1eebe47a9dcc459d7f97bcb800aa3, type: 2}
-  Window: {fileID: 2372899748573223653}
+  Window: {fileID: 0}
   id: 
 --- !u!1 &2372899748578997346
 GameObject:
@@ -733,7 +733,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b2f6e322e73bf9d41b376741a8fff387, type: 2}
+  - {fileID: 2100000, guid: ff666563b8337f14f8e5d8cb19fbe734, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -831,7 +831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2372899748828858527
 Transform:
   m_ObjectHideFlags: 0

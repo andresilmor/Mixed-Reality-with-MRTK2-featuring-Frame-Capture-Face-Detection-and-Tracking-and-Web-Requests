@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,7 +30,10 @@ public class UIManager : MonoBehaviour {
     }
 
     [Header("Config:")]
+    [SerializeField] public float viewScale = 1f;
     [SerializeField] GraphicUserInterfaceScriptableObject graphicUserInterface;
+    [SerializeField] ButtonVisualMaterialScriptableObject circleButtonsMaterial;
+    [SerializeField] ButtonVisualMaterialScriptableObject rectangleButtonsMaterial;
     [SerializeField] GameObject uiPool;
 
     [Header("Audio Clips:")]
@@ -51,7 +55,7 @@ public class UIManager : MonoBehaviour {
 
     }
 
-    public UIWindow OpenWindow(WindowType toOpen, IUIView uiView, UIStacker stacker = null, string stackerName = "", bool isNotification = false) {
+    public UIWindow OpenWindow(WindowType toOpen, UIView uiView, UIStacker stacker = null, string stackerName = "", bool isNotification = false) {
 
         Vector3 position;
         if (stacker is null) {
@@ -88,12 +92,14 @@ public class UIManager : MonoBehaviour {
 
     }
 
-    private UIWindow InstantiateWindow(WindowType toOpen, IUIView uiView, UIStacker stacker, Vector3? position, Quaternion rotation, bool isNotification = false) {
+    private UIWindow InstantiateWindow(WindowType toOpen, UIView uiView, UIStacker stacker, Vector3? position, Quaternion rotation, bool isNotification = false) {
         UIWindow window = WindowPool.ContainsKey(toOpen) ? WindowPool[toOpen].First() : null;
         if (!window) {
             foreach (var data in graphicUserInterface.windows) {
                 if (data.windowType.Equals(toOpen)) {
                     window = Instantiate(data.window, position is null ? Vector3.zero : (Vector3)position, rotation, stacker.gameObject.transform).GetComponent<UIWindow>();
+
+                    window.gameObject.transform.localScale *= viewScale;
 
                     window.WindowType = toOpen;
                     window.BindedView = uiView;
@@ -139,6 +145,17 @@ public class UIManager : MonoBehaviour {
             UIStackers.Remove(stacker);
 
         }
+
+    }
+
+    public static bool ValidateWindow(WindowType windowType, WindowType typeRequired) {
+        if (!windowType.Equals(typeRequired)) { // Select here the interface "needed"
+            Debug.Log("Not validated?");
+            return false;
+
+        }
+
+        return true;
 
     }
 

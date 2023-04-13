@@ -56,7 +56,6 @@ public class AppCommandCenter : MonoBehaviour {
 
 
     public string ShowNetworkInterfaces() {
-        Debug.Log("dasdas");
         IPGlobalProperties computerProperties = IPGlobalProperties.GetIPGlobalProperties();
         NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
         string info = "";

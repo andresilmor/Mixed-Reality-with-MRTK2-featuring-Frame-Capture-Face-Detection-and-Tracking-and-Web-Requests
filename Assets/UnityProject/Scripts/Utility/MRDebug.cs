@@ -1,7 +1,9 @@
 using BestHTTP.SecureProtocol.Org.BouncyCastle.Asn1.Sec;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using UnityEditor.Presets;
 using UnityEngine;
 
 public static class MRDebug
@@ -11,10 +13,17 @@ public static class MRDebug
     private static GameObject _cubeForTest;
     private static GameObject _sphereForTest;
 
-    private static List<string> _logs = new List<string>();
-    private static List<string> _warningLogs = new List<string>();
-    private static List<string> _errorLogs = new List<string>();
-    private static List<string> _fatalLogs = new List<string>();
+    private static List<AppLog> _logs = new List<AppLog>();
+
+    public struct AppLog {
+        public LogType type;
+        public string info;
+
+        public AppLog(LogType type, string info) {
+            this.type = type;
+            this.info = info;
+        }
+    }
 
     public static void Log(object message, LogType logType = LogType.Info)
     {
@@ -23,31 +32,29 @@ public static class MRDebug
 
         switch (logType) {
             case LogType.Info: preText = "|INFO| ";
+                _logs.Add(new AppLog(LogType.Info, System.DateTime.Now + " | " + text + "\n"));
                 break;
 
             case LogType.Exception: preText = "|EXCEPTION| ";
+                _logs.Add(new AppLog(LogType.Exception, System.DateTime.Now + " | " + text + "\n"));
                 break;
 
             case LogType.Warning:
                 preText = "|WARNING| ";
-                _warningLogs.Add(System.DateTime.Now + " | " + text + "\n");
+                _logs.Add(new AppLog(LogType.Warning, System.DateTime.Now + " | " + text + "\n"));
                 break;
 
             case LogType.Error:
                 preText = "|ERROR| ";
-                _errorLogs.Add(System.DateTime.Now + " | " + text + "\n");
+                _logs.Add(new AppLog(LogType.Error, System.DateTime.Now + " | " + text + "\n"));
                 break;
 
             case LogType.Fatal:
                 preText = "|FATAL| ";
-                _fatalLogs.Add(System.DateTime.Now + " | " + text + "\n");
+                _logs.Add(new AppLog(LogType.Fatal, System.DateTime.Now + " | " + text + "\n"));
                 break;
 
         }
-
-        text = preText + text + "\n";
-
-        _logs.Add(text);
 
         if (_debugConsole != null)
             _debugConsole.text = _debugConsole.text + text;
@@ -69,6 +76,18 @@ public static class MRDebug
     public static void LogException(object message) {
         string text = message.ToString();
         Log(text, LogType.Exception);
+
+    }
+
+    public static List<AppLog> GetLog(params LogType[] logType) {
+        List<AppLog> filteredLogs = new List<AppLog>();
+        foreach (AppLog log in _logs) {
+            if (logType.Contains<LogType>(log.type))
+                filteredLogs.Add(log);
+
+        }
+
+        return filteredLogs;
 
     }
 
@@ -101,8 +120,8 @@ public static class MRDebug
     public static void BindDebugConsole(TextMeshPro text)
     {
         _debugConsole = text;
-        foreach (string s in _logs)
-            _debugConsole.text = _debugConsole.text + s;
+        foreach (AppLog log in _logs)
+            _debugConsole.text = _debugConsole.text + log.info;
 
     }
 

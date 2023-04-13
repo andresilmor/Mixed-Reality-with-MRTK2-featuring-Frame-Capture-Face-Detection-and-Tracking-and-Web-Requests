@@ -8,7 +8,7 @@ using Debug = MRDebug;
 using Debug = UnityEngine.Debug;
 #endif
 
-[CreateAssetMenu(menuName = "Scriptable Object/EmotionsDetected List")]
+[CreateAssetMenu(menuName = "Scriptable Object/Emotions Detected List")]
 public class EmotionsListScriptableObject : ScriptableObject {
 
     [System.Serializable]

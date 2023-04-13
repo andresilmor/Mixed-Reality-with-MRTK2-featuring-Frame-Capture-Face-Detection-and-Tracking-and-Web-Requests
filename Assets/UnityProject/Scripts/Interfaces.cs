@@ -13,9 +13,3 @@ public interface ITrackerEntity {
 }
 
 
-public interface IUIView {
-    public void Bind(UIWindow window);
-    public void BindTexts(UIWindow window, bool alreadyValidated);
-    public void BindActions(UIWindow window, bool alreadyValidated);
-
-}
