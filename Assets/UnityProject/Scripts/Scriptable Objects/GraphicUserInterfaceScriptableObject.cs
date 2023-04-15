@@ -4,11 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Microsoft.MixedReality.Toolkit.Input.KeyBinding;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 [CreateAssetMenu(menuName = "Scriptable Object/Graphic User Interface")]
 public class GraphicUserInterfaceScriptableObject : ScriptableObject {

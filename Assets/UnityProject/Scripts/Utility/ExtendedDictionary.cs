@@ -4,11 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine.InputSystem;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 public class ExtendedDictonary<Tkey, Tvalue> : Dictionary<Tkey, Tvalue> {
     public Dictionary<Tkey, Tvalue> Items = new Dictionary<Tkey, Tvalue>();

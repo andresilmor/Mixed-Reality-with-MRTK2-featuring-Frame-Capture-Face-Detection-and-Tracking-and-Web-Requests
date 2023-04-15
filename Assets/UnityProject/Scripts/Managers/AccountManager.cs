@@ -13,11 +13,7 @@ using UnityEditor;
 using System.Diagnostics.Contracts;
 using Microsoft.MixedReality.Toolkit.UI;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 public static class AccountManager {
     public static string currentUserUUID { get; private set; }

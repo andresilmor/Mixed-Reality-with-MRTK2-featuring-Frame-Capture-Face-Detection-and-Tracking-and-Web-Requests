@@ -2,11 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 public class Singleton<T> : MonoBehaviour where T : Component
 {

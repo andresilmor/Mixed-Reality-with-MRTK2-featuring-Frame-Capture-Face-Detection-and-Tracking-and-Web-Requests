@@ -10,21 +10,17 @@ using UnityEngine;
 using System.Net.NetworkInformation;
 using UnityEngine.SceneManagement;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 
 [DisallowMultipleComponent]
 public class AppCommandCenter : MonoBehaviour {
 
     private static Camera _cameraMain;
-    public static Camera cameraMain {
+    public static Camera CameraMain {
         get {
             if (_cameraMain == null)
-                cameraMain = Camera.main;
+                CameraMain = Camera.main;
             return _cameraMain;
         }
         private set { _cameraMain = value; }

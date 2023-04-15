@@ -18,11 +18,7 @@ using UnityEngine.XR.ARSubsystems;
 using PersonAndEmotionsInferenceReply;
 using UnityEngine.Rendering;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 
 //Embedded Detection

@@ -4,11 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 public static class TimedEventManager {
     private static Dictionary<string, TimedEventHandler> _timers = new Dictionary<string, TimedEventHandler>();

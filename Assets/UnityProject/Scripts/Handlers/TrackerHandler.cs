@@ -9,11 +9,7 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using RectCV = OpenCVForUnity.CoreModule.Rect;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 public class TrackerHandler : MonoBehaviour 
 {

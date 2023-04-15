@@ -149,6 +149,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -195,6 +196,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -211,8 +213,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ea0cee081a5fb646b4e6917ad2cd049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graphicUserInterface: {fileID: 11400000, guid: 61cc6a5d39d640a478a4e806e877ce63, type: 2}
+  ViewScale: 1
+  AxisZOffset: 0.55
+  AxisYOffset: -0.07
   uiPool: {fileID: 458620962}
+  graphicUserInterface: {fileID: 11400000, guid: 61cc6a5d39d640a478a4e806e877ce63, type: 2}
+  circleButtonsMaterial: {fileID: 0}
+  rectangleButtonsMaterial: {fileID: 0}
   OpenWindowClip: {fileID: 8300000, guid: 4075162bd7e8d9b4387ba77aeb751a0d, type: 3}
   CloseWindowClip: {fileID: 8300000, guid: 291bf9326e517b0489c2ee53d0a6a63f, type: 3}
   NotificationClip: {fileID: 8300000, guid: 82bb32b8900f55c488f190d835ffcd99, type: 3}

@@ -7,11 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 [DisallowMultipleComponent]
 public class UIWindow : MonoBehaviour {
@@ -60,7 +56,7 @@ public class UIWindow : MonoBehaviour {
     }
 
     public void LookToCamera() {
-        gameObject.transform.LookAt(AppCommandCenter.cameraMain.transform.position);
+        gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
 
     }
 

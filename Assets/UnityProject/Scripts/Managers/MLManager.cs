@@ -27,11 +27,7 @@ using Windows.Graphics.Holographic;
 using Windows.Graphics.Imaging;
 #endif
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 public static class MLManager
 {
@@ -79,7 +75,7 @@ public static class MLManager
                         
                         videoFrame.SoftwareBitmap.Dispose();
                        
-                        //UnityEngine.Object.Instantiate(MRDebug.GetSphereForTest(), AppCommandCenter.cameraMain.transform.position, Quaternion.identity);
+                        //UnityEngine.Object.Instantiate(MRDebug.GetSphereForTest(), AppCommandCenter.CameraMain.transform.position, Quaternion.identity);
                         //UnityEngine.Object.Instantiate(MRDebug.GetCubeForTest(), cameraFrame.Extrinsic.Position, Quaternion.identity);
                        
                         ImageInferenceRequest request = new ImageInferenceRequest();

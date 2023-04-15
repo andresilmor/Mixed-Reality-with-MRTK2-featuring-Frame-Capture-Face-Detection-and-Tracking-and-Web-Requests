@@ -12,11 +12,7 @@ using RectCV = OpenCVForUnity.CoreModule.Rect;
 using Windows.Media.Capture.Frames;
 #endif
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 
 public static class TrackerManager {
@@ -68,7 +64,7 @@ public static class TrackerManager {
         // ------------------------------------ DANGER ZONE --------------------------------------------- //
         Debug.Log("Pre Create");
         UIWindow newVisualTracker = UIManager.Instance.OpenWindowAt(WindowType.Sp_ML_E_1btn_Pacient, worldPosition, Quaternion.identity);
-        newVisualTracker.transform.LookAt(AppCommandCenter.cameraMain.transform);
+        newVisualTracker.transform.LookAt(AppCommandCenter.CameraMain.transform);
         Debug.Log("Pro Create");
         Debug.Log("Height Frame: " + frame.height().ToString());
 

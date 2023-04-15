@@ -14,11 +14,7 @@ using UnityEngine;
 using Windows.Perception.Spatial;
 #endif
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 
 /// <summary>

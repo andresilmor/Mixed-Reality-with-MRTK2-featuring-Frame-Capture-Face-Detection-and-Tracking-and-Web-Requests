@@ -16,11 +16,7 @@ using Windows.Media.MediaProperties;
 using System.Threading;
 #endif
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 public class FrameArrivedEventArgs {
     public CameraFrame Frame;

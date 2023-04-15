@@ -1,4 +1,5 @@
 using BestHTTP.SecureProtocol.Org.BouncyCastle.Asn1.Sec;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,10 @@ public static class MRDebug
         string text = message.ToString();
         string preText = "";
 
+#if ENABLE_WINMD_SUPPORT
+
+        
+
         switch (logType) {
             case LogType.Info: preText = "|INFO| ";
                 _logs.Add(new AppLog(LogType.Info, System.DateTime.Now + " | " + text + "\n"));
@@ -58,6 +63,10 @@ public static class MRDebug
 
         if (_debugConsole != null)
             _debugConsole.text = _debugConsole.text + text;
+
+#else
+        UnityEngine.Debug.Log(Enum.GetName(typeof(LogType), logType) + " | " + text + "\n");
+#endif
 
     }
 
@@ -132,21 +141,21 @@ public static class MRDebug
     public static void DrawFieldView()
     {
         GameObject te = null;
-        te = UnityEngine.Object.Instantiate(MRDebug.GetSphereForTest(), AppCommandCenter.cameraMain.ScreenToWorldPoint(new Vector3(0, AppCommandCenter.cameraMain.pixelHeight, AppCommandCenter.cameraMain.nearClipPlane)), Quaternion.identity);
+        te = UnityEngine.Object.Instantiate(MRDebug.GetSphereForTest(), AppCommandCenter.CameraMain.ScreenToWorldPoint(new Vector3(0, AppCommandCenter.CameraMain.pixelHeight, AppCommandCenter.CameraMain.nearClipPlane)), Quaternion.identity);
         RaycastHit hit;
-        Physics.Raycast(te.transform.position, AppCommandCenter.cameraMain.ScreenToWorldPoint(new Vector3(0, AppCommandCenter.cameraMain.pixelHeight, AppCommandCenter.cameraMain.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
+        Physics.Raycast(te.transform.position, AppCommandCenter.CameraMain.ScreenToWorldPoint(new Vector3(0, AppCommandCenter.CameraMain.pixelHeight, AppCommandCenter.CameraMain.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
         GameObject two = UnityEngine.Object.Instantiate(MRDebug.GetCubeForTest(), hit.point, Quaternion.identity);
         LineDrawer.Draw(te.transform.position, two.transform.position, Color.yellow);
-        te = UnityEngine.Object.Instantiate(MRDebug.GetSphereForTest(), AppCommandCenter.cameraMain.ScreenToWorldPoint(new Vector3(AppCommandCenter.cameraMain.pixelWidth, AppCommandCenter.cameraMain.pixelHeight, AppCommandCenter.cameraMain.nearClipPlane)), Quaternion.identity);
-        Physics.Raycast(te.transform.position, AppCommandCenter.cameraMain.ScreenToWorldPoint(new Vector3(AppCommandCenter.cameraMain.pixelWidth, AppCommandCenter.cameraMain.pixelHeight, AppCommandCenter.cameraMain.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
+        te = UnityEngine.Object.Instantiate(MRDebug.GetSphereForTest(), AppCommandCenter.CameraMain.ScreenToWorldPoint(new Vector3(AppCommandCenter.CameraMain.pixelWidth, AppCommandCenter.CameraMain.pixelHeight, AppCommandCenter.CameraMain.nearClipPlane)), Quaternion.identity);
+        Physics.Raycast(te.transform.position, AppCommandCenter.CameraMain.ScreenToWorldPoint(new Vector3(AppCommandCenter.CameraMain.pixelWidth, AppCommandCenter.CameraMain.pixelHeight, AppCommandCenter.CameraMain.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
         two = UnityEngine.Object.Instantiate(MRDebug.GetCubeForTest(), hit.point, Quaternion.identity);
         LineDrawer.Draw(te.transform.position, two.transform.position, Color.yellow);
-        te = UnityEngine.Object.Instantiate(MRDebug.GetSphereForTest(), AppCommandCenter.cameraMain.ScreenToWorldPoint(new Vector3(AppCommandCenter.cameraMain.pixelWidth, 0, AppCommandCenter.cameraMain.nearClipPlane)), Quaternion.identity);
-        Physics.Raycast(te.transform.position, AppCommandCenter.cameraMain.ScreenToWorldPoint(new Vector3(AppCommandCenter.cameraMain.pixelWidth, 0, AppCommandCenter.cameraMain.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
+        te = UnityEngine.Object.Instantiate(MRDebug.GetSphereForTest(), AppCommandCenter.CameraMain.ScreenToWorldPoint(new Vector3(AppCommandCenter.CameraMain.pixelWidth, 0, AppCommandCenter.CameraMain.nearClipPlane)), Quaternion.identity);
+        Physics.Raycast(te.transform.position, AppCommandCenter.CameraMain.ScreenToWorldPoint(new Vector3(AppCommandCenter.CameraMain.pixelWidth, 0, AppCommandCenter.CameraMain.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
         two = UnityEngine.Object.Instantiate(MRDebug.GetCubeForTest(), hit.point, Quaternion.identity);
         LineDrawer.Draw(te.transform.position, two.transform.position, Color.yellow);
-        te = UnityEngine.Object.Instantiate(MRDebug.GetSphereForTest(), AppCommandCenter.cameraMain.ScreenToWorldPoint(new Vector3(0, 0, AppCommandCenter.cameraMain.nearClipPlane)), Quaternion.identity);
-        Physics.Raycast(te.transform.position, AppCommandCenter.cameraMain.ScreenToWorldPoint(new Vector3(0, 0, AppCommandCenter.cameraMain.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
+        te = UnityEngine.Object.Instantiate(MRDebug.GetSphereForTest(), AppCommandCenter.CameraMain.ScreenToWorldPoint(new Vector3(0, 0, AppCommandCenter.CameraMain.nearClipPlane)), Quaternion.identity);
+        Physics.Raycast(te.transform.position, AppCommandCenter.CameraMain.ScreenToWorldPoint(new Vector3(0, 0, AppCommandCenter.CameraMain.farClipPlane)), out hit, Mathf.Infinity, 1 << 31);
         two = UnityEngine.Object.Instantiate(MRDebug.GetCubeForTest(), hit.point, Quaternion.identity);
         LineDrawer.Draw(te.transform.position, two.transform.position, Color.yellow);
     }

@@ -1,10 +1,6 @@
 using Realms;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 public class PacientEntity : RealmObject {
 

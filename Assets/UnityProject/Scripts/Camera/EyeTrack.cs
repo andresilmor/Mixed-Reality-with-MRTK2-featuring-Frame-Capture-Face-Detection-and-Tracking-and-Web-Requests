@@ -1,11 +1,7 @@
 using UnityEngine;
 using System;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 [RequireComponent(typeof(Camera))]
 public class EyeTrack : MonoBehaviour

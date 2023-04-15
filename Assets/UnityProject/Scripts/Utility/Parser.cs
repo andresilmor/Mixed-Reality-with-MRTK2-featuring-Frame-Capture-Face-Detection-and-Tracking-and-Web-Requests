@@ -13,11 +13,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 #endif
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 public static class Parser {
     public static string Base64ToJson(string base64) {

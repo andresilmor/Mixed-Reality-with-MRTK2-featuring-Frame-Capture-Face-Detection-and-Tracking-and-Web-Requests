@@ -5,11 +5,7 @@ using UnityEngine;
 using static Realms.ChangeSet;
 using UnityEngine.UIElements;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 [RequireComponent(typeof(UIWindow))]
 public class PacientTracker : MonoBehaviour, ITrackerEntity  {
@@ -35,7 +31,7 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
 
     private void FixedUpdate() {
         if (Window != null && (Window.components["EmotionDisplay"] as MeshRenderer).isVisible)
-            gameObject.transform.LookAt(AppCommandCenter.cameraMain.transform);
+            gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform);
         
 
     }
@@ -61,7 +57,7 @@ public class PacientTracker : MonoBehaviour, ITrackerEntity  {
     }
 
     public void UpdatePosition(Vector3 newPosition, CameraFrame cameraFrame = null) {
-        float exisX = cameraFrame is null ? AppCommandCenter.cameraMain.transform.rotation.x : cameraFrame.Extrinsic.GetRotation().x;
+        float exisX = cameraFrame is null ? AppCommandCenter.CameraMain.transform.rotation.x : cameraFrame.Extrinsic.GetRotation().x;
 
         if (exisX <= -0.0001508334f) {
             newPosition.y = -(newPosition.y + 0.098f); //0.0991  0.0979 0.0985f 0.0983f 0.0988f

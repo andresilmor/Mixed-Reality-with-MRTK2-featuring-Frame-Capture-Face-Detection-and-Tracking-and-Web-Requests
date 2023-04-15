@@ -16,11 +16,7 @@ using Windows.Media.Capture.Frames;
 using Windows.Media.Devices.Core;
 #endif
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 public static class MRWorld {
 
@@ -85,7 +81,7 @@ public static class MRWorld {
             }
 
             Point point = new Point(rect.x + rect.width / 2, rect.y + rect.height * offsetFactor);
-            return new Windows.Foundation.Point(point.x, AppCommandCenter.cameraMain.pixelHeight - point.y); //846 = Frame Height, static now but we can turn dynamic and get from Intrinsics
+            return new Windows.Foundation.Point(point.x, AppCommandCenter.CameraMain.pixelHeight - point.y); //846 = Frame Height, static now but we can turn dynamic and get from Intrinsics
         }
 
 #endif
@@ -126,7 +122,7 @@ public static class MRWorld {
         unprojectionOffset = new Vector2(0, 0);
 
         /*
-        if (posY > AppCommandCenter.cameraMain.pixelHeight / 2) // Got by trial and error / Negative = UP / Positive = Down
+        if (posY > AppCommandCenter.CameraMain.pixelHeight / 2) // Got by trial and error / Negative = UP / Positive = Down
         {
             unprojectionOffset = new Vector2(0, -0.12f);
             unprojectionOffset = new Vector2(0, 0);
@@ -266,7 +262,7 @@ public static class MRWorld {
         //LineDrawer.Draw(cameraFrame.Extrinsic.Position, worldPosition, UnityEngine.Color.red);
         /*
         Vector3 testWorldPosition = worldPosition;
-        if (testWorldPosition.y > AppCommandCenter.cameraMain.pixelHeight / 2) // Got by trial and error / Negative = UP / Positive = Down
+        if (testWorldPosition.y > AppCommandCenter.CameraMain.pixelHeight / 2) // Got by trial and error / Negative = UP / Positive = Down
         {
             testWorldPosition.y = testWorldPosition.y;
         } else {

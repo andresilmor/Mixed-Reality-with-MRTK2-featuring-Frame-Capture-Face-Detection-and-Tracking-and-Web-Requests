@@ -7,9 +7,9 @@ public abstract class UIView {
 
 
     abstract public void Bind(UIWindow window); 
-    abstract protected void BindTexts(); 
+    abstract protected void SetTexts(); 
     abstract protected void BindActions(); 
-    abstract protected void BindMaterials(); 
-
+    abstract protected void SetMaterials();
+    abstract protected void UnbindActions();
 
 }

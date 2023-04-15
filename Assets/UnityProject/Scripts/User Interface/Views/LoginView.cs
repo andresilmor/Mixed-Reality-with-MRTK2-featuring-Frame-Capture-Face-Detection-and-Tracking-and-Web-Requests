@@ -4,11 +4,7 @@ using TMPro;
 using UnityEngine;
 using Microsoft.MixedReality.Toolkit.UI;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 public class LoginView : UIView {
     protected override UIWindow _window { 
@@ -23,9 +19,10 @@ public class LoginView : UIView {
     public override void Bind(UIWindow window) {
         if (UIManager.ValidateWindow(window.WindowType, WindowType.H_2btn_00)) {
             _window = window;
+            UnbindActions();
             BindActions();
-            BindTexts();
-            BindMaterials();
+            SetTexts();
+            SetMaterials();
 
         }
 
@@ -41,9 +38,9 @@ public class LoginView : UIView {
 
     }
 
-    protected override void BindMaterials() {   }
+    protected override void SetMaterials() {   }
 
-    protected override void BindTexts() {
+    protected override void SetTexts() {
         (_window.components["Title"] as TextMeshPro).text = "Welcome Caregiver";
         (_window.components["Subtitle"] as TextMeshPro).text = "Select Login Method";
         (_window.components["TopButtonText"] as TextMeshPro).text = "Keyboard";
@@ -51,4 +48,7 @@ public class LoginView : UIView {
         
     }
 
+    protected override void UnbindActions() {
+        (_window.components["BotButton"] as Interactable).OnClick.RemoveAllListeners();
+    }
 }

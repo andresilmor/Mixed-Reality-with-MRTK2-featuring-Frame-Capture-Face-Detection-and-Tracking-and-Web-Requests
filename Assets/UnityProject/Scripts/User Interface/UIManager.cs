@@ -7,11 +7,7 @@ using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
-#if ENABLE_WINMD_SUPPORT
 using Debug = MRDebug;
-#else
-using Debug = UnityEngine.Debug;
-#endif
 
 
 [RequireComponent(typeof(MixedRealitySceneContent))]
@@ -30,11 +26,17 @@ public class UIManager : MonoBehaviour {
     }
 
     [Header("Config:")]
-    [SerializeField] public float viewScale = 1f;
+    [SerializeField] public float ViewScale = 1f;
+    [SerializeField] public float WindowDistance = 0.55f;
+    [SerializeField] public float AxisZOffset = 0.40f;
+    [SerializeField] public float AxisYOffset = 0.30f;
+
+    [SerializeField] GameObject uiPool;
+
+    [Header("Scriptable Objects:")]
     [SerializeField] GraphicUserInterfaceScriptableObject graphicUserInterface;
     [SerializeField] ButtonVisualMaterialScriptableObject circleButtonsMaterial;
     [SerializeField] ButtonVisualMaterialScriptableObject rectangleButtonsMaterial;
-    [SerializeField] GameObject uiPool;
 
     [Header("Audio Clips:")]
     [SerializeField] public AudioClip OpenWindowClip;
@@ -43,6 +45,10 @@ public class UIManager : MonoBehaviour {
 
     private List<UIStacker> UIStackers = new List<UIStacker>();
     private Dictionary<WindowType, List<UIWindow>> WindowPool = new Dictionary<WindowType, List<UIWindow>>();
+
+
+    
+
 
     void Awake() {
         Instance = this;
@@ -59,9 +65,14 @@ public class UIManager : MonoBehaviour {
 
         Vector3 position;
         if (stacker is null) {
-            position = AppCommandCenter.cameraMain.transform.position;
-            position.z += 0.40f;
-            position.y += -0.105f;
+            //position = AppCommandCenter.CameraMain.transform.position;
+            //position.z += AxisZOffset;
+            //position.y += AxisYOffset;
+
+            position = AppCommandCenter.CameraMain.transform.position + AppCommandCenter.CameraMain.transform.forward * UIManager.Instance.WindowDistance;
+
+            position.y += UIManager.Instance.AxisYOffset;
+
 
             GameObject newGameObject = new GameObject(stackerName);
             newGameObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
@@ -92,14 +103,17 @@ public class UIManager : MonoBehaviour {
 
     }
 
-    private UIWindow InstantiateWindow(WindowType toOpen, UIView uiView, UIStacker stacker, Vector3? position, Quaternion rotation, bool isNotification = false) {
+    private UIWindow InstantiateWindow(WindowType toOpen, UIView uiView, UIStacker stacker, Vector3? position, Quaternion? rotation, bool isNotification = false) {
         UIWindow window = WindowPool.ContainsKey(toOpen) ? WindowPool[toOpen].First() : null;
         if (!window) {
             foreach (var data in graphicUserInterface.windows) {
                 if (data.windowType.Equals(toOpen)) {
-                    window = Instantiate(data.window, position is null ? Vector3.zero : (Vector3)position, rotation, stacker.gameObject.transform).GetComponent<UIWindow>();
+                    window = Instantiate(data.window, position is null ? Vector3.zero : (Vector3)position, (Quaternion)rotation, stacker.gameObject.transform).GetComponent<UIWindow>();
 
-                    window.gameObject.transform.localScale *= viewScale;
+                    if (rotation is null)
+                        window.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
+
+                    window.gameObject.transform.localScale *= ViewScale;
 
                     window.WindowType = toOpen;
                     window.BindedView = uiView;
