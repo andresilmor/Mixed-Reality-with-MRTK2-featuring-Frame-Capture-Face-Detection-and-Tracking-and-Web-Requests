@@ -34,7 +34,7 @@ public class CameraFrameReader
 		public MediaFrameReference mediaFrameReference;
 #endif
 		/// <summary>
-		/// Frame image data in format OpenCV
+		/// Frame image Data in format OpenCV
 		/// </summary>
 		//public Mat frameMat;
 		public CameraExtrinsic extrinsic;
@@ -245,8 +245,8 @@ public class CameraFrameReader
             /// <summary>
             /// Gets a buffer as an array of bytes. <see href="https://docs.microsoft.com/de-de/windows/win32/winrt/imemorybufferbyteaccess-getbuffer"/>.
             /// </summary>
-            /// <param name="value">A pointer to a byte array containing the buffer data</param>
-            /// <param name="capacity">The number of bytes in the returned array</param>
+            /// <param Name="value">A pointer to a byte array containing the buffer Data</param>
+            /// <param Name="capacity">The number of bytes in the returned array</param>
 			
             void GetBuffer(out byte* value, out uint capacity);
 		

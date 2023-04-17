@@ -51,7 +51,7 @@ public static class AccountManager {
 
         }
 
-        QRCodeReaderManager.DetectQRCodes(1.5f);
+        QRCodeReaderManager.DetectQRCodes(null, 1.5f);
         Debug.Log("yO");
 
         //QRCodesManager.Instance.StartQRTracking();
@@ -91,7 +91,7 @@ public static class AccountManager {
                     if (succeed) {
                         JObject response = JObject.Parse(@message);
                         //Debug.Log(response.ToString());
-                        if (response.HasValues && response["data"] != null) {
+                        if (response.HasValues && response["Data"] != null) {
                             isLogged = SaveUser(response);
                             requesting = false;
                             UIManager.Instance.CloseWindow(AccountManager.loginWindow.stacker);
@@ -115,7 +115,7 @@ public static class AccountManager {
             new APIManager.Field[] {
                 new APIManager.Field("token"),
                 new APIManager.Field("uuid"),
-                new APIManager.Field("name"),
+                new APIManager.Field("Name"),
                 new APIManager.Field("memberOf", new APIManager.Field[] {
                     new APIManager.Field("role"),
                     new APIManager.Field("institution", new APIManager.Field[] {
@@ -133,8 +133,8 @@ public static class AccountManager {
     #region Logged Account Persistence
 
     private static bool SaveUser(JObject response) {
-        if (RealmManager.CreateUpdateUser(response, response["data"]["memberLogin"]["uuid"].Value<string>()))
-            currentUserUUID = response["data"]["memberLogin"]["uuid"].Value<string>();
+        if (RealmManager.CreateUpdateUser(response, response["Data"]["memberLogin"]["uuid"].Value<string>()))
+            currentUserUUID = response["Data"]["memberLogin"]["uuid"].Value<string>();
 
         return SetRelationshipInstitution(response);
 
@@ -145,7 +145,7 @@ public static class AccountManager {
     private static bool SetRelationshipInstitution(JObject response) {
         UserEntity currentUser = RealmManager.realm.Find<UserEntity>(currentUserUUID);
 
-        foreach (var relationship in response["data"]["memberLogin"]["memberOf"])
+        foreach (var relationship in response["Data"]["memberLogin"]["memberOf"])
             RealmManager.CreateUpdateUserMembership(currentUser, relationship);
 
         return true;

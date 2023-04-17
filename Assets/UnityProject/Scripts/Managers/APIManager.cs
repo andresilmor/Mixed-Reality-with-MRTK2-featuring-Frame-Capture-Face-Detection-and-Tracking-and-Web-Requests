@@ -197,12 +197,12 @@ public static class APIManager {
                 Debug.Log("Binary");
                 /*
                 try { 
-                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray().Length);
-                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].uuid);
-                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].faceRect.x1);
-                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].emotionsDetected.continuous["Valence"].ToString());
-                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()[0].emotionsDetected.categorical.ToArray()[0]);
-                    Debug.Log(ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).GetType());
+                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(Data)).detections.ToArray().Length);
+                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(Data)).detections.ToArray()[0].uuid);
+                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(Data)).detections.ToArray()[0].faceRect.x1);
+                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(Data)).detections.ToArray()[0].emotionsDetected.continuous["Valence"].ToString());
+                Debug.Log("r: " + ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(Data)).detections.ToArray()[0].emotionsDetected.categorical.ToArray()[0]);
+                    Debug.Log(ProtoBuf.Serializer.Deserialize<ProtoClasses.PacientsAndEmotionsInferenceReply>(new MemoryStream(Data)).GetType());
                 } catch (Exception ex) {
                     Debug.Log(ex.Message);
                 }
@@ -213,7 +213,7 @@ public static class APIManager {
               
                 List<Detection> detections = new List<Detection>();
 
-                foreach (PacientAndEmotionDetected pacient in ProtoBuf.Serializer.Deserialize<PacientsAndEmotionsInferenceReply>(new MemoryStream(data)).detections.ToArray()) {
+                foreach (PacientAndEmotionDetected pacient in ProtoBuf.Serializer.Deserialize<PacientsAndEmotionsInferenceReply>(new MemoryStream(Data)).detections.ToArray()) {
                     detections.Add(new Detection(
                             id: pacient.uuid,
                             bodyCenter: new BodyCenter(
@@ -313,7 +313,7 @@ public static class APIManager {
                 action?.Invoke(response.DataAsText, true);
                 break;
 
-            // The request finished with an unexpected error. The request's Exception property may contain more info about the error.
+            // The request finished with an unexpected error. The request's Exception property may contain more Info about the error.
             case HTTPRequestStates.Error:
                 action?.Invoke(response.DataAsText, false);
                 Debug.LogError("Request Finished with Error! " + (request.Exception != null ? (request.Exception.Message + "\n" + request.Exception.StackTrace) : "No Exception"));

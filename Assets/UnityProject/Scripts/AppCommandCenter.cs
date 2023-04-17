@@ -178,8 +178,8 @@ public class AppCommandCenter : MonoBehaviour {
                 //MLManager.AnalyseFrame();
 
             });
-            (timerOverNotification.components["CloseButton"] as Interactable).OnClick.AddListener(() => {
-                UIManager.Instance.CloseWindow(timerOverNotification.stacker, (timerOverNotification.components["CloseButton"] as Interactable).gameObject.GetComponent<AudioSource>());
+            (timerOverNotification.components["CloseBtn"] as Interactable).OnClick.AddListener(() => {
+                UIManager.Instance.CloseWindow(timerOverNotification.stacker, (timerOverNotification.components["CloseBtn"] as Interactable).gameObject.GetComponent<AudioSource>());
 
             });
 
@@ -201,11 +201,21 @@ public class AppCommandCenter : MonoBehaviour {
         UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.H_2btn_00, new LoginView(), stackerName: "Login Window");
 
     }
-    
+
+    public static void StopApplication() {
+        // save any game Data here
+#if UNITY_EDITOR
+        // Application.Quit() does not work in the editor so
+        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
+    }
+
     private void SetDebugger() {
         MRDebug.SetCubeForTest(_cubeForTest);
         MRDebug.SetSphereForTest(_sphereForTest);
-        MRDebug.BindDebugConsole(_debugText);
         LineDrawer.SetDrawLine(_lineForTest);
 
     }

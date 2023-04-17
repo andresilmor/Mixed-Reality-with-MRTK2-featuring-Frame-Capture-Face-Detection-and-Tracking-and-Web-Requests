@@ -33,6 +33,10 @@ public class UIManager : MonoBehaviour {
 
     [SerializeField] GameObject uiPool;
 
+    [Header("Menus")]
+    [SerializeField] public HandMenu HandMenu;
+    [SerializeField] public HomeMenu HomeMenu;
+
     [Header("Scriptable Objects:")]
     [SerializeField] GraphicUserInterfaceScriptableObject graphicUserInterface;
     [SerializeField] ButtonVisualMaterialScriptableObject circleButtonsMaterial;
@@ -57,7 +61,20 @@ public class UIManager : MonoBehaviour {
 
     void Start() {
         graphicUserInterface.SetupComponentsDictionary();
+
+
         //AppCommandCenter.StartApplication();
+
+    }
+
+    public ButtonVisualMaterialScriptableObject.ButtonStatus? GetCircleButtonMaterial(string id) {
+        foreach (ButtonVisualMaterialScriptableObject.Data data in circleButtonsMaterial.ButtonMaterial) {
+            if (data.Name.Equals(id))
+                return data.ButtonStatus;
+
+        }
+
+        return null;
 
     }
 
@@ -73,7 +90,7 @@ public class UIManager : MonoBehaviour {
 
             position.y += UIManager.Instance.AxisYOffset;
 
-
+            
             GameObject newGameObject = new GameObject(stackerName);
             newGameObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             newGameObject.transform.parent = this.gameObject.transform;

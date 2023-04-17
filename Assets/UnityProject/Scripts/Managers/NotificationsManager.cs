@@ -29,8 +29,8 @@ public static class NotificationsManager {
                     if (succeed) {
                         JObject response = JObject.Parse(@message);
 
-                        if (response.HasValues && (response["data"]["medicationToTake"] as JArray).Count > 0) {
-                            foreach (JToken medicationToTake in response["data"]["medicationToTake"])
+                        if (response.HasValues && (response["Data"]["medicationToTake"] as JArray).Count > 0) {
+                            foreach (JToken medicationToTake in response["Data"]["medicationToTake"])
                                 RealmManager.CreateUpdateMedicationToTake(medicationToTake, institutionUUID);
 
                             AppCommandCenter.Instance.StartCoroutine(CreateTimerMedication(institutionUUID));
@@ -53,7 +53,7 @@ public static class NotificationsManager {
                 new APIManager.Field("intOfTime"),
                 new APIManager.Field("medication", new APIManager.Field[] {
                     new APIManager.Field("uuid"),
-                    new APIManager.Field("name")
+                    new APIManager.Field("Name")
                 }),
                 new APIManager.Field("pacient", new APIManager.Field[] {
                     new APIManager.Field("uuid")

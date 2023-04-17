@@ -38,10 +38,10 @@ public static class RealmManager {
     }
 
     /// <summary>
-    /// Checks existance of UserEntity with the gived userUUID, if already existes just updates the content based on the data, if not, a new one is created.
+    /// Checks existance of UserEntity with the gived userUUID, if already existes just updates the content based on the Data, if not, a new one is created.
     /// </summary>
-    /// <param name="data"></param>
-    /// <param name="userUUID"></param>
+    /// <param Name="data"></param>
+    /// <param Name="userUUID"></param>
     /// <returns>True: Updated/created and commited | False: Did not commit</returns>
     public static bool CreateUpdateUser(JObject data, string userUUID) {
         RealmObject userObject = RealmManager.realm.Find<UserEntity>(userUUID);
@@ -51,13 +51,13 @@ public static class RealmManager {
                 try {
                     if (userObject == null) {
                         userObject = new UserEntity(
-                                UUID: data["data"]["memberLogin"]["uuid"].Value<string>(),
-                                token: data["data"]["memberLogin"]["token"].Value<string>()
+                                UUID: data["Data"]["memberLogin"]["uuid"].Value<string>(),
+                                token: data["Data"]["memberLogin"]["token"].Value<string>()
                         );
                         realm.Add(userObject);
 
                     } else {
-                        (userObject as UserEntity).Token = data["data"]["memberLogin"]["token"].Value<string>();
+                        (userObject as UserEntity).Token = data["Data"]["memberLogin"]["token"].Value<string>();
                         realm.Add(userObject, update: true);
                         Debug.Log("User Updtted");
 
@@ -80,8 +80,8 @@ public static class RealmManager {
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="userObject"></param>
-    /// <param name="relationship"></param>
+    /// <param Name="userObject"></param>
+    /// <param Name="relationship"></param>
     /// <returns></returns>
     public static bool CreateUpdateUserMembership(RealmObject userObject, JToken relationship) {
         InstitutionEntity institution = RealmManager.realm.Find<InstitutionEntity>(relationship["institution"]["uuid"].Value<string>());
@@ -119,7 +119,7 @@ public static class RealmManager {
 
         MedicationEntity medication = RealmManager.realm.Find<MedicationEntity>(data["medication"]["uuid"].Value<string>());
         if (medication is null)
-            medication = new MedicationEntity(data["medication"]["uuid"].Value<string>(), data["medication"]["name"].Value<string>());
+            medication = new MedicationEntity(data["medication"]["uuid"].Value<string>(), data["medication"]["Name"].Value<string>());
 
         MedicationToTakeEntity medicationToTake = null;
         medicationToTake = RealmManager.realm.All<MedicationToTakeEntity>().Filter(

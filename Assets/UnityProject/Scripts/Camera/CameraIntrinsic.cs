@@ -77,13 +77,13 @@ public class CameraIntrinsic
     public readonly Windows.Media.Capture.Frames.VideoMediaFrameFormat videoFormat;
 #endif
 
-    /// <param name="focalLength">focal length for the camera</param>
-    /// <param name="imageWidth">image width in pixels</param>
-    /// <param name="imageHeight">image height in pixels</param>
-    /// <param name="principalPoint">principal point for the camera </param>
-    /// <param name="radialDistortion">radial distortion for the camera</param>
-    /// <param name="tangentialDistortion">tangential distortion for the camera</param>
-    /// <param name="undistortedProjectionTransform">Undistorted projection transform for the camera</param>
+    /// <param Name="focalLength">focal length for the camera</param>
+    /// <param Name="imageWidth">image width in pixels</param>
+    /// <param Name="imageHeight">image height in pixels</param>
+    /// <param Name="principalPoint">principal point for the camera </param>
+    /// <param Name="radialDistortion">radial distortion for the camera</param>
+    /// <param Name="tangentialDistortion">tangential distortion for the camera</param>
+    /// <param Name="undistortedProjectionTransform">Undistorted projection transform for the camera</param>
     public CameraIntrinsic(
         Vector2 focalLength,
         uint imageWidth,
@@ -120,7 +120,7 @@ public class CameraIntrinsic
     /// <summary>
     /// Constructor using default values except the project transformation.
     /// </summary>
-    /// <param name="undistortedProjectionTransform">Undistorted projection transform for the camera</param>
+    /// <param Name="undistortedProjectionTransform">Undistorted projection transform for the camera</param>
     public CameraIntrinsic(Matrix4x4 undistortedProjectionTransform)
     {
         FocalLength = Vector2.zero;

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Debug = MRDebug;
 
-public class UIHandMenu : MonoBehaviour
+public class HandMenu : MonoBehaviour
 {
     [Header("Buttons Config:")]
     [SerializeField] Interactable HomeButton;
@@ -13,7 +13,7 @@ public class UIHandMenu : MonoBehaviour
     [SerializeField] Interactable LogoutButton;
 
     [Header("Windows:")]
-    [SerializeField] UIHomeMenu HomeMenu;
+    [SerializeField] HomeMenu HomeMenu;
 
     // Start is called before the first frame update
     void Start() {
@@ -21,17 +21,20 @@ public class UIHandMenu : MonoBehaviour
             Debug.Log("HomeMenu not defined");
         else {
 
+            HomeButton.OnClick.RemoveAllListeners();
+
             // Home Button
             HomeMenu.gameObject.SetActive(false);
+
             HomeButton.OnClick.AddListener(() => {
                 HomeMenu.gameObject.SetActive(!HomeMenu.gameObject.activeInHierarchy);
 
-                Vector3 position = AppCommandCenter.CameraMain.transform.position + AppCommandCenter.CameraMain.transform.forward * UIManager.Instance.WindowDistance;
+                Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * UIManager.Instance.WindowDistance;
 
                 position.y += UIManager.Instance.AxisYOffset;
 
                 HomeMenu.gameObject.transform.position = position;
-                HomeMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
+                HomeMenu.gameObject.transform.LookAt(Camera.main.transform.position);
                 //HomeMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform);   
 
             });

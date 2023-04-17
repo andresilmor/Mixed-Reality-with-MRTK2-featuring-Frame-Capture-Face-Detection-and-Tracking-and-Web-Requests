@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9131824738477575181}
-  - component: {fileID: 9131824738477575182}
   m_Layer: 0
   m_Name: MixedRealityToolkitVisualProfiler
   m_TagString: Untagged
@@ -32,40 +31,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9131824738477575182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9131824738477575183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 146bf582aa2e02d41b97e5f4aa778db5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isVisible: 1
-  frameInfoVisible: 1
-  memoryStatsVisible: 1
-  frameSampleRate: 0.1
-  windowAnchor: 7
-  windowOffset: {x: 0.1, y: 0.1}
-  windowScale: 1
-  windowFollowSpeed: 5
-  showProfilerDuringMRC: 0
-  displayedDecimalDigits: 1
-  frameRateColors:
-  - percentageOfTarget: 0.95
-    color: {r: 0.49609375, g: 0.7265625, b: 0, a: 1}
-  - percentageOfTarget: 0.75
-    color: {r: 0.99609375, g: 0.72265625, b: 0, a: 1}
-  - percentageOfTarget: 0
-    color: {r: 0.99609375, g: 0, b: 0, a: 1}
-  baseColor: {r: 0.3125, g: 0.3125, b: 0.3125, a: 1}
-  memoryUsedColor: {r: 0, g: 0.640625, b: 0.93359375, a: 1}
-  memoryPeakColor: {r: 0.99609375, g: 0.72265625, b: 0, a: 1}
-  memoryLimitColor: {r: 0.5859375, g: 0.5859375, b: 0.5859375, a: 1}
-  defaultMaterial: {fileID: 0}
-  defaultInstancedMaterial: {fileID: 0}
-  IsToBuildWindow: 1
-  DoReset: 1

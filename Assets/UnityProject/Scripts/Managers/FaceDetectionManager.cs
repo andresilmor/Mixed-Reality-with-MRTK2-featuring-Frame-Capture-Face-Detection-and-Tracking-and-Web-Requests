@@ -542,7 +542,7 @@ public static class FaceDetectionManager {
 
         MatOfRect tmpobjects = new MatOfRect();
 
-        Mat img1 = new Mat(img, r1);//subimage for rectangle -- without data copying
+        Mat img1 = new Mat(img, r1);//subimage for rectangle -- without Data copying
 
         cascade.detectMultiScale(img1, tmpobjects, 1.1, 2, 0 | Objdetect.CASCADE_DO_CANNY_PRUNING | Objdetect.CASCADE_SCALE_IMAGE | Objdetect.CASCADE_FIND_BIGGEST_OBJECT, new Size(d, d), new Size());
 

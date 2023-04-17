@@ -389,7 +389,7 @@ public static class MRWorld {
 
     // ATTENTION TO THIS IS FOR BOUNDIG BOX
     public static Vector3 GetWorldPositionOfPixel(Point pointCV, Vector2 unprojectionOffset, CameraFrame cameraFrame, GameObject toInstantiate = null, int layer = 31, bool debug = false, GameObject debugText = null) {
-        MRDebug.ClearConsole();
+        
 
         Vector3 layForward = Vector3.zero;
 

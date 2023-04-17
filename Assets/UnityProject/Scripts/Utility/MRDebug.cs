@@ -7,9 +7,10 @@ using TMPro;
 using UnityEditor.Presets;
 using UnityEngine;
 
+using Debug = MRDebug;
+
 public static class MRDebug
 {
-    private static TextMeshPro _debugConsole = null;
 
     private static GameObject _cubeForTest;
     private static GameObject _sphereForTest;
@@ -65,6 +66,7 @@ public static class MRDebug
             _debugConsole.text = _debugConsole.text + text;
 
 #else
+        _logs.Add(new AppLog(logType, System.DateTime.Now + " | " + Enum.GetName(typeof(LogType), logType) + " | " + text + "\n"));
         UnityEngine.Debug.Log(Enum.GetName(typeof(LogType), logType) + " | " + text + "\n");
 #endif
 
@@ -88,10 +90,17 @@ public static class MRDebug
 
     }
 
-    public static List<AppLog> GetLog(params LogType[] logType) {
+    public static List<AppLog> GetLog(bool filterInfo, bool filterWarning, bool filterException, bool filterError, bool filterFatal) {
         List<AppLog> filteredLogs = new List<AppLog>();
+
         foreach (AppLog log in _logs) {
-            if (logType.Contains<LogType>(log.type))
+            if (
+                (log.type is LogType.Info && filterInfo) ||
+                (log.type is LogType.Warning && filterWarning) ||
+                (log.type is LogType.Exception && filterException) ||
+                (log.type is LogType.Error && filterError) ||
+                (log.type is LogType.Fatal && filterFatal)
+                )
                 filteredLogs.Add(log);
 
         }
@@ -100,12 +109,7 @@ public static class MRDebug
 
     }
 
-    public static void ClearConsole()
-    {
-        _debugConsole.text = "";
-
-    }
-
+ 
     public static GameObject GetCubeForTest()
     {
         return _cubeForTest;
@@ -126,17 +130,6 @@ public static class MRDebug
         _sphereForTest = sphere;
     }
 
-    public static void BindDebugConsole(TextMeshPro text)
-    {
-        _debugConsole = text;
-        foreach (AppLog log in _logs)
-            _debugConsole.text = _debugConsole.text + log.info;
-
-    }
-
-    public static void UnbindDebugConsole() {
-        _debugConsole = null;
-    }
 
     public static void DrawFieldView()
     {

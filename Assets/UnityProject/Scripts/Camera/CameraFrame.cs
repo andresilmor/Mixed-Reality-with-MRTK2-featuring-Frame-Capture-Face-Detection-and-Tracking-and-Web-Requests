@@ -21,7 +21,7 @@ public class CameraFrame : IDisposable
 #endif
 
         /// <summary>
-        /// Contains the image data as OpenCV <seealso cref="Mat"/>.
+        /// Contains the image Data as OpenCV <seealso cref="Mat"/>.
         /// </summary>
         public readonly Mat Mat;
 
@@ -85,7 +85,7 @@ public class CameraFrame : IDisposable
         /// Encodes the image of the camera frame into a memory buffer using OpenCV.
         /// See the <see href="https://docs.opencv.org/4.5.0/d4/da8/group__imgcodecs.html#ga288b8b3da0892bd651fce07b3bbd3a56">OpenCV documentation</see> for the list of supported file formats.
         /// </summary>
-        /// <param name="ext">The extension of the file format supported by OpenCV</param>
+        /// <param Name="ext">The extension of the file format supported by OpenCV</param>
         /// <returns>A resized buffer to fit the compressed image</returns>
         public byte[] EncodeImage(string ext = ".jpg")
         {
