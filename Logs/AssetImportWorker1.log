@@ -15,7 +15,7 @@ D:/PC/Desktop/IP/Rep/MR_M
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
-52278
+55265
 Successfully changed project path to: D:/PC/Desktop/IP/Rep/MR_M
 D:/PC/Desktop/IP/Rep/MR_M
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,12 +47,12 @@ D:/PC/Desktop/IP/Rep/MR_M
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [31180] Host "[IP] 172.17.2.201 [Port] 0 [Flags] 2 [Guid] 1862322826 [EditorId] 1862322826 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [14916] Host "[IP] 172.17.2.201 [Port] 0 [Flags] 2 [Guid] 943291202 [EditorId] 943291202 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [31180] Host "[IP] 172.17.2.201 [Port] 0 [Flags] 2 [Guid] 1862322826 [EditorId] 1862322826 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [14916] Host "[IP] 172.17.2.201 [Port] 0 [Flags] 2 [Guid] 943291202 [EditorId] 943291202 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 151.44 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 4.86 ms.
+Refreshing native plugins compatible for Editor in 166.48 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 4.30 ms.
 Initialize engine version: 2021.3.16f1 (4016570cf34f)
 [Subsystems] Discovering subsystems at path C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path D:/PC/Desktop/IP/Rep/MR_M/Assets
@@ -67,55 +67,55 @@ Initialize mono
 Mono path[0] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56512
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56060
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
 Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll
-Registered in 0.008109 seconds.
+Registered in 0.009126 seconds.
 Native extension for UWP target not found
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 117.72 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 0.17 ms.
+Refreshing native plugins compatible for Editor in 123.78 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.12 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.652 seconds
+- Completed reload, in  0.697 seconds
 Domain Reload Profiling:
-	ReloadAssembly (652ms)
-		BeginReloadAssembly (64ms)
+	ReloadAssembly (698ms)
+		BeginReloadAssembly (68ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (488ms)
-			LoadAssemblies (62ms)
+		EndReloadAssembly (521ms)
+			LoadAssemblies (66ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
 			SetupTypeCache (106ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (25ms)
-			SetupLoadedEditorAssemblies (301ms)
+			RebuildScriptCaches (37ms)
+			SetupLoadedEditorAssemblies (320ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (59ms)
+				InitializePlatformSupportModulesInManaged (61ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (118ms)
+				RefreshPlugins (124ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (84ms)
-				ProcessInitializeOnLoadMethodAttributes (39ms)
+				ProcessInitializeOnLoadAttributes (93ms)
+				ProcessInitializeOnLoadMethodAttributes (40ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.017484 seconds.
+Registered in 0.018224 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for UWP target not found
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 109.15 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
+Refreshing native plugins compatible for Editor in 122.21 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.04 ms.
 DisplayProgressbar: Restoring NuGet Packages
 Added DLL directory D:\PC\Desktop\IP\Rep\MR_M\Assets\Packages\Microsoft.VCRTForwarders.140.1.0.7\Unity\x64 to the user search path.
 UnityEngine.StackTraceUtility:ExtractStackTrace ()
@@ -140,48 +140,51 @@ UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
 
 (Filename: Assets/Packages/Microsoft.MixedReality.QR.0.5.3037/Unity/Editor/Microsoft.MixedReality.QR.Init.cs Line: 60)
 
-[XR] [MROpenXR][Info   ][21:12:30.490798][tid:79cc] MeshProvider_RegisterLifecycleProvider
-[XR] [MROpenXR][Info   ][21:12:30.490929][tid:79cc] InputProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][20:51:44.248455][tid:3a44] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][20:51:44.248455][tid:3a44] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][20:51:44.248542][tid:3a44] InputProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][20:51:44.248542][tid:3a44] InputProvider_RegisterLifecycleProvider
 [XR] Error loading subsystem: Display (1) (header mismatch?)
-[XR] [MROpenXR][Info   ][21:12:30.492076][tid:79cc] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.7.0.0 PartA_PrivTags=33554432
+[XR] [MROpenXR][Info   ][20:51:44.250128][tid:3a44] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
+[XR] [MROpenXR][Info   ][20:51:44.250128][tid:3a44] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
 Mono: successfully reloaded assembly
-- Completed reload, in  2.088 seconds
+- Completed reload, in  1.850 seconds
 Domain Reload Profiling:
-	ReloadAssembly (2089ms)
-		BeginReloadAssembly (208ms)
+	ReloadAssembly (1851ms)
+		BeginReloadAssembly (217ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
+			DisableScriptedObjects (6ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (130ms)
-		EndReloadAssembly (1780ms)
-			LoadAssemblies (89ms)
+			CreateAndSetChildDomain (123ms)
+		EndReloadAssembly (1512ms)
+			LoadAssemblies (105ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (273ms)
+			SetupTypeCache (327ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (77ms)
-			SetupLoadedEditorAssemblies (1294ms)
+			RebuildScriptCaches (92ms)
+			SetupLoadedEditorAssemblies (937ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (13ms)
+				InitializePlatformSupportModulesInManaged (16ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (109ms)
-				BeforeProcessingInitializeOnLoad (106ms)
-				ProcessInitializeOnLoadAttributes (1004ms)
-				ProcessInitializeOnLoadMethodAttributes (52ms)
-				AfterProcessingInitializeOnLoad (9ms)
+				RefreshPlugins (122ms)
+				BeforeProcessingInitializeOnLoad (122ms)
+				ProcessInitializeOnLoadAttributes (597ms)
+				ProcessInitializeOnLoadMethodAttributes (69ms)
+				AfterProcessingInitializeOnLoad (11ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (4ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 2.16 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
-Unloading 7054 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 417 unused Assets / (216.7 KB). Loaded Objects now: 7362.
-Memory consumption went from 274.9 MB to 274.7 MB.
-Total: 4.557500 ms (FindLiveObjects: 0.510800 ms CreateObjectMapping: 0.552300 ms MarkObjects: 3.184500 ms  DeleteObjects: 0.309200 ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 2.28 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.04 ms.
+Unloading 7040 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 251 unused Assets / (196.1 KB). Loaded Objects now: 7359.
+Memory consumption went from 273.5 MB to 273.3 MB.
+Total: 5.477700 ms (FindLiveObjects: 0.531300 ms CreateObjectMapping: 0.604300 ms MarkObjects: 4.112500 ms  DeleteObjects: 0.228900 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -195,189 +198,121 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 194409.501326 seconds.
-  path: Assets/SCI-FI GUI Pack/Resources/Font/OCRAStd.otf
-  artifactKey: Guid(b05a299fbee884175ae95ec19d26b59f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/SCI-FI GUI Pack/Resources/Font/OCRAStd.otf using Guid(b05a299fbee884175ae95ec19d26b59f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2531d4e5e44b97e7f729f211d13f426') in 0.134611 seconds 
+  Time since last request: 365959.565001 seconds.
+  path: Packages/com.microsoft.mixedreality.toolkit.examples/StandardAssets/Models/Materials/5.mat
+  artifactKey: Guid(b62873551dfeef943be6324c304cd0ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.examples/StandardAssets/Models/Materials/5.mat using Guid(b62873551dfeef943be6324c304cd0ab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '741704e043dda7b22e67c42612f4b41e') in 0.198392 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 13.061836 seconds.
-  path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Experimental - SceneUnderstanding/Profiles/DemoSceneUnderstandingObserverProfile.asset
-  artifactKey: Guid(c16ec84a27c8162459bd27e1758712bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Experimental - SceneUnderstanding/Profiles/DemoSceneUnderstandingObserverProfile.asset using Guid(c16ec84a27c8162459bd27e1758712bd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f515fbc82cb29b6b9fc96b94a5eff55e') in 0.154431 seconds 
+  Time since last request: 0.000031 seconds.
+  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicBackPlateRecordingState.mat
+  artifactKey: Guid(68581ab65a54bad45b3d0fbfca7613fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicBackPlateRecordingState.mat using Guid(68581ab65a54bad45b3d0fbfca7613fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c8aa227b1e696b789bbd6ded6c1f0f50') in 0.033883 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000015 seconds.
-  path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - Input/Scenes/DisablePointers/DisablePointersExampleSpeechCommandsProfile.asset
-  artifactKey: Guid(21d45f668d3389748bf43c1ea1814389) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - Input/Scenes/DisablePointers/DisablePointersExampleSpeechCommandsProfile.asset using Guid(21d45f668d3389748bf43c1ea1814389) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3337d26d304133a99fb67df4936d71aa') in 0.144059 seconds 
+  Time since last request: 0.000030 seconds.
+  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconHandJoint.mat
+  artifactKey: Guid(e6ab953dc933471489f5ebff6791a886) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconHandJoint.mat using Guid(e6ab953dc933471489f5ebff6791a886) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '347d5bcf1b35a65bc5e8e61781656a95') in 0.111453 seconds 
 ========================================================================
 Received Import Request.
   Time since last request: 0.000020 seconds.
-  path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoExperienceSettingsProfile.asset
-  artifactKey: Guid(d67dc8667c2253644891c8627f5f31f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoExperienceSettingsProfile.asset using Guid(d67dc8667c2253644891c8627f5f31f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f8ad96eec32fe4ab7d359921c6ba03c') in 0.009617 seconds 
+  path: Packages/com.microsoft.mixedreality.toolkit.examples/StandardAssets/Materials/CubeOpaqueBorder.mat
+  artifactKey: Guid(9846ae30ab91499fa97b4533cd15b970) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.examples/StandardAssets/Materials/CubeOpaqueBorder.mat using Guid(9846ae30ab91499fa97b4533cd15b970) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '89e9db3543706fd110f6dbf908e0e193') in 0.073970 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000019 seconds.
-  path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoPointerProfile.asset
-  artifactKey: Guid(fa348bf44b661704fb20e5d975528e84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoPointerProfile.asset using Guid(fa348bf44b661704fb20e5d975528e84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7d124b69b13f433cb8118fb99f32045') in 0.151947 seconds 
+  Time since last request: 0.000023 seconds.
+  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconMessage.mat
+  artifactKey: Guid(c3ec3f87c678f3d48bc51f5625647104) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconMessage.mat using Guid(c3ec3f87c678f3d48bc51f5625647104) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '87503ae32d732464fc5014ca645d4748') in 0.029473 seconds 
 ========================================================================
 Received Import Request.
   Time since last request: 0.000018 seconds.
-  path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoInputSimulationProfile.asset
-  artifactKey: Guid(0e54184c8f9cca44aad8fdda3f62fd82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoInputSimulationProfile.asset using Guid(0e54184c8f9cca44aad8fdda3f62fd82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f709c641bfda15f3d66adde0ef9c3508') in 0.043021 seconds 
+  path: Packages/com.microsoft.mixedreality.toolkit.examples/StandardAssets/Materials/CubeInnerGlow.mat
+  artifactKey: Guid(29a177f4c4044f31919d6183391c9805) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.examples/StandardAssets/Materials/CubeInnerGlow.mat using Guid(29a177f4c4044f31919d6183391c9805) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c1867deb27ae8b9921465745460e2e33') in 0.109297 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000020 seconds.
-  path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Experimental - SceneUnderstanding/Profiles/DemoSceneUnderstandingSystemProfile.asset
-  artifactKey: Guid(4630fffe09ac63045b63a7c8f851e1b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Experimental - SceneUnderstanding/Profiles/DemoSceneUnderstandingSystemProfile.asset using Guid(4630fffe09ac63045b63a7c8f851e1b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff5bb0d2c79213d1ce01ebb186e3cfe8') in 0.020059 seconds 
+  Time since last request: 0.000035 seconds.
+  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconAdd.mat
+  artifactKey: Guid(ccf34f78a6419584fa9cea97b5e46131) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconAdd.mat using Guid(ccf34f78a6419584fa9cea97b5e46131) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ea2daeefd67b6e1bff2729221ececb25') in 0.042346 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000032 seconds.
-  path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - Input/Scenes/DisablePointers/DisablePointersExampleConfigurationProfile.asset
-  artifactKey: Guid(66621bc077ea36f48b8aae415eaefed1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - Input/Scenes/DisablePointers/DisablePointersExampleConfigurationProfile.asset using Guid(66621bc077ea36f48b8aae415eaefed1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b3d49da444385415d65822eba0b8c1ed') in 0.187896 seconds 
+  Time since last request: 0.000022 seconds.
+  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconClose.mat
+  artifactKey: Guid(115e8a36a794d414d96ca3ae31a090fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconClose.mat using Guid(115e8a36a794d414d96ca3ae31a090fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd63d9f92f7dd4267729ab15cd5da0a0b') in 0.012193 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000015 seconds.
+  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconMicrophone.mat
+  artifactKey: Guid(23b680d6c13ccad4ba5004f1b6a22462) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconMicrophone.mat using Guid(23b680d6c13ccad4ba5004f1b6a22462) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd1b9de2e9177bb313b93a48f45d2ec65') in 0.224867 seconds 
 ========================================================================
 Received Import Request.
   Time since last request: 0.000019 seconds.
-  path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoInputActionsProfile.asset
-  artifactKey: Guid(4e612b3b9b7239648a53f22f541356c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoInputActionsProfile.asset using Guid(4e612b3b9b7239648a53f22f541356c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a61ce0fbb6ac3b2642227cee62d58f5') in 0.006464 seconds 
+  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconCamera.mat
+  artifactKey: Guid(943fce092bd9aea49808ff09b520bf74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicButtonIconCamera.mat using Guid(943fce092bd9aea49808ff09b520bf74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '900efab644784c4b2b3a56a085511467') in 0.031609 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoSpeechCommandsProfile.asset
-  artifactKey: Guid(0c8a5b59737fff34c9f5e511149e29fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoSpeechCommandsProfile.asset using Guid(0c8a5b59737fff34c9f5e511149e29fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2999eff503ade9e6d88998410f7a7f04') in 0.005733 seconds 
+  Time since last request: 0.000033 seconds.
+  path: Packages/com.microsoft.mixedreality.toolkit.examples/StandardAssets/Models/Materials/7.mat
+  artifactKey: Guid(0393ac2b971eddd4785463e9f09c243c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.examples/StandardAssets/Models/Materials/7.mat using Guid(0393ac2b971eddd4785463e9f09c243c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '838f7714a9debf2bd75c3e0b52a8ab49') in 0.112255 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000024 seconds.
-  path: Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoConfigurationProfile.asset
-  artifactKey: Guid(6615cacb3eaaa044f99b917186093aeb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Samples/Mixed Reality Toolkit Examples/2.8.3/Demos - EyeTracking/General/Profiles/EyeTrackingDemoConfigurationProfile.asset using Guid(6615cacb3eaaa044f99b917186093aeb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5c9bbccbf2b08cc65043248a110490d1') in 0.145454 seconds 
+  Time since last request: 0.000019 seconds.
+  path: Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicBackPlateLabel.mat
+  artifactKey: Guid(33bd7ed5b0c7fbf458af3e21dc58c192) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Packages/com.microsoft.mixedreality.toolkit.foundation/SDK/Features/UX/Interactable/Materials/HolographicBackPlateLabel.mat using Guid(33bd7ed5b0c7fbf458af3e21dc58c192) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c45cf8a2c494a67f777e6efeeda2d7f2') in 0.050875 seconds 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.019445 seconds.
+Registered in 0.019182 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for UWP target not found
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 2.31 ms, found 26 plugins.
+Refreshing native plugins compatible for Editor in 2.14 ms, found 26 plugins.
 Preloading 1 native plugins for Editor in 0.03 ms.
-Warning: Annotation not found!
-UnityEngine.StackTraceUtility:ExtractStackTrace ()
-UnityEditor.ProBuilder.EditorUtility:SetGizmoIconEnabled (System.Type,bool) (at Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/EditorUtility.cs:575)
-UnityEditor.ProBuilder.HierarchyListener:.cctor () (at Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/HierarchyListener.cs:21)
-System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
-UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
-
-[Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/EditorUtility.cs line 575]
-
 Mono: successfully reloaded assembly
-- Completed reload, in  1.198 seconds
+- Completed reload, in  1.136 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1199ms)
-		BeginReloadAssembly (151ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (4ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (43ms)
-		EndReloadAssembly (948ms)
-			LoadAssemblies (116ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (289ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (44ms)
-			SetupLoadedEditorAssemblies (457ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (19ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (73ms)
-				ProcessInitializeOnLoadAttributes (311ms)
-				ProcessInitializeOnLoadMethodAttributes (42ms)
-				AfterProcessingInitializeOnLoad (9ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (6ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 22.37 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
-Unloading 6971 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 242 unused Assets / (172.1 KB). Loaded Objects now: 7417.
-Memory consumption went from 272.9 MB to 272.7 MB.
-Total: 3.912000 ms (FindLiveObjects: 0.462700 ms CreateObjectMapping: 0.457700 ms MarkObjects: 2.829300 ms  DeleteObjects: 0.161800 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.017231 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for UWP target not found
-Native extension for WindowsStandalone target not found
-Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 2.40 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 0.04 ms.
-Warning: Annotation not found!
-UnityEngine.StackTraceUtility:ExtractStackTrace ()
-UnityEditor.ProBuilder.EditorUtility:SetGizmoIconEnabled (System.Type,bool) (at Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/EditorUtility.cs:575)
-UnityEditor.ProBuilder.HierarchyListener:.cctor () (at Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/HierarchyListener.cs:21)
-System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
-UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
-
-[Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/EditorUtility.cs line 575]
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.182 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1183ms)
-		BeginReloadAssembly (128ms)
+	ReloadAssembly (1136ms)
+		BeginReloadAssembly (135ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (5ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (35ms)
-		EndReloadAssembly (963ms)
-			LoadAssemblies (93ms)
+			CreateAndSetChildDomain (39ms)
+		EndReloadAssembly (911ms)
+			LoadAssemblies (98ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (292ms)
+			SetupTypeCache (264ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (45ms)
-			SetupLoadedEditorAssemblies (464ms)
+			RebuildScriptCaches (39ms)
+			SetupLoadedEditorAssemblies (449ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (20ms)
+				InitializePlatformSupportModulesInManaged (23ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (3ms)
-				BeforeProcessingInitializeOnLoad (72ms)
-				ProcessInitializeOnLoadAttributes (316ms)
-				ProcessInitializeOnLoadMethodAttributes (44ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (74ms)
+				ProcessInitializeOnLoadAttributes (292ms)
+				ProcessInitializeOnLoadMethodAttributes (47ms)
 				AfterProcessingInitializeOnLoad (9ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (6ms)
+			AwakeInstancesAfterBackupRestoration (7ms)
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 24.72 ms, found 26 plugins.
+Refreshing native plugins compatible for Editor in 31.46 ms, found 26 plugins.
 Preloading 1 native plugins for Editor in 0.03 ms.
 Unloading 6971 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 242 unused Assets / (164.6 KB). Loaded Objects now: 7421.
-Memory consumption went from 272.9 MB to 272.7 MB.
-Total: 3.906700 ms (FindLiveObjects: 0.509500 ms CreateObjectMapping: 0.551800 ms MarkObjects: 2.679500 ms  DeleteObjects: 0.165300 ms)
+Unloading 242 unused Assets / (164.2 KB). Loaded Objects now: 7404.
+Memory consumption went from 272.5 MB to 272.3 MB.
+Total: 3.591100 ms (FindLiveObjects: 0.481700 ms CreateObjectMapping: 0.523600 ms MarkObjects: 2.414500 ms  DeleteObjects: 0.170600 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -392,57 +327,48 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.025268 seconds.
+Registered in 0.019592 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for UWP target not found
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 2.36 ms, found 26 plugins.
+Refreshing native plugins compatible for Editor in 2.37 ms, found 26 plugins.
 Preloading 1 native plugins for Editor in 0.04 ms.
-Warning: Annotation not found!
-UnityEngine.StackTraceUtility:ExtractStackTrace ()
-UnityEditor.ProBuilder.EditorUtility:SetGizmoIconEnabled (System.Type,bool) (at Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/EditorUtility.cs:575)
-UnityEditor.ProBuilder.HierarchyListener:.cctor () (at Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/HierarchyListener.cs:21)
-System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
-UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
-
-[Library/PackageCache/com.unity.probuilder@5.0.3/Editor/EditorCore/EditorUtility.cs line 575]
-
 Mono: successfully reloaded assembly
-- Completed reload, in  1.127 seconds
+- Completed reload, in  1.121 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1127ms)
+	ReloadAssembly (1121ms)
 		BeginReloadAssembly (126ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (4ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (36ms)
-		EndReloadAssembly (916ms)
-			LoadAssemblies (90ms)
+			CreateAndSetChildDomain (35ms)
+		EndReloadAssembly (909ms)
+			LoadAssemblies (91ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (265ms)
+			SetupTypeCache (268ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (40ms)
-			SetupLoadedEditorAssemblies (462ms)
+			RebuildScriptCaches (39ms)
+			SetupLoadedEditorAssemblies (447ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (20ms)
+				InitializePlatformSupportModulesInManaged (19ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (2ms)
 				BeforeProcessingInitializeOnLoad (73ms)
-				ProcessInitializeOnLoadAttributes (309ms)
-				ProcessInitializeOnLoadMethodAttributes (49ms)
-				AfterProcessingInitializeOnLoad (9ms)
+				ProcessInitializeOnLoadAttributes (297ms)
+				ProcessInitializeOnLoadMethodAttributes (44ms)
+				AfterProcessingInitializeOnLoad (10ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (6ms)
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 24.07 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 0.02 ms.
+Refreshing native plugins compatible for Editor in 28.98 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
 Unloading 6971 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 242 unused Assets / (172.4 KB). Loaded Objects now: 7425.
-Memory consumption went from 272.9 MB to 272.8 MB.
-Total: 4.464200 ms (FindLiveObjects: 0.491900 ms CreateObjectMapping: 0.531500 ms MarkObjects: 3.270500 ms  DeleteObjects: 0.169500 ms)
+Unloading 242 unused Assets / (179.9 KB). Loaded Objects now: 7408.
+Memory consumption went from 272.5 MB to 272.4 MB.
+Total: 3.656300 ms (FindLiveObjects: 0.536500 ms CreateObjectMapping: 0.548800 ms MarkObjects: 2.392800 ms  DeleteObjects: 0.177400 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 

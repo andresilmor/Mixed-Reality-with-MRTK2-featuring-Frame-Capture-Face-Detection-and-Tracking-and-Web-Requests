@@ -1,0 +1,478 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.16f1 (4016570cf34f) revision 4200023'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19044) 64bit Core' Language: 'en' Physical Memory: 32678 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files (x86)\ProjetoIntegrado_Multimedia_AndreMoreira\Unity Editors\2021.3.16f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker6
+-projectPath
+D:/PC/Desktop/IP/Rep/MR_M
+-logFile
+Logs/AssetImportWorker6.log
+-srvPort
+55265
+Successfully changed project path to: D:/PC/Desktop/IP/Rep/MR_M
+D:/PC/Desktop/IP/Rep/MR_M
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [40252] Host "[IP] 172.17.2.201 [Port] 0 [Flags] 2 [Guid] 2090760603 [EditorId] 2090760603 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [40252] Host "[IP] 172.17.2.201 [Port] 0 [Flags] 2 [Guid] 2090760603 [EditorId] 2090760603 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+Refreshing native plugins compatible for Editor in 156.20 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 4.10 ms.
+Initialize engine version: 2021.3.16f1 (4016570cf34f)
+[Subsystems] Discovering subsystems at path C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/PC/Desktop/IP/Rep/MR_M/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 2070 SUPER (ID=0x1e84)
+    Vendor:   NVIDIA
+    VRAM:     8011 MB
+    Driver:   27.21.14.6192
+Initialize mono
+Mono path[0] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56656
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll
+Registered in 0.007911 seconds.
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 108.54 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.23 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.605 seconds
+Domain Reload Profiling:
+	ReloadAssembly (605ms)
+		BeginReloadAssembly (65ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (441ms)
+			LoadAssemblies (63ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (92ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (24ms)
+			SetupLoadedEditorAssemblies (278ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (48ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (109ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (81ms)
+				ProcessInitializeOnLoadMethodAttributes (38ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.018683 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 109.84 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+DisplayProgressbar: Restoring NuGet Packages
+Added DLL directory D:\PC\Desktop\IP\Rep\MR_M\Assets\Packages\Microsoft.VCRTForwarders.140.1.0.7\Unity\x64 to the user search path.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+InitVCRTForwarders:.cctor () (at Assets/Packages/Microsoft.VCRTForwarders.140.1.0.7/Unity/Editor/InitVCRTForwarders.cs:53)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/Packages/Microsoft.VCRTForwarders.140.1.0.7/Unity/Editor/InitVCRTForwarders.cs Line: 53)
+
+Package Manager log level set to [2]
+Added DLL directory D:\PC\Desktop\IP\Rep\MR_M\Assets\Packages\Microsoft.MixedReality.QR.0.5.3037\Unity\x64 to the user search path.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Microsoft.MixedReality.QR.Init:.cctor () (at Assets/Packages/Microsoft.MixedReality.QR.0.5.3037/Unity/Editor/Microsoft.MixedReality.QR.Init.cs:60)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/Packages/Microsoft.MixedReality.QR.0.5.3037/Unity/Editor/Microsoft.MixedReality.QR.Init.cs Line: 60)
+
+[XR] [MROpenXR][Info   ][21:59:23.798744][tid:9d3c] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][21:59:23.798744][tid:9d3c] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][21:59:23.798792][tid:9d3c] InputProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][21:59:23.798792][tid:9d3c] InputProvider_RegisterLifecycleProvider
+[XR] Error loading subsystem: Display (1) (header mismatch?)
+[XR] [MROpenXR][Info   ][21:59:23.799898][tid:9d3c] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
+[XR] [MROpenXR][Info   ][21:59:23.799898][tid:9d3c] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
+Mono: successfully reloaded assembly
+- Completed reload, in  1.609 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1609ms)
+		BeginReloadAssembly (211ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (131ms)
+		EndReloadAssembly (1298ms)
+			LoadAssemblies (88ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (264ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (75ms)
+			SetupLoadedEditorAssemblies (824ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (110ms)
+				BeforeProcessingInitializeOnLoad (109ms)
+				ProcessInitializeOnLoadAttributes (523ms)
+				ProcessInitializeOnLoadMethodAttributes (55ms)
+				AfterProcessingInitializeOnLoad (11ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (4ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 2.19 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+Unloading 7040 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 251 unused Assets / (196.1 KB). Loaded Objects now: 7359.
+Memory consumption went from 273.5 MB to 273.3 MB.
+Total: 3.706100 ms (FindLiveObjects: 0.483700 ms CreateObjectMapping: 0.526700 ms MarkObjects: 2.518400 ms  DeleteObjects: 0.176600 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.019026 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 2.33 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.04 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.140 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1141ms)
+		BeginReloadAssembly (132ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (36ms)
+		EndReloadAssembly (918ms)
+			LoadAssemblies (104ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (269ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (47ms)
+			SetupLoadedEditorAssemblies (443ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (22ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (76ms)
+				ProcessInitializeOnLoadAttributes (291ms)
+				ProcessInitializeOnLoadMethodAttributes (43ms)
+				AfterProcessingInitializeOnLoad (8ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 25.05 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+Unloading 6971 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 242 unused Assets / (187.4 KB). Loaded Objects now: 7363.
+Memory consumption went from 268.2 MB to 268.0 MB.
+Total: 4.204100 ms (FindLiveObjects: 0.610800 ms CreateObjectMapping: 0.721900 ms MarkObjects: 2.681600 ms  DeleteObjects: 0.189000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 417425.217228 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup11_h1647.90.png
+  artifactKey: Guid(cdf4352b34e325a4e9d6cb78077893db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup11_h1647.90.png using Guid(cdf4352b34e325a4e9d6cb78077893db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99da0877a1e33fdb1faa1bb230a51e5d') in 0.059160 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 20.569594 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup11_h1647.90.png
+  artifactKey: Guid(cdf4352b34e325a4e9d6cb78077893db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup11_h1647.90.png using Guid(cdf4352b34e325a4e9d6cb78077893db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c5a1d461622234ee773a629d3494e8b4') in 0.185328 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 260.678420 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup02.png
+  artifactKey: Guid(6423d0ca050df6843afc19df5a55d66e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup02.png using Guid(6423d0ca050df6843afc19df5a55d66e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4e01d206120adc5469369d557967113b') in 0.025992 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 29.203419 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup11.png
+  artifactKey: Guid(6f0e6873f01f5c343b7e454610cd914b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup11.png using Guid(6f0e6873f01f5c343b7e454610cd914b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1efc01d336f4cd1b3ee2bdcb42425a4c') in 0.010357 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 66.652390 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup02_h892.png
+  artifactKey: Guid(6ff552c9bff70b9409701354153ab716) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup02_h892.png using Guid(6ff552c9bff70b9409701354153ab716) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9abf7ea6118293ebf76f183db572956a') in 0.033789 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup11.png
+  artifactKey: Guid(6f0e6873f01f5c343b7e454610cd914b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup11.png using Guid(6f0e6873f01f5c343b7e454610cd914b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b8f9fa77da1fceae3ba6f7c37fa01bb3') in 0.100860 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.017818 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 2.34 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.04 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.131 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1131ms)
+		BeginReloadAssembly (144ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (49ms)
+		EndReloadAssembly (888ms)
+			LoadAssemblies (98ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (263ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (39ms)
+			SetupLoadedEditorAssemblies (431ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (19ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (72ms)
+				ProcessInitializeOnLoadAttributes (285ms)
+				ProcessInitializeOnLoadMethodAttributes (43ms)
+				AfterProcessingInitializeOnLoad (9ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 23.95 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+Unloading 6971 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 242 unused Assets / (164.1 KB). Loaded Objects now: 7382.
+Memory consumption went from 272.2 MB to 272.1 MB.
+Total: 3.800100 ms (FindLiveObjects: 0.479600 ms CreateObjectMapping: 0.499100 ms MarkObjects: 2.641400 ms  DeleteObjects: 0.179400 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 649.816771 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_info.png
+  artifactKey: Guid(a998c2766cd7d1f458a2e06107f148c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_info.png using Guid(a998c2766cd7d1f458a2e06107f148c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7dd25f8d7d78686e0b1b2799f920fe31') in 0.055004 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 12.540699 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_info.png
+  artifactKey: Guid(a998c2766cd7d1f458a2e06107f148c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_info.png using Guid(a998c2766cd7d1f458a2e06107f148c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9ff12f2f3439dab14949d493adcae6f2') in 0.038196 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.018966 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 2.36 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.04 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.085 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1085ms)
+		BeginReloadAssembly (138ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (3ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (51ms)
+		EndReloadAssembly (862ms)
+			LoadAssemblies (87ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (247ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (38ms)
+			SetupLoadedEditorAssemblies (431ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (18ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (69ms)
+				ProcessInitializeOnLoadAttributes (290ms)
+				ProcessInitializeOnLoadMethodAttributes (41ms)
+				AfterProcessingInitializeOnLoad (9ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 21.90 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+Unloading 6971 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 242 unused Assets / (179.8 KB). Loaded Objects now: 7388.
+Memory consumption went from 272.3 MB to 272.1 MB.
+Total: 4.484700 ms (FindLiveObjects: 0.497800 ms CreateObjectMapping: 0.524600 ms MarkObjects: 3.285300 ms  DeleteObjects: 0.176000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 1368.301447 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_warning_inactive.png
+  artifactKey: Guid(9b1dee9f97387374f8f2dcf572f4ccf9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_warning_inactive.png using Guid(9b1dee9f97387374f8f2dcf572f4ccf9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7e150cc21ebca9ed99084054ca5df332') in 0.055872 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 24.897263 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_warning.png
+  artifactKey: Guid(a54b0917ff0dbe84ba4bc5d9dc26ea68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_warning.png using Guid(a54b0917ff0dbe84ba4bc5d9dc26ea68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '04e19bf79c350dbb22a753d641a0992f') in 0.009878 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 29.898474 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_fatal_inactive.png
+  artifactKey: Guid(ddfb88ef2e5e1dc45bea13c07bf00aec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_fatal_inactive.png using Guid(ddfb88ef2e5e1dc45bea13c07bf00aec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '184762cd3a6d32f0e1a14de668eda2a0') in 0.009216 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 31.115239 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_fatal.png
+  artifactKey: Guid(db56efe7f9b52034583a79c95d106019) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_fatal.png using Guid(db56efe7f9b52034583a79c95d106019) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6185ff855bca841fe9afe74ddb305db6') in 0.010571 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 48.790521 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_exception.png
+  artifactKey: Guid(527d52d962f7eb14789db092ae79cc14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_exception.png using Guid(527d52d962f7eb14789db092ae79cc14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'add63e82e69cc2b0eb8f524ecfedfd4e') in 0.010491 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 46.396821 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_error.png
+  artifactKey: Guid(14354ac229244c749935eea7b71107a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_error.png using Guid(14354ac229244c749935eea7b71107a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72375c90cdffb653b1f6615e555d3b2f') in 0.010641 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 13.237957 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_warning.png
+  artifactKey: Guid(a54b0917ff0dbe84ba4bc5d9dc26ea68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_warning.png using Guid(a54b0917ff0dbe84ba4bc5d9dc26ea68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a326fd1896b22838c952fa71d9e706de') in 0.036016 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.001446 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_exception_inactive.png
+  artifactKey: Guid(eda8bc8362da4284a993469809a457d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_exception_inactive.png using Guid(eda8bc8362da4284a993469809a457d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'efa8f3b40f55d853e318881f51bebfe5') in 0.546143 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_fatal_inactive.png
+  artifactKey: Guid(ddfb88ef2e5e1dc45bea13c07bf00aec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_fatal_inactive.png using Guid(ddfb88ef2e5e1dc45bea13c07bf00aec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2596401c31f5e60e37043c601793f205') in 0.020539 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_error_inactive.png
+  artifactKey: Guid(9c7e1cae2c7ab36428e358090b3b206a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Buttons/btn_c_error_inactive.png using Guid(9c7e1cae2c7ab36428e358090b3b206a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '20f6c2318c7eff5daba1207d34b2a0c4') in 0.020324 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

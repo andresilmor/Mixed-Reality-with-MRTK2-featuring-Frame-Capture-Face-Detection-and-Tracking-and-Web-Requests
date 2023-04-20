@@ -9,7 +9,7 @@ using Debug = MRDebug;
 public class DebugMenu : MonoBehaviour
 {
 
-    [Header("Buttons Config:")]
+    [Header("Buttons:")]
     [SerializeField] Interactable _upPageBtn;
     [SerializeField] Interactable _downPageBtn;
     [SerializeField] Interactable _infoFilterBtn;
@@ -19,7 +19,7 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] Interactable _fatalFilterBtn;
     [SerializeField] Interactable _filterToggleBtn;
 
-    [Header("Buttons Mesh:")]
+    [Header("Mesh:")]
     [SerializeField] MeshRenderer _infoFilterMesh;
     [SerializeField] MeshRenderer _warningFilterMesh;
     [SerializeField] MeshRenderer _exceptionFilterMesh;
@@ -27,11 +27,11 @@ public class DebugMenu : MonoBehaviour
     [SerializeField] MeshRenderer _fatalFilterMesh;
     [SerializeField] MeshRenderer _filterToggleMesh;
 
-    [Header("Texts Config:")]
+    [Header("Texts:")]
     [SerializeField] TextMeshPro _console;
     [SerializeField] TextMeshPro _pagination;
 
-    [Header("Windows Config:")]
+    [Header("Dettached Windows:")]
     [SerializeField] GameObject _filtersWindow;
 
     bool _filterInfo = true;

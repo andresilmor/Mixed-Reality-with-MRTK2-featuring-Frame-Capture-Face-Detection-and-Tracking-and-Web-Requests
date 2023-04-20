@@ -178,8 +178,8 @@ public class AppCommandCenter : MonoBehaviour {
                 //MLManager.AnalyseFrame();
 
             });
-            (timerOverNotification.components["CloseBtn"] as Interactable).OnClick.AddListener(() => {
-                UIManager.Instance.CloseWindow(timerOverNotification.stacker, (timerOverNotification.components["CloseBtn"] as Interactable).gameObject.GetComponent<AudioSource>());
+            (timerOverNotification.components["_closeBtn"] as Interactable).OnClick.AddListener(() => {
+                UIManager.Instance.CloseWindow(timerOverNotification.stacker, (timerOverNotification.components["_closeBtn"] as Interactable).gameObject.GetComponent<AudioSource>());
 
             });
 

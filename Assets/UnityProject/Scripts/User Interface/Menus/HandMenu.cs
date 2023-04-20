@@ -34,8 +34,7 @@ public class HandMenu : MonoBehaviour
                 position.y += UIManager.Instance.AxisYOffset;
 
                 HomeMenu.gameObject.transform.position = position;
-                HomeMenu.gameObject.transform.LookAt(Camera.main.transform.position);
-                //HomeMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform);   
+                HomeMenu.gameObject.transform.LookAt(Camera.main.transform.position); 
 
             });
 

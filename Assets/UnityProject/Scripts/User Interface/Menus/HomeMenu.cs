@@ -1,7 +1,4 @@
-using Microsoft.MixedReality.Toolkit.Diagnostics;
 using Microsoft.MixedReality.Toolkit.UI;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,65 +6,66 @@ using UnityEngine.UI;
 public class HomeMenu : MonoBehaviour
 {
     [Header("Buttons:")]
-    [SerializeField] Interactable CloseBtn;
-    [SerializeField] Interactable SettingsBtn;
-    [SerializeField] Interactable FaceReconBtn;
-    [SerializeField] Interactable QRCodeBtn;
-    [SerializeField] Interactable DebugBtn;
+    [SerializeField] Interactable _closeBtn;
+    [SerializeField] Interactable _settingsBtn;
+    [SerializeField] Interactable _faceReconBtn;
+    [SerializeField] Interactable _QRCodeBtn;
+    [SerializeField] Interactable _debugBtn;
 
     [Header("Graphics:")]
-    [SerializeField] Image MemoryUsageBar;
-    [SerializeField] Image MemoryPeakBar;
-    [SerializeField] TextMeshPro FPSCount;
+    [SerializeField] Image _memoryUsageBar;
+    [SerializeField] Image _memoryPeakBar;
+    [SerializeField] TextMeshPro _FPSCount;
 
     [Header("Utility:")]
-    [SerializeField] HardwareDiagnostic HardwareDiagnostic;
+    [SerializeField] HardwareDiagnostic _hardwareDiagnostic;
 
     [Header("Connected Menus:")]
-    [SerializeField] QRCodeMenu QRCodeMenu;
-    [SerializeField] DebugMenu DebugMenu;
+    [SerializeField] QRCodeMenu _QRCodeMenu;
+    [SerializeField] DebugMenu _debugMenu;
+    [SerializeField] FaceReconMenu _faceReconMenu;
 
 
     void Start()
     {
-        if (HardwareDiagnostic != null) {
-            HardwareDiagnostic.OnNewDiagnostic += (object sender, DiagnosticData e) => {
+        if (_hardwareDiagnostic != null) {
+            _hardwareDiagnostic.OnNewDiagnostic += (object sender, DiagnosticData e) => {
                 if (!gameObject.activeInHierarchy)
                     return; 
 
-                FPSCount.text = e.cpuFrameRate.ToString();
+                _FPSCount.text = e.cpuFrameRate.ToString();
             
-                MemoryUsageBar.fillAmount = e.memoryUsage / e.memoryLimit;
-                MemoryPeakBar.fillAmount = e.memoryPeak / e.memoryLimit;
+                _memoryUsageBar.fillAmount = e.memoryUsage / e.memoryLimit;
+                _memoryPeakBar.fillAmount = e.memoryPeak / e.memoryLimit;
 
             };
 
         }
 
 
-        QRCodeBtn.OnClick.AddListener(() => {
-            QRCodeMenu.gameObject.SetActive(!QRCodeMenu.gameObject.activeInHierarchy);
+        _QRCodeBtn.OnClick.AddListener(() => {
+            _QRCodeMenu.gameObject.SetActive(!_QRCodeMenu.gameObject.activeInHierarchy);
 
             Vector3 position = AppCommandCenter.CameraMain.transform.position + AppCommandCenter.CameraMain.transform.forward * UIManager.Instance.WindowDistance;
 
             position.y += UIManager.Instance.AxisYOffset;
 
-            QRCodeMenu.gameObject.transform.position = position;
-            QRCodeMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
+            _QRCodeMenu.gameObject.transform.position = position;
+            _QRCodeMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
             //HomeMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform);   
         });
 
 
 
-        DebugBtn.OnClick.AddListener(() => {
-            DebugMenu.gameObject.SetActive(!DebugMenu.gameObject.activeInHierarchy);
+        _debugBtn.OnClick.AddListener(() => {
+            _debugMenu.gameObject.SetActive(!_debugMenu.gameObject.activeInHierarchy);
 
             Vector3 position = AppCommandCenter.CameraMain.transform.position + AppCommandCenter.CameraMain.transform.forward * UIManager.Instance.WindowDistance;
 
             position.y += UIManager.Instance.AxisYOffset;
 
-            DebugMenu.gameObject.transform.position = position;
-            DebugMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
+            _debugMenu.gameObject.transform.position = position;
+            _debugMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
             //HomeMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform);   
         });
 
