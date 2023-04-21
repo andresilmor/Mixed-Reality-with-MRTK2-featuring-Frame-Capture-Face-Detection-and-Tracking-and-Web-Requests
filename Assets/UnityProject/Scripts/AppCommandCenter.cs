@@ -142,12 +142,12 @@ public class AppCommandCenter : MonoBehaviour {
         //When the load is still in progress, output the Text and progress bar
         while (!asyncOperation.isDone) {
             //Output the current progress
-            Debug.Log("Loading progress: " + (asyncOperation.progress * 100) + "%");
+            //Debug.Log("Loading progress: " + (asyncOperation.progress * 100) + "%");
 
             // Check if the load has finished
             if (asyncOperation.progress >= 0.9f) {
                 //Change the Text to show the Scene is ready
-                Debug.Log("Press the space bar to continue");
+                //Debug.Log("Press the space bar to continue");
                 //Wait to you press the space key to activate the Scene
                  asyncOperation.allowSceneActivation = true;
                 
@@ -198,7 +198,17 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
     private static void StartApplication() {
-        UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.H_2btn_00, new LoginView(), stackerName: "Login Window");
+        //UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.H_2btn_00, new LoginView(), stackerName: "Login Window");
+
+        UIManager.Instance.LoginMenu.gameObject.SetActive(!UIManager.Instance.LoginMenu.gameObject.activeInHierarchy);
+
+        Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * UIManager.Instance.WindowDistance;
+
+        position.y += UIManager.Instance.AxisYOffset;
+
+        UIManager.Instance.LoginMenu.gameObject.transform.position = position;
+        UIManager.Instance.LoginMenu.gameObject.transform.LookAt(Camera.main.transform.position);
+
 
     }
 

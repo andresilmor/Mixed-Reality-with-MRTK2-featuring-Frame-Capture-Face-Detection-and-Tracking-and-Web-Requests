@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -36,6 +35,7 @@ public class UIManager : MonoBehaviour {
     [Header("Menus")]
     [SerializeField] public HandMenu HandMenu;
     [SerializeField] public HomeMenu HomeMenu;
+    [SerializeField] public LoginMenu LoginMenu;
 
     [Header("Scriptable Objects:")]
     [SerializeField] GraphicUserInterfaceScriptableObject graphicUserInterface;

@@ -459,9 +459,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c0449e640c16b4458de9f5cb3997f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HomeButton: {fileID: 5275332853830281191}
-  HelpButton: {fileID: 5275332852578087346}
-  LogoutButton: {fileID: 5275332854234437483}
+  HomeBtn: {fileID: 5275332853830281191}
+  HelpBtn: {fileID: 5275332852578087346}
+  LogoutBtn: {fileID: 5275332854234437483}
+  ShutdownBtn: {fileID: 2880717656413135626}
   HomeMenu: {fileID: 0}
 --- !u!114 &8301846928661492157
 MonoBehaviour:
@@ -633,6 +634,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4180372398655005802, guid: f448f9b70e1802f46a262b7b3543ef2f, type: 3}
   m_PrefabInstance: {fileID: 2160030168375002989}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2880717656413135626 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4180372398655005799, guid: f448f9b70e1802f46a262b7b3543ef2f, type: 3}
+  m_PrefabInstance: {fileID: 2160030168375002989}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1410eac1ae94b4d4492a09cc368e152c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3400066478425934687
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -63,7 +63,7 @@ public static class QRCodeReaderManager
     private static List<Action<List<QRCodeDetected>>> _passiveModeActions = new List<Action<List<QRCodeDetected>>>();
 
 
-    async public static void DetectQRCodes(Action<List<QRCodeDetected>> action = null, float? waitSeconds = null) {
+    async public static void DetectQRCodes(Action<List<QRCodeDetected>> action = null, float? waitSeconds = null, Action endTimeAction = null) {
         if (_detecting) {
             if (waitSeconds != null) {
                 if (waitSeconds == 0) {
@@ -71,7 +71,7 @@ public static class QRCodeReaderManager
 
                 } else {
                     _timerActions.Add(_timerActions.Count,action);
-                    _stopDetectitionCoroutine = AppCommandCenter.Instance.StartCoroutine(StopDetection((float)waitSeconds, _timerActions.Count - 1));
+                    _stopDetectitionCoroutine = AppCommandCenter.Instance.StartCoroutine(StopDetection((float)waitSeconds, _timerActions.Count - 1, endTimeAction));
 
                 }
 
@@ -108,7 +108,7 @@ public static class QRCodeReaderManager
 
     }
 
-    static IEnumerator StopDetection(float waitTime, int actionKey) {
+    static IEnumerator StopDetection(float waitTime, int actionKey, Action endTimeAction = null) {
         yield return new WaitForSeconds(waitTime);
 
         if (!InPassiveMode)
@@ -116,6 +116,8 @@ public static class QRCodeReaderManager
 
         _timerActions.Remove(actionKey);
         _detecting = false;
+
+        endTimeAction.Invoke();
 
     }
 
@@ -143,6 +145,9 @@ public static class QRCodeReaderManager
                 for (int i = 0; i < points.rows(); i++) {
                     float[] points_arr = new float[8];
                     points.get(i, 0, points_arr);
+
+
+                    Debug.Log(decodedInfo[i]);
 
                     if (decodedInfo.Count > i && decodedInfo[i] != null)
                         detections.Add(new QRCodeDetected(points_arr, decodedInfo[i]));

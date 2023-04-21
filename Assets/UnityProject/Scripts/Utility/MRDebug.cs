@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor.Presets;
 using UnityEngine;
 
 using Debug = MRDebug;
@@ -32,43 +31,8 @@ public static class MRDebug
         string text = message.ToString();
         string preText = "";
 
-#if ENABLE_WINMD_SUPPORT
-
-        
-
-        switch (logType) {
-            case LogType.Info: preText = "|INFO| ";
-                _logs.Add(new AppLog(LogType.Info, System.DateTime.Now + " | " + text + "\n"));
-                break;
-
-            case LogType.Exception: preText = "|EXCEPTION| ";
-                _logs.Add(new AppLog(LogType.Exception, System.DateTime.Now + " | " + text + "\n"));
-                break;
-
-            case LogType.Warning:
-                preText = "|WARNING| ";
-                _logs.Add(new AppLog(LogType.Warning, System.DateTime.Now + " | " + text + "\n"));
-                break;
-
-            case LogType.Error:
-                preText = "|ERROR| ";
-                _logs.Add(new AppLog(LogType.Error, System.DateTime.Now + " | " + text + "\n"));
-                break;
-
-            case LogType.Fatal:
-                preText = "|FATAL| ";
-                _logs.Add(new AppLog(LogType.Fatal, System.DateTime.Now + " | " + text + "\n"));
-                break;
-
-        }
-
-        if (_debugConsole != null)
-            _debugConsole.text = _debugConsole.text + text;
-
-#else
         _logs.Add(new AppLog(logType, System.DateTime.Now + " | " + Enum.GetName(typeof(LogType), logType) + " | " + text + "\n"));
         UnityEngine.Debug.Log(Enum.GetName(typeof(LogType), logType) + " | " + text + "\n");
-#endif
 
     }
 

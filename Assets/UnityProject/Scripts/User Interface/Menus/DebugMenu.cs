@@ -52,7 +52,7 @@ public class DebugMenu : MonoBehaviour
 
         _console.ForceMeshUpdate(true);
 
-        //_console.text = "";
+        _console.text = "";
         foreach (MRDebug.AppLog log in MRDebug.GetLog(_filterInfo, _filterWarning, _filterException, _filterError, _filterFatal)) {
             _console.text = _console.text + log.info;
         }

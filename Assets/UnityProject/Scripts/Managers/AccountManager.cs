@@ -45,14 +45,19 @@ public static class AccountManager {
     #region Login
 
     async public static Task<bool> LoginQR() {
+        /*
         if (loginWindow != null) {
             (loginWindow.components["BotButton"] as Interactable).enabled = false;
             loginWindow.UpdateContent("BotButtonText", "Looking for QR Code...");
 
-        }
-
-        QRCodeReaderManager.DetectQRCodes(null, 1.5f);
-        Debug.Log("yO");
+        }*/
+        Debug.Log("Starting");
+        QRCodeReaderManager.DetectQRCodes((List<QRCodeReaderManager.QRCodeDetected> results) => {
+            Debug.Log("Invoked");
+        }, 1.5f, () => {
+            Debug.Log("Time Over");
+        });
+        Debug.Log("Yo");
 
         //QRCodesManager.Instance.StartQRTracking();
         //QRCodesManager.Instance.QRCodeAdded += LoginQRCode;

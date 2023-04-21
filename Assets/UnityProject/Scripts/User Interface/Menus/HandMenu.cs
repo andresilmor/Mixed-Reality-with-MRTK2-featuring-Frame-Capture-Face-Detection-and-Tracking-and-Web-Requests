@@ -8,9 +8,10 @@ using Debug = MRDebug;
 public class HandMenu : MonoBehaviour
 {
     [Header("Buttons Config:")]
-    [SerializeField] Interactable HomeButton;
-    [SerializeField] Interactable HelpButton;
-    [SerializeField] Interactable LogoutButton;
+    [SerializeField] Interactable HomeBtn;
+    [SerializeField] Interactable HelpBtn;
+    [SerializeField] Interactable LogoutBtn;
+    [SerializeField] Interactable ShutdownBtn;
 
     [Header("Windows:")]
     [SerializeField] HomeMenu HomeMenu;
@@ -21,12 +22,12 @@ public class HandMenu : MonoBehaviour
             Debug.Log("HomeMenu not defined");
         else {
 
-            HomeButton.OnClick.RemoveAllListeners();
+            HomeBtn.OnClick.RemoveAllListeners();
 
             // Home Button
             HomeMenu.gameObject.SetActive(false);
 
-            HomeButton.OnClick.AddListener(() => {
+            HomeBtn.OnClick.AddListener(() => {
                 HomeMenu.gameObject.SetActive(!HomeMenu.gameObject.activeInHierarchy);
 
                 Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * UIManager.Instance.WindowDistance;
@@ -35,6 +36,11 @@ public class HandMenu : MonoBehaviour
 
                 HomeMenu.gameObject.transform.position = position;
                 HomeMenu.gameObject.transform.LookAt(Camera.main.transform.position); 
+
+            });
+
+            ShutdownBtn.OnClick.AddListener(() => {
+                AppCommandCenter.StopApplication();
 
             });
 

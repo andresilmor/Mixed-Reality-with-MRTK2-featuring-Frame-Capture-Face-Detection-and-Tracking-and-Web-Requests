@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using Unity.Profiling;
-using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
 #if WINDOWS_UWP
