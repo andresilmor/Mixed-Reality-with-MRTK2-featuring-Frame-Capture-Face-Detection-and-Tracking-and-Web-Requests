@@ -463,6 +463,7 @@ MonoBehaviour:
   HelpBtn: {fileID: 5275332852578087346}
   LogoutBtn: {fileID: 5275332854234437483}
   ShutdownBtn: {fileID: 2880717656413135626}
+  HomeMesh: {fileID: 5275332854277640077}
   HomeMenu: {fileID: 0}
 --- !u!114 &8301846928661492157
 MonoBehaviour:
@@ -900,6 +901,11 @@ MonoBehaviour:
 --- !u!4 &5275332853830281194 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4180372398655005802, guid: f448f9b70e1802f46a262b7b3543ef2f, type: 3}
+  m_PrefabInstance: {fileID: 8301846927179088768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5275332854277640077 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4180372399029947405, guid: f448f9b70e1802f46a262b7b3543ef2f, type: 3}
   m_PrefabInstance: {fileID: 8301846927179088768}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8301846927851041548

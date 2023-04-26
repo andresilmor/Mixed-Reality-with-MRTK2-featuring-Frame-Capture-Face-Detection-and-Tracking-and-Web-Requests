@@ -1,10 +1,12 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
+using System;
+using System.Collections;
+
+using System.Collections.Generic;
 
 using UnityEngine;
 
-
-namespace Microsoft.MixedReality.SampleQRCodes
+using Microsoft.MixedReality.QR;
+namespace QRTracking
 {
     public class QRCodesSetup : MonoBehaviour
     {
@@ -25,8 +27,18 @@ namespace Microsoft.MixedReality.SampleQRCodes
             }
             if (VisualizeQRCodes)
             {
-                gameObject.AddComponent(typeof(QRCodesVisualizer));
+                gameObject.AddComponent(typeof(QRTracking.QRCodesVisualizer));
             }
+        }
+
+        void Start()
+        {
+            
+        }
+
+        void Update()
+        {
+
         }
     }
 }

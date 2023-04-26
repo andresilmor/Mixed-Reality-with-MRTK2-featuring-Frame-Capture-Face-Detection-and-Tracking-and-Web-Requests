@@ -16,6 +16,8 @@ public static class MRDebug
 
     private static List<AppLog> _logs = new List<AppLog>();
 
+    public static TextMeshPro Console = null;
+
     public struct AppLog {
         public LogType type;
         public string info;
@@ -34,23 +36,8 @@ public static class MRDebug
         _logs.Add(new AppLog(logType, System.DateTime.Now + " | " + Enum.GetName(typeof(LogType), logType) + " | " + text + "\n"));
         UnityEngine.Debug.Log(Enum.GetName(typeof(LogType), logType) + " | " + text + "\n");
 
-    }
-
-    public static void LogWarning(object message) {
-        string text = message.ToString();
-        Log(text, LogType.Warning);
-
-    }
-
-    public static void LogError(object message) {
-        string text = message.ToString();
-        Log(text, LogType.Error);
-
-    }
-
-    public static void LogException(object message) {
-        string text = message.ToString();
-        Log(text, LogType.Exception);
+        if (UIManager.Instance.DebugMenu.gameObject.activeInHierarchy)
+            UIManager.Instance.DebugMenu.UpdateConsole();
 
     }
 

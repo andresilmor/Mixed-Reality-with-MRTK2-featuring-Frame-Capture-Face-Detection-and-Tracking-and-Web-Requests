@@ -122,7 +122,7 @@ public class UIWindow : MonoBehaviour {
         try {
             (components[key] as TextMeshPro).text = content;
         } catch (Exception e) {
-            Debug.LogException(e);
+            Debug.Log(e, LogType.Warning);
         }
     }
 

@@ -5,13 +5,13 @@ using Realms;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
-using Microsoft.MixedReality.SampleQRCodes;
 using System.Security.Cryptography;
 using System.Linq;
 using Realms.Sync;
 using UnityEditor;
 using System.Diagnostics.Contracts;
 using Microsoft.MixedReality.Toolkit.UI;
+using QRTracking;
 
 using Debug = MRDebug;
 
@@ -19,7 +19,7 @@ public static class AccountManager {
     public static string currentUserUUID { get; private set; }
 
     private static bool _isLogged = false;
-    public static bool isLogged {
+    public static bool IsLogged {
         get { return _isLogged; }
         private set {
             if (_isLogged == value) { return; }
@@ -31,16 +31,20 @@ public static class AccountManager {
                 }
 
             }
-            //OnLoggedStatusChange(isLogged);
+            //OnLoggedStatusChange(IsLogged);
         }
     }
 
-    //public delegate void OnVariableChangeDelegate(bool newValue);
-    //public static event OnVariableChangeDelegate OnLoggedStatusChange;
+
+
+    public delegate void OnVariableChangeDelegate(bool newValue);
+    public static event OnVariableChangeDelegate OnLoggedStatusChange;
 
     public static UIWindow loginWindow;
 
     private static bool requesting = false;
+    private static int _qrTrackingCounter = 0;
+    private static QRInfo _lastQR = null;
 
     #region Login
 
@@ -50,37 +54,52 @@ public static class AccountManager {
             (loginWindow.components["BotButton"] as Interactable).enabled = false;
             loginWindow.UpdateContent("BotButtonText", "Looking for QR Code...");
 
-        }*/
+        }
+
+        /*
         Debug.Log("Starting");
         QRCodeReaderManager.DetectQRCodes((List<QRCodeReaderManager.QRCodeDetected> results) => {
             Debug.Log("Invoked");
         }, 1.5f, () => {
             Debug.Log("Time Over");
-        });
+        });*/
         Debug.Log("Yo");
 
-        //QRCodesManager.Instance.StartQRTracking();
-        //QRCodesManager.Instance.QRCodeAdded += LoginQRCode;
+
+        QRCodesManager.Instance.ResetHandlers();
+        QRCodesManager.Instance.QRCodeAdded += LoginQRCode;
+        QRCodesManager.Instance.StartQRTracking();
 
         return true;
     }
 
-    async private static void LoginQRCode(object sender, QRCodeEventArgs<Microsoft.MixedReality.QR.QRCode> args) {
-        //improve
+    async private static void LoginQRCode(object sender, QRCodeEventArgs<Microsoft.MixedReality.QR.QRCode> code) {
+        Debug.Log("Hello There.");
+        QRInfo newQR = new QRInfo(code.Data);
+
+        Debug.Log(code.Data.Data.ToString());
         Debug.Log("Here.");
-        if (requesting || QRCodesManager.Instance.lastSeen.Data.Data.Equals(args.Data.Data)) {
-            Debug.Log("Old QRCode.");
+
+        if (_lastQR != null && _lastQR.Id == newQR.Id)
             return;
-        }
+
+        _lastQR = newQR;
+
+        //if (_qrTrackingCounter++ != 2)
+        //    return;
 
 
-        JObject qrMessage = JObject.Parse(@args.Data.Data.ToString());
-        QRCodesManager.Instance.lastSeen = args;
-
-
+        requesting = true;
+        Debug.Log("Here. 0");
         QRCodesManager.Instance.StopQRTracking();
         QRCodesManager.Instance.QRCodeAdded -= LoginQRCode;
-        requesting = true;
+        
+        Debug.Log("Here. 0.1");
+        Debug.Log(newQR.Data.ToString());
+
+        Debug.Log("Here. 1"); // Vai até aqui se ler json, se nao der Reiniciar os oculos
+        JObject qrMessage = JObject.Parse(@newQR.Data.ToString());
+
 
         APIManager.Field queryOperation = new APIManager.Field(
         "memberLogin", new APIManager.FieldParams[] {
@@ -88,6 +107,18 @@ public static class AccountManager {
             new APIManager.FieldParams("password", "\"" + qrMessage["password"] + "\""),
         });
         Debug.Log(qrMessage.ToString());
+
+        requesting = false;
+        _qrTrackingCounter = 0;
+        Debug.Log("Here. 2");
+
+        //IsLogged = true; Only with api working
+        
+        Debug.Log("Gonna Invoke. 0");
+        OnLoggedStatusChange?.Invoke(true);
+        Debug.Log("Invoked. 0");
+
+
         return;
 
         await APIManager.ExecuteRequest("", queryOperation,
@@ -97,7 +128,7 @@ public static class AccountManager {
                         JObject response = JObject.Parse(@message);
                         //Debug.Log(response.ToString());
                         if (response.HasValues && response["Data"] != null) {
-                            isLogged = SaveUser(response);
+                            IsLogged = SaveUser(response);
                             requesting = false;
                             UIManager.Instance.CloseWindow(AccountManager.loginWindow.stacker);
 
@@ -130,7 +161,7 @@ public static class AccountManager {
             })
 
         });
-
+        
     }
 
     #endregion
@@ -162,7 +193,7 @@ public static class AccountManager {
 
 
     public static bool Logout() {
-        isLogged = false;
+        IsLogged = false;
         return true;
 
     }

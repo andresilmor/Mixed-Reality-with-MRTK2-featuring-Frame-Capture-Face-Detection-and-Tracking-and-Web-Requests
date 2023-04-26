@@ -107,8 +107,8 @@ public static class MRWorld {
         Vector3 layForward = Vector3.Normalize(rotation * correctedUnprojection);
 
 
-        if (layForward == Vector3.forward) Debug.LogWarning("Lay forward is forward vector.");
-        if (layForward == Vector3.zero) Debug.LogWarning("Lay forward is zero vector.");
+        if (layForward == Vector3.forward) Debug.Log("Lay forward is forward vector.", LogType.Warning);
+        if (layForward == Vector3.zero) Debug.Log("Lay forward is zero vector.", LogType.Warning);
         return layForward;
 
     }
@@ -168,7 +168,7 @@ public static class MRWorld {
                 Debug.Log("Raycast failed. Probably no spatial mesh provided.");
                 //return Vector3.positiveInfinity;
 #else
-            Debug.LogWarning("Raycast failed. Probably no spatial mesh provided. Use Holographic Remoting or HoloLens."); // TODO: Check mesh simulation
+            Debug.Log("Raycast failed. Probably no spatial mesh provided. Use Holographic Remoting or HoloLens.", LogType.Warning); // TODO: Check mesh simulation
 #endif
         }
         //frame.Dispose(); // TODO: Check disposal

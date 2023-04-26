@@ -26,9 +26,6 @@ public class LoginMenu : MonoBehaviour
 
             System.Threading.Tasks.Task<bool> task = AccountManager.LoginQR();
 
-            _QRCodeText.text = "Invalid QR Code! Try again.";
-
-            _validatingLogin = false;
 
         });
     }

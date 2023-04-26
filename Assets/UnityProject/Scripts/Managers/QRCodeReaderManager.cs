@@ -1,4 +1,4 @@
-using Microsoft.MixedReality.SampleQRCodes;
+
 using Microsoft.MixedReality.Toolkit.Experimental.InteractiveElement;
 using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.ImgprocModule;
@@ -15,7 +15,7 @@ using Debug = MRDebug;
 
 
 
-
+// Uses the CV Asset
 public static class QRCodeReaderManager
 {
     public struct QRCodeDetected {

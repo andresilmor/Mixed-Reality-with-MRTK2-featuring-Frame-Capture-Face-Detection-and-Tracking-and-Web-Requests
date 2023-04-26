@@ -52,12 +52,10 @@ public class DebugMenu : MonoBehaviour
 
         _console.ForceMeshUpdate(true);
 
-        _console.text = "";
-        foreach (MRDebug.AppLog log in MRDebug.GetLog(_filterInfo, _filterWarning, _filterException, _filterError, _filterFatal)) {
-            _console.text = _console.text + log.info;
-        }
+        MRDebug.Console = _console;
 
-        UpdatePagination();
+        _console.text = "";
+        UpdateConsole();
 
         _upPageBtn.OnClick.AddListener(() => {
             _console.pageToDisplay = _console.pageToDisplay >= _console.textInfo.pageCount ? 1 : _console.pageToDisplay + 1;
@@ -81,11 +79,7 @@ public class DebugMenu : MonoBehaviour
             else
                 _infoFilterMesh.material = UIManager.Instance.GetCircleButtonMaterial("Info").Value.InactiveMaterial;
 
-            foreach (MRDebug.AppLog log in MRDebug.GetLog(_filterInfo, _filterWarning, _filterException, _filterError, _filterFatal)) {
-                _console.text = _console.text + log.info;
-            }
-
-            UpdatePagination();
+            UpdateConsole();
 
         });
 
@@ -99,11 +93,7 @@ public class DebugMenu : MonoBehaviour
             else
                 _warningFilterMesh.material = UIManager.Instance.GetCircleButtonMaterial("Warning").Value.InactiveMaterial;
 
-            foreach (MRDebug.AppLog log in MRDebug.GetLog(_filterInfo, _filterWarning, _filterException, _filterError, _filterFatal)) {
-                _console.text = _console.text + log.info;
-            }
-
-            UpdatePagination();
+            UpdateConsole();
 
         });
 
@@ -117,11 +107,7 @@ public class DebugMenu : MonoBehaviour
             else
                 _exceptionFilterMesh.material = UIManager.Instance.GetCircleButtonMaterial("Exception").Value.InactiveMaterial;
 
-            foreach (MRDebug.AppLog log in MRDebug.GetLog(_filterInfo, _filterWarning, _filterException, _filterError, _filterFatal)) {
-                _console.text = _console.text + log.info;
-            }
-
-            UpdatePagination();
+            UpdateConsole();
 
         });
 
@@ -135,11 +121,7 @@ public class DebugMenu : MonoBehaviour
             else
                 _errorFilterMesh.material = UIManager.Instance.GetCircleButtonMaterial("Error").Value.InactiveMaterial;
 
-            foreach (MRDebug.AppLog log in MRDebug.GetLog(_filterInfo, _filterWarning, _filterException, _filterError, _filterFatal)) {
-                _console.text = _console.text + log.info;
-            }
-
-            UpdatePagination();
+            UpdateConsole();
 
         });
 
@@ -153,11 +135,7 @@ public class DebugMenu : MonoBehaviour
             else
                 _fatalFilterMesh.material = UIManager.Instance.GetCircleButtonMaterial("Fatal").Value.InactiveMaterial;
 
-            foreach (MRDebug.AppLog log in MRDebug.GetLog(_filterInfo, _filterWarning, _filterException, _filterError, _filterFatal)) {
-                _console.text = _console.text + log.info;
-            }
-
-            UpdatePagination();
+            UpdateConsole();
 
         });
 
@@ -180,11 +158,16 @@ public class DebugMenu : MonoBehaviour
 
     private void OnEnable() {
         UIManager.Instance.HomeMenu.gameObject.SetActive(false);
-
-        foreach (MRDebug.AppLog log in MRDebug.GetLog(_filterInfo, _filterWarning, _filterException, _filterError, _filterFatal)) {
-            _console.text = _console.text + log.info;
-        }
+        UpdateConsole();
 
     }
 
+    public void UpdateConsole() {
+        foreach (MRDebug.AppLog log in MRDebug.GetLog(_filterInfo, _filterWarning, _filterException, _filterError, _filterFatal)) {
+            _console.text = _console.text + log.info;
+
+        }
+        UpdatePagination();
+
+    }
 }

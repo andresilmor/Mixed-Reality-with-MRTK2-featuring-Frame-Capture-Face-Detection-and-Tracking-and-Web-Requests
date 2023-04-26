@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour {
     [SerializeField] public HandMenu HandMenu;
     [SerializeField] public HomeMenu HomeMenu;
     [SerializeField] public LoginMenu LoginMenu;
+    [SerializeField] public DebugMenu DebugMenu;
 
     [Header("Scriptable Objects:")]
     [SerializeField] GraphicUserInterfaceScriptableObject graphicUserInterface;

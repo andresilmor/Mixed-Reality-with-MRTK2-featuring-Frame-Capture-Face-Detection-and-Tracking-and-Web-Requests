@@ -316,22 +316,22 @@ public static class APIManager {
             // The request finished with an unexpected error. The request's Exception property may contain more Info about the error.
             case HTTPRequestStates.Error:
                 action?.Invoke(response.DataAsText, false);
-                Debug.LogError("Request Finished with Error! " + (request.Exception != null ? (request.Exception.Message + "\n" + request.Exception.StackTrace) : "No Exception"));
+                Debug.Log("Request Finished with Error! " + (request.Exception != null ? (request.Exception.Message + "\n" + request.Exception.StackTrace) : "No Exception", LogType.Error));
                 break;
 
             // The request aborted, initiated by the user.
             case HTTPRequestStates.Aborted:
-                Debug.LogWarning("Request Aborted!");
+                Debug.Log("Request Aborted!", LogType.Warning);
                 break;
 
             // Connecting to the server is timed out.
             case HTTPRequestStates.ConnectionTimedOut:
-                Debug.LogError("Connection Timed Out!");
+                Debug.Log("Connection Timed Out!", LogType.Error);
                 break;
 
             // The request didn't finished in the given time.
             case HTTPRequestStates.TimedOut:
-                Debug.LogError("Processing the request Timed Out!");
+                Debug.Log("Processing the request Timed Out!", LogType.Fatal);
                 break;
         }
     }

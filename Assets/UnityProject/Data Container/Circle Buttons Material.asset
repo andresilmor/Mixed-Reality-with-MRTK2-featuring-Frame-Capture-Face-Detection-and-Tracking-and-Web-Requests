@@ -55,3 +55,10 @@ MonoBehaviour:
       SelectedMaterial: {fileID: 0}
       UnselectedMaterial: {fileID: 0}
       HoverMaterial: {fileID: 0}
+  - Name: Home
+    ButtonStatus:
+      ActiveMaterial: {fileID: 2100000, guid: ceef709c2db13a743891e5538eaccb0b, type: 2}
+      InactiveMaterial: {fileID: 2100000, guid: 84c271d4f7a7ff946976f1b63b6dfe31, type: 2}
+      SelectedMaterial: {fileID: 0}
+      UnselectedMaterial: {fileID: 0}
+      HoverMaterial: {fileID: 0}

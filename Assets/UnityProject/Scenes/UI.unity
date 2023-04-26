@@ -279,6 +279,7 @@ MonoBehaviour:
   HandMenu: {fileID: 1842457522}
   HomeMenu: {fileID: 816529396}
   LoginMenu: {fileID: 8133909149527626456}
+  DebugMenu: {fileID: 909031871}
   graphicUserInterface: {fileID: 11400000, guid: 61cc6a5d39d640a478a4e806e877ce63, type: 2}
   circleButtonsMaterial: {fileID: 11400000, guid: 0a79fea7e32dfd04688cc0769861605c, type: 2}
   rectangleButtonsMaterial: {fileID: 11400000, guid: 6fb8e73ce3b71e743b1b915c0dc1e287, type: 2}

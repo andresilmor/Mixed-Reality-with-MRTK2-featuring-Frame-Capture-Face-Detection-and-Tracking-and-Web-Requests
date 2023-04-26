@@ -1,3 +1,5 @@
+using Microsoft.MixedReality.Toolkit;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,5 +9,3 @@ public interface ITrackerEntity {
     public void UpdatePosition(Vector3 newPosition, CameraFrame cameraFrame = null);
 
 }
-
-

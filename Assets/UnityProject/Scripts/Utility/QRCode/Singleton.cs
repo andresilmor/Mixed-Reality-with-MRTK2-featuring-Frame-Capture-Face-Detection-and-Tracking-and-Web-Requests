@@ -1,10 +1,5 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-
 using UnityEngine;
-
-
-namespace Microsoft.MixedReality.SampleQRCodes
+namespace QRTracking
 {
     /// <summary>
     /// Inherit from this base class to create a singleton.
@@ -56,10 +51,12 @@ namespace Microsoft.MixedReality.SampleQRCodes
             }
         }
 
+
         private void OnApplicationQuit()
         {
             m_ShuttingDown = true;
         }
+
 
         private void OnDestroy()
         {
