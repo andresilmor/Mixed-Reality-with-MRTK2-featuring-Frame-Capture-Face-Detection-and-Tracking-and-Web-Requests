@@ -62,3 +62,10 @@ MonoBehaviour:
       SelectedMaterial: {fileID: 0}
       UnselectedMaterial: {fileID: 0}
       HoverMaterial: {fileID: 0}
+  - Name: Logout
+    ButtonStatus:
+      ActiveMaterial: {fileID: 2100000, guid: 18d013f1ab3dc6d47adb08007f783458, type: 2}
+      InactiveMaterial: {fileID: 2100000, guid: 052d2230188d4af408836efd1f83506d, type: 2}
+      SelectedMaterial: {fileID: 0}
+      UnselectedMaterial: {fileID: 0}
+      HoverMaterial: {fileID: 0}

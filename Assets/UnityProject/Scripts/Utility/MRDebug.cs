@@ -36,7 +36,7 @@ public static class MRDebug
         _logs.Add(new AppLog(logType, System.DateTime.Now + " | " + Enum.GetName(typeof(LogType), logType) + " | " + text + "\n"));
         UnityEngine.Debug.Log(Enum.GetName(typeof(LogType), logType) + " | " + text + "\n");
 
-        if (UIManager.Instance.DebugMenu.gameObject.activeInHierarchy)
+        if (AppCommandCenter.Instance.AdditiveScenesLoaded && UIManager.Instance.DebugMenu.gameObject.activeInHierarchy)
             UIManager.Instance.DebugMenu.UpdateConsole();
 
     }

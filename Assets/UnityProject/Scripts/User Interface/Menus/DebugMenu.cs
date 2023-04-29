@@ -163,6 +163,9 @@ public class DebugMenu : MonoBehaviour
     }
 
     public void UpdateConsole() {
+        if (_console == null)
+            return;
+
         foreach (MRDebug.AppLog log in MRDebug.GetLog(_filterInfo, _filterWarning, _filterException, _filterError, _filterFatal)) {
             _console.text = _console.text + log.info;
 

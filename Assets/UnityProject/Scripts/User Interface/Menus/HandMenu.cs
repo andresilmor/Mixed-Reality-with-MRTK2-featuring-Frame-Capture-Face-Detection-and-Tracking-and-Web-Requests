@@ -16,9 +16,8 @@ public class HandMenu : MonoBehaviour
 
     [Header("Mesh:")]
     [SerializeField] MeshRenderer HomeMesh;
+    [SerializeField] MeshRenderer LogoutMesh;
 
-    [Header("Windows:")]
-    [SerializeField] HomeMenu HomeMenu;
 
     private static HandMenu _instance = null;
     public static HandMenu Instance {
@@ -34,21 +33,24 @@ public class HandMenu : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        if (HomeMenu == null)
-            Debug.Log("HomeMenu not defined");
+        if (UIManager.Instance.HomeMenu == null)
+            Debug.Log("UIManager.Instance.HomeMenu not defined");
         else {
 
             // Home Button
-            HomeMenu.gameObject.SetActive(false);
+            UIManager.Instance.HomeMenu.gameObject.SetActive(false);
 
             if (AccountManager.IsLogged) {
                 ToggleHomeButton(true);
-
+                ToggleLogoutButton(true);
 
             } else {
                 ToggleHomeButton(false);
+                ToggleLogoutButton(false);
 
             }
+
+
 
             AccountManager.OnLoggedStatusChange += ToggleHomeButton;
 
@@ -70,14 +72,14 @@ public class HandMenu : MonoBehaviour
                 HomeMesh.material = UIManager.Instance.GetCircleButtonMaterial("Home").Value.ActiveMaterial;
 
                 HomeBtn.OnClick.AddListener(() => {
-                    HomeMenu.gameObject.SetActive(!HomeMenu.gameObject.activeInHierarchy);
+                    UIManager.Instance.HomeMenu.gameObject.SetActive(!UIManager.Instance.HomeMenu.gameObject.activeInHierarchy);
 
                     Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * UIManager.Instance.WindowDistance;
 
                     position.y += UIManager.Instance.AxisYOffset;
 
-                    HomeMenu.gameObject.transform.position = position;
-                    HomeMenu.gameObject.transform.LookAt(Camera.main.transform.position);
+                    UIManager.Instance.HomeMenu.gameObject.transform.position = position;
+                    UIManager.Instance.HomeMenu.gameObject.transform.LookAt(Camera.main.transform.position);
 
                 });
 
@@ -88,6 +90,41 @@ public class HandMenu : MonoBehaviour
             HomeMesh.material = UIManager.Instance.GetCircleButtonMaterial("Home").Value.InactiveMaterial;
 
             HomeBtn.OnClick.RemoveAllListeners();
+
+        } catch (Exception ex) {
+            Debug.Log(ex.Message, LogType.Exception);
+        }
+
+    }
+
+    public void ToggleLogoutButton(bool isActive) {
+        try {
+            Debug.Log("Toggle");
+
+            if (isActive) {
+                LogoutMesh.material = UIManager.Instance.GetCircleButtonMaterial("Logout").Value.ActiveMaterial;
+
+                LogoutBtn.OnClick.AddListener(() => {
+                    UIManager.Instance.HomeMenu.gameObject.SetActive(false);
+                    UIManager.Instance.DebugMenu.gameObject.SetActive(false);
+
+                    UIManager.Instance.CloseAllWindows();
+
+                    UIManager.Instance.LoginMenu.gameObject.SetActive(true);
+
+                    LogoutMesh.material = UIManager.Instance.GetCircleButtonMaterial("Logout").Value.InactiveMaterial;
+
+                    ToggleHomeButton(false);
+
+                });
+
+                return;
+
+            }
+
+            LogoutMesh.material = UIManager.Instance.GetCircleButtonMaterial("Logout").Value.InactiveMaterial;
+
+            LogoutBtn.OnClick.RemoveAllListeners();
 
         } catch (Exception ex) {
             Debug.Log(ex.Message, LogType.Exception);

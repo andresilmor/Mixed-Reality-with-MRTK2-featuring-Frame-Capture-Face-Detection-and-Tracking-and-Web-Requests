@@ -179,6 +179,12 @@ public class UIManager : MonoBehaviour {
         }
 
     }
+    
+    public void CloseAllWindows() {
+        foreach (UIStacker stacker in UIStackers)
+            CloseWindow(stacker);
+
+    }
 
     public static bool ValidateWindow(WindowType windowType, WindowType typeRequired) {
         if (!windowType.Equals(typeRequired)) { // Select here the interface "needed"

@@ -49,6 +49,16 @@ public class AppCommandCenter : MonoBehaviour {
     
     public byte timeToStop = 0;
 
+    private bool _additiveScenesLoaded = false;
+    public bool AdditiveScenesLoaded {
+        private set {
+            _additiveScenesLoaded = value;
+        }
+        get {
+            return _additiveScenesLoaded;
+        }
+    }
+
 
 
     public string ShowNetworkInterfaces() {
@@ -107,6 +117,7 @@ public class AppCommandCenter : MonoBehaviour {
     async void Start()
 #endif
     {
+
         SetDebugger();
         MineField();    
         //await MLManager.ToggleLiveDetection();
@@ -126,6 +137,7 @@ public class AppCommandCenter : MonoBehaviour {
         //Load Additive Scenes
         yield return StartCoroutine(LoadAddititiveScene("UI"));
 
+        AdditiveScenesLoaded = true;
         StartApplication();
 
     }
