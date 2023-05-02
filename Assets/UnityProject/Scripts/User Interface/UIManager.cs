@@ -79,6 +79,17 @@ public class UIManager : MonoBehaviour {
 
     }
 
+    public ButtonVisualMaterialScriptableObject.ButtonStatus? GetRectangleButtonMaterial(string id) {
+        foreach (ButtonVisualMaterialScriptableObject.Data data in rectangleButtonsMaterial.ButtonMaterial) {
+            if (data.Name.Equals(id))
+                return data.ButtonStatus;
+
+        }
+
+        return null;
+
+    }
+
     public UIWindow OpenWindow(WindowType toOpen, UIView uiView, UIStacker stacker = null, string stackerName = "", bool isNotification = false) {
 
         Vector3 position;

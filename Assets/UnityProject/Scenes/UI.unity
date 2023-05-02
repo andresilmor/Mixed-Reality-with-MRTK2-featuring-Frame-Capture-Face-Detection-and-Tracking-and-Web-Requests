@@ -278,7 +278,7 @@ MonoBehaviour:
   uiPool: {fileID: 458620962}
   HandMenu: {fileID: 1842457522}
   HomeMenu: {fileID: 816529396}
-  LoginMenu: {fileID: 8133909149527626456}
+  LoginMenu: {fileID: 5959844433895071473}
   DebugMenu: {fileID: 909031871}
   graphicUserInterface: {fileID: 11400000, guid: 61cc6a5d39d640a478a4e806e877ce63, type: 2}
   circleButtonsMaterial: {fileID: 11400000, guid: 0a79fea7e32dfd04688cc0769861605c, type: 2}
@@ -531,6 +531,17 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 2fb5fa78c5ca14e8eb09400ad29567fb, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9a67e21dac0e8e459168b923286c008, type: 3}
+--- !u!114 &5959844433895071473 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2473863406143360038, guid: 45119cefb061ac046a934a45810dc038, type: 3}
+  m_PrefabInstance: {fileID: 8133909149527626455}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58e4269112dbf494aaa268db28d640ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6349835627397894526 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4139529695984404818, guid: 414a5cd81f829854cbe1285939f48e4c, type: 3}
@@ -663,23 +674,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoginMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 8133909148701443539, guid: 45119cefb061ac046a934a45810dc038, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45119cefb061ac046a934a45810dc038, type: 3}
---- !u!114 &8133909149527626456 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2473863406143360038, guid: 45119cefb061ac046a934a45810dc038, type: 3}
-  m_PrefabInstance: {fileID: 8133909149527626455}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58e4269112dbf494aaa268db28d640ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8292450542149737783
 PrefabInstance:
   m_ObjectHideFlags: 0

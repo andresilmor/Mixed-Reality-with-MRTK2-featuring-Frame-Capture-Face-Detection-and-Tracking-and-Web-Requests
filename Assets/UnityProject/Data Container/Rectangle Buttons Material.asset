@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Rectangle Buttons Material
   m_EditorClassIdentifier: 
   _buttonMaterial:
-  - name: Close
-    material: {fileID: 2100000, guid: 44f56f491a11fe14589aaa4ef9fd7969, type: 2}
-  - name: Next
-    material: {fileID: 2100000, guid: 29d9edda7170a934fbc59e5951adaccd, type: 2}
-  - name: Back
-    material: {fileID: 2100000, guid: 51bce08f6515867479e02e18960adbb7, type: 2}
+  - Name: Normal
+    ButtonStatus:
+      ActiveMaterial: {fileID: 2100000, guid: 8ec205f602699c44298362a3870b1dd4, type: 2}
+      InactiveMaterial: {fileID: 2100000, guid: ea16138115781984787a18f289546a30, type: 2}
+      SelectedMaterial: {fileID: 0}
+      UnselectedMaterial: {fileID: 0}
+      HoverMaterial: {fileID: 0}
