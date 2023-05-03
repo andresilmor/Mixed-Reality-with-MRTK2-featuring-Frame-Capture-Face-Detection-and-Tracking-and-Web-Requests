@@ -31,7 +31,8 @@ public class LoginView : UIView {
         AccountManager.loginWindow = _window;
 
         (_window.components["BotButton"] as Interactable).OnClick.AddListener(() => {
-            System.Threading.Tasks.Task<bool> task = AccountManager.LoginQR();
+            //System.Threading.Tasks.Task<bool> task = 
+            AccountManager.LoginQR();
         });
 
        

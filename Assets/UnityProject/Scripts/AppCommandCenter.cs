@@ -11,6 +11,7 @@ using System.Net.NetworkInformation;
 using UnityEngine.SceneManagement;
 
 using Debug = MRDebug;
+using BestHTTP.Logger;
 
 
 [DisallowMultipleComponent]
@@ -118,8 +119,7 @@ public class AppCommandCenter : MonoBehaviour {
 #endif
     {
 
-        SetDebugger();
-        MineField();    
+        SetDebugger();  
         //await MLManager.ToggleLiveDetection();
 
         StartCoroutine(LoadAdditiveScenes());
@@ -172,7 +172,7 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
 
-    private void MineField() { // For features test / Out-flow
+    async private void MineField() { // For features test / Out-flow
         //DateTime testDT = DateTime.Now;
         //testDT  = testDT.Add(new TimeSpan(0, 0, 5));
         //Debug.Log("=> " + testDT.ToString());
@@ -186,7 +186,7 @@ public class AppCommandCenter : MonoBehaviour {
             (timerOverNotification.components["ActionButtonText"] as TextMeshPro).text = "Locate Pacient";
             (timerOverNotification.components["ActionButton"] as Interactable).OnClick.AddListener(() => {
                 Debug.Log("Ok im calling");
-                //APIManager.wsLiveDetection.Send("oi");
+                //APIManager.wsFrameInference.Send("oi");
                 //MLManager.AnalyseFrame();
 
             });
@@ -195,9 +195,9 @@ public class AppCommandCenter : MonoBehaviour {
 
             });
 
-            if (!APIManager.wsLiveDetection.IsOpen) {
+            if (!APIManager.wsFrameInference.IsOpen) {
                 Debug.Log("nop opened");
-                APIManager.wsLiveDetection.Open();
+                APIManager.wsFrameInference.Open();
             }
             
             Debug.Log(TimedEventManager.GetTimedEventTimeLeft("TEST"));
@@ -205,11 +205,43 @@ public class AppCommandCenter : MonoBehaviour {
 
         }));*/
 
+        APIManager.Field queryOperation = new APIManager.Field(
+        "MemberLogin", new APIManager.Field[] {new APIManager.Field("loginCredentials", new APIManager.FieldParams[] {
+            new APIManager.FieldParams("username", "\"" + "CareXR_Tester_Caregiver" + "\""),
+            new APIManager.FieldParams("password", "\"" + "password" + "\""),
+        }) });
 
+
+        await APIManager.ExecuteRequest("", queryOperation,
+            (message, succeed) => {
+                
+
+
+            },
+            new APIManager.Field[] {
+            new APIManager.Field("... on Member", new APIManager.Field[] {
+                new APIManager.Field("token"),
+                new APIManager.Field("uuid"),
+                new APIManager.Field("username"),
+                new APIManager.Field("MemberOf", new APIManager.Field[] {
+                    new APIManager.Field("role"),
+                    new APIManager.Field("institution", new APIManager.Field[] {
+                    new APIManager.Field("uuid")
+                    })
+                }),
+            }), 
+            new APIManager.Field("... on Error", new APIManager.Field[] {
+                new APIManager.Field("message"),
+            })
+
+        });
 
     }
 
     private static void StartApplication() {
+
+
+        AppCommandCenter.Instance.MineField();
         //UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.H_2btn_00, new LoginView(), stackerName: "Login Window");
 
         UIManager.Instance.LoginMenu.gameObject.SetActive(!UIManager.Instance.LoginMenu.gameObject.activeInHierarchy);

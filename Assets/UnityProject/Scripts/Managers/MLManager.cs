@@ -37,7 +37,7 @@ public static class MLManager
 
     public static async Task<bool> ToggleLiveDetection() {
 
-        APIManager.CreateWebSocketLiveDetection(APIManager.mlLiveDetection, DetectionType.Person, FaceDetectionManager.ProcessResults);
+        APIManager.CreateWebSocketLiveDetection(APIManager.FrameFullInference, DetectionType.Person, FaceDetectionManager.ProcessResults);
 
 
 #if ENABLE_WINMD_SUPPORT
@@ -48,7 +48,7 @@ public static class MLManager
 
         //AppCommandCenter.CameraFrameReader.FrameArrived += CameraServiceOnFrameArrivedSync;
         Debug.Log("Back");
-        return APIManager.wsLiveDetection != null;
+        return APIManager.wsFrameInference != null;
 
     }
 

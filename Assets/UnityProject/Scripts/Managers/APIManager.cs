@@ -53,23 +53,23 @@ public static class APIManager {
     #region API Meta Data
 
     [Header("Protocols:")]
-    [SerializeField] static string websocketProtocol = "wss://";
-    [SerializeField] static string httpProtocol = "https://";
+    [SerializeField] static string websocketProtocol = "ws://";
+    [SerializeField] static string httpProtocol = "http://";
 
     [Header("API Address:")]
     //string address = "websocketProtocol://192.168.1.238:8000";
-    [SerializeField] static string ip = "9ee0-193-136-194-58.eu.ngrok.io";
+    [SerializeField] static string ip = "54.229.220.82";
     [SerializeField] static string port = ""; //For when used with localhost server :8000
 
     [Header("Root Paths:")]
     [SerializeField] private static string _websocketPath = "/ws";
-    public static string websocketPath {
+    public static string WebsocketPath {
         get {
             return _websocketPath;
         }
     }
     [SerializeField] private static string _graphqlPath = "/api";
-    public static string graphqlPath {
+    public static string GraphqlPath {
         get {
             return _graphqlPath;
         }
@@ -91,16 +91,16 @@ public static class APIManager {
 
     #region WebSockets Data
 
-    private const string _mlLiveDetection = "/live";
-    public static string mlLiveDetection {
+    private const string _frameFullInference = "/live";
+    public static string FrameFullInference {
         get {
-            return _mlLiveDetection;
+            return _frameFullInference;
         }
     }
 
     private static List<WebSocket> wsConnections;
     private static List<string> wsConnectionsPath;
-    public static WebSocket wsLiveDetection { get; private set; }
+    public static WebSocket wsFrameInference { get; private set; }
 
     #endregion
 
@@ -148,8 +148,8 @@ public static class APIManager {
 
     public static WebSocket GetWebSocket(string path) {
         switch (path) {
-            case _mlLiveDetection:
-                return wsLiveDetection;
+            case _frameFullInference:
+                return wsFrameInference;
 
 
             default:
@@ -165,8 +165,8 @@ public static class APIManager {
 
     private static void AddWebSocket(string path, WebSocket webSocket) {
         switch (path) {
-            case _mlLiveDetection:
-                wsLiveDetection = webSocket;
+            case _frameFullInference:
+                wsFrameInference = webSocket;
                 break;
 
             default:
@@ -179,10 +179,10 @@ public static class APIManager {
 
     public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<List<PersonAndEmotionsInferenceReply.Detection>> action) {
         try {
-            wsLiveDetection = new WebSocket(new Uri("ws://34.254.162.143/ws"));
+            wsFrameInference = new WebSocket(new Uri(websocketProtocol + ip + _websocketPath));
+            // "ws://34.254.162.143/ws" 
 
-
-            wsLiveDetection.OnMessage += (WebSocket webSocket, string message) => {
+            wsFrameInference.OnMessage += (WebSocket webSocket, string message) => {
 
                 if (message.Length > 6) {
                     if (detectionType == DetectionType.Person) {
@@ -193,7 +193,7 @@ public static class APIManager {
                 }
 
             };
-            wsLiveDetection.OnBinary += (WebSocket webSocket, byte[] data) => {
+            wsFrameInference.OnBinary += (WebSocket webSocket, byte[] data) => {
                 Debug.Log("Binary");
                 /*
                 try { 
@@ -235,11 +235,11 @@ public static class APIManager {
                 action?.Invoke(new DetectionsList("Pacients", list: detections), detectionType);
                 */
             };
-            wsLiveDetection.Open();
+            wsFrameInference.Open();
             
 
             /*
-            WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + port + websocketPath + path));
+            WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + port + WebsocketPath + path));
 
             newConnection.OnMessage += (WebSocket webSocket, string message) => {
                 Debug.Log(message);
@@ -258,7 +258,7 @@ public static class APIManager {
 
     public static void CreateWebSocketConnection(string path, Action<string> action) {
         try {
-            WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + port + websocketPath + path));
+            WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + port + WebsocketPath + path));
 
             newConnection.OnMessage += (WebSocket webSocket, string message) => {
                 if (message.Length > 6)
@@ -290,8 +290,8 @@ public static class APIManager {
     }
 
     public static void CloseAllWebSockets() {
-        if (wsLiveDetection != null && wsLiveDetection.IsOpen) { 
-            wsLiveDetection.Close(); 
+        if (wsFrameInference != null && wsFrameInference.IsOpen) { 
+            wsFrameInference.Close(); 
         }
 
         if (wsConnections != null && wsConnections.Count > 0) {
@@ -367,23 +367,48 @@ public static class APIManager {
             string query = "query {\r\n";
             query += (new string('\t', 1) + type.name);
             if (type.parameters != null) {
-                query += " (";
+                query += " ( ";
                 foreach (FieldParams parameter in type.parameters)
                     query += (parameter.name + ": " + parameter.value + ", ");
 
-                query += ") {\r\n";
+                if (type.subfield != null)
+                    query += " ) {\r\n";
 
+            }
+            if (type.subfield != null) {
+                query += " ( ";
+                foreach (APIManager.Field subfield in type.subfield) {
+                    query += subfield.name + ": { ";
+
+                    if (subfield.parameters != null) {
+                        foreach (FieldParams parameter in subfield.parameters)
+                            query += (parameter.name + ": " + parameter.value + ", ");
+
+
+
+                    }
+
+                    query += " } ";
+                }
+                query += " ) { \r\n";
             }
 
             MountQuery(args, ref query, 2);
             query += (new string('\t', 1) + "}\r\n");
             query += "}";
 
+
+
             string jsonData = JsonConvert.SerializeObject(new { query });
+
+            Debug.Log(jsonData.ToString());
+
+            return;
+
             byte[] postData = Encoding.ASCII.GetBytes(jsonData);
 
 
-            using (HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + port + graphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => OnRequestFinished(action, request, response))) {
+            using (HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + port + GraphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => OnRequestFinished(action, request, response))) {
                 request.DisableCache = true;
 
                 request.SetHeader("Content-Type", "application/json");

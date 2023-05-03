@@ -14,6 +14,7 @@ using Microsoft.MixedReality.Toolkit.UI;
 using QRTracking;
 
 using Debug = MRDebug;
+using static APIManager;
 
 public static class AccountManager {
     public static string currentUserUUID { get; private set; }
@@ -48,7 +49,7 @@ public static class AccountManager {
 
     #region Login
 
-    async public static Task<bool> LoginQR() {
+    public static bool LoginQR() {
         /*
         if (loginWindow != null) {
             (loginWindow.components["BotButton"] as Interactable).enabled = false;
@@ -100,26 +101,21 @@ public static class AccountManager {
         Debug.Log("Here. 1"); // Vai até aqui se ler json, se nao der Reiniciar os oculos
         JObject qrMessage = JObject.Parse(@newQR.Data.ToString());
 
-
-        APIManager.Field queryOperation = new APIManager.Field(
-        "memberLogin", new APIManager.FieldParams[] {
-            new APIManager.FieldParams("username", "\"" + qrMessage["username"] + "\""),
-            new APIManager.FieldParams("password", "\"" + qrMessage["password"] + "\""),
-        });
-        Debug.Log(qrMessage.ToString());
+        IsLogged = await ValidateLogin(qrMessage["username"].ToString(), qrMessage["password"].ToString());
+        OnLoggedStatusChange?.Invoke(true);
 
         requesting = false;
         _qrTrackingCounter = 0;
-        Debug.Log("Here. 2");
-
-        //IsLogged = true; Only with api working
         
-        Debug.Log("Gonna Invoke. 0");
-        OnLoggedStatusChange?.Invoke(true);
-        Debug.Log("Invoked. 0");
+    }
 
+    async public static Task<bool> ValidateLogin(string username, string password) {
+        APIManager.Field queryOperation = new APIManager.Field(
+        "MemberLogin", new APIManager.Field[] {new APIManager.Field("loginCredentials", new APIManager.FieldParams[] {
+            new APIManager.FieldParams("username", "\"" + username + "\""),
+            new APIManager.FieldParams("password", "\"" + password + "\""),
+        }) });
 
-        return;
 
         await APIManager.ExecuteRequest("", queryOperation,
             (message, succeed) => {
@@ -161,7 +157,9 @@ public static class AccountManager {
             })
 
         });
-        
+
+        return false;
+
     }
 
     #endregion

@@ -50,7 +50,7 @@ public class LoginMenu : MonoBehaviour
             _keyboardMesh.material = UIManager.Instance.GetRectangleButtonMaterial("Normal").Value.InactiveMaterial;
             _keyboardBtn.enabled = false;
 
-            System.Threading.Tasks.Task<bool> task = AccountManager.LoginQR();
+            AccountManager.LoginQR();
 
 
         });
