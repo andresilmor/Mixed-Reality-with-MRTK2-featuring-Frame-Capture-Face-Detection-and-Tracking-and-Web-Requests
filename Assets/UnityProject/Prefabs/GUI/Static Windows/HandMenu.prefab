@@ -461,7 +461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HomeBtn: {fileID: 5275332853830281191}
   HelpBtn: {fileID: 5275332852578087346}
-  LogoutBtn: {fileID: 5275332854234437483}
+  LogoutBtn: {fileID: 1525837361175818040}
   ShutdownBtn: {fileID: 2880717656413135626}
   HomeMesh: {fileID: 5275332854277640077}
   LogoutMesh: {fileID: 1525837360511420242}
@@ -717,6 +717,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4180372398655005802, guid: f448f9b70e1802f46a262b7b3543ef2f, type: 3}
   m_PrefabInstance: {fileID: 3400066478425934687}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1525837361175818040 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4180372398655005799, guid: f448f9b70e1802f46a262b7b3543ef2f, type: 3}
+  m_PrefabInstance: {fileID: 3400066478425934687}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1410eac1ae94b4d4492a09cc368e152c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6133301585116238924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1027,17 +1038,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4180372398655005802, guid: f448f9b70e1802f46a262b7b3543ef2f, type: 3}
   m_PrefabInstance: {fileID: 8301846927851041548}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5275332854234437483 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4180372398655005799, guid: f448f9b70e1802f46a262b7b3543ef2f, type: 3}
-  m_PrefabInstance: {fileID: 8301846927851041548}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1410eac1ae94b4d4492a09cc368e152c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &8301846928072676821
 PrefabInstance:
   m_ObjectHideFlags: 0

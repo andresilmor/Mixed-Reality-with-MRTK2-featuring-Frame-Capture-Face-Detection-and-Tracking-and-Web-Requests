@@ -1,0 +1,409 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.16f1 (4016570cf34f) revision 4200023'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19044) 64bit Core' Language: 'en' Physical Memory: 32678 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files (x86)\ProjetoIntegrado_Multimedia_AndreMoreira\Unity Editors\2021.3.16f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker15
+-projectPath
+D:/PC/Desktop/IP/Rep/MR_M
+-logFile
+Logs/AssetImportWorker15.log
+-srvPort
+59023
+Successfully changed project path to: D:/PC/Desktop/IP/Rep/MR_M
+D:/PC/Desktop/IP/Rep/MR_M
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [36592] Host "[IP] 172.17.2.117 [Port] 0 [Flags] 2 [Guid] 2568965585 [EditorId] 2568965585 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [36592] Host "[IP] 172.17.2.117 [Port] 0 [Flags] 2 [Guid] 2568965585 [EditorId] 2568965585 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+Refreshing native plugins compatible for Editor in 157.96 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 4.08 ms.
+Initialize engine version: 2021.3.16f1 (4016570cf34f)
+[Subsystems] Discovering subsystems at path C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/PC/Desktop/IP/Rep/MR_M/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 2070 SUPER (ID=0x1e84)
+    Vendor:   NVIDIA
+    VRAM:     8011 MB
+    Driver:   27.21.14.6192
+Initialize mono
+Mono path[0] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56356
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll
+Registered in 0.008272 seconds.
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 112.38 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.10 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.627 seconds
+Domain Reload Profiling:
+	ReloadAssembly (627ms)
+		BeginReloadAssembly (70ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (458ms)
+			LoadAssemblies (68ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (99ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (23ms)
+			SetupLoadedEditorAssemblies (285ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (51ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (113ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (82ms)
+				ProcessInitializeOnLoadMethodAttributes (38ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.017859 seconds.
+Android Extension - Scanning For ADB Devices 4334 ms
+Begin MonoManager ReloadAssembly
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 107.39 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+DisplayProgressbar: Restoring NuGet Packages
+Added DLL directory D:\PC\Desktop\IP\Rep\MR_M\Assets\Packages\Microsoft.VCRTForwarders.140.1.0.7\Unity\x64 to the user search path.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+InitVCRTForwarders:.cctor () (at Assets/Packages/Microsoft.VCRTForwarders.140.1.0.7/Unity/Editor/InitVCRTForwarders.cs:53)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/Packages/Microsoft.VCRTForwarders.140.1.0.7/Unity/Editor/InitVCRTForwarders.cs Line: 53)
+
+Package Manager log level set to [2]
+Added DLL directory D:\PC\Desktop\IP\Rep\MR_M\Assets\Packages\Microsoft.MixedReality.QR.0.5.3037\Unity\x64 to the user search path.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Microsoft.MixedReality.QR.Init:.cctor () (at Assets/Packages/Microsoft.MixedReality.QR.0.5.3037/Unity/Editor/Microsoft.MixedReality.QR.Init.cs:60)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/Packages/Microsoft.MixedReality.QR.0.5.3037/Unity/Editor/Microsoft.MixedReality.QR.Init.cs Line: 60)
+
+[XR] [MROpenXR][Info   ][15:42:53.653782][tid:8ef0] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][15:42:53.653782][tid:8ef0] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][15:42:53.653838][tid:8ef0] InputProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][15:42:53.653838][tid:8ef0] InputProvider_RegisterLifecycleProvider
+[XR] Error loading subsystem: Display (1) (header mismatch?)
+[XR] [MROpenXR][Info   ][15:42:53.712675][tid:8ef0] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
+[XR] [MROpenXR][Info   ][15:42:53.712675][tid:8ef0] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
+Mono: successfully reloaded assembly
+- Completed reload, in  2.783 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2783ms)
+		BeginReloadAssembly (100ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (16ms)
+		EndReloadAssembly (2580ms)
+			LoadAssemblies (96ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (263ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (75ms)
+			SetupLoadedEditorAssemblies (2105ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (13ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (107ms)
+				BeforeProcessingInitializeOnLoad (128ms)
+				ProcessInitializeOnLoadAttributes (1216ms)
+				ProcessInitializeOnLoadMethodAttributes (632ms)
+				AfterProcessingInitializeOnLoad (9ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (4ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 2.40 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+Unloading 7030 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 251 unused Assets / (188.2 KB). Loaded Objects now: 7349.
+Memory consumption went from 273.3 MB to 273.1 MB.
+Total: 4.016700 ms (FindLiveObjects: 0.539300 ms CreateObjectMapping: 0.606100 ms MarkObjects: 2.677500 ms  DeleteObjects: 0.193200 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 101579.037785 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup02.png
+  artifactKey: Guid(6423d0ca050df6843afc19df5a55d66e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup02.png using Guid(6423d0ca050df6843afc19df5a55d66e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '247b6d812e1064e2334ba62f88ded48b') in 0.084224 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 62.982679 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup02_h892.png
+  artifactKey: Guid(6ff552c9bff70b9409701354153ab716) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup02_h892.png using Guid(6ff552c9bff70b9409701354153ab716) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '055dc7ae5002d970130e46eb5befc28f') in 0.179068 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 88.217368 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup03.png
+  artifactKey: Guid(4c4b349e2994f1348ba6406d2e035edf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup03.png using Guid(4c4b349e2994f1348ba6406d2e035edf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9982950fa0088737cf2d274737442dbc') in 0.037460 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 45.967890 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup03_h412.44.png
+  artifactKey: Guid(f0ea7b6b762fcf045918455c6fe99eae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup03_h412.44.png using Guid(f0ea7b6b762fcf045918455c6fe99eae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '495690ca8d1c65d96d640a1e2d9240b7') in 0.025781 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.184688 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup03_h412.44.png
+  artifactKey: Guid(f0ea7b6b762fcf045918455c6fe99eae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup03_h412.44.png using Guid(f0ea7b6b762fcf045918455c6fe99eae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27db836376d2f0a88599693aa80242bc') in 0.060860 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 277.332874 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup06.png
+  artifactKey: Guid(93f35be3c229b184188c77a7d147b92f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup06.png using Guid(93f35be3c229b184188c77a7d147b92f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd841d7d8a2dc7bce461d61c95726b4da') in 0.184222 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 13.730660 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup06.png
+  artifactKey: Guid(93f35be3c229b184188c77a7d147b92f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup06.png using Guid(93f35be3c229b184188c77a7d147b92f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e6c266d3e674fc3e86fc92585f0135c7') in 0.029215 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 134.054298 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07.png
+  artifactKey: Guid(9ff34fd21f4f73a4f8eab84c6e52c7c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07.png using Guid(9ff34fd21f4f73a4f8eab84c6e52c7c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '087dd839f09e424e14b828e858d7f30e') in 0.034100 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.803613 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup07.png
+  artifactKey: Guid(9ff34fd21f4f73a4f8eab84c6e52c7c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup07.png using Guid(9ff34fd21f4f73a4f8eab84c6e52c7c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '54343bee73d6b9bd3e7f3dadf76044ea') in 0.030226 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 55.831121 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup09.png
+  artifactKey: Guid(6a15c51f9f5a1454290a618b42d9a938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup09.png using Guid(6a15c51f9f5a1454290a618b42d9a938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90924ba17fa8575f1e8d5ebe1562bc69') in 0.037475 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.099636 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup09.png
+  artifactKey: Guid(6a15c51f9f5a1454290a618b42d9a938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup09.png using Guid(6a15c51f9f5a1454290a618b42d9a938) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a57924b7f8628caef2ad2e78de7c190') in 0.028302 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 72.468838 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup10.png
+  artifactKey: Guid(43c9a901dac94094cabde065cb729f70) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup10.png using Guid(43c9a901dac94094cabde065cb729f70) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2248ceec820400b2babbdd9f97bf7af1') in 0.026610 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 256.574816 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup10_w208.681_h477.879.png
+  artifactKey: Guid(3dba8a7a7c13c0c41975d00f5a474346) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup10_w208.681_h477.879.png using Guid(3dba8a7a7c13c0c41975d00f5a474346) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '389e3d03ea3a5f2fcc85ed429ab0b15e') in 0.039941 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.342903 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup10_w208.681_h477.879.png
+  artifactKey: Guid(3dba8a7a7c13c0c41975d00f5a474346) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup10_w208.681_h477.879.png using Guid(3dba8a7a7c13c0c41975d00f5a474346) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd20422f09af5327a93593ffc51b1dc05') in 0.044483 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 170.697898 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup11.png
+  artifactKey: Guid(6f0e6873f01f5c343b7e454610cd914b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup11.png using Guid(6f0e6873f01f5c343b7e454610cd914b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'db68ffcfa29357b62b7cea728a47cd17') in 0.034622 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 525.082107 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup11_h1647.90.png
+  artifactKey: Guid(cdf4352b34e325a4e9d6cb78077893db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup11_h1647.90.png using Guid(cdf4352b34e325a4e9d6cb78077893db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'be36be1ecb8cafd9c38b377a9198341b') in 0.054522 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 14.364342 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup11_h1647.90.png
+  artifactKey: Guid(cdf4352b34e325a4e9d6cb78077893db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup11_h1647.90.png using Guid(cdf4352b34e325a4e9d6cb78077893db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71adaa33f9b722e151942e627eb27a1b') in 0.206074 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 320.334100 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup12.png
+  artifactKey: Guid(81c828ac04b360f45a0b897bc97f2f86) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup12.png using Guid(81c828ac04b360f45a0b897bc97f2f86) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5f91b563f7bec1c9bd83356e46541d78') in 0.025520 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 15.979231 seconds.
+  path: Assets/UnityProject/Sprites/Custom GUI/Popups/popup12.png
+  artifactKey: Guid(81c828ac04b360f45a0b897bc97f2f86) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Sprites/Custom GUI/Popups/popup12.png using Guid(81c828ac04b360f45a0b897bc97f2f86) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '412350ae2d5184ecc847c166407f7941') in 0.127273 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.017340 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 2.28 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.04 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.118 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1119ms)
+		BeginReloadAssembly (151ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (52ms)
+		EndReloadAssembly (881ms)
+			LoadAssemblies (94ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (264ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (40ms)
+			SetupLoadedEditorAssemblies (428ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (19ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (71ms)
+				ProcessInitializeOnLoadAttributes (283ms)
+				ProcessInitializeOnLoadMethodAttributes (42ms)
+				AfterProcessingInitializeOnLoad (9ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 22.03 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+Unloading 6961 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 242 unused Assets / (187.3 KB). Loaded Objects now: 7380.
+Memory consumption went from 272.1 MB to 271.9 MB.
+Total: 3.561000 ms (FindLiveObjects: 0.480800 ms CreateObjectMapping: 0.464100 ms MarkObjects: 2.442400 ms  DeleteObjects: 0.173000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 162.440253 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Popups/mt_popup02_h892.mat
+  artifactKey: Guid(630207acdc675cc4e92e805b58ee80ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Popups/mt_popup02_h892.mat using Guid(630207acdc675cc4e92e805b58ee80ca) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0b7552ee0e2b93a6f9de05ed687de41e') in 0.119357 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Popups/mt_popup03_h412.44.mat
+  artifactKey: Guid(c49bf00ec6bf1cc478fa73346e7751a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Popups/mt_popup03_h412.44.mat using Guid(c49bf00ec6bf1cc478fa73346e7751a5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'efc8c2fa9e896933cf638479b987c943') in 0.092472 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Popups/mt_popup11_h1647.90.mat
+  artifactKey: Guid(a3e633909b2a4044fb82c85518dd10b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Popups/mt_popup11_h1647.90.mat using Guid(a3e633909b2a4044fb82c85518dd10b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7939f4f4f0d09860ad4a223071d58802') in 0.020404 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Popups/mt_popup07.mat
+  artifactKey: Guid(5c33730e509563f46b609fc2be1fc51a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Popups/mt_popup07.mat using Guid(5c33730e509563f46b609fc2be1fc51a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e36bbc9b3d3bd1e543f7b659a2b013a0') in 0.012037 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Popups/mt_popup12.mat
+  artifactKey: Guid(2c7203f22e7bff34081d0e2efae9676e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Popups/mt_popup12.mat using Guid(2c7203f22e7bff34081d0e2efae9676e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3f6571793187142030721d3f1e8c03e0') in 0.014806 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/UnityProject/Materials/MR UI/Popups/mt_popup09.mat
+  artifactKey: Guid(22ce4a83e62b584439a5f8abb5f704a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/UnityProject/Materials/MR UI/Popups/mt_popup09.mat using Guid(22ce4a83e62b584439a5f8abb5f704a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e99cef6f62d11f1bcb1554b940f78722') in 0.023862 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

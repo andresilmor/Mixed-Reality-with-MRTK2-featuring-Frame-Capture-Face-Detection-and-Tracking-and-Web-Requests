@@ -15,6 +15,7 @@ using QRTracking;
 
 using Debug = MRDebug;
 using static APIManager;
+using BestHTTP.Logger;
 
 public static class AccountManager {
     public static string currentUserUUID { get; private set; }
@@ -26,6 +27,9 @@ public static class AccountManager {
             if (_isLogged == value) { return; }
             _isLogged = value;
             if (_isLogged) {
+                return;
+
+                // EXECUTE in LOGIN
                 foreach (MemberOf memberOf in RealmManager.realm.Find<UserEntity>(currentUserUUID).MemberOf) {
                     NotificationsManager.SetupMedicationAlerts(memberOf.Institution.UUID);
 
@@ -75,45 +79,39 @@ public static class AccountManager {
     }
 
     async private static void LoginQRCode(object sender, QRCodeEventArgs<Microsoft.MixedReality.QR.QRCode> code) {
-        Debug.Log("Hello There.");
+   
         QRInfo newQR = new QRInfo(code.Data);
-
-        Debug.Log(code.Data.Data.ToString());
-        Debug.Log("Here.");
-
         if (_lastQR != null && _lastQR.Id == newQR.Id)
             return;
 
         _lastQR = newQR;
 
-        //if (_qrTrackingCounter++ != 2)
-        //    return;
 
 
-        requesting = true;
-        Debug.Log("Here. 0");
         QRCodesManager.Instance.StopQRTracking();
         QRCodesManager.Instance.QRCodeAdded -= LoginQRCode;
         
-        Debug.Log("Here. 0.1");
         Debug.Log(newQR.Data.ToString());
 
-        Debug.Log("Here. 1"); // Vai até aqui se ler json, se nao der Reiniciar os oculos
         JObject qrMessage = JObject.Parse(@newQR.Data.ToString());
 
-        IsLogged = await ValidateLogin(qrMessage["username"].ToString(), qrMessage["password"].ToString());
-        OnLoggedStatusChange?.Invoke(true);
+        LoginWithCredentials(qrMessage["username"].ToString(), qrMessage["password"].ToString());
 
-        requesting = false;
-        _qrTrackingCounter = 0;
-        
     }
 
-    async public static Task<bool> ValidateLogin(string username, string password) {
-        APIManager.Field queryOperation = new APIManager.Field(
-        "MemberLogin", new APIManager.Field[] {new APIManager.Field("loginCredentials", new APIManager.FieldParams[] {
-            new APIManager.FieldParams("username", "\"" + username + "\""),
-            new APIManager.FieldParams("password", "\"" + password + "\""),
+    async public static void LoginWithCredentials(string username, string password) {
+        requesting = true;
+        IsLogged = await ValidateLogin(username, password);
+
+        requesting = false;
+
+    }
+
+    async private static Task<bool> ValidateLogin(string username, string password) {
+        GraphQL.Type queryOperation = new GraphQL.Type(
+        "MemberLogin", new GraphQL.Type[] {new GraphQL.Type("loginCredentials", new GraphQL.Params[] {
+            new GraphQL.Params("username", "\"" + username + "\""),
+            new GraphQL.Params("password", "\"" + password + "\""),
         }) });
 
 
@@ -122,43 +120,46 @@ public static class AccountManager {
                 try {
                     if (succeed) {
                         JObject response = JObject.Parse(@message);
-                        //Debug.Log(response.ToString());
-                        if (response.HasValues && response["Data"] != null) {
-                            IsLogged = SaveUser(response);
+                        if (response.HasValues && response["data"] != null && response["data"]["MemberLogin"]["message"] == null) {
+
+                            IsLogged = true;
+                            OnLoggedStatusChange?.Invoke(IsLogged);
+                            SaveUser(response);
                             requesting = false;
-                            UIManager.Instance.CloseWindow(AccountManager.loginWindow.stacker);
-
-
 
                         } else {
-                            Debug.Log("Response empty");
+                            IsLogged = false;
+
+                            UIManager.Instance.LoginMenu.ShowLoginErrorMessage("Invalid Credentials");
 
                         }
 
                     }
 
                 } catch (Exception e) {
-                    Debug.Log("Error: " + e.Message);
                     requesting = false;
-
                 }
 
             },
-            new APIManager.Field[] {
-                new APIManager.Field("token"),
-                new APIManager.Field("uuid"),
-                new APIManager.Field("Name"),
-                new APIManager.Field("memberOf", new APIManager.Field[] {
-                    new APIManager.Field("role"),
-                    new APIManager.Field("institution", new APIManager.Field[] {
-                    new APIManager.Field("uuid")
-                })
+            new GraphQL.Type[] {
+                new GraphQL.Type("... on Member", new GraphQL.Type[] {
+                    new GraphQL.Type("token"),
+                    new GraphQL.Type("uuid"),
+                    new GraphQL.Type("name"),
+                    new GraphQL.Type("MemberOf", new GraphQL.Type[] {
+                        new GraphQL.Type("role"),
+                        new GraphQL.Type("institution", new GraphQL.Type[] {
+                            new GraphQL.Type("uuid")
+                        })
+                    }),
+                }),
+                new GraphQL.Type("... on Error", new GraphQL.Type[] {
+                    new GraphQL.Type("message"),
+                
+                }),
+            });
 
-            })
-
-        });
-
-        return false;
+        return IsLogged;
 
     }
 
@@ -166,23 +167,22 @@ public static class AccountManager {
 
     #region Logged Account Persistence
 
-    private static bool SaveUser(JObject response) {
-        if (RealmManager.CreateUpdateUser(response, response["Data"]["memberLogin"]["uuid"].Value<string>()))
-            currentUserUUID = response["Data"]["memberLogin"]["uuid"].Value<string>();
+    private static void SaveUser(JObject response) {
+        if (RealmManager.CreateUpdateUser(response, response["data"]["MemberLogin"]["uuid"].Value<string>()))
+            currentUserUUID = response["data"]["MemberLogin"]["uuid"].Value<string>();
 
-        return SetRelationshipInstitution(response);
+        SetRelationshipInstitution(response);
 
     }
 
 
 
-    private static bool SetRelationshipInstitution(JObject response) {
+    private static void SetRelationshipInstitution(JObject response) {
         UserEntity currentUser = RealmManager.realm.Find<UserEntity>(currentUserUUID);
 
-        foreach (var relationship in response["Data"]["memberLogin"]["memberOf"])
+        foreach (var relationship in response["data"]["MemberLogin"]["MemberOf"])
             RealmManager.CreateUpdateUserMembership(currentUser, relationship);
 
-        return true;
 
     }
 
@@ -192,6 +192,7 @@ public static class AccountManager {
 
     public static bool Logout() {
         IsLogged = false;
+        OnLoggedStatusChange?.Invoke(IsLogged);
         return true;
 
     }

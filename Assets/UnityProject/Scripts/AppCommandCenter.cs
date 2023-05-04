@@ -173,9 +173,9 @@ public class AppCommandCenter : MonoBehaviour {
 
 
     async private void MineField() { // For features test / Out-flow
-        //DateTime testDT = DateTime.Now;
-        //testDT  = testDT.Add(new TimeSpan(0, 0, 5));
-        //Debug.Log("=> " + testDT.ToString());
+                                     //DateTime testDT = DateTime.Now;
+                                     //testDT  = testDT.Add(new TimeSpan(0, 0, 5));
+                                     //Debug.Log("=> " + testDT.ToString());
 
 
         /*TimedEventManager.AddUpdateTimedEvent("3c764a20-629c-4be9-b19b-5f87bddd60d5", new TimedEventHandler(testDT, () => {
@@ -204,37 +204,56 @@ public class AppCommandCenter : MonoBehaviour {
 
 
         }));*/
-
-        APIManager.Field queryOperation = new APIManager.Field(
-        "MemberLogin", new APIManager.Field[] {new APIManager.Field("loginCredentials", new APIManager.FieldParams[] {
-            new APIManager.FieldParams("username", "\"" + "CareXR_Tester_Caregiver" + "\""),
-            new APIManager.FieldParams("password", "\"" + "password" + "\""),
+        /*
+        GraphQL.Type queryOperation = new GraphQL.Type(
+        "MemberLogin", new GraphQL.Type[] {new GraphQL.Type("loginCredentials", new GraphQL.Params[] {
+            new GraphQL.Params("username", "\"" + "CareXR_Tester_Caregiver" + "\""),
+            new GraphQL.Params("password", "\"" + "password" + "\""),
         }) });
+
 
 
         await APIManager.ExecuteRequest("", queryOperation,
             (message, succeed) => {
-                
+                try {
+                    if (succeed) {
+                        JObject response = JObject.Parse(@message);
+
+                        Debug.Log(response.ToString());
+                        if (response.HasValues && response["data"] != null && response["data"]["MemberLogin"]["message"] == null) {
+                            Debug.Log("Ok");
 
 
-            },
-            new APIManager.Field[] {
-            new APIManager.Field("... on Member", new APIManager.Field[] {
-                new APIManager.Field("token"),
-                new APIManager.Field("uuid"),
-                new APIManager.Field("username"),
-                new APIManager.Field("MemberOf", new APIManager.Field[] {
-                    new APIManager.Field("role"),
-                    new APIManager.Field("institution", new APIManager.Field[] {
-                    new APIManager.Field("uuid")
-                    })
+
+                        } else {
+                            Debug.Log("Not ok");
+                        }
+
+                    }
+
+                } catch (Exception e) {
+                    Debug.Log("Really not ok");
+                }
+
+            }, new GraphQL.Type[] {
+                new GraphQL.Type("... on Member", new GraphQL.Type[] {
+                    new GraphQL.Type("token"),
+                    new GraphQL.Type("uuid"),
+                    new GraphQL.Type("name"),
+                    new GraphQL.Type("MemberOf", new GraphQL.Type[] {
+                        new GraphQL.Type("role"),
+                        new GraphQL.Type("institution", new GraphQL.Type[] {
+                            new GraphQL.Type("uuid")
+                        })
+                    }),
                 }),
-            }), 
-            new APIManager.Field("... on Error", new APIManager.Field[] {
-                new APIManager.Field("message"),
-            })
+                new GraphQL.Type("... on Error", new GraphQL.Type[] {
+                    new GraphQL.Type("message"),
 
-        });
+                }),
+            });
+        */
+
 
     }
 

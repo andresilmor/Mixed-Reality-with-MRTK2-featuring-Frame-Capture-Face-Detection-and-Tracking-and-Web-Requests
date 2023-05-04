@@ -81,7 +81,7 @@ public static class MLManager
                         ImageInferenceRequest request = new ImageInferenceRequest();
                         request.image = byteArray;
                         
-                        APIManager.wsLiveDetection.Send(Parser.ProtoSerialize<ImageInferenceRequest>(request));
+                        APIManager.wsFrameInference.Send(Parser.ProtoSerialize<ImageInferenceRequest>(request));
 
                     }
                     else

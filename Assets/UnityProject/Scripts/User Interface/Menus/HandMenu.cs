@@ -51,9 +51,6 @@ public class HandMenu : MonoBehaviour
             }
 
 
-
-            AccountManager.OnLoggedStatusChange += ToggleHomeButton;
-
             ShutdownBtn.OnClick.AddListener(() => {
                 AppCommandCenter.StopApplication();
 
@@ -66,7 +63,6 @@ public class HandMenu : MonoBehaviour
 
     public void ToggleHomeButton(bool isActive) {
         try {
-            Debug.Log("Toggle");
 
             if (isActive) {
                 HomeMesh.material = UIManager.Instance.GetCircleButtonMaterial("Home").Value.ActiveMaterial;
@@ -82,6 +78,8 @@ public class HandMenu : MonoBehaviour
                     UIManager.Instance.HomeMenu.gameObject.transform.LookAt(Camera.main.transform.position);
 
                 });
+
+
 
                 return;
 
@@ -115,6 +113,12 @@ public class HandMenu : MonoBehaviour
                     LogoutMesh.material = UIManager.Instance.GetCircleButtonMaterial("Logout").Value.InactiveMaterial;
 
                     ToggleHomeButton(false);
+                    ToggleLogoutButton(false);
+
+                    AccountManager.Logout();
+
+                    UIManager.Instance.LoginMenu.SetupLoginPage();
+
 
                 });
 

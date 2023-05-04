@@ -17,10 +17,10 @@ public static class NotificationsManager {
         if (timedEventsList == null)
             timedEventsList = new List<TimedEventHandler>();
 
-        APIManager.Field queryOperation = new APIManager.Field(
-                    "medicationToTake", new APIManager.FieldParams[] {
-                        new APIManager.FieldParams("memberID", "\"" + AccountManager.currentUserUUID + "\""),
-                        new APIManager.FieldParams("institutionID", "\"" + institutionUUID + "\""),
+        GraphQL.Type queryOperation = new GraphQL.Type(
+                    "medicationToTake", new GraphQL.Params[] {
+                        new GraphQL.Params("memberID", "\"" + AccountManager.currentUserUUID + "\""),
+                        new GraphQL.Params("institutionID", "\"" + institutionUUID + "\""),
                     });
 
         await APIManager.ExecuteRequest(RealmManager.realm.Find<UserEntity>(AccountManager.currentUserUUID).Token.ToString().Trim(), queryOperation,
@@ -46,17 +46,17 @@ public static class NotificationsManager {
 
 
             },
-            new APIManager.Field[] {
-                new APIManager.Field("atTime"),
-                new APIManager.Field("quantity"),
-                new APIManager.Field("timeMeasure"),
-                new APIManager.Field("intOfTime"),
-                new APIManager.Field("medication", new APIManager.Field[] {
-                    new APIManager.Field("uuid"),
-                    new APIManager.Field("Name")
+            new GraphQL.Type[] {
+                new GraphQL.Type("atTime"),
+                new GraphQL.Type("quantity"),
+                new GraphQL.Type("timeMeasure"),
+                new GraphQL.Type("intOfTime"),
+                new GraphQL.Type("medication", new GraphQL.Type[] {
+                    new GraphQL.Type("uuid"),
+                    new GraphQL.Type("Name")
                 }),
-                new APIManager.Field("pacient", new APIManager.Field[] {
-                    new APIManager.Field("uuid")
+                new GraphQL.Type("pacient", new GraphQL.Type[] {
+                    new GraphQL.Type("uuid")
                 })
             }
         );

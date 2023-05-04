@@ -51,15 +51,15 @@ public static class RealmManager {
                 try {
                     if (userObject == null) {
                         userObject = new UserEntity(
-                                UUID: data["Data"]["memberLogin"]["uuid"].Value<string>(),
-                                token: data["Data"]["memberLogin"]["token"].Value<string>()
+                                UUID: data["data"]["MemberLogin"]["uuid"].Value<string>(),
+                                token: data["data"]["MemberLogin"]["token"].Value<string>()
                         );
                         realm.Add(userObject);
 
                     } else {
-                        (userObject as UserEntity).Token = data["Data"]["memberLogin"]["token"].Value<string>();
+                        (userObject as UserEntity).Token = data["data"]["MemberLogin"]["token"].Value<string>();
                         realm.Add(userObject, update: true);
-                        Debug.Log("User Updtted");
+                        Debug.Log("User Updated");
 
                     }
                     transaction.Commit();

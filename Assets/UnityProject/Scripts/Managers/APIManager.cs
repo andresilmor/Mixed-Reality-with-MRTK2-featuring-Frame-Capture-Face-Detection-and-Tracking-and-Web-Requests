@@ -46,7 +46,7 @@ using System.IO;
 using System.Linq;
 
 using Debug = MRDebug;
-
+using System.Text.RegularExpressions;
 
 public static class APIManager {
 
@@ -106,41 +106,7 @@ public static class APIManager {
 
     #region GraphQL Field
 
-    public struct Field {
-        public string name;
-        public FieldParams[] parameters;
-        public Field[] subfield;
-
-        public Field(string name, FieldParams[] parameters = null) {
-            this.name = name;
-            this.parameters = parameters;
-            this.subfield = null;
-        }
-
-        public Field(string name, Field[] subfield) {
-            this.name = name;
-            this.parameters = null;
-            this.subfield = subfield;
-        }
-
-        public Field(string name, FieldParams[] parameters, Field[] subfield) {
-            this.name = name;
-            this.parameters = parameters;
-            this.subfield = subfield;
-        }
-
-
-    }
-
-    public struct FieldParams {
-        public string name;
-        public string value;
-
-        public FieldParams(string name, string value) {
-            this.name = name;
-            this.value = value;
-        }
-    }
+    
 
     #endregion
 
@@ -339,8 +305,8 @@ public static class APIManager {
     #endregion
 
     #region GraphQL Query Functions
-    private static void MountQuery(Field[] args, ref string query, byte identationLevel = 2) {
-        foreach (Field field in args) {
+    private static void MountQuery(GraphQL.Type[] args, ref string query, byte identationLevel = 2) {
+        foreach (GraphQL.Type field in args) {
             query += (new string('\t', identationLevel) + field.name);
             if (field.parameters != null) {
                 query += " (";
@@ -361,14 +327,14 @@ public static class APIManager {
         }
     }
 
-    public static async Task ExecuteRequest(string token, Field type, Action<string, bool> action, params Field[] args) {
+    public static async Task ExecuteRequest(string token, GraphQL.Type type, Action<string, bool> action, params GraphQL.Type[] args) {
 
         await Task.Run(() => {
-            string query = "query {\r\n";
+            string query = ""; //query {\r\n
             query += (new string('\t', 1) + type.name);
             if (type.parameters != null) {
                 query += " ( ";
-                foreach (FieldParams parameter in type.parameters)
+                foreach (GraphQL.Params parameter in type.parameters)
                     query += (parameter.name + ": " + parameter.value + ", ");
 
                 if (type.subfield != null)
@@ -377,11 +343,11 @@ public static class APIManager {
             }
             if (type.subfield != null) {
                 query += " ( ";
-                foreach (APIManager.Field subfield in type.subfield) {
+                foreach (GraphQL.Type subfield in type.subfield) {
                     query += subfield.name + ": { ";
 
                     if (subfield.parameters != null) {
-                        foreach (FieldParams parameter in subfield.parameters)
+                        foreach (GraphQL.Params parameter in subfield.parameters)
                             query += (parameter.name + ": " + parameter.value + ", ");
 
 
@@ -391,19 +357,21 @@ public static class APIManager {
                     query += " } ";
                 }
                 query += " ) { \r\n";
-            }
+            } else
+                query += " ) { \r\n";
 
             MountQuery(args, ref query, 2);
             query += (new string('\t', 1) + "}\r\n");
-            query += "}";
+            query = "query { " + query + "}";
 
-
+            query = query.Replace("\n", " ").Replace("\t", " ").Replace("\r", " ");
+            RegexOptions options = RegexOptions.None;
+            Regex regex = new Regex(@"[ ]{2,}", options);
+            query = regex.Replace(query, @" ");
 
             string jsonData = JsonConvert.SerializeObject(new { query });
 
-            Debug.Log(jsonData.ToString());
 
-            return;
 
             byte[] postData = Encoding.ASCII.GetBytes(jsonData);
 
@@ -414,7 +382,7 @@ public static class APIManager {
                 request.SetHeader("Content-Type", "application/json");
                 request.SetHeader("Accept", "application/json");
                 request.SetHeader("Keep-Alive", "timeout = 2, max = 20");
-                Debug.Log(token);
+               
                 if (token != "")
                     request.SetHeader("Authorization", token.Trim());
 
