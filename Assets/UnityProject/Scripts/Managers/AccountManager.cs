@@ -63,7 +63,7 @@ public static class AccountManager {
 
         /*
         Debug.Log("Starting");
-        QRCodeReaderManager.DetectQRCodes((List<QRCodeReaderManager.QRCodeDetected> results) => {
+        QRCodeCVManager.DetectQRCodes((List<QRCodeCVManager.QRCodeDetected> results) => {
             Debug.Log("Invoked");
         }, 1.5f, () => {
             Debug.Log("Time Over");

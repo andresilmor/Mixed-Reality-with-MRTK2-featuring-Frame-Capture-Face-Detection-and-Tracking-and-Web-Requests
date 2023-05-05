@@ -52,13 +52,13 @@ public class LoginMenu : MonoBehaviour
 
         _validatingLogin = false;
 
-#if ENABLE_WINMD_SUPPORT
-        _usernameText.text = "Insert username...";
-        _passwordText.text = "Insert password...";
-#else
-        _usernameText.text = "CareXR_Tdasdasester_Caregiver";
+
+        //_usernameText.text = "Insert username...";
+        //_passwordText.text = "Insert password...";
+
+        _usernameText.text = "CareXR_Tester_Caregiver";
         _passwordText.text = "password";
-#endif
+
 
         if (_cleanPassword || _cleanUsername)
             _loginMesh.material = UIManager.Instance.GetRectangleButtonMaterial("Normal").Value.InactiveMaterial;
@@ -144,13 +144,10 @@ public class LoginMenu : MonoBehaviour
         });
 
         _loginBtn.OnClick.AddListener(() => {
-#if ENABLE_WINMD_SUPPORT
-            if ((_cleanPassword || _cleanUsername) || _validatingLogin)
+
+            if (/*(_cleanPassword || _cleanUsername) || */ _validatingLogin)
                     return;
-#else
-            if (_validatingLogin)
-                return;
-#endif
+
 
 
             _loginText.text = "Validating...";

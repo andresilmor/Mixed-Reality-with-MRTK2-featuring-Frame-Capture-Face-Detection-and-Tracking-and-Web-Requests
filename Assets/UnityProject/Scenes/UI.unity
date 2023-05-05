@@ -521,14 +521,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HomeMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 5752247220690508861, guid: a9a67e21dac0e8e459168b923286c008, type: 3}
-      propertyPath: m_Type
-      value: 1
+    - target: {fileID: 4894327439436186423, guid: a9a67e21dac0e8e459168b923286c008, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5752247220690508861, guid: a9a67e21dac0e8e459168b923286c008, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 2fb5fa78c5ca14e8eb09400ad29567fb, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9a67e21dac0e8e459168b923286c008, type: 3}
 --- !u!114 &5959844433895071473 stripped

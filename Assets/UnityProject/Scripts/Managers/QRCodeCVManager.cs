@@ -16,7 +16,7 @@ using Debug = MRDebug;
 
 
 // Uses the CV Asset
-public static class QRCodeReaderManager
+public static class QRCodeCVManager
 {
     public struct QRCodeDetected {
         public float[] PointsArr;
@@ -86,7 +86,7 @@ public static class QRCodeReaderManager
 
         if (waitSeconds != null) {
             if (waitSeconds == 0) {
-                QRCodeReaderManager.IsOneShot = true;
+                QRCodeCVManager.IsOneShot = true;
                 _oneShotAction = action;
 
             } else {
@@ -96,8 +96,8 @@ public static class QRCodeReaderManager
             }
 
         } else {
-            QRCodeReaderManager.IsOneShot = false;
-            QRCodeReaderManager.InPassiveMode = true;
+            QRCodeCVManager.IsOneShot = false;
+            QRCodeCVManager.InPassiveMode = true;
 
             _passiveModeActions.Add(action);
 
