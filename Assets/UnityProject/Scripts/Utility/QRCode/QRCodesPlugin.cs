@@ -23,7 +23,7 @@ namespace QRTracking {
         }
     }
 
-    public class QRCodesManager : Singleton<QRCodesManager> {
+    public class QRCodesPlugin : Singleton<QRCodesPlugin> {
         [Tooltip("Determines if the QR codes scanner should be automatically started.")]
         public bool AutoStartQRTracking = true;
 
@@ -80,7 +80,7 @@ namespace QRTracking {
                 qrTracker.Removed += QRCodeWatcher_Removed;
                 qrTracker.EnumerationCompleted += QRCodeWatcher_EnumerationCompleted;
             } catch (Exception ex) {
-                Debug.Log("QRCodesManager : exception starting the tracker " + ex.ToString());
+                Debug.Log("QRCodesPlugin : exception starting the tracker " + ex.ToString());
             }
 
             if (AutoStartQRTracking) {
@@ -90,13 +90,13 @@ namespace QRTracking {
 
         public void StartQRTracking() {
             if (qrTracker != null && !IsTrackerRunning) {
-                Debug.Log("QRCodesManager starting QRCodeWatcher");
+                Debug.Log("QRCodesPlugin starting QRCodeWatcher");
                 try {
                     qrTracker.Start();
                     IsTrackerRunning = true;
                     QRCodesTrackingStateChanged?.Invoke(this, true);
                 } catch (Exception ex) {
-                    Debug.Log("QRCodesManager starting QRCodeWatcher Exception:" + ex.ToString());
+                    Debug.Log("QRCodesPlugin starting QRCodeWatcher Exception:" + ex.ToString());
                 }
             }
         }
@@ -117,7 +117,7 @@ namespace QRTracking {
         }
 
         private void QRCodeWatcher_Removed(object sender, QRCodeRemovedEventArgs args) {
-            Debug.Log("QRCodesManager QRCodeWatcher_Removed");
+            Debug.Log("QRCodesPlugin QRCodeWatcher_Removed");
 
             bool found = false;
             lock (qrCodesList) {
@@ -135,7 +135,7 @@ namespace QRTracking {
         }
 
         private void QRCodeWatcher_Updated(object sender, QRCodeUpdatedEventArgs args) {
-            Debug.Log("QRCodesManager QRCodeWatcher_Updated");
+            Debug.Log("QRCodesPlugin QRCodeWatcher_Updated");
 
             bool found = false;
             lock (qrCodesList) {
@@ -153,7 +153,7 @@ namespace QRTracking {
         }
 
         private void QRCodeWatcher_Added(object sender, QRCodeAddedEventArgs args) {
-            Debug.Log("QRCodesManager QRCodeWatcher_Added");
+            Debug.Log("QRCodesPlugin QRCodeWatcher_Added");
 
             lock (qrCodesList) {
                 qrCodesList[args.Code.Id] = args.Code;
@@ -165,7 +165,7 @@ namespace QRTracking {
         }
 
         private void QRCodeWatcher_EnumerationCompleted(object sender, object e) {
-            Debug.Log("QRCodesManager QrTracker_EnumerationCompleted");
+            Debug.Log("QRCodesPlugin QrTracker_EnumerationCompleted");
         }
 
         private void Update() {

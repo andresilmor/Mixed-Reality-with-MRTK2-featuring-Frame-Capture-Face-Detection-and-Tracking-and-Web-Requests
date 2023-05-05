@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Debug = MRDebug;
+
 
 public class LoginMenu : MonoBehaviour
 {
@@ -64,6 +66,7 @@ public class LoginMenu : MonoBehaviour
             _loginMesh.material = UIManager.Instance.GetRectangleButtonMaterial("Normal").Value.InactiveMaterial;
 
         AccountManager.OnLoggedStatusChange += OnSucessfullLogin;
+
     }
 
     private void SetListeners() {
@@ -76,6 +79,8 @@ public class LoginMenu : MonoBehaviour
             _keyboardMesh.material = UIManager.Instance.GetRectangleButtonMaterial("Normal").Value.InactiveMaterial;
             _keyboardBtn.enabled = false;
 
+            UIManager.Instance.DebugMenu.gameObject.SetActive(true);
+            Debug.Log("Starting");
             AccountManager.LoginQR();
 
 

@@ -14,10 +14,10 @@ namespace QRTracking {
         [Tooltip("Visualize the detected QRCodes in the 3d space.")]
         public bool VisualizeQRCodes = true;
 
-        QRCodesManager qrCodesManager = null;
+        QRCodesPlugin qrCodesManager = null;
 
         void Awake() {
-            qrCodesManager = QRCodesManager.Instance;
+            qrCodesManager = QRCodesPlugin.Instance;
             if (AutoStartQRTracking) {
                 qrCodesManager.StartQRTracking();
             }

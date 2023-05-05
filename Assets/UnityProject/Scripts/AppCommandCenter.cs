@@ -125,9 +125,9 @@ public class AppCommandCenter : MonoBehaviour {
         StartCoroutine(LoadAdditiveScenes());
 
 #if ENABLE_WINMD_SUPPORT
-        //if (AppCommandCenter.CameraFrameReader == null)
-        //    AppCommandCenter.CameraFrameReader = await CameraFrameReader.CreateAsync();
-
+        if (AppCommandCenter.CameraFrameReader == null)
+            AppCommandCenter.CameraFrameReader = await CameraFrameReader.CreateAsync();
+       
 #endif
 
     }
@@ -172,88 +172,7 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
 
-    async private void MineField() { // For features test / Out-flow
-                                     //DateTime testDT = DateTime.Now;
-                                     //testDT  = testDT.Add(new TimeSpan(0, 0, 5));
-                                     //Debug.Log("=> " + testDT.ToString());
-
-
-        /*TimedEventManager.AddUpdateTimedEvent("3c764a20-629c-4be9-b19b-5f87bddd60d5", new TimedEventHandler(testDT, () => {
-
-            UIWindow timerOverNotification = UIManager.Instance.OpenWindow(WindowType.TD_1btn_Cl_00, stackerName: "Time Over Notification", isNotification: true);
-            (timerOverNotification.components["Title"] as TextMeshPro).text = "Medication Alert";
-            (timerOverNotification.components["Description"] as TextMeshPro).text = "Pacient, Tiago Monteiro, have medication to take at 12:30.";
-            (timerOverNotification.components["ActionButtonText"] as TextMeshPro).text = "Locate Pacient";
-            (timerOverNotification.components["ActionButton"] as Interactable).OnClick.AddListener(() => {
-                Debug.Log("Ok im calling");
-                //APIManager.wsFrameInference.Send("oi");
-                //MLManager.AnalyseFrame();
-
-            });
-            (timerOverNotification.components["_closeBtn"] as Interactable).OnClick.AddListener(() => {
-                UIManager.Instance.CloseWindow(timerOverNotification.stacker, (timerOverNotification.components["_closeBtn"] as Interactable).gameObject.GetComponent<AudioSource>());
-
-            });
-
-            if (!APIManager.wsFrameInference.IsOpen) {
-                Debug.Log("nop opened");
-                APIManager.wsFrameInference.Open();
-            }
-            
-            Debug.Log(TimedEventManager.GetTimedEventTimeLeft("TEST"));
-
-
-        }));*/
-        /*
-        GraphQL.Type queryOperation = new GraphQL.Type(
-        "MemberLogin", new GraphQL.Type[] {new GraphQL.Type("loginCredentials", new GraphQL.Params[] {
-            new GraphQL.Params("username", "\"" + "CareXR_Tester_Caregiver" + "\""),
-            new GraphQL.Params("password", "\"" + "password" + "\""),
-        }) });
-
-
-
-        await APIManager.ExecuteRequest("", queryOperation,
-            (message, succeed) => {
-                try {
-                    if (succeed) {
-                        JObject response = JObject.Parse(@message);
-
-                        Debug.Log(response.ToString());
-                        if (response.HasValues && response["data"] != null && response["data"]["MemberLogin"]["message"] == null) {
-                            Debug.Log("Ok");
-
-
-
-                        } else {
-                            Debug.Log("Not ok");
-                        }
-
-                    }
-
-                } catch (Exception e) {
-                    Debug.Log("Really not ok");
-                }
-
-            }, new GraphQL.Type[] {
-                new GraphQL.Type("... on Member", new GraphQL.Type[] {
-                    new GraphQL.Type("token"),
-                    new GraphQL.Type("uuid"),
-                    new GraphQL.Type("name"),
-                    new GraphQL.Type("MemberOf", new GraphQL.Type[] {
-                        new GraphQL.Type("role"),
-                        new GraphQL.Type("institution", new GraphQL.Type[] {
-                            new GraphQL.Type("uuid")
-                        })
-                    }),
-                }),
-                new GraphQL.Type("... on Error", new GraphQL.Type[] {
-                    new GraphQL.Type("message"),
-
-                }),
-            });
-        */
-
+    async private void MineField() { 
 
     }
 
@@ -261,7 +180,6 @@ public class AppCommandCenter : MonoBehaviour {
 
 
         AppCommandCenter.Instance.MineField();
-        //UIWindow loginWindow = UIManager.Instance.OpenWindow(WindowType.H_2btn_00, new LoginView(), stackerName: "Login Window");
 
         UIManager.Instance.LoginMenu.gameObject.SetActive(!UIManager.Instance.LoginMenu.gameObject.activeInHierarchy);
 

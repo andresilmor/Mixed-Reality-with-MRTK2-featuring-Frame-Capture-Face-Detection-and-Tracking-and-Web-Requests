@@ -53,4 +53,12 @@ public enum LogType {
 
 }
 
+[SerializeField]
+public enum DetectionMode {
+    OneShot,
+    Passive,
+    Timing
+
+}
+
 

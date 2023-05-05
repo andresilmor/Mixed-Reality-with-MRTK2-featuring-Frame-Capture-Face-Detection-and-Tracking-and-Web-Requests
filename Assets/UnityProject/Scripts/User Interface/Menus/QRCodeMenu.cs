@@ -18,26 +18,30 @@ public class QRCodeMenu : MonoBehaviour
         PassiveModeOffBtn.OnClick.RemoveAllListeners();
 
         ScanBtn.OnClick.AddListener(() => {
-            QRCodeCVManager.DetectQRCodes((List<QRCodeCVManager.QRCodeDetected> detectedCode) => {
-                foreach (QRCodeCVManager.QRCodeDetected detected in detectedCode) { 
+            /*
+            QRCodeReaderManager.DetectQRCodes((List<QRCodeReaderManager.QRCodeDetected> detectedCode) => {
+                foreach (QRCodeReaderManager.QRCodeDetected detected in detectedCode) { 
                     Debug.Log(detected.Info);
                 }
 
             }, 0);
+            */
 
         });
 
         PassiveModeOnBtn.OnClick.AddListener(() => {
-            QRCodeCVManager.DetectQRCodes((List<QRCodeCVManager.QRCodeDetected> detectedCode) => {
-                foreach (QRCodeCVManager.QRCodeDetected detected in detectedCode) {
+            /*
+            QRCodeReaderManager.DetectQRCodes((List<QRCodeReaderManager.QRCodeDetected> detectedCode) => {
+                foreach (QRCodeReaderManager.QRCodeDetected detected in detectedCode) {
                     Debug.Log(detected.Info);
                 }
 
             });
+            */
         });
 
         PassiveModeOffBtn.OnClick.AddListener(() => {
-            QRCodeCVManager.DeactivatePassiveMode();
+            QRCodeReaderManager.DeactivatePassiveMode();
         });
 
     }

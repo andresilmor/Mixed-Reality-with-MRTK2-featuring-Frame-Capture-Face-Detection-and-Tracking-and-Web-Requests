@@ -37,10 +37,10 @@ namespace QRTracking {
             Debug.Log("QRCodesVisualizer start");
             qrCodesObjectsList = new SortedDictionary<System.Guid, GameObject>();
 
-            QRCodesManager.Instance.QRCodesTrackingStateChanged += Instance_QRCodesTrackingStateChanged;
-            QRCodesManager.Instance.QRCodeAdded += Instance_QRCodeAdded;
-            QRCodesManager.Instance.QRCodeUpdated += Instance_QRCodeUpdated;
-            QRCodesManager.Instance.QRCodeRemoved += Instance_QRCodeRemoved;
+            QRCodesPlugin.Instance.QRCodesTrackingStateChanged += Instance_QRCodesTrackingStateChanged;
+            QRCodesPlugin.Instance.QRCodeAdded += Instance_QRCodeAdded;
+            QRCodesPlugin.Instance.QRCodeUpdated += Instance_QRCodeUpdated;
+            QRCodesPlugin.Instance.QRCodeRemoved += Instance_QRCodeRemoved;
             if (qrCodePrefab == null) {
                 throw new System.Exception("Prefab not assigned");
             }

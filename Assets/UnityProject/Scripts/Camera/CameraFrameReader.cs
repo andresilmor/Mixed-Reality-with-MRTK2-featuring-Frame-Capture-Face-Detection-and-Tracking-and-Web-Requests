@@ -51,10 +51,12 @@ public class CameraFrameReader
     public int FrameHeight { get; set; }
     public int FrameWidth { get; set; }
 
+	public static bool IsRunning = false;
+
 #if ENABLE_WINMD_SUPPORT
-	MediaCapture mediaCapture;
-	MediaFrameSource mediaFrameSource;
-	MediaFrameReader mediaFrameReader;
+	MediaCapture _mediaCapture;
+	MediaFrameSource _mediaFrameSource;
+	MediaFrameReader _mediaFrameReader;
 
 	private Frame _lastFrame;
 
@@ -96,15 +98,71 @@ public class CameraFrameReader
 	{
 		get
 		{
-			return mediaFrameReader != null;
+			return _mediaFrameReader != null;
 		}
+	}
+
+	public async Task<bool> StopCapture()
+    {
+		if (!CameraFrameReader.IsRunning)
+			return false;
+			
+#if ENABLE_WINMD_SUPPORT
+		bool stopFrameReaderAsyncTask = await StopFrameReaderAsyncTask();
+        if (!stopFrameReaderAsyncTask) return false;
+        _mediaCapture.Dispose();
+        _mediaCapture = null;
+        return true;
+#else
+        return await Task.FromResult(false);
+#endif
+	}
+
+	public async Task<bool> StartCapture()
+    {
+		if (CameraFrameReader.IsRunning)
+			return false;
+
+#if ENABLE_WINMD_SUPPORT
+		return await StartFrameReaderAsyncTask();
+#else
+		return await Task.FromResult(false);
+#endif
+	}
+
+	/// <summary>
+    /// Stops the video pipeline and frame reading.
+    /// </summary>
+    /// <returns>Whether the video frame reader is successfully stopped</returns>
+    private async Task<bool> StopFrameReaderAsyncTask()
+    {
+        await _mediaFrameReader.StopAsync();
+		CameraFrameReader.IsRunning = false;
+		return true;
+    }
+
+	/// <summary>
+    /// Starts the video pipeline and frame reading.
+    /// </summary>
+    /// <returns>Whether the frame reader is successfully started</returns>
+    private async Task<bool> StartFrameReaderAsyncTask()
+    {
+		MediaFrameReaderStartStatus mediaFrameReaderStartStatus = await _mediaFrameReader.StartAsync();
+        if (mediaFrameReaderStartStatus == MediaFrameReaderStartStatus.Success)
+        {
+			CameraFrameReader.IsRunning = true;
+            return true;
+        }
+
+		CameraFrameReader.IsRunning = false;
+        return false;
 	}
 
 	private CameraFrameReader(MediaCapture mediaCapture = null, MediaFrameSource mediaFrameSource = null, MediaFrameReader mediaFrameReader = null, int? width = null, int? height = null)
 	{
-		this.mediaCapture = mediaCapture;
-		this.mediaFrameSource = mediaFrameSource;
-		this.mediaFrameReader = mediaFrameReader;
+		this._mediaCapture = mediaCapture;
+		this._mediaFrameSource = mediaFrameSource;
+		this._mediaFrameReader = mediaFrameReader;
 
 		if (width != null && height != null) {
 			Debug.Log("Width Original: " + ((int)width).ToString());
@@ -114,18 +172,18 @@ public class CameraFrameReader
 			Debug.Log("Width Assigned: " + FrameWidth.ToString());
 		}
 
-		if (this.mediaFrameReader != null)
+		if (this._mediaFrameReader != null)
 		{
 			Debug.Log("+= setting");
 			//this.FrameArrived += TestingAction;
-			this.mediaFrameReader.FrameArrived += onFrameArrived;
+			this._mediaFrameReader.FrameArrived += onFrameArrived;
 		}
 	}
 
-	public static async Task<CameraFrameReader> CreateAsync(int width = 1504, int height = 846) //Default values anyway, if not defined the "outputSize" in "mediaCapture.CreateFrameReaderAsync"
+	public static async Task<CameraFrameReader> CreateAsync(int width = 1504, int height = 846) //Default values anyway, if not defined the "outputSize" in "_mediaCapture.CreateFrameReaderAsync"
 	{
-		MediaCapture mediaCapture = null;
-		MediaFrameReader mediaFrameReader = null;
+		MediaCapture _mediaCapture = null;
+		MediaFrameReader _mediaFrameReader = null;
 		MediaFrameSourceGroup selectedGroup = null;
 		MediaFrameSourceInfo selectedSourceInfo = null;
 
@@ -174,11 +232,11 @@ public class CameraFrameReader
 		};
 
 		// Create and initilize capture device 
-		mediaCapture = new MediaCapture();
+		_mediaCapture = new MediaCapture();
 
 		try
 		{
-			await mediaCapture.InitializeAsync(settings);
+			await _mediaCapture.InitializeAsync(settings);
 		}
 		catch (Exception e)
 		{
@@ -187,30 +245,30 @@ public class CameraFrameReader
 		}
 
 		
-		Debug.Log($"[### DEBUG ###] mediaCapture.FrameSources Count = {mediaCapture.FrameSources.Count}");
+		Debug.Log($"[### DEBUG ###] _mediaCapture.FrameSources Count = {_mediaCapture.FrameSources.Count}");
 		string ID = "";
-		foreach (KeyValuePair<string, MediaFrameSource> kvp in mediaCapture.FrameSources)
+		foreach (KeyValuePair<string, MediaFrameSource> kvp in _mediaCapture.FrameSources)
 		{
 				Debug.Log($"[### DEBUG ###] Key = {kvp.Key}");
 				ID = kvp.Key;
 				break;
 		}
 		
-		MediaFrameSource selectedSource = mediaCapture.FrameSources[ID];
+		MediaFrameSource selectedSource = _mediaCapture.FrameSources[ID];
 		Debug.Log("OK!");
 		var subtype = MediaEncodingSubtypes.Bgra8;
 		BitmapSize outputSize = new BitmapSize { Width = (uint)width, Height = (uint)height };
 
 		// create new frame reader 
-		mediaFrameReader = await mediaCapture.CreateFrameReaderAsync(selectedSource, subtype, outputSize);
+		_mediaFrameReader = await _mediaCapture.CreateFrameReaderAsync(selectedSource, subtype, outputSize);
 
-		MediaFrameReaderStartStatus status = await mediaFrameReader.StartAsync();
-
+		MediaFrameReaderStartStatus status = await _mediaFrameReader.StartAsync();
+		CameraFrameReader.IsRunning = true;
 
 		if (status == MediaFrameReaderStartStatus.Success)
 		{
 			Debug.Log("MediaFrameReaderStartStatus == Success");
-			return new CameraFrameReader(mediaCapture, selectedSource, mediaFrameReader, width, height);
+			return new CameraFrameReader(_mediaCapture, selectedSource, _mediaFrameReader, width, height);
 		}
 		else
 		{
@@ -222,13 +280,13 @@ public class CameraFrameReader
 
 	public async Task StopFrameHandlerAsync()
 	{
-        if (mediaCapture != null && mediaCapture.CameraStreamState != Windows.Media.Devices.CameraStreamState.Shutdown)
+        if (_mediaCapture != null && _mediaCapture.CameraStreamState != Windows.Media.Devices.CameraStreamState.Shutdown)
         {
 			Debug.Log("Close Camera!");
-			await mediaFrameReader.StopAsync();
-            mediaFrameReader.Dispose();
-            mediaCapture.Dispose();
-            mediaCapture = null;
+			await _mediaFrameReader.StopAsync();
+            _mediaFrameReader.Dispose();
+            _mediaCapture.Dispose();
+            _mediaCapture = null;
         }
 	}
 #endif
@@ -299,15 +357,20 @@ public class CameraFrameReader
         return _bitmap;
     }
 
+	private bool testing = true;
 
     void onFrameArrived(MediaFrameReader sender, MediaFrameArrivedEventArgs args)
 	{
-
 		if (FrameArrived.GetInvocationList().Length <= 0)
 			return;
+		
+		if (testing)
+			Debug.Log("okapassssssssssssssssssssssssssssssssssssssssss");
 
 		MediaFrameReference frame = sender.TryAcquireLatestFrame();
         if (frame != null){
+				if (testing)
+					Debug.Log("Frame not null");
 				// Works
 				/*LastFrame = new Frame
 				{mediaFrameReference = frame, extrinsic = null, intrinsic = null};
@@ -328,8 +391,14 @@ public class CameraFrameReader
 				CameraFrame cameraFrame = new CameraFrame(GenerateCVMat(frame), 
 					intrinsic, extrinsic, FrameWidth, FrameHeight, (uint)thisFrameCount, frame);
                 FrameArrivedEventArgs eventArgs = new FrameArrivedEventArgs(cameraFrame);
+				if (testing) {
+					Debug.Log("Invoquing");
+					}
                 FrameArrived?.Invoke(this, eventArgs);
-
+				if (testing) {
+					Debug.Log("Invoked");
+					testing = false;
+					}
 				} catch (Exception ex) {
 					Debug.Log("Error: {ex.Message}");
 				}

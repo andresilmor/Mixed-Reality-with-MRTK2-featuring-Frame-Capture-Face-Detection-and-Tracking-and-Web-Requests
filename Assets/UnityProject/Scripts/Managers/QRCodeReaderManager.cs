@@ -7,6 +7,7 @@ using PersonAndEmotionsInferenceReply;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Analytics;
@@ -16,7 +17,7 @@ using Debug = MRDebug;
 
 
 // Uses the CV Asset
-public static class QRCodeCVManager
+public static class QRCodeReaderManager
 {
     public struct QRCodeDetected {
         public float[] PointsArr;
@@ -52,10 +53,7 @@ public static class QRCodeCVManager
     private static bool _hasFinished = true;
     private static Mat _grayMat;
 
-    public static bool IsOneShot;
-    public static bool InPassiveMode;
 
-    private static Coroutine _stopDetectitionCoroutine;
     private static bool _detecting = false;
 
     private static Action<List<QRCodeDetected>> _oneShotAction;
@@ -63,56 +61,87 @@ public static class QRCodeCVManager
     private static List<Action<List<QRCodeDetected>>> _passiveModeActions = new List<Action<List<QRCodeDetected>>>();
 
 
-    async public static void DetectQRCodes(Action<List<QRCodeDetected>> action = null, float? waitSeconds = null, Action endTimeAction = null) {
-        if (_detecting) {
-            if (waitSeconds != null) {
-                if (waitSeconds == 0) {
-                    _oneShotAction = action;
+    /// <summary>
+    /// Detect QR Codes on Frame (One-Shot)
+    /// </summary>
+    /// <param name="action"></param>
+    async public static void DetectQRCodes(DetectionMode detectionMode, Action<List<QRCodeDetected>> action = null) {
+#if ENABLE_WINMD_SUPPORT
+/*
+        if (AppCommandCenter.CameraFrameReader == null) {
+            Debug.Log("wtf");
+            AppCommandCenter.CameraFrameReader = await CameraFrameReader.CreateAsync();
+        } else if (!CameraFrameReader.IsRunning) {
+        Debug.Log("START CAPTURE");
+            await AppCommandCenter.CameraFrameReader.StartCapture();
+        }*/
+#endif
 
-                } else {
-                    _timerActions.Add(_timerActions.Count,action);
-                    _stopDetectitionCoroutine = AppCommandCenter.Instance.StartCoroutine(StopDetection((float)waitSeconds, _timerActions.Count - 1, endTimeAction));
+        switch (detectionMode) {
+            case DetectionMode.OneShot:
+                Debug.Log("oNE SHOT");
+                _oneShotAction = action;
+                AppCommandCenter.CameraFrameReader.FrameArrived += OneShotDetection;
+                break;
 
-                }
+            case DetectionMode.Passive:
+                break;
 
-            } else {
-                _passiveModeActions.Add(action);
-
-            }
-
-            return;
+            case DetectionMode.Timing:
+                break;
         
         }
 
-        if (waitSeconds != null) {
-            if (waitSeconds == 0) {
-                QRCodeCVManager.IsOneShot = true;
-                _oneShotAction = action;
+    }
 
-            } else {
-                _timerActions.Add(_timerActions.Count, action);
-                _stopDetectitionCoroutine = AppCommandCenter.Instance.StartCoroutine(StopDetection((float)waitSeconds, _timerActions.Count - 1));
+    private static void OneShotDetection(object sender, FrameArrivedEventArgs e) {
+        Debug.Log("hhhheeeeerrrrreeeee");
+        try {
+            if (_grayMat is null) {
+                _grayMat = new Mat(e.Frame.Mat.rows(), e.Frame.Mat.cols(), CvType.CV_8UC1);
 
             }
 
-        } else {
-            QRCodeCVManager.IsOneShot = false;
-            QRCodeCVManager.InPassiveMode = true;
+            Imgproc.cvtColor(e.Frame.Mat, _grayMat, Imgproc.COLOR_RGBA2GRAY);
 
-            _passiveModeActions.Add(action);
+            bool result = detector.detectAndDecodeMulti(_grayMat, decodedInfo, points);
+
+            if (result) {
+
+                List<QRCodeDetected> detections = new List<QRCodeDetected>();
+
+                for (int i = 0; i < points.rows(); i++) {
+                    float[] points_arr = new float[8];
+                    points.get(i, 0, points_arr);
+
+
+                    Debug.Log(decodedInfo[i]);
+
+                    if (decodedInfo.Count > i && decodedInfo[i] != null)
+                        detections.Add(new QRCodeDetected(points_arr, decodedInfo[i]));
+
+                }
+
+                _oneShotAction?.Invoke(detections);
+                _oneShotAction = null;
+
+            }
+
+        } catch (Exception ex) {
+            Debug.Log(ex.Message);
 
         }
 
-        _detecting = true;
-        AppCommandCenter.CameraFrameReader.FrameArrived += ProcessDetections;
+        AppCommandCenter.CameraFrameReader.FrameArrived -= OneShotDetection;
 
+        _hasFinished = true;
     }
+
+
 
     static IEnumerator StopDetection(float waitTime, int actionKey, Action endTimeAction = null) {
         yield return new WaitForSeconds(waitTime);
 
-        if (!InPassiveMode)
-            AppCommandCenter.CameraFrameReader.FrameArrived -= ProcessDetections;
 
         _timerActions.Remove(actionKey);
         _detecting = false;
@@ -123,6 +152,7 @@ public static class QRCodeCVManager
 
 
     private static void ProcessDetections(object sender, FrameArrivedEventArgs e) {
+        /*
         if (!_hasFinished)
             return;
 
@@ -193,7 +223,7 @@ public static class QRCodeCVManager
 
         _hasFinished = true;
 
-
+        */
     }
 
     public static void CleanPassiveModeActions() {
@@ -203,7 +233,6 @@ public static class QRCodeCVManager
 
     public static void DeactivatePassiveMode() {
         CleanPassiveModeActions();
-        InPassiveMode = false;
 
         if (_timerActions.Count <= 0) {
             AppCommandCenter.CameraFrameReader.FrameArrived -= ProcessDetections;

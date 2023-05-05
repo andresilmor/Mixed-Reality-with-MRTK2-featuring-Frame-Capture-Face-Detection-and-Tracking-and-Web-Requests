@@ -14,8 +14,6 @@ using Microsoft.MixedReality.Toolkit.UI;
 using QRTracking;
 
 using Debug = MRDebug;
-using static APIManager;
-using BestHTTP.Logger;
 
 public static class AccountManager {
     public static string currentUserUUID { get; private set; }
@@ -58,17 +56,25 @@ public static class AccountManager {
 
         /*
         Debug.Log("Starting");
-        QRCodeCVManager.DetectQRCodes((List<QRCodeCVManager.QRCodeDetected> results) => {
+        QRCodeReaderManager.DetectQRCodes((List<QRCodeReaderManager.QRCodeDetected> results) => {
             Debug.Log("Invoked");
         }, 1.5f, () => {
             Debug.Log("Time Over");
         });*/
-        Debug.Log("Yo");
+        Debug.Log("----- Yo");
 
 
-        //QRCodesManager.Instance.ResetHandlers();
-        //QRCodesManager.Instance.QRCodeAdded += LoginQRCode;
-        //QRCodesManager.Instance.StartQRTracking();
+        //QRCodesPlugin.Instance.ResetHandlers();
+        //QRCodesPlugin.Instance.QRCodeAdded += LoginQRCode;
+        //QRCodesPlugin.Instance.StartQRTracking();
+
+        QRCodeReaderManager.DetectQRCodes(DetectionMode.OneShot, (List<QRCodeReaderManager.QRCodeDetected> list) => {
+            Debug.Log("----- Called");
+            foreach (QRCodeReaderManager.QRCodeDetected detection in list) {
+                Debug.Log(detection.Info.ToString()); 
+
+            }
+        });
 
         return true;
     }
@@ -83,8 +89,8 @@ public static class AccountManager {
 
 
 
-        QRCodesManager.Instance.StopQRTracking();
-        QRCodesManager.Instance.QRCodeAdded -= LoginQRCode;
+        QRCodesPlugin.Instance.StopQRTracking();
+        QRCodesPlugin.Instance.QRCodeAdded -= LoginQRCode;
         
         Debug.Log(newQR.Data.ToString());
 

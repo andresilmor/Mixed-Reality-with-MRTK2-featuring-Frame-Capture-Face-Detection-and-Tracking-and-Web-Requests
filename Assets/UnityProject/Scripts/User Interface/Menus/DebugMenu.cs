@@ -44,12 +44,6 @@ public class DebugMenu : MonoBehaviour
     
 
     private void Start() {
-        Debug.Log("Info");
-        Debug.Log("Warning", LogType.Warning);
-        Debug.Log("Exception", LogType.Exception);
-        Debug.Log("Error", LogType.Error);
-        Debug.Log("Fatal", LogType.Fatal);
-
         _console.ForceMeshUpdate(true);
 
         MRDebug.Console = _console;
