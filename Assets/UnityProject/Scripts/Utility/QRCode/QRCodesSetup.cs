@@ -6,10 +6,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Microsoft.MixedReality.QR;
-namespace QRTracking
-{
-    public class QRCodesSetup : MonoBehaviour
-    {
+namespace QRTracking {
+    public class QRCodesSetup : MonoBehaviour {
         [Tooltip("Determines if the QR codes scanner should be automatically started.")]
         public bool AutoStartQRTracking = true;
 
@@ -18,26 +16,21 @@ namespace QRTracking
 
         QRCodesManager qrCodesManager = null;
 
-        void Awake()
-        {
+        void Awake() {
             qrCodesManager = QRCodesManager.Instance;
-            if (AutoStartQRTracking)
-            {
+            if (AutoStartQRTracking) {
                 qrCodesManager.StartQRTracking();
             }
-            if (VisualizeQRCodes)
-            {
+            if (VisualizeQRCodes) {
                 gameObject.AddComponent(typeof(QRTracking.QRCodesVisualizer));
             }
         }
 
-        void Start()
-        {
-            
+        void Start() {
+
         }
 
-        void Update()
-        {
+        void Update() {
 
         }
     }

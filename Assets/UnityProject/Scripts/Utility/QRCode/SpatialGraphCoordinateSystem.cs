@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 #if WINDOWS_UWP
 using Windows.Perception.Spatial;
+using Microsoft.MixedReality.OpenXR;
+using Windows.Graphics.Imaging;
+using Windows.Media.Capture.Frames;
+using Windows.Media.Devices.Core;
 #endif
 using Microsoft.MixedReality.Toolkit.Utilities;
 
-namespace QRTracking
-{
-    public class SpatialGraphCoordinateSystem : MonoBehaviour
-    {
+namespace QRTracking {
+    public class SpatialGraphCoordinateSystem : MonoBehaviour {
 #if WINDOWS_UWP
         private SpatialCoordinateSystem CoordinateSystem = null;
 #endif
         private System.Guid id;
-        public System.Guid Id
-        {
-            get
-            {
+        public System.Guid Id {
+            get {
                 return id;
             }
 
-            set
-            {
+            set {
                 id = value;
 #if WINDOWS_UWP
                 CoordinateSystem = Windows.Perception.Spatial.Preview.SpatialGraphInteropPreview.CreateCoordinateSystemForNode(id);
@@ -34,13 +33,11 @@ namespace QRTracking
             }
         }
 
-        void Awake()
-        {
+        void Awake() {
         }
 
         // Use this for initialization
-        void Start()
-        {
+        void Start() {
 #if WINDOWS_UWP
             if (CoordinateSystem == null)
             {
@@ -53,10 +50,12 @@ namespace QRTracking
 #endif
         }
 
+#if WINDOWS_UWP
 
 
-        private void UpdateLocation()
-        {
+#endif
+
+        private void UpdateLocation() {
             {
 #if WINDOWS_UWP
                 if (CoordinateSystem == null)
@@ -127,8 +126,7 @@ namespace QRTracking
             }
         }
         // Update is called once per frame
-        void Update()
-        {
+        void Update() {
             UpdateLocation();
         }
     }

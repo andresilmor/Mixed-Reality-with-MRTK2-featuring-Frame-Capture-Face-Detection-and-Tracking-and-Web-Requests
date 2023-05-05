@@ -45,7 +45,6 @@ public static class AccountManager {
     public delegate void OnVariableChangeDelegate(bool newValue);
     public static event OnVariableChangeDelegate OnLoggedStatusChange;
 
-    public static UIWindow loginWindow;
 
     private static bool requesting = false;
     private static int _qrTrackingCounter = 0;
@@ -54,12 +53,8 @@ public static class AccountManager {
     #region Login
 
     public static bool LoginQR() {
-        /*
-        if (loginWindow != null) {
-            (loginWindow.components["BotButton"] as Interactable).enabled = false;
-            loginWindow.UpdateContent("BotButtonText", "Looking for QR Code...");
-
-        }
+     
+     
 
         /*
         Debug.Log("Starting");
@@ -71,9 +66,9 @@ public static class AccountManager {
         Debug.Log("Yo");
 
 
-        QRCodesManager.Instance.ResetHandlers();
-        QRCodesManager.Instance.QRCodeAdded += LoginQRCode;
-        QRCodesManager.Instance.StartQRTracking();
+        //QRCodesManager.Instance.ResetHandlers();
+        //QRCodesManager.Instance.QRCodeAdded += LoginQRCode;
+        //QRCodesManager.Instance.StartQRTracking();
 
         return true;
     }
