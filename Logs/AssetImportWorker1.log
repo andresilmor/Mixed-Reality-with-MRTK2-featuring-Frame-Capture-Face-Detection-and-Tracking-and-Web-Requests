@@ -9,13 +9,13 @@ C:\Program Files (x86)\ProjetoIntegrado_Multimedia_AndreMoreira\Unity Editors\20
 -batchMode
 -noUpm
 -name
-AssetImportWorker24
+AssetImportWorker1
 -projectPath
 D:/PC/Desktop/IP/Rep/MR_M
 -logFile
-Logs/AssetImportWorker24.log
+Logs/AssetImportWorker1.log
 -srvPort
-59023
+61741
 Successfully changed project path to: D:/PC/Desktop/IP/Rep/MR_M
 D:/PC/Desktop/IP/Rep/MR_M
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,12 +47,12 @@ D:/PC/Desktop/IP/Rep/MR_M
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [30484] Host "[IP] 172.17.2.117 [Port] 0 [Flags] 2 [Guid] 3548481012 [EditorId] 3548481012 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [29436] Host "[IP] 172.17.2.119 [Port] 0 [Flags] 2 [Guid] 2412385363 [EditorId] 2412385363 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [30484] Host "[IP] 172.17.2.117 [Port] 0 [Flags] 2 [Guid] 3548481012 [EditorId] 3548481012 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [29436] Host "[IP] 172.17.2.119 [Port] 0 [Flags] 2 [Guid] 2412385363 [EditorId] 2412385363 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 176.64 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 4.82 ms.
+Refreshing native plugins compatible for Editor in 455.69 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 11.15 ms.
 Initialize engine version: 2021.3.16f1 (4016570cf34f)
 [Subsystems] Discovering subsystems at path C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path D:/PC/Desktop/IP/Rep/MR_M/Assets
@@ -67,55 +67,56 @@ Initialize mono
 Mono path[0] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56052
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56476
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
 Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.16f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll
-Registered in 0.009353 seconds.
+Registered in 0.036236 seconds.
 Native extension for UWP target not found
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 112.69 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 0.11 ms.
+Refreshing native plugins compatible for Editor in 420.18 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.58 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.688 seconds
+- Completed reload, in  2.426 seconds
 Domain Reload Profiling:
-	ReloadAssembly (689ms)
-		BeginReloadAssembly (98ms)
+	ReloadAssembly (2428ms)
+		BeginReloadAssembly (302ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (485ms)
-			LoadAssemblies (95ms)
+			CreateAndSetChildDomain (2ms)
+		EndReloadAssembly (1725ms)
+			LoadAssemblies (293ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (113ms)
+			SetupTypeCache (355ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (23ms)
-			SetupLoadedEditorAssemblies (294ms)
+			RebuildScriptCaches (87ms)
+			SetupLoadedEditorAssemblies (1092ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (53ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (113ms)
-				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (88ms)
-				ProcessInitializeOnLoadMethodAttributes (38ms)
+				InitializePlatformSupportModulesInManaged (192ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (421ms)
+				BeforeProcessingInitializeOnLoad (4ms)
+				ProcessInitializeOnLoadAttributes (324ms)
+				ProcessInitializeOnLoadMethodAttributes (150ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.019456 seconds.
+Registered in 0.091031 seconds.
+Android Extension - Scanning For ADB Devices 6794 ms
 Begin MonoManager ReloadAssembly
 Native extension for UWP target not found
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Refreshing native plugins compatible for Editor in 107.24 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
+Refreshing native plugins compatible for Editor in 394.19 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.12 ms.
 DisplayProgressbar: Restoring NuGet Packages
 Added DLL directory D:\PC\Desktop\IP\Rep\MR_M\Assets\Packages\Microsoft.VCRTForwarders.140.1.0.7\Unity\x64 to the user search path.
 UnityEngine.StackTraceUtility:ExtractStackTrace ()
@@ -140,51 +141,51 @@ UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
 
 (Filename: Assets/Packages/Microsoft.MixedReality.QR.0.5.3037/Unity/Editor/Microsoft.MixedReality.QR.Init.cs Line: 60)
 
-[XR] [MROpenXR][Info   ][18:21:24.034510][tid:7714] MeshProvider_RegisterLifecycleProvider
-[XR] [MROpenXR][Info   ][18:21:24.034510][tid:7714] MeshProvider_RegisterLifecycleProvider
-[XR] [MROpenXR][Info   ][18:21:24.034583][tid:7714] InputProvider_RegisterLifecycleProvider
-[XR] [MROpenXR][Info   ][18:21:24.034583][tid:7714] InputProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][19:08:09.314565][tid:72fc] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][19:08:09.314565][tid:72fc] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][19:08:09.314748][tid:72fc] InputProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][19:08:09.314748][tid:72fc] InputProvider_RegisterLifecycleProvider
 [XR] Error loading subsystem: Display (1) (header mismatch?)
-[XR] [MROpenXR][Info   ][18:21:24.035822][tid:7714] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
-[XR] [MROpenXR][Info   ][18:21:24.035822][tid:7714] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
+[XR] [MROpenXR][Info   ][19:08:09.318605][tid:72fc] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
+[XR] [MROpenXR][Info   ][19:08:09.318605][tid:72fc] OnPluginStarted UnityVersion=2021.3.16f1 OpenXRPluginVersion=1.5.3 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
 Mono: successfully reloaded assembly
-- Completed reload, in  1.659 seconds
+- Completed reload, in  5.061 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1660ms)
-		BeginReloadAssembly (217ms)
+	ReloadAssembly (5064ms)
+		BeginReloadAssembly (356ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
+			DisableScriptedObjects (20ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (128ms)
-		EndReloadAssembly (1339ms)
-			LoadAssemblies (101ms)
+			CreateAndSetChildDomain (51ms)
+		EndReloadAssembly (4417ms)
+			LoadAssemblies (297ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (277ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (78ms)
-			SetupLoadedEditorAssemblies (845ms)
+			SetupTypeCache (861ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (244ms)
+			SetupLoadedEditorAssemblies (2889ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (13ms)
+				InitializePlatformSupportModulesInManaged (40ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (107ms)
-				BeforeProcessingInitializeOnLoad (104ms)
-				ProcessInitializeOnLoadAttributes (551ms)
-				ProcessInitializeOnLoadMethodAttributes (59ms)
-				AfterProcessingInitializeOnLoad (9ms)
-				EditorAssembliesLoaded (0ms)
+				RefreshPlugins (395ms)
+				BeforeProcessingInitializeOnLoad (401ms)
+				ProcessInitializeOnLoadAttributes (1840ms)
+				ProcessInitializeOnLoadMethodAttributes (182ms)
+				AfterProcessingInitializeOnLoad (31ms)
+				EditorAssembliesLoaded (1ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (4ms)
+			AwakeInstancesAfterBackupRestoration (16ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 2.35 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 0.05 ms.
-Unloading 7030 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 251 unused Assets / (188.2 KB). Loaded Objects now: 7349.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.11 seconds
+Refreshing native plugins compatible for Editor in 5.43 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.08 ms.
+Unloading 7028 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 251 unused Assets / (196.0 KB). Loaded Objects now: 7347.
 Memory consumption went from 273.3 MB to 273.1 MB.
-Total: 6.189000 ms (FindLiveObjects: 0.708900 ms CreateObjectMapping: 0.770000 ms MarkObjects: 4.379300 ms  DeleteObjects: 0.329800 ms)
+Total: 10.755500 ms (FindLiveObjects: 1.119400 ms CreateObjectMapping: 1.287700 ms MarkObjects: 7.846200 ms  DeleteObjects: 0.500200 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -197,42 +198,21 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
-Received Import Request.
-  Time since last request: 110971.259915 seconds.
-  path: Assets/UnityProject/Sprites/EMOTIC Icons/Affection.png
-  artifactKey: Guid(4995b41db556d87409d4375eceb8950b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Sprites/EMOTIC Icons/Affection.png using Guid(4995b41db556d87409d4375eceb8950b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d453c34b37d55fff86e9e3628b9040a') in 0.244985 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000026 seconds.
-  path: Assets/UnityProject/Sprites/EMOTIC Icons/Pleasure.png
-  artifactKey: Guid(a6ffb64fbe9092141b3b2e45a3b6615f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Sprites/EMOTIC Icons/Pleasure.png using Guid(a6ffb64fbe9092141b3b2e45a3b6615f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bfd5d9bb369de7d6180a05134da5c646') in 0.024959 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000024 seconds.
-  path: Assets/UnityProject/Sprites/EMOTIC Icons/Disquietment.png
-  artifactKey: Guid(b41bc0c1cc3d4574a95c88a394d214bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Sprites/EMOTIC Icons/Disquietment.png using Guid(b41bc0c1cc3d4574a95c88a394d214bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'be64261d061fca14207582019cd9c127') in 0.017085 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/UnityProject/Sprites/EMOTIC Icons/Doub-Confusion.png
-  artifactKey: Guid(e39608a6616b0c247b47c7c736af8d83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Sprites/EMOTIC Icons/Doub-Confusion.png using Guid(e39608a6616b0c247b47c7c736af8d83) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '65a737405acd0a780e25fa83c0e70ffa') in 0.017976 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000043 seconds.
-  path: Assets/UnityProject/Sprites/EMOTIC Icons/Sympathy.png
-  artifactKey: Guid(0c35bed25bcf3864bb902b8f1350a8e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Sprites/EMOTIC Icons/Sympathy.png using Guid(0c35bed25bcf3864bb902b8f1350a8e5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '409923b8f6b30a1958dc3f02f38aa7d4') in 0.019439 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000028 seconds.
-  path: Assets/UnityProject/Sprites/EMOTIC Icons/Esteem.png
-  artifactKey: Guid(17319e07580a03d4cabb9eb3e876b509) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/UnityProject/Sprites/EMOTIC Icons/Esteem.png using Guid(17319e07580a03d4cabb9eb3e876b509) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3399ef9f872b7f200c57796300ad28d6') in 0.020220 seconds 
-Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
-AssetImportWorker is now disconnected from the server
-Process exiting
-Exiting without the bug reporter. Application will terminate with return code 0
+Received Prepare
+Refreshing native plugins compatible for Editor in 124.76 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.06 ms.
+Unloading 242 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 242 unused Assets / (177.0 KB). Loaded Objects now: 7347.
+Memory consumption went from 133.1 MB to 132.9 MB.
+Total: 8.042700 ms (FindLiveObjects: 0.883600 ms CreateObjectMapping: 1.102900 ms MarkObjects: 5.705200 ms  DeleteObjects: 0.349600 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 

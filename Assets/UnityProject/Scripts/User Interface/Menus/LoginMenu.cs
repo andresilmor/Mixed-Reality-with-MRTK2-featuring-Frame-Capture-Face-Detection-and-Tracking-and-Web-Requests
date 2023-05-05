@@ -32,6 +32,16 @@ public class LoginMenu : MonoBehaviour
 
     private TouchScreenKeyboard _keyboard = null;
 
+    public TextMeshPro QRCodeText {
+        get {
+            return _QRCodeText;
+        }
+        set {
+            _QRCodeText = value;
+        }
+
+    }
+
     bool _validatingLogin = false;
     bool _insertingPassword = false;
 
@@ -69,12 +79,13 @@ public class LoginMenu : MonoBehaviour
 
     }
 
+
     private void SetListeners() {
         _QRCodeBtn.OnClick.AddListener(() => {
             if (_validatingLogin)
                 return;
 
-            _QRCodeText.text = "Looking for QR Code...";
+            _QRCodeText.text = "Looking for QRCode...";
 
             _keyboardMesh.material = UIManager.Instance.GetRectangleButtonMaterial("Normal").Value.InactiveMaterial;
             _keyboardBtn.enabled = false;

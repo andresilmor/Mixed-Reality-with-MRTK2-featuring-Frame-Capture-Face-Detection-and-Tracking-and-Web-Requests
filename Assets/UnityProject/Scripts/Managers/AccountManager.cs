@@ -62,7 +62,7 @@ public static class AccountManager {
             Debug.Log("Time Over");
         });*/
         Debug.Log("----- Yo");
-
+        requesting = true;
 
         //QRCodesPlugin.Instance.ResetHandlers();
         //QRCodesPlugin.Instance.QRCodeAdded += LoginQRCode;
@@ -70,10 +70,22 @@ public static class AccountManager {
 
         QRCodeReaderManager.DetectQRCodes(DetectionMode.OneShot, (List<QRCodeReaderManager.QRCodeDetected> list) => {
             Debug.Log("----- Called");
-            foreach (QRCodeReaderManager.QRCodeDetected detection in list) {
-                Debug.Log(detection.Info.ToString()); 
 
-            }
+            if (list != null && list.Count > 0) {
+                Debug.Log("----- Founded");
+                UIManager.Instance.LoginMenu.QRCodeText.text = "Validating...";
+
+                foreach (QRCodeReaderManager.QRCodeDetected detection in list) {
+                    Debug.Log(detection.Info.ToString());
+
+                }
+
+                return;
+
+            } else
+                UIManager.Instance.LoginMenu.QRCodeText.text = "No QRCode Found";
+            Debug.Log("----- NOP Founded xd");
+            requesting = false;
         });
 
         return true;
