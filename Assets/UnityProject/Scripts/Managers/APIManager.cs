@@ -47,33 +47,27 @@ using System.Linq;
 
 using Debug = MRDebug;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public static class APIManager {
 
     #region API Meta Data
 
     [Header("Protocols:")]
-    [SerializeField] static string websocketProtocol = "ws://";
-    [SerializeField] static string httpProtocol = "http://";
+    [SerializeField] static string _websocketProtocol = "ws://";
+    [SerializeField] static string _httpProtocol = "http://";
 
     [Header("API Address:")]
-    //string address = "websocketProtocol://192.168.1.238:8000";
-    [SerializeField] static string ip = "54.229.220.82";
-    [SerializeField] static string port = ""; //For when used with localhost server :8000
+    //string address = "_websocketProtocol://192.168.1.238:8000";
+    [SerializeField] static string _ip = "54.229.220.82";
+    [SerializeField] static string _port = ""; //For when used with localhost server :8000
 
     [Header("Root Paths:")]
     [SerializeField] private static string _websocketPath = "/ws";
-    public static string WebsocketPath {
-        get {
-            return _websocketPath;
-        }
-    }
+    public static string WebsocketPath { get { return _websocketPath; } }
+
     [SerializeField] private static string _graphqlPath = "/api";
-    public static string GraphqlPath {
-        get {
-            return _graphqlPath;
-        }
-    }
+    public static string GraphqlPath { get { return _graphqlPath; } }
 
     #endregion
 
@@ -91,16 +85,33 @@ public static class APIManager {
 
     #region WebSockets Data
 
-    private const string _frameFullInference = "/live";
-    public static string FrameFullInference {
-        get {
-            return _frameFullInference;
-        }
-    }
+    // Machine Learning Routes
+    private const string _mlRoute = "/ml";
+    public static string MLRoute { get { return _mlRoute; } }
 
-    private static List<WebSocket> wsConnections;
-    private static List<string> wsConnectionsPath;
+    private const string _frameFullInference = "/emotionFaceRecon";
+    public static string FrameFullInference { get { return _frameFullInference; } }
+
+    // QRCode Routes
+    private const string _qrRoute = "/qr";
+    public static string QRRoute { get { return _qrRoute; } }   
+
+    private const string _qrDecode = "/decode";
+    public static string QRDecode { get { return _qrDecode; } }
+
+    private const string _qrAuth = "/auth";
+    public static string QRAuth { get { return _qrAuth; } }
+
+
+    private static List<string> _wsConnectionsPath;
+
+    private static Dictionary<string, WebSocket> _wsConnections = new Dictionary<string, WebSocket>();
+    public static Dictionary<string, WebSocket> WebSocketConnections { get { return _wsConnections; } }
+
+
+    // WS Connections
     public static WebSocket wsFrameInference { get; private set; }
+
 
     #endregion
 
@@ -113,42 +124,79 @@ public static class APIManager {
     #region WebSocket
 
     public static WebSocket GetWebSocket(string path) {
-        switch (path) {
-            case _frameFullInference:
-                return wsFrameInference;
-
-
-            default:
-                for (int index = 0; index >= wsConnections.Count; index++) {
-                    if (wsConnectionsPath[index].Equals(path))
-                        return wsConnections[index];
-                }
-                return null;
-
+        if (_wsConnections.ContainsKey(path)) {
+            return _wsConnections[path];
         }
+        Debug.Log("Nop Contains");
+        return null;
 
     }
 
     private static void AddWebSocket(string path, WebSocket webSocket) {
+        _wsConnections.Add(path, webSocket);
+
+        /*
         switch (path) {
             case _frameFullInference:
                 wsFrameInference = webSocket;
                 break;
 
             default:
-                wsConnections.Add(webSocket);
-                wsConnectionsPath.Add(path);
+                _wsConnections.Add(webSocket);
+                _wsConnectionsPath.Add(path);
                 break;
 
-        }
+        }*/
     }
+
+
+    public static WebSocket CreateWebSocketConnection(string path, Action<string> onMessageAction = null, Action<byte[]> onBinaryAction = null) {
+        if (_wsConnections.ContainsKey(path))
+            return _wsConnections[path];
+
+        try {
+            _wsConnections[path] = new WebSocket(new Uri(_websocketProtocol + _ip + _websocketPath + path));
+
+            _wsConnections[path].OnMessage += (WebSocket webSocket, string data) => {
+                Debug.Log(data);
+                onMessageAction?.Invoke(data);
+            };
+
+            _wsConnections[path].OnBinary += (WebSocket webSocket, byte[] data) => {
+                onBinaryAction?.Invoke(data);
+
+            };
+
+            _wsConnections[path].OnClosed += (WebSocket webSocket, UInt16 code, string message) => {
+                Debug.Log("Connection [" + path + "] closed.");
+            };
+
+            _wsConnections[path].OnOpen += (WebSocket webSocket) => {
+                Debug.Log("Connection [" + path + "] opened.");
+            
+            };
+
+
+            return _wsConnections[path];
+
+        } catch (Exception e) {
+            Debug.Log("Error: " + e.Message.ToString());
+        }
+
+        return null;
+
+    }
+
+
 
     public static void CreateWebSocketLiveDetection(string path, DetectionType detectionType, Action<List<PersonAndEmotionsInferenceReply.Detection>> action) {
         try {
-            wsFrameInference = new WebSocket(new Uri(websocketProtocol + ip + _websocketPath));
+            Debug.Log(_websocketProtocol + _ip + _websocketPath + _mlRoute + path);
+
+            _wsConnections[path] = new WebSocket(new Uri(_websocketProtocol + _ip + _websocketPath + "/ml" + path));
             // "ws://34.254.162.143/ws" 
 
-            wsFrameInference.OnMessage += (WebSocket webSocket, string message) => {
+            _wsConnections[path].OnMessage += (WebSocket webSocket, string message) => {
 
                 if (message.Length > 6) {
                     if (detectionType == DetectionType.Person) {
@@ -159,7 +207,7 @@ public static class APIManager {
                 }
 
             };
-            wsFrameInference.OnBinary += (WebSocket webSocket, byte[] data) => {
+            _wsConnections[path].OnBinary += (WebSocket webSocket, byte[] data) => {
                 Debug.Log("Binary");
                 /*
                 try { 
@@ -201,11 +249,11 @@ public static class APIManager {
                 action?.Invoke(new DetectionsList("Pacients", list: detections), detectionType);
                 */
             };
-            wsFrameInference.Open();
+            _wsConnections[path].Open();
             
 
             /*
-            WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + port + WebsocketPath + path));
+            WebSocket newConnection = new WebSocket(new Uri(_websocketProtocol + _ip + _port + WebsocketPath + path));
 
             newConnection.OnMessage += (WebSocket webSocket, string message) => {
                 Debug.Log(message);
@@ -222,48 +270,21 @@ public static class APIManager {
 
     }
 
-    public static void CreateWebSocketConnection(string path, Action<string> action) {
-        try {
-            WebSocket newConnection = new WebSocket(new Uri(websocketProtocol + ip + port + WebsocketPath + path));
-
-            newConnection.OnMessage += (WebSocket webSocket, string message) => {
-                if (message.Length > 6)
-                    action?.Invoke(message);
-            };
-
-            ConfigWebsocketGeneric(path, newConnection);
-
-        } catch (Exception e) {
-            Debug.Log("Error: " + e.Message.ToString());
-        }
-
-    }
-
-    private static void ConfigWebsocketGeneric(string path, WebSocket newConnection) {
-        newConnection.OnOpen += (WebSocket webSocket) => {
-            webSocket.Send("Connection Opened");
-        };
-
-        newConnection.OnClosed += (WebSocket webSocket, UInt16 code, string message) => {
-            wsConnections.Remove(newConnection);
-
-        };
-
-        newConnection.Open();
-
-        AddWebSocket(path, newConnection);
-
-    }
+    
 
     public static void CloseAllWebSockets() {
+        foreach (KeyValuePair<string,WebSocket> connection in _wsConnections)
+            connection.Value.Close();   
+
+        /*
         if (wsFrameInference != null && wsFrameInference.IsOpen) { 
             wsFrameInference.Close(); 
         }
 
-        if (wsConnections != null && wsConnections.Count > 0) {
-            foreach (WebSocket ws in wsConnections)
+        if (_wsConnections != null && _wsConnections.Count > 0) {
+            foreach (WebSocket ws in _wsConnections)
                 ws.Close();
-        }
+        }*/
 
 
     }
@@ -376,7 +397,7 @@ public static class APIManager {
             byte[] postData = Encoding.ASCII.GetBytes(jsonData);
 
 
-            using (HTTPRequest request = new HTTPRequest(new Uri(httpProtocol + ip + port + GraphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => OnRequestFinished(action, request, response))) {
+            using (HTTPRequest request = new HTTPRequest(new Uri(_httpProtocol + _ip + _port + GraphqlPath), HTTPMethods.Post, (HTTPRequest request, HTTPResponse response) => OnRequestFinished(action, request, response))) {
                 request.DisableCache = true;
 
                 request.SetHeader("Content-Type", "application/json");

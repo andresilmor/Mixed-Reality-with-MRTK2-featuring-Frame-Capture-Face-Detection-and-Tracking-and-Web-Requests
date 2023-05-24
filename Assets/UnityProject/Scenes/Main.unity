@@ -5123,7 +5123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2589127543728232935, guid: c4c2e91a85db9de48ba573e5b22df34c, type: 3}
       propertyPath: m_Name
-      value: Lights
+      value: Debug ights
       objectReference: {fileID: 0}
     - target: {fileID: 2589127543728232935, guid: c4c2e91a85db9de48ba573e5b22df34c, type: 3}
       propertyPath: m_IsActive
