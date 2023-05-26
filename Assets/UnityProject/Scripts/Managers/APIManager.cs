@@ -150,7 +150,7 @@ public static class APIManager {
     }
 
 
-    public static WebSocket CreateWebSocketConnection(string path, Action<string> onMessageAction = null, Action<byte[]> onBinaryAction = null) {
+    public static WebSocket CreateWebSocketConnection(string path, Action<WebSocket, string> onMessageAction = null, Action<byte[]> onBinaryAction = null, Action<WebSocket> onOpen = null) {
         if (_wsConnections.ContainsKey(path))
             return _wsConnections[path];
 
@@ -158,8 +158,8 @@ public static class APIManager {
             _wsConnections[path] = new WebSocket(new Uri(_websocketProtocol + _ip + _websocketPath + path));
 
             _wsConnections[path].OnMessage += (WebSocket webSocket, string data) => {
-                Debug.Log(data);
-                onMessageAction?.Invoke(data);
+                Debug.Log("API Manager: " + data);
+                onMessageAction?.Invoke(webSocket, data);
             };
 
             _wsConnections[path].OnBinary += (WebSocket webSocket, byte[] data) => {
@@ -172,6 +172,7 @@ public static class APIManager {
             };
 
             _wsConnections[path].OnOpen += (WebSocket webSocket) => {
+                onOpen?.Invoke(webSocket);
                 Debug.Log("Connection [" + path + "] opened.");
             
             };

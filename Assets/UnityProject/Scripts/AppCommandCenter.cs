@@ -172,8 +172,8 @@ public class AppCommandCenter : MonoBehaviour {
     }
 
 
-    async private void MineField() { 
-
+    async private void MineField() {
+        
     }
 
     private static void StartApplication() {

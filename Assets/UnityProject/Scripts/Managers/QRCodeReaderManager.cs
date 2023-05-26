@@ -62,7 +62,7 @@ public static class QRCodeReaderManager
 
     private static bool _detecting = false;
 
-    private static Action<List<QRCodeDetected>> _oneShotAction;
+    private static List<Action<List<QRCodeDecodeReply.Detection>>> _oneShotAction = new List<Action<List<QRCodeDecodeReply.Detection>>>();
     private static Dictionary<int,Action<List<QRCodeDetected>>> _timerActions = new Dictionary<int,Action<List<QRCodeDetected>>>();
     private static List<Action<List<QRCodeDetected>>> _passiveModeActions = new List<Action<List<QRCodeDetected>>>();
 
@@ -72,7 +72,7 @@ public static class QRCodeReaderManager
     /// Detect QR Codes on Frame (One-Shot)
     /// </summary>
     /// <param name="action"></param>
-    async public static void DetectQRCodes(DetectionMode detectionMode, Action<List<QRCodeDetected>> action = null) {
+    async public static void DetectQRCodes(DetectionMode detectionMode, List<Action<List<QRCodeDecodeReply.Detection>>> actions = null) {
 #if ENABLE_WINMD_SUPPORT
 /*
         if (AppCommandCenter.CameraFrameReader == null) {
@@ -88,7 +88,9 @@ public static class QRCodeReaderManager
 
         switch (detectionMode) {
             case DetectionMode.OneShot:
-                _oneShotAction = action;
+                foreach (Action<List<QRCodeDecodeReply.Detection>> action in actions)
+                    _oneShotAction.Add(action);
+
                 AppCommandCenter.CameraFrameReader.FrameArrived += OneShotDetection;
                 break;
 
@@ -98,6 +100,37 @@ public static class QRCodeReaderManager
             case DetectionMode.Timing:
                 break;
         
+        }
+
+    }
+
+    async public static void DetectQRCodes(DetectionMode detectionMode, Action<List<QRCodeDecodeReply.Detection>> action = null) {
+#if ENABLE_WINMD_SUPPORT
+/*
+        if (AppCommandCenter.CameraFrameReader == null) {
+            Debug.Log("wtf");
+            AppCommandCenter.CameraFrameReader = await CameraFrameReader.CreateAsync();
+        } else if (!CameraFrameReader.IsRunning) {
+        Debug.Log("START CAPTURE");
+            await AppCommandCenter.CameraFrameReader.StartCapture();
+        }*/
+#endif
+
+
+
+        switch (detectionMode) {
+            case DetectionMode.OneShot:
+                _oneShotAction.Add(action);
+
+                AppCommandCenter.CameraFrameReader.FrameArrived += OneShotDetection;
+                break;
+
+            case DetectionMode.Passive:
+                break;
+
+            case DetectionMode.Timing:
+                break;
+
         }
 
     }
@@ -117,10 +150,6 @@ public static class QRCodeReaderManager
 
                 if (_oneShotTentatives >= 10) {
                     StopOneShotDetection(null);
-                    APIManager.GetWebSocket(APIManager.QRRoute + APIManager.QRDecode).Close();
-                    _hasFinishedOneShot = true;
-                    _wsConnected = false;
-                    _oneShotTentatives = 0;
                     return;
 
                 }
@@ -168,14 +197,20 @@ public static class QRCodeReaderManager
         _wsConnected = true;
 
         Debug.Log("HERE .....");
-        WebSocket ws = APIManager.CreateWebSocketConnection(APIManager.QRRoute + APIManager.QRDecode, (string message) => {
+        WebSocket ws = APIManager.CreateWebSocketConnection(APIManager.QRRoute + APIManager.QRDecode, (WebSocket ws, string message) => {
+            Debug.Log("Action .....");
             try {
                 QRCodeDecodeReply.DetectionsList results = JsonConvert.DeserializeObject<QRCodeDecodeReply.DetectionsList>(
                     JsonConvert.DeserializeObject(message).ToString());
+                if (results.qrCodes.Count > 0) {
+                    StopOneShotDetection(results.qrCodes);
+                    Debug.Log("Response ..." + results.qrCodes[0].content);
 
+
+                }
 
             } catch (Exception e) {
-                Debug.Log(e.Message, LogType.Exception);
+                Debug.Log("B: " + e.Message, LogType.Exception);
 
             }
 
@@ -249,14 +284,20 @@ public static class QRCodeReaderManager
 
         }
 
-        private static void StopOneShotDetection(List<QRCodeDetected> result) {
-            _oneShotTentatives = 0;
-            _oneShotAction?.Invoke(result);
-            _oneShotAction = null;
-            AppCommandCenter.CameraFrameReader.FrameArrived -= OneShotDetection;
-            _hasFinishedOneShot = true;
+    private static void StopOneShotDetection(List<QRCodeDecodeReply.Detection> qrCodes) {
+        AppCommandCenter.CameraFrameReader.FrameArrived -= OneShotDetection;
+        APIManager.GetWebSocket(APIManager.QRRoute + APIManager.QRDecode).Close();
 
-        }
+        foreach (Action<List<QRCodeDecodeReply.Detection>> action in _oneShotAction)
+            action?.Invoke(qrCodes);
+
+        _hasFinishedOneShot = true;
+        _wsConnected = false;
+        _oneShotTentatives = 0;
+        _oneShotAction = new List<Action<List<QRCodeDecodeReply.Detection>>>();
+
+    }
+
 
 
 

@@ -14,6 +14,9 @@ using Microsoft.MixedReality.Toolkit.UI;
 using QRTracking;
 
 using Debug = MRDebug;
+using BestHTTP.WebSocket;
+using Microsoft.MixedReality.Toolkit.Utilities;
+using System.Diagnostics;
 
 public static class AccountManager {
     public static string currentUserUUID { get; private set; }
@@ -61,34 +64,76 @@ public static class AccountManager {
         }, 1.5f, () => {
             Debug.Log("Time Over");
         });*/
-        Debug.Log("----- Yo");
+        Debug.Log("----- Route: " + (APIManager.QRRoute + APIManager.QRAuth));
         requesting = true;
 
         //QRCodesPlugin.Instance.ResetHandlers();
         //QRCodesPlugin.Instance.QRCodeAdded += LoginQRCode;
         //QRCodesPlugin.Instance.StartQRTracking();
 
-        QRCodeReaderManager.DetectQRCodes(DetectionMode.OneShot, (List<QRCodeReaderManager.QRCodeDetected> list) => {
-            Debug.Log("----- Called");
-
-            if (list != null && list.Count > 0) {
-                Debug.Log("----- Founded");
-                UIManager.Instance.LoginMenu.QRCodeText.text = "Validating...";
-
-                foreach (QRCodeReaderManager.QRCodeDetected detection in list) {
-                    Debug.Log(detection.Info.ToString());
-
-                }
-
-                return;
-
-            } else
-                UIManager.Instance.LoginMenu.QRCodeText.text = "No QRCode Found";
-            Debug.Log("----- NOP Founded xd");
+        WebSocket authChannel = APIManager.CreateWebSocketConnection(APIManager.QRRoute + APIManager.QRAuth, (WebSocket ws, string response) => {
+            Debug.Log("RESPONSE");
+            Debug.Log(response);
             requesting = false;
+            ws.Close();
+
+        }, null, (WebSocket ws) => {
+
+            QRCodeReaderManager.DetectQRCodes(DetectionMode.OneShot, (List<QRCodeDecodeReply.Detection> list) => {
+         
+                if (list != null && list.Count > 0) {
+                    try { 
+                        UIManager.Instance.LoginMenu.QRCodeText.text = "Validating...";
+
+                        foreach (QRCodeDecodeReply.Detection detection in list) {
+                            if (!requesting)
+                                break;
+                            Debug.Log("Detection: " + detection.content.ToString());
+                            string channel = detection.content.ToString();
+                            if (channel.Contains('.')) {
+                                channel = channel.Split('.')[1];
+                                Debug.Log("----- Channel 1: " + channel);
+
+                                if (channel[channel.Length - 1] != '=')
+                                    channel += "=";
+
+                                channel = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(channel));
+                                Debug.Log("----- Channel 2: " + channel);
+                                Debug.Log("----- Object2: " + JObject.Parse(channel).ToString());
+                                channel = JObject.Parse(channel)["context"]["channel"].ToString();
+                                Debug.Log("----- Channel 3: " + channel);
+
+                                ws.Send("{ \"channel\": " + channel + ", \"confirmation\": " + false + " }");
+
+                            }
+
+
+                            Debug.Log(detection.content.ToString());
+
+                        }
+
+                        return;
+
+                    } catch (Exception ex) {
+                        Debug.Log("A: " + ex.Message, LogType.Exception);
+
+                        ws.Close();
+
+                    }
+
+                } else
+                    UIManager.Instance.LoginMenu.QRCodeText.text = "No QRCode Found";
+
+                Debug.Log("----- NOP Founded xd");
+
+            });
+
         });
 
+        authChannel.Open();
+
         return true;
+
     }
 
     async private static void LoginQRCode(object sender, QRCodeEventArgs<Microsoft.MixedReality.QR.QRCode> code) {
