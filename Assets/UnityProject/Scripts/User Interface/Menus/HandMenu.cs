@@ -108,7 +108,11 @@ public class HandMenu : MonoBehaviour
 
                     UIManager.Instance.CloseAllWindows();
 
+                    Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * UIManager.Instance.WindowDistance;
+                    position.y += UIManager.Instance.AxisYOffset;
                     UIManager.Instance.LoginMenu.gameObject.SetActive(true);
+                    UIManager.Instance.LoginMenu.gameObject.transform.position = position;
+                    UIManager.Instance.LoginMenu.gameObject.transform.LookAt(Camera.main.transform.position);
 
                     LogoutMesh.material = UIManager.Instance.GetCircleButtonMaterial("Logout").Value.InactiveMaterial;
 

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 
 class UserEntity : RealmObject {
     [PrimaryKey]
+    public string Email { set; get; }
+
     public string UUID { set; get; }
 
-    public string Role { set; get; }
+    public string CurrentRole { set; get; }
 
     public string Token { set; get; }
 
@@ -14,8 +16,9 @@ class UserEntity : RealmObject {
 
     public UserEntity() { }
 
-    public UserEntity(string UUID, string token) {
+    public UserEntity(string email, string UUID, string token) {
+        this.Email = email;
         this.UUID = UUID;
-        Token = token;
+        this.Token = token;
     }
 }

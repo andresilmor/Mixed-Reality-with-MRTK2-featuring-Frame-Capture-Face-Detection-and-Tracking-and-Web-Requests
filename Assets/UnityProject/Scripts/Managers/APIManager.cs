@@ -151,9 +151,6 @@ public static class APIManager {
 
 
     public static WebSocket CreateWebSocketConnection(string path, Action<WebSocket, string> onMessageAction = null, Action<byte[]> onBinaryAction = null, Action<WebSocket> onOpen = null) {
-        if (_wsConnections.ContainsKey(path))
-            return _wsConnections[path];
-
         try {
             _wsConnections[path] = new WebSocket(new Uri(_websocketProtocol + _ip + _websocketPath + path));
 

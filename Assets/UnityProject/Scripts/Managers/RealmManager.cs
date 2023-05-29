@@ -37,27 +37,109 @@ public static class RealmManager {
 
     }
 
+    public static string FindActiveUser(bool save = false) {
+        List<UserEntity> userObject = RealmManager.realm.All<UserEntity>().Where(user => user.Token != "").ToList();
+        Debug.Log("User Count: " + userObject.Count);
+
+        if (userObject.Count > 0 && save) {
+            Debug.Log("WTF MEN!");
+            Debug.Log("User Token Realm: " + userObject[0].Token);
+            AccountManager.Token = userObject[0].Token;
+            AccountManager.ActiveUserEmail = userObject[0].Email;
+            return userObject[0].Token;
+
+        }
+        Debug.Log("Returning null");
+        return null;
+      
+
+    }
+
+    public static bool LogoutUser(string userEmail) {
+        RealmObject userObject = RealmManager.realm.Find<UserEntity>(userEmail);
+
+        using (Realm realm = RealmManager.realm) {
+            using (Transaction transaction = realm.BeginWrite()) {
+                try {
+                    (userObject as UserEntity).Token = "";
+                    realm.Add(userObject, update: true);
+                  
+                    transaction.Commit();
+                    return true;
+
+                } catch (Exception ex) {
+                    transaction.Rollback();
+                    return false;
+
+                }
+
+            }
+
+        }
+
+    }
+
+
     /// <summary>
-    /// Checks existance of UserEntity with the gived userUUID, if already existes just updates the content based on the Data, if not, a new one is created.
+    /// Checks existance of UserEntity with the gived userEmail, if already existes just updates the content based on the Data, if not, a new one is created.
     /// </summary>
     /// <param Name="data"></param>
-    /// <param Name="userUUID"></param>
+    /// <param Name="userEmail"></param>
     /// <returns>True: Updated/created and commited | False: Did not commit</returns>
-    public static bool CreateUpdateUser(JObject data, string userUUID) {
-        RealmObject userObject = RealmManager.realm.Find<UserEntity>(userUUID);
-
+    public static bool CreateUpdateUser(JObject data, string userEmail) {
+        RealmObject userObject = RealmManager.realm.Find<UserEntity>(userEmail);
+        Debug.Log("User " + (userObject != null ? "Founded" : "Not Founded"));
         using (Realm realm = RealmManager.realm) {
             using (Transaction transaction = realm.BeginWrite()) {
                 try {
                     if (userObject == null) {
                         userObject = new UserEntity(
+                                email: userEmail,
                                 UUID: data["data"]["MemberLogin"]["uuid"].Value<string>(),
                                 token: data["data"]["MemberLogin"]["token"].Value<string>()
                         );
                         realm.Add(userObject);
+                        Debug.Log("User Added");
+
 
                     } else {
                         (userObject as UserEntity).Token = data["data"]["MemberLogin"]["token"].Value<string>();
+                        realm.Add(userObject, update: true);
+                        Debug.Log("User Updated");
+
+                    }
+                    transaction.Commit();
+                    return true;
+
+                } catch (Exception ex) {
+                    transaction.Rollback();
+                    return false;
+
+                }
+
+            }
+
+        }
+
+    }
+
+    public static bool CreateUpdateUser(string uuid, string token, string userEmail) {
+        RealmObject userObject = RealmManager.realm.Find<UserEntity>(userEmail);
+        Debug.Log("User " + (userObject != null ? "Founded" : "Not Founded"));
+        using (Realm realm = RealmManager.realm) {
+            using (Transaction transaction = realm.BeginWrite()) {
+                try {
+                    if (userObject == null) {
+                        userObject = new UserEntity(
+                                email: userEmail,
+                                UUID: uuid,
+                                token: token
+                        );
+                        realm.Add(userObject);
+                        Debug.Log("User Added");
+
+                    } else {
+                        (userObject as UserEntity).Token = token;
                         realm.Add(userObject, update: true);
                         Debug.Log("User Updated");
 

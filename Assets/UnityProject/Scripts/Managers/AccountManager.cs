@@ -17,21 +17,25 @@ using Debug = MRDebug;
 using BestHTTP.WebSocket;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using System.Diagnostics;
+using Newtonsoft.Json;
+using Microsoft.MixedReality.Toolkit.Examples.Demos.EyeTracking;
 
 public static class AccountManager {
-    public static string currentUserUUID { get; private set; }
+    public static string ActiveUserEmail { get; set; }
+    public static string Token { get; set; }
 
     private static bool _isLogged = false;
     public static bool IsLogged {
         get { return _isLogged; }
-        private set {
+        set {
             if (_isLogged == value) { return; }
             _isLogged = value;
+            OnLoggedStatusChange?.Invoke(value);
             if (_isLogged) {
                 return;
 
                 // EXECUTE in LOGIN
-                foreach (MemberOf memberOf in RealmManager.realm.Find<UserEntity>(currentUserUUID).MemberOf) {
+                foreach (MemberOf memberOf in RealmManager.realm.Find<UserEntity>(ActiveUserEmail).MemberOf) {
                     NotificationsManager.SetupMedicationAlerts(memberOf.Institution.UUID);
 
                 }
@@ -52,63 +56,86 @@ public static class AccountManager {
     private static QRInfo _lastQR = null;
 
     #region Login
+    public static void OnSucessfullLogin(bool logged) {
+        UIManager.Instance.HandMenu.ToggleHomeButton(logged);
+        UIManager.Instance.HandMenu.ToggleLogoutButton(logged);
+
+        UIManager.Instance.LoginMenu.gameObject.SetActive(false);
+
+        UIManager.Instance.HomeMenu.gameObject.SetActive(true);
+
+        Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * UIManager.Instance.WindowDistance;
+
+        position.y += UIManager.Instance.AxisYOffset;
+
+        UIManager.Instance.HomeMenu.gameObject.transform.position = position;
+        UIManager.Instance.HomeMenu.gameObject.transform.LookAt(Camera.main.transform.position);
+
+        UIManager.Instance.LoginMenu.ClearLoginPage();
+    }
 
     public static bool LoginQR() {
      
      
 
-        /*
-        Debug.Log("Starting");
-        QRCodeReaderManager.DetectQRCodes((List<QRCodeReaderManager.QRCodeDetected> results) => {
-            Debug.Log("Invoked");
-        }, 1.5f, () => {
-            Debug.Log("Time Over");
-        });*/
-        Debug.Log("----- Route: " + (APIManager.QRRoute + APIManager.QRAuth));
         requesting = true;
 
-        //QRCodesPlugin.Instance.ResetHandlers();
-        //QRCodesPlugin.Instance.QRCodeAdded += LoginQRCode;
-        //QRCodesPlugin.Instance.StartQRTracking();
 
         WebSocket authChannel = APIManager.CreateWebSocketConnection(APIManager.QRRoute + APIManager.QRAuth, (WebSocket ws, string response) => {
-            Debug.Log("RESPONSE");
-            Debug.Log(response);
+            JObject res = JObject.Parse(@response);
+
+            Debug.Log(res); 
+            Debug.Log(res["confirmation"].Type); 
+
+            if ((bool)res["confirmation"] == true) {
+                Debug.Log("HERE");
+                IsLogged = true;
+                Debug.Log("Saving User");
+                SaveUser(res["authToken"].ToString());
+
+            } else {
+                Debug.Log("WTF");
+                UIManager.Instance.LoginMenu.ResetButtons();
+     
+
+            }
+
             requesting = false;
-            ws.Close();
+            Debug.Log("Im gonna close the mothafucker");
+            APIManager.GetWebSocket(APIManager.QRRoute + APIManager.QRAuth).Close();
 
         }, null, (WebSocket ws) => {
 
-            QRCodeReaderManager.DetectQRCodes(DetectionMode.OneShot, (List<QRCodeDecodeReply.Detection> list) => {
-         
-                if (list != null && list.Count > 0) {
-                    try { 
+            QRCodeReaderManager.DetectQRCodes(DetectionMode.OneShot, (List<QRCodeDecodeReply.Detection> qrCodes) => {
+                Debug.Log("ON OPEN CALLED");
+                if (qrCodes != null && qrCodes.Count > 0) {
+                    try {
                         UIManager.Instance.LoginMenu.QRCodeText.text = "Validating...";
 
-                        foreach (QRCodeDecodeReply.Detection detection in list) {
+                        foreach (QRCodeDecodeReply.Detection detection in qrCodes) {
                             if (!requesting)
                                 break;
-                            Debug.Log("Detection: " + detection.content.ToString());
+                            //Debug.Log("Detection: " + detection.content.ToString());
                             string channel = detection.content.ToString();
                             if (channel.Contains('.')) {
                                 channel = channel.Split('.')[1];
-                                Debug.Log("----- Channel 1: " + channel);
+                                //Debug.Log("----- Channel 1: " + channel);
 
                                 if (channel[channel.Length - 1] != '=')
                                     channel += "=";
 
                                 channel = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(channel));
-                                Debug.Log("----- Channel 2: " + channel);
-                                Debug.Log("----- Object2: " + JObject.Parse(channel).ToString());
+                                //Debug.Log("----- Channel 2: " + channel);
+                                //Debug.Log("----- Object2: " + JObject.Parse(channel).ToString());
                                 channel = JObject.Parse(channel)["context"]["channel"].ToString();
-                                Debug.Log("----- Channel 3: " + channel);
+                                //Debug.Log("----- Channel 3: " + channel);
 
-                                ws.Send("{ \"channel\": " + channel + ", \"confirmation\": " + false + " }");
+                                ws.Send(JObject.Parse("{ \"channel\": \"" + channel + "\", \"confirmation\": " + false.ToString().ToLower() + " }").ToString());
 
                             }
 
 
-                            Debug.Log(detection.content.ToString());
+                            //Debug.Log(detection.content.ToString());
 
                         }
 
@@ -116,20 +143,26 @@ public static class AccountManager {
 
                     } catch (Exception ex) {
                         Debug.Log("A: " + ex.Message, LogType.Exception);
+                        UIManager.Instance.LoginMenu.ResetButtons();
 
-                        ws.Close();
+                        APIManager.GetWebSocket(APIManager.QRRoute + APIManager.QRAuth).Close();
 
                     }
 
-                } else
+                } else {
                     UIManager.Instance.LoginMenu.QRCodeText.text = "No QRCode Found";
+                    requesting = false;
+                    UIManager.Instance.LoginMenu.ResetButtons();
+                    APIManager.GetWebSocket(APIManager.QRRoute + APIManager.QRAuth).Close();
 
-                Debug.Log("----- NOP Founded xd");
+                }
+                //Debug.Log("----- NOP Founded xd");
 
             });
 
         });
 
+        Debug.Log("Number of methods of : " + authChannel.OnOpen.GetInvocationList().Length);
         authChannel.Open();
 
         return true;
@@ -144,8 +177,6 @@ public static class AccountManager {
 
         _lastQR = newQR;
 
-
-
         QRCodesPlugin.Instance.StopQRTracking();
         QRCodesPlugin.Instance.QRCodeAdded -= LoginQRCode;
         
@@ -153,25 +184,29 @@ public static class AccountManager {
 
         JObject qrMessage = JObject.Parse(@newQR.Data.ToString());
 
-        LoginWithCredentials(qrMessage["username"].ToString(), qrMessage["password"].ToString());
+        LoginWithCredentials(qrMessage["email"].ToString(), qrMessage["password"].ToString());
 
     }
 
-    async public static void LoginWithCredentials(string username, string password) {
+    async public static void LoginWithCredentials(string email, string password) {
         requesting = true;
-        IsLogged = await ValidateLogin(username, password);
+        bool validated = await ValidateLogin(email, password);
+
+        if (validated)
+            IsLogged = validated;
 
         requesting = false;
 
     }
 
-    async private static Task<bool> ValidateLogin(string username, string password) {
+    async private static Task<bool> ValidateLogin(string email, string password) {
         GraphQL.Type queryOperation = new GraphQL.Type(
         "MemberLogin", new GraphQL.Type[] {new GraphQL.Type("loginCredentials", new GraphQL.Params[] {
-            new GraphQL.Params("username", "\"" + username + "\""),
+            new GraphQL.Params("email", "\"" + email + "\""),
             new GraphQL.Params("password", "\"" + password + "\""),
         }) });
 
+        bool valueToReturn = false;
 
         await APIManager.ExecuteRequest("", queryOperation,
             (message, succeed) => {
@@ -180,15 +215,13 @@ public static class AccountManager {
                         JObject response = JObject.Parse(@message);
                         if (response.HasValues && response["data"] != null && response["data"]["MemberLogin"]["message"] == null) {
 
-                            IsLogged = true;
-                            OnLoggedStatusChange?.Invoke(IsLogged);
                             SaveUser(response);
                             requesting = false;
+                            valueToReturn = true;
 
                         } else {
-                            IsLogged = false;
-
                             UIManager.Instance.LoginMenu.ShowLoginErrorMessage("Invalid Credentials");
+                            valueToReturn = false;
 
                         }
 
@@ -196,6 +229,8 @@ public static class AccountManager {
 
                 } catch (Exception e) {
                     requesting = false;
+                    valueToReturn = false;
+
                 }
 
             },
@@ -217,7 +252,7 @@ public static class AccountManager {
                 }),
             });
 
-        return IsLogged;
+        return valueToReturn;
 
     }
 
@@ -226,17 +261,37 @@ public static class AccountManager {
     #region Logged Account Persistence
 
     private static void SaveUser(JObject response) {
-        if (RealmManager.CreateUpdateUser(response, response["data"]["MemberLogin"]["uuid"].Value<string>()))
-            currentUserUUID = response["data"]["MemberLogin"]["uuid"].Value<string>();
+        AccountManager.Token = response["data"]["MemberLogin"]["token"].Value<string>();
+        if (RealmManager.CreateUpdateUser(response, response["data"]["MemberLogin"]["email"].Value<string>()))
+            ActiveUserEmail = response["data"]["MemberLogin"]["email"].Value<string>();
 
         SetRelationshipInstitution(response);
 
     }
 
+    private static void SaveUser(string token) {
+        
+
+        string tokenClaim = token.Split('.')[1];
+
+        if (tokenClaim[tokenClaim.Length - 1] != '=')
+            tokenClaim += "=";
+
+        tokenClaim = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(tokenClaim));
+        string userEmail = JObject.Parse(tokenClaim)["sub"].ToString();
+        Debug.Log("----- Sub Test: " + userEmail.ToString());
+        Debug.Log("----- Token Test: " + token.ToString());
+        AccountManager.Token = token;
+
+        RealmManager.CreateUpdateUser("", token, userEmail);
+
+    
+    }
+
 
 
     private static void SetRelationshipInstitution(JObject response) {
-        UserEntity currentUser = RealmManager.realm.Find<UserEntity>(currentUserUUID);
+        UserEntity currentUser = RealmManager.realm.Find<UserEntity>(ActiveUserEmail);
 
         foreach (var relationship in response["data"]["MemberLogin"]["MemberOf"])
             RealmManager.CreateUpdateUserMembership(currentUser, relationship);
@@ -248,10 +303,10 @@ public static class AccountManager {
 
 
 
-    public static bool Logout() {
+    public static void Logout() {
+        RealmManager.LogoutUser(AccountManager.ActiveUserEmail);
         IsLogged = false;
-        OnLoggedStatusChange?.Invoke(IsLogged);
-        return true;
+
 
     }
 

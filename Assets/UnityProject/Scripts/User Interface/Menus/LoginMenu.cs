@@ -18,7 +18,7 @@ public class LoginMenu : MonoBehaviour
 
     [Header("Texts")]
     [SerializeField] TextMeshPro _QRCodeText;
-    [SerializeField] TextMeshPro _usernameText;
+    [SerializeField] TextMeshPro _emailText;
     [SerializeField] TextMeshPro _passwordText;
     [SerializeField] TextMeshPro _loginText;
 
@@ -45,7 +45,7 @@ public class LoginMenu : MonoBehaviour
     bool _validatingLogin = false;
     bool _insertingPassword = false;
 
-    bool _cleanUsername = true;
+    bool _cleanEmail = true;
     bool _cleanPassword = true;
 
     string _password;
@@ -65,23 +65,24 @@ public class LoginMenu : MonoBehaviour
         _validatingLogin = false;
 
 
-        //_usernameText.text = "Insert username...";
+        //_emailText.text = "Insert username...";
         //_passwordText.text = "Insert password...";
 
-        _usernameText.text = "CareXR_Tester_Caregiver";
+        _emailText.text = "CareXR_Tester_Caregiver";
         _passwordText.text = "password";
 
 
-        if (_cleanPassword || _cleanUsername)
+        if (_cleanPassword || _cleanEmail)
             _loginMesh.material = UIManager.Instance.GetRectangleButtonMaterial("Normal").Value.InactiveMaterial;
 
-        AccountManager.OnLoggedStatusChange += OnSucessfullLogin;
+        AccountManager.OnLoggedStatusChange += AccountManager.OnSucessfullLogin;
 
     }
 
 
     private void SetListeners() {
         _QRCodeBtn.OnClick.AddListener(() => {
+            Debug.Log("QR Code BTN CALLED");
             if (_validatingLogin)
                 return;
 
@@ -115,13 +116,13 @@ public class LoginMenu : MonoBehaviour
             if (_validatingLogin)
                 return;
 
-            _usernameText.text = "Insert username...";
+            _emailText.text = "Insert username...";
             _passwordText.text = "Insert password...";
 
             _loginFormPanel.gameObject.SetActive(false);
             _optionPanel.gameObject.SetActive(true);
 
-            _cleanUsername = true;
+            _cleanEmail = true;
             _cleanPassword = true;
 
             if (_keyboard != null)
@@ -133,13 +134,13 @@ public class LoginMenu : MonoBehaviour
             if (_validatingLogin)
                 return;
 
-            if (_cleanUsername) {
-                _usernameText.text = "";
-                _cleanUsername = false;
+            if (_cleanEmail) {
+                _emailText.text = "";
+                _cleanEmail = false;
 
             }
 
-            _keyboard = TouchScreenKeyboard.Open(_usernameText.text, TouchScreenKeyboardType.EmailAddress, false, false, false, false);
+            _keyboard = TouchScreenKeyboard.Open(_emailText.text, TouchScreenKeyboardType.EmailAddress, false, false, false, false);
 
             _insertingPassword = false;
 
@@ -153,7 +154,7 @@ public class LoginMenu : MonoBehaviour
 
             }
 
-            _keyboard = TouchScreenKeyboard.Open(_password, TouchScreenKeyboardType.EmailAddress, false, false, true, false);
+            _keyboard = TouchScreenKeyboard.Open(_password, TouchScreenKeyboardType.Default, false, false, false, false);
 
             _insertingPassword = true;
 
@@ -161,7 +162,7 @@ public class LoginMenu : MonoBehaviour
 
         _loginBtn.OnClick.AddListener(() => {
 
-            if (/*(_cleanPassword || _cleanUsername) || */ _validatingLogin)
+            if (/*(_cleanPassword || _cleanEmail) || */ _validatingLogin)
                     return;
 
 
@@ -169,31 +170,15 @@ public class LoginMenu : MonoBehaviour
             _loginText.text = "Validating...";
             _validatingLogin = true;
 
-            AccountManager.LoginWithCredentials(_usernameText.text, _passwordText.text);
+            AccountManager.LoginWithCredentials(_emailText.text, _passwordText.text);
 
         });
     }
 
-    private static void OnSucessfullLogin(bool logged) {
-        UIManager.Instance.HandMenu.ToggleHomeButton(logged);
-        UIManager.Instance.HandMenu.ToggleLogoutButton(logged);
-
-        UIManager.Instance.LoginMenu.gameObject.SetActive(false);
-
-        UIManager.Instance.HomeMenu.gameObject.SetActive(!UIManager.Instance.HomeMenu.gameObject.activeInHierarchy);
-
-        Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * UIManager.Instance.WindowDistance;
-
-        position.y += UIManager.Instance.AxisYOffset;
-
-        UIManager.Instance.HomeMenu.gameObject.transform.position = position;
-        UIManager.Instance.HomeMenu.gameObject.transform.LookAt(Camera.main.transform.position);
-
-        UIManager.Instance.LoginMenu.ClearLoginPage();
-    }
+    
 
     public void ClearLoginPage() {
-        AccountManager.OnLoggedStatusChange -= OnSucessfullLogin;
+        AccountManager.OnLoggedStatusChange -= AccountManager.OnSucessfullLogin;
 
         _QRCodeBtn.OnClick.RemoveAllListeners();
         _keyboardBtn.OnClick.RemoveAllListeners();
@@ -201,6 +186,7 @@ public class LoginMenu : MonoBehaviour
         _unInputBtn.OnClick.RemoveAllListeners();
         _pwInputBtn.OnClick.RemoveAllListeners();
         _loginBtn.OnClick.RemoveAllListeners();
+
 
     }
 
@@ -216,13 +202,26 @@ public class LoginMenu : MonoBehaviour
                 _password = _keyboard.text;
                 _passwordText.text = new string('*', _password.Length);
             } else 
-                _usernameText.text = _keyboard.text;
+                _emailText.text = _keyboard.text;
 
         }
-        if (!_cleanPassword && !_cleanUsername)
+        if (!_cleanPassword && !_cleanEmail)
             _loginMesh.material = UIManager.Instance.GetRectangleButtonMaterial("Normal").Value.ActiveMaterial;
 
     }
 
 
+    private void OnEnable() {
+        ResetButtons();
+        UIManager.Instance.LoginMenu.gameObject.transform.LookAt(Camera.main.transform.position);
+
+    }
+
+    public void ResetButtons() {
+        _loginMesh.material = UIManager.Instance.GetRectangleButtonMaterial("Normal").Value.ActiveMaterial;
+        _keyboardMesh.material = UIManager.Instance.GetRectangleButtonMaterial("Normal").Value.ActiveMaterial;
+
+        QRCodeText.text = "QR Code";
+
+    }
 }

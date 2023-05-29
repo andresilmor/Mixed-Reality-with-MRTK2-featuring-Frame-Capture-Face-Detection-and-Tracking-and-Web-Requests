@@ -98,7 +98,7 @@ public class AppCommandCenter : MonoBehaviour {
     void OnEnable() {
         BestHTTP.HTTPManager.Setup();
 
-        RealmManager.BulldozeRealm();
+        //RealmManager.BulldozeRealm();
 
     }
 
@@ -173,7 +173,7 @@ public class AppCommandCenter : MonoBehaviour {
 
 
     async private void MineField() {
-        
+
     }
 
     private static void StartApplication() {
@@ -181,15 +181,20 @@ public class AppCommandCenter : MonoBehaviour {
 
         AppCommandCenter.Instance.MineField();
 
-        UIManager.Instance.LoginMenu.gameObject.SetActive(!UIManager.Instance.LoginMenu.gameObject.activeInHierarchy);
-
         Vector3 position = Camera.main.transform.position + Camera.main.transform.forward * UIManager.Instance.WindowDistance;
 
         position.y += UIManager.Instance.AxisYOffset;
 
-        UIManager.Instance.LoginMenu.gameObject.transform.position = position;
-        UIManager.Instance.LoginMenu.gameObject.transform.LookAt(Camera.main.transform.position);
+        if (RealmManager.FindActiveUser(true) == null) {
+            UIManager.Instance.LoginMenu.gameObject.SetActive(true);
+            UIManager.Instance.LoginMenu.gameObject.transform.position = position;
+            UIManager.Instance.LoginMenu.gameObject.transform.LookAt(Camera.main.transform.position);
 
+        } else {
+            AccountManager.OnSucessfullLogin(true);
+            AccountManager.IsLogged = true;
+            
+        }
 
     }
 

@@ -19,11 +19,11 @@ public static class NotificationsManager {
 
         GraphQL.Type queryOperation = new GraphQL.Type(
                     "medicationToTake", new GraphQL.Params[] {
-                        new GraphQL.Params("memberID", "\"" + AccountManager.currentUserUUID + "\""),
+                        new GraphQL.Params("memberID", "\"" + AccountManager.ActiveUserEmail + "\""),
                         new GraphQL.Params("institutionID", "\"" + institutionUUID + "\""),
                     });
 
-        await APIManager.ExecuteRequest(RealmManager.realm.Find<UserEntity>(AccountManager.currentUserUUID).Token.ToString().Trim(), queryOperation,
+        await APIManager.ExecuteRequest(RealmManager.realm.Find<UserEntity>(AccountManager.ActiveUserEmail).Token.ToString().Trim(), queryOperation,
             (message, succeed) => {
                 try {
                     if (succeed) {

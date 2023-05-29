@@ -1016,8 +1016,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.36058295, y: 0.25115415, z: 0.0005}
-  m_Center: {x: 0.00011944771, y: 0.00028304756, z: 0}
+  m_Size: {x: 0.37386352, y: 0.26270255, z: 0.0005}
+  m_Center: {x: 0.0001797378, y: -0.00004272163, z: 0}
 --- !u!114 &4894327439436186415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1117,7 +1117,7 @@ MonoBehaviour:
   activation: 3
   flattenAxis: 3
   uniformScaleOnFlattenedAxis: 1
-  boxPadding: {x: 0.01, y: 0.01, z: 0}
+  boxPadding: {x: 0.005, y: 0.005, z: 0}
   boxDisplayConfiguration: {fileID: 11400000, guid: 44491e52bba2773418dd4992fbe86498, type: 2}
   linksConfiguration: {fileID: 114946863364051912, guid: 937ce507dd7ee334ba569554e24adbdd, type: 3}
   scaleHandlesConfiguration: {fileID: 11400000, guid: 5849c25b25e9e6c42aa2fbf11fd0bcf2, type: 2}

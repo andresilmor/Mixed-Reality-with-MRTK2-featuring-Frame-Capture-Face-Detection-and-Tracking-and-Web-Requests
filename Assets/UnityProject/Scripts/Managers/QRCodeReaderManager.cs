@@ -294,7 +294,7 @@ public static class QRCodeReaderManager
         _hasFinishedOneShot = true;
         _wsConnected = false;
         _oneShotTentatives = 0;
-        _oneShotAction = new List<Action<List<QRCodeDecodeReply.Detection>>>();
+        _oneShotAction.Clear();
 
     }
 
