@@ -59,7 +59,7 @@ public static class APIManager {
 
     [Header("API Address:")]
     //string address = "_websocketProtocol://192.168.1.238:8000";
-    [SerializeField] static string _ip = "54.229.220.82";
+    [SerializeField] static string _ip = "34.244.82.96";
     [SerializeField] static string _port = ""; //For when used with localhost server :8000
 
     [Header("Root Paths:")]
