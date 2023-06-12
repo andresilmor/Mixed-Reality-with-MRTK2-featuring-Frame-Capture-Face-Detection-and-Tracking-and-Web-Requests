@@ -11,6 +11,7 @@ using Debug = MRDebug;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Media.Capture.Frames;
+using Windows.Graphics.Imaging;
 #endif
 
 public class CameraFrame : IDisposable
@@ -18,6 +19,9 @@ public class CameraFrame : IDisposable
 
 #if ENABLE_WINMD_SUPPORT
         public readonly MediaFrameReference MediaFrameReference;
+        
+        public readonly SoftwareBitmap Bitmap;
+
 #endif
 
         /// <summary>
@@ -57,11 +61,11 @@ public class CameraFrame : IDisposable
 
 #if ENABLE_WINMD_SUPPORT
 
-        public CameraFrame(Mat mat, CameraIntrinsic intrinsic, CameraExtrinsic extrinsic, int width, int height, uint frameCount, MediaFrameReference mediaFrameReference = null, ColorFormat format = ColorFormat.RGB)
+        public CameraFrame(Mat mat, CameraIntrinsic intrinsic, CameraExtrinsic extrinsic, int width, int height, uint frameCount, MediaFrameReference mediaFrameReference = null, SoftwareBitmap bitmap = null, ColorFormat format = ColorFormat.RGB)
         {
-            if (mat == null) throw new ArgumentNullException(nameof(mat));
-            if (intrinsic == null) throw new ArgumentNullException(nameof(intrinsic));
-            if (extrinsic == null) throw new ArgumentNullException(nameof(extrinsic));
+            //if (mat == null) throw new ArgumentNullException(nameof(mat));
+            //if (intrinsic == null) throw new ArgumentNullException(nameof(intrinsic));
+            //if (extrinsic == null) throw new ArgumentNullException(nameof(extrinsic));
             Mat = mat;
             Intrinsic = intrinsic;
             Extrinsic = extrinsic;
@@ -70,6 +74,7 @@ public class CameraFrame : IDisposable
             FrameCount = frameCount;
             Format = format;
             MediaFrameReference = mediaFrameReference;
+            Bitmap = bitmap;
 
         
         }

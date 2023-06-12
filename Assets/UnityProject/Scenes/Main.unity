@@ -2220,6 +2220,7 @@ MonoBehaviour:
   DetectionDistanceLimit: {fileID: 1081445010}
   _debugText: {fileID: 1520693231}
   _cubeForTest: {fileID: 5166614015768655864, guid: f5439ff4138eb2e4e98cb39677737bc0, type: 3}
+  OutlinedCube: {fileID: 1077441217099968542, guid: 31b29c7276a135840ac150a6d8de480e, type: 3}
   _sphereForTest: {fileID: 7747253093464675002, guid: 256969b470d89c441bd75fb2c6b0a3ba, type: 3}
   _lineForTest: {fileID: 7438048857545862999, guid: 7c129ff77fddcb3458036b064d83fe08, type: 3}
   _detectionName: {fileID: 7846235075062323456, guid: 5c5fcddbea03ecb439f9ce040d8c16ae, type: 3}

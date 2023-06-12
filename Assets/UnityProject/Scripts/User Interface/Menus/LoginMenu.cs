@@ -42,7 +42,7 @@ public class LoginMenu : MonoBehaviour
 
     }
 
-    bool _validatingLogin = false;
+    public bool ValidatingLogin = false;
     bool _insertingPassword = false;
 
     bool _cleanEmail = true;
@@ -53,6 +53,7 @@ public class LoginMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         SetupLoginPage();
+        UIManager.Instance.DebugMenu.gameObject.SetActive(true);
 
     }
 
@@ -62,13 +63,13 @@ public class LoginMenu : MonoBehaviour
         _QRCodeText.text = "QR Code";
         _loginText.text = "Login";
 
-        _validatingLogin = false;
+        ValidatingLogin = false;
 
 
         //_emailText.text = "Insert username...";
         //_passwordText.text = "Insert password...";
 
-        _emailText.text = "CareXR_Tester_Caregiver";
+        _emailText.text = "caregiver@carexr.com";
         _passwordText.text = "password";
 
 
@@ -83,7 +84,7 @@ public class LoginMenu : MonoBehaviour
     private void SetListeners() {
         _QRCodeBtn.OnClick.AddListener(() => {
             Debug.Log("QR Code BTN CALLED");
-            if (_validatingLogin)
+            if (ValidatingLogin)
                 return;
 
             _QRCodeText.text = "Looking for QRCode...";
@@ -99,7 +100,7 @@ public class LoginMenu : MonoBehaviour
         });
 
         _keyboardBtn.OnClick.AddListener(() => {
-            if (_validatingLogin)
+            if (ValidatingLogin)
                 return;
 
             _loginText.text = "Login";
@@ -110,10 +111,10 @@ public class LoginMenu : MonoBehaviour
         });
 
         _closeBtn.OnClick.AddListener(() => {
-            if (_validatingLogin)
+            if (ValidatingLogin)
                 return;
 
-            if (_validatingLogin)
+            if (ValidatingLogin)
                 return;
 
             _emailText.text = "Insert username...";
@@ -131,7 +132,7 @@ public class LoginMenu : MonoBehaviour
         });
 
         _unInputBtn.OnClick.AddListener(() => {
-            if (_validatingLogin)
+            if (ValidatingLogin)
                 return;
 
             if (_cleanEmail) {
@@ -162,13 +163,13 @@ public class LoginMenu : MonoBehaviour
 
         _loginBtn.OnClick.AddListener(() => {
 
-            if (/*(_cleanPassword || _cleanEmail) || */ _validatingLogin)
+            if (/*(_cleanPassword || _cleanEmail) || */ ValidatingLogin)
                     return;
 
 
 
             _loginText.text = "Validating...";
-            _validatingLogin = true;
+            ValidatingLogin = true;
 
             AccountManager.LoginWithCredentials(_emailText.text, _passwordText.text);
 
@@ -192,7 +193,7 @@ public class LoginMenu : MonoBehaviour
 
     public void ShowLoginErrorMessage(string message) {
         _loginText.text = message;
-        _validatingLogin = false;
+        ValidatingLogin = false;
 
     }
 

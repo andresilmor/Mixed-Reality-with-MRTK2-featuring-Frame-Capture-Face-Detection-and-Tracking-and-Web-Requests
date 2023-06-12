@@ -75,15 +75,15 @@ public static class QRCodeReaderManager
     async public static void DetectQRCodes(DetectionMode detectionMode, List<Action<List<QRCodeDecodeReply.Detection>>> actions = null) {
 #if ENABLE_WINMD_SUPPORT
 /*
-        if (AppCommandCenter.CameraFrameReader == null) {
+        if (AppCommandCenter.MediaCaptureManager == null) {
             Debug.Log("wtf");
-            AppCommandCenter.CameraFrameReader = await CameraFrameReader.CreateAsync();
-        } else if (!CameraFrameReader.IsRunning) {
+            AppCommandCenter.MediaCaptureManager = await MediaCaptureManager.CreateAsync();
+        } else if (!MediaCaptureManager.IsCapturing) {
         Debug.Log("START CAPTURE");
-            await AppCommandCenter.CameraFrameReader.StartCapture();
+            await AppCommandCenter.MediaCaptureManager.StartCapture();
         }*/
 #endif
-        
+
 
 
         switch (detectionMode) {
@@ -91,7 +91,7 @@ public static class QRCodeReaderManager
                 foreach (Action<List<QRCodeDecodeReply.Detection>> action in actions)
                     _oneShotAction.Add(action);
 
-                AppCommandCenter.CameraFrameReader.FrameArrived += OneShotDetection;
+                //AppCommandCenter.MediaCaptureManager.FrameArrived += OneShotDetection;
                 break;
 
             case DetectionMode.Passive:
@@ -107,12 +107,12 @@ public static class QRCodeReaderManager
     async public static void DetectQRCodes(DetectionMode detectionMode, Action<List<QRCodeDecodeReply.Detection>> action = null) {
 #if ENABLE_WINMD_SUPPORT
 /*
-        if (AppCommandCenter.CameraFrameReader == null) {
+        if (AppCommandCenter.MediaCaptureManager == null) {
             Debug.Log("wtf");
-            AppCommandCenter.CameraFrameReader = await CameraFrameReader.CreateAsync();
-        } else if (!CameraFrameReader.IsRunning) {
+            AppCommandCenter.MediaCaptureManager = await MediaCaptureManager.CreateAsync();
+        } else if (!MediaCaptureManager.IsCapturing) {
         Debug.Log("START CAPTURE");
-            await AppCommandCenter.CameraFrameReader.StartCapture();
+            await AppCommandCenter.MediaCaptureManager.StartCapture();
         }*/
 #endif
 
@@ -122,7 +122,7 @@ public static class QRCodeReaderManager
             case DetectionMode.OneShot:
                 _oneShotAction.Add(action);
 
-                AppCommandCenter.CameraFrameReader.FrameArrived += OneShotDetection;
+                //AppCommandCenter.MediaCaptureManager.FrameArrived += OneShotDetection;
                 break;
 
             case DetectionMode.Passive:
@@ -285,7 +285,7 @@ public static class QRCodeReaderManager
         }
 
     private static void StopOneShotDetection(List<QRCodeDecodeReply.Detection> qrCodes) {
-        AppCommandCenter.CameraFrameReader.FrameArrived -= OneShotDetection;
+        //AppCommandCenter.MediaCaptureManager.FrameArrived -= OneShotDetection;
         APIManager.GetWebSocket(APIManager.QRRoute + APIManager.QRDecode).Close();
 
         foreach (Action<List<QRCodeDecodeReply.Detection>> action in _oneShotAction)
@@ -370,7 +370,7 @@ public static class QRCodeReaderManager
                     }
 
                     if (!InPassiveMode && _timerActions.Count <= 0) {
-                        AppCommandCenter.CameraFrameReader.FrameArrived -= ProcessDetections;
+                        AppCommandCenter.MediaCaptureManager.FrameArrived -= ProcessDetections;
                         _detecting = false;
 
                     }
@@ -397,7 +397,7 @@ public static class QRCodeReaderManager
         CleanPassiveModeActions();
 
         if (_timerActions.Count <= 0) {
-            AppCommandCenter.CameraFrameReader.FrameArrived -= ProcessDetections;
+            //AppCommandCenter.MediaCaptureManager.FrameArrived -= ProcessDetections;
             _detecting = false;
 
         }

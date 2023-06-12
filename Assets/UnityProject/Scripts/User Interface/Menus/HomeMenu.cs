@@ -20,11 +20,6 @@ public class HomeMenu : MonoBehaviour
     [Header("Utility:")]
     [SerializeField] HardwareDiagnostic _hardwareDiagnostic;
 
-    [Header("Connected Menus:")]
-    [SerializeField] QRCodeMenu _QRCodeMenu;
-    [SerializeField] DebugMenu _debugMenu;
-    [SerializeField] FaceReconMenu _faceReconMenu;
-
 
     void Start()
     {
@@ -44,31 +39,25 @@ public class HomeMenu : MonoBehaviour
 
 
         _QRCodeBtn.OnClick.AddListener(() => {
-            _QRCodeMenu.gameObject.SetActive(!_QRCodeMenu.gameObject.activeInHierarchy);
-
-            Vector3 position = AppCommandCenter.CameraMain.transform.position + AppCommandCenter.CameraMain.transform.forward * UIManager.Instance.WindowDistance;
-
-            position.y += UIManager.Instance.AxisYOffset;
-
-            _QRCodeMenu.gameObject.transform.position = position;
-            _QRCodeMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
-            //HomeMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform);   
+            UIManager.Instance.QRCodeMenu.gameObject.SetActive(!UIManager.Instance.QRCodeMenu.gameObject.activeInHierarchy);
+            UIManager.Instance.QRCodeMenu.gameObject.transform.position = UIManager.GetPositionInFront();
+            UIManager.Instance.QRCodeMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
+       
         });
 
+        _faceReconBtn.OnClick.AddListener(() => {
+            UIManager.Instance.FaceReconMenu.gameObject.SetActive(!UIManager.Instance.FaceReconMenu.gameObject.activeInHierarchy);
+            UIManager.Instance.FaceReconMenu.gameObject.transform.position = UIManager.GetPositionInFront();
+            UIManager.Instance.FaceReconMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
 
+        });
 
         _debugBtn.OnClick.AddListener(() => {
-            _debugMenu.gameObject.SetActive(!_debugMenu.gameObject.activeInHierarchy);
+            UIManager.Instance.DebugMenu.gameObject.SetActive(!UIManager.Instance.DebugMenu.gameObject.activeInHierarchy);
+            UIManager.Instance.DebugMenu.gameObject.transform.position = UIManager.GetPositionInFront();
+            UIManager.Instance.DebugMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
 
-            Vector3 position = AppCommandCenter.CameraMain.transform.position + AppCommandCenter.CameraMain.transform.forward * UIManager.Instance.WindowDistance;
-
-            position.y += UIManager.Instance.AxisYOffset;
-
-            _debugMenu.gameObject.transform.position = position;
-            _debugMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform.position);
-            //HomeMenu.gameObject.transform.LookAt(AppCommandCenter.CameraMain.transform);   
         });
 
     }
-
 }

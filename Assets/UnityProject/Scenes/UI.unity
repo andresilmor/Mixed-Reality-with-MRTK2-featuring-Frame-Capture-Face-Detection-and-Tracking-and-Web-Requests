@@ -221,29 +221,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 932356029}
-  - component: {fileID: 932356028}
   - component: {fileID: 932356030}
   m_Layer: 0
-  m_Name: UI Container
+  m_Name: UI Manager
   m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &932356028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 932356027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c65c9dd2f312b8d41b8849d58e1053fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alignmentType: 1
-  containerObject: {fileID: 932356029}
 --- !u!4 &932356029
 Transform:
   m_ObjectHideFlags: 0
@@ -275,14 +260,17 @@ MonoBehaviour:
   WindowDistance: 0.55
   AxisZOffset: 0.55
   AxisYOffset: -0.07
-  uiPool: {fileID: 458620962}
+  _uiPool: {fileID: 458620962}
+  _uiContainer: {fileID: 1970987830}
   HandMenu: {fileID: 1842457522}
   HomeMenu: {fileID: 816529396}
   LoginMenu: {fileID: 5959844433895071473}
   DebugMenu: {fileID: 909031871}
-  graphicUserInterface: {fileID: 11400000, guid: 61cc6a5d39d640a478a4e806e877ce63, type: 2}
-  circleButtonsMaterial: {fileID: 11400000, guid: 0a79fea7e32dfd04688cc0769861605c, type: 2}
-  rectangleButtonsMaterial: {fileID: 11400000, guid: 6fb8e73ce3b71e743b1b915c0dc1e287, type: 2}
+  QRCodeMenu: {fileID: 751191190}
+  FaceReconMenu: {fileID: 7020467022936873005}
+  _graphicUserInterface: {fileID: 11400000, guid: 61cc6a5d39d640a478a4e806e877ce63, type: 2}
+  _circleButtonsMaterial: {fileID: 11400000, guid: 0a79fea7e32dfd04688cc0769861605c, type: 2}
+  _rectangleButtonsMaterial: {fileID: 11400000, guid: 6fb8e73ce3b71e743b1b915c0dc1e287, type: 2}
   OpenWindowClip: {fileID: 8300000, guid: 4075162bd7e8d9b4387ba77aeb751a0d, type: 3}
   CloseWindowClip: {fileID: 8300000, guid: 291bf9326e517b0489c2ee53d0a6a63f, type: 3}
   NotificationClip: {fileID: 8300000, guid: 82bb32b8900f55c488f190d835ffcd99, type: 3}
@@ -314,6 +302,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c0449e640c16b4458de9f5cb3997f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1970987830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1970987831}
+  - component: {fileID: 1970987832}
+  m_Layer: 0
+  m_Name: UI Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1970987831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970987830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1970987832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970987830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65c9dd2f312b8d41b8849d58e1053fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alignmentType: 1
+  containerObject: {fileID: 1970987831}
 --- !u!1 &2033124120
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +584,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2033124121}
     m_Modifications:
+    - target: {fileID: 131052935927925115, guid: 414a5cd81f829854cbe1285939f48e4c, type: 3}
+      propertyPath: m_text
+      value: Identify and anylise visible persons.
+      objectReference: {fileID: 0}
     - target: {fileID: 4139529695984404817, guid: 414a5cd81f829854cbe1285939f48e4c, type: 3}
       propertyPath: m_Name
       value: FaceReconMenu
@@ -600,6 +638,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4139529695984404818, guid: 414a5cd81f829854cbe1285939f48e4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4342007478980333862, guid: 414a5cd81f829854cbe1285939f48e4c, type: 3}
+      propertyPath: m_text
+      value: Face Recognition
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020467024051086278, guid: 414a5cd81f829854cbe1285939f48e4c, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

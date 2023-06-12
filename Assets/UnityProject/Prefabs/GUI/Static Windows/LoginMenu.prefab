@@ -466,6 +466,7 @@ MonoBehaviour:
   _loginMesh: {fileID: 6135428939681476521}
   _optionPanel: {fileID: 588330151660403141}
   _loginFormPanel: {fileID: 5575367931119955975}
+  ValidatingLogin: 0
 --- !u!65 &8133909148701443546
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -8,8 +8,6 @@ using UnityEngine.Events;
 
 using Debug = MRDebug;
 
-
-[RequireComponent(typeof(MixedRealitySceneContent))]
 [DisallowMultipleComponent]
 public class UIManager : MonoBehaviour {
     private static UIManager _instance;
@@ -30,26 +28,29 @@ public class UIManager : MonoBehaviour {
     [SerializeField] public float AxisZOffset = 0.40f;
     [SerializeField] public float AxisYOffset = 0.30f;
 
-    [SerializeField] GameObject uiPool;
+    [SerializeField] GameObject _uiPool;
+    [SerializeField] GameObject _uiContainer;
 
     [Header("Menus")]
     [SerializeField] public HandMenu HandMenu;
     [SerializeField] public HomeMenu HomeMenu;
     [SerializeField] public LoginMenu LoginMenu;
     [SerializeField] public DebugMenu DebugMenu;
+    [SerializeField] public QRCodeMenu QRCodeMenu;
+    [SerializeField] public FaceReconMenu FaceReconMenu;
 
     [Header("Scriptable Objects:")]
-    [SerializeField] GraphicUserInterfaceScriptableObject graphicUserInterface;
-    [SerializeField] ButtonVisualMaterialScriptableObject circleButtonsMaterial;
-    [SerializeField] ButtonVisualMaterialScriptableObject rectangleButtonsMaterial;
+    [SerializeField] GraphicUserInterfaceScriptableObject _graphicUserInterface;
+    [SerializeField] ButtonVisualMaterialScriptableObject _circleButtonsMaterial;
+    [SerializeField] ButtonVisualMaterialScriptableObject _rectangleButtonsMaterial;
 
     [Header("Audio Clips:")]
     [SerializeField] public AudioClip OpenWindowClip;
     [SerializeField] public AudioClip CloseWindowClip;
     [SerializeField] public AudioClip NotificationClip;
 
-    private List<UIStacker> UIStackers = new List<UIStacker>();
-    private Dictionary<WindowType, List<UIWindow>> WindowPool = new Dictionary<WindowType, List<UIWindow>>();
+    private List<UIStacker> _uiStackers = new List<UIStacker>();
+    private Dictionary<WindowType, List<UIWindow>> _windowPool = new Dictionary<WindowType, List<UIWindow>>();
 
 
     
@@ -61,7 +62,7 @@ public class UIManager : MonoBehaviour {
     }
 
     void Start() {
-        graphicUserInterface.SetupComponentsDictionary();
+        _graphicUserInterface.SetupComponentsDictionary();
 
 
         //AppCommandCenter.StartApplication();
@@ -69,7 +70,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public ButtonVisualMaterialScriptableObject.ButtonStatus? GetCircleButtonMaterial(string id) {
-        foreach (ButtonVisualMaterialScriptableObject.Data data in circleButtonsMaterial.ButtonMaterial) {
+        foreach (ButtonVisualMaterialScriptableObject.Data data in _circleButtonsMaterial.ButtonMaterial) {
             if (data.Name.Equals(id))
                 return data.ButtonStatus;
 
@@ -80,7 +81,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public ButtonVisualMaterialScriptableObject.ButtonStatus? GetRectangleButtonMaterial(string id) {
-        foreach (ButtonVisualMaterialScriptableObject.Data data in rectangleButtonsMaterial.ButtonMaterial) {
+        foreach (ButtonVisualMaterialScriptableObject.Data data in _rectangleButtonsMaterial.ButtonMaterial) {
             if (data.Name.Equals(id))
                 return data.ButtonStatus;
 
@@ -105,9 +106,9 @@ public class UIManager : MonoBehaviour {
             
             GameObject newGameObject = new GameObject(stackerName);
             newGameObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-            newGameObject.transform.parent = this.gameObject.transform;
+            newGameObject.transform.parent = _uiContainer.gameObject.transform;
             stacker = newGameObject.AddComponent<UIStacker>();
-            UIStackers.Add(stacker);
+            _uiStackers.Add(stacker);
 
         } else {
             position = stacker.GetActiveWindowPosition();
@@ -122,9 +123,9 @@ public class UIManager : MonoBehaviour {
         if (stacker is null) {
             GameObject newGameObject = new GameObject(stackerName);
             newGameObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-            newGameObject.transform.parent = this.gameObject.transform;
+            newGameObject.transform.parent = _uiContainer.gameObject.transform  ;
             stacker = newGameObject.AddComponent<UIStacker>();
-            UIStackers.Add(stacker);
+            _uiStackers.Add(stacker);
 
         } 
 
@@ -133,9 +134,9 @@ public class UIManager : MonoBehaviour {
     }
 
     private UIWindow InstantiateWindow(WindowType toOpen, UIView uiView, UIStacker stacker, Vector3? position, Quaternion? rotation, bool isNotification = false) {
-        UIWindow window = WindowPool.ContainsKey(toOpen) ? WindowPool[toOpen].First() : null;
+        UIWindow window = _windowPool.ContainsKey(toOpen) ? _windowPool[toOpen].First() : null;
         if (!window) {
-            foreach (var data in graphicUserInterface.windows) {
+            foreach (var data in _graphicUserInterface.windows) {
                 if (data.windowType.Equals(toOpen)) {
                     window = Instantiate(data.window, position is null ? Vector3.zero : (Vector3)position, (Quaternion)rotation, stacker.gameObject.transform).GetComponent<UIWindow>();
 
@@ -156,7 +157,7 @@ public class UIManager : MonoBehaviour {
             }
 
         } else {
-            WindowPool[toOpen].Remove(window);
+            _windowPool[toOpen].Remove(window);
             window.gameObject.transform.SetParent(stacker.gameObject.transform, true);
 
         }
@@ -174,25 +175,25 @@ public class UIManager : MonoBehaviour {
         bool destroyStacker = stacker.PopWindow(out UIWindow windowToPool, closeCallerAudioSource);
 
         if (windowToPool != null) {
-            windowToPool.gameObject.transform.SetParent(uiPool.transform);
+            windowToPool.gameObject.transform.SetParent(_uiPool.transform);
 
-            if (!WindowPool.ContainsKey(windowToPool.WindowType))
-                WindowPool.Add(windowToPool.WindowType, new List<UIWindow>());
+            if (!_windowPool.ContainsKey(windowToPool.WindowType))
+                _windowPool.Add(windowToPool.WindowType, new List<UIWindow>());
 
-            WindowPool[windowToPool.WindowType].Add(windowToPool);
+            _windowPool[windowToPool.WindowType].Add(windowToPool);
 
         }
 
         if (destroyStacker) { 
             Destroy(stacker.gameObject);
-            UIStackers.Remove(stacker);
+            _uiStackers.Remove(stacker);
 
         }
 
     }
     
     public void CloseAllWindows() {
-        foreach (UIStacker stacker in UIStackers)
+        foreach (UIStacker stacker in _uiStackers)
             CloseWindow(stacker);
 
     }
@@ -206,6 +207,12 @@ public class UIManager : MonoBehaviour {
 
         return true;
 
+    }
+
+    public static Vector3 GetPositionInFront() {
+        Vector3 position = AppCommandCenter.CameraMain.transform.position + AppCommandCenter.CameraMain.transform.forward * UIManager.Instance.WindowDistance;
+        position.y += UIManager.Instance.AxisYOffset;
+        return position;
     }
 
 

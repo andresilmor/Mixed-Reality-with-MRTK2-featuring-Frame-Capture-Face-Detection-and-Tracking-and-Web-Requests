@@ -6,18 +6,18 @@ using UnityEngine;
 public class QRCodeMenu : MonoBehaviour
 {
     [Header("Buttons:")]
-    [SerializeField] Interactable ScanBtn;
-    [SerializeField] Interactable PassiveModeOnBtn;
-    [SerializeField] Interactable PassiveModeOffBtn;
+    [SerializeField] Interactable _scanBtn;
+    [SerializeField] Interactable _passiveModeOnBtn;
+    [SerializeField] Interactable _passiveModeOffBtn;
 
 
     void Start()
     {
-        ScanBtn.OnClick.RemoveAllListeners();
-        PassiveModeOnBtn.OnClick.RemoveAllListeners();
-        PassiveModeOffBtn.OnClick.RemoveAllListeners();
+        _scanBtn.OnClick.RemoveAllListeners();
+        _passiveModeOnBtn.OnClick.RemoveAllListeners();
+        _passiveModeOffBtn.OnClick.RemoveAllListeners();
 
-        ScanBtn.OnClick.AddListener(() => {
+        _scanBtn.OnClick.AddListener(() => {
             /*
             QRCodeReaderManager.DetectQRCodes((List<QRCodeReaderManager.QRCodeDetected> detectedCode) => {
                 foreach (QRCodeReaderManager.QRCodeDetected detected in detectedCode) { 
@@ -29,7 +29,7 @@ public class QRCodeMenu : MonoBehaviour
 
         });
 
-        PassiveModeOnBtn.OnClick.AddListener(() => {
+        _passiveModeOnBtn.OnClick.AddListener(() => {
             /*
             QRCodeReaderManager.DetectQRCodes((List<QRCodeReaderManager.QRCodeDetected> detectedCode) => {
                 foreach (QRCodeReaderManager.QRCodeDetected detected in detectedCode) {
@@ -40,8 +40,7 @@ public class QRCodeMenu : MonoBehaviour
             */
         });
 
-        PassiveModeOffBtn.OnClick.AddListener(() => {
-            QRCodeReaderManager.DeactivatePassiveMode();
+        _passiveModeOffBtn.OnClick.AddListener(() => {
         });
 
     }

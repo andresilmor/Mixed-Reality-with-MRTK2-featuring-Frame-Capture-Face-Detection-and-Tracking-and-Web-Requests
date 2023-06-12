@@ -189,24 +189,24 @@ public static class AccountManager {
     }
 
     async public static void LoginWithCredentials(string email, string password) {
+        if (requesting)
+            return;
+
         requesting = true;
-        bool validated = await ValidateLogin(email, password);
+        await ValidateLogin(email, password);
 
-        if (validated)
-            IsLogged = validated;
-
-        requesting = false;
 
     }
 
-    async private static Task<bool> ValidateLogin(string email, string password) {
+    async private static Task ValidateLogin(string email, string password) {
+
+        Debug.Log("ValidateLogin");
         GraphQL.Type queryOperation = new GraphQL.Type(
         "MemberLogin", new GraphQL.Type[] {new GraphQL.Type("loginCredentials", new GraphQL.Params[] {
             new GraphQL.Params("email", "\"" + email + "\""),
             new GraphQL.Params("password", "\"" + password + "\""),
         }) });
 
-        bool valueToReturn = false;
 
         await APIManager.ExecuteRequest("", queryOperation,
             (message, succeed) => {
@@ -214,22 +214,30 @@ public static class AccountManager {
                     if (succeed) {
                         JObject response = JObject.Parse(@message);
                         if (response.HasValues && response["data"] != null && response["data"]["MemberLogin"]["message"] == null) {
-
+                            Debug.Log(response.ToString());
+                            UIManager.Instance.LoginMenu.ValidatingLogin = false;
                             SaveUser(response);
+                            AccountManager.IsLogged = true;
                             requesting = false;
-                            valueToReturn = true;
 
                         } else {
+                            Debug.Log("No Response");
                             UIManager.Instance.LoginMenu.ShowLoginErrorMessage("Invalid Credentials");
-                            valueToReturn = false;
+                            UIManager.Instance.LoginMenu.ValidatingLogin = false;
+                            requesting = false;
+                            UIManager.Instance.LoginMenu.ResetButtons();
 
                         }
 
                     }
 
                 } catch (Exception e) {
+
+
+                    Debug.Log("Error (ValidateLogin/ExecuteRequest): " + e.Message);
+                    UIManager.Instance.LoginMenu.ValidatingLogin = false;
                     requesting = false;
-                    valueToReturn = false;
+                    UIManager.Instance.LoginMenu.ResetButtons();
 
                 }
 
@@ -239,6 +247,7 @@ public static class AccountManager {
                     new GraphQL.Type("token"),
                     new GraphQL.Type("uuid"),
                     new GraphQL.Type("name"),
+                    new GraphQL.Type("email"),
                     new GraphQL.Type("MemberOf", new GraphQL.Type[] {
                         new GraphQL.Type("role"),
                         new GraphQL.Type("institution", new GraphQL.Type[] {
@@ -252,7 +261,10 @@ public static class AccountManager {
                 }),
             });
 
-        return valueToReturn;
+        requesting = false;
+        UIManager.Instance.LoginMenu.ValidatingLogin = false;
+        UIManager.Instance.LoginMenu.ResetButtons();
+        Debug.Log("Returning Value");
 
     }
 

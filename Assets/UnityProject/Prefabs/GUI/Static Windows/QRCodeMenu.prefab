@@ -302,9 +302,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c56d6939b6f214fb403f1506366681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScanBtn: {fileID: 1777515220351485443}
-  PassiveModeOnBtn: {fileID: 2497433050126590976}
-  PassiveModeOffBtn: {fileID: 2497433050033881769}
+  _scanBtn: {fileID: 1777515220351485443}
+  _passiveModeOnBtn: {fileID: 2497433050126590976}
+  _passiveModeOffBtn: {fileID: 2497433050033881769}
 --- !u!65 &2497433051802008657
 BoxCollider:
   m_ObjectHideFlags: 0

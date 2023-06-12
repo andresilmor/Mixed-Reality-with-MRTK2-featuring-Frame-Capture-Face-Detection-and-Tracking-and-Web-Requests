@@ -1,6 +1,7 @@
 using BestHTTP.WebSocket;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Utilities;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -9,6 +10,18 @@ using TMPro;
 using UnityEngine;
 using System.Net.NetworkInformation;
 using UnityEngine.SceneManagement;
+
+#if ENABLE_WINMD_SUPPORT
+using Windows.Media;
+using Windows.Graphics.Imaging;
+using Windows.Foundation;
+using Windows.Media.Devices.Core;
+using Windows.Perception.Spatial;
+using Windows.Perception.Spatial.Preview;
+
+using HL2UnityPlugin;
+
+#endif
 
 using Debug = MRDebug;
 using BestHTTP.Logger;
@@ -36,18 +49,19 @@ public class AppCommandCenter : MonoBehaviour {
     [Header("Debugger:")]
     [SerializeField] TextMeshPro _debugText;
     [SerializeField] GameObject _cubeForTest;
+    [SerializeField] public GameObject OutlinedCube;
     [SerializeField] GameObject _sphereForTest;
     [SerializeField] GameObject _lineForTest;
     [SerializeField] public GameObject _detectionName;
     [SerializeField] GameObject _general;
-
+    /*
     // Attr's for the Machine Learning and detections
-    private static CameraFrameReader _cameraFrameReader = null;
-    public static CameraFrameReader CameraFrameReader {
-        get { return AppCommandCenter._cameraFrameReader; }
-        set { if (AppCommandCenter.CameraFrameReader == null) AppCommandCenter._cameraFrameReader = value; }
+    private static MediaCaptureManager _cameraFrameReader = null;
+    public static MediaCaptureManager MediaCaptureManager {
+        get { return null; }
+        set { if (AppCommandCenter.MediaCaptureManager == null) AppCommandCenter._cameraFrameReader = value; }
     }
-    
+    */
     public byte timeToStop = 0;
 
     private bool _additiveScenesLoaded = false;
@@ -124,11 +138,6 @@ public class AppCommandCenter : MonoBehaviour {
 
         StartCoroutine(LoadAdditiveScenes());
 
-#if ENABLE_WINMD_SUPPORT
-        if (AppCommandCenter.CameraFrameReader == null)
-            AppCommandCenter.CameraFrameReader = await CameraFrameReader.CreateAsync();
-       
-#endif
 
     }
 
@@ -216,18 +225,52 @@ public class AppCommandCenter : MonoBehaviour {
 
     }
 
-    void Update() {
-       /*
-        if (timeToStop > 4) {
-            if (TrackerManager.TrackersUpdater != null) { 
-                Debug.Log("Updater stopped");
-                StopCoroutine(TrackerManager.TrackersUpdater);
-                TrackerManager.TrackersUpdater = null;
+    async void Update() {
+        /*
+#if ENABLE_WINMD_SUPPORT
+        FaceDetectionManager.Counter += 1;
+        if (MediaCaptureManager.IsCapturing)
+        {
+            CameraFrame returnFrame = await MediaCaptureManager.GetLatestFrame();
+
+
+            if (returnFrame != null)
+            {
+
+                if (FaceDetectionManager.Counter >= 20)
+                {
+                    FaceDetectionManager.Counter = 0;
+
+                    Task thread = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            // Get the prediction from the model
+                            var result = await FaceDetectionManager.EvaluateVideoFrameAsync(returnFrame.Bitmap);
+                            //If faces exist in frame, identify in 3D
+                            if (result.Faces != null && result.Faces.Length > 0)
+                            {
+                                UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+                                {
+                                    //Visualize the detections in 3D to create GameObjects for eye gaze to interact with
+                                    Debug.Log("Face Detected: " + result.Faces.Length);
+                                }, true);
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.Log("Exception:" + ex.Message);
+                        }
+
+                    });
+                }
 
             }
 
-        }*/
-
+        }
+#endif
+        */
     }
 
     private void OnDestroy() {

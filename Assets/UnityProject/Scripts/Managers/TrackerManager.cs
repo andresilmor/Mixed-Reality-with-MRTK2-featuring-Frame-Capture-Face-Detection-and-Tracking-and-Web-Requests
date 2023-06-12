@@ -163,6 +163,7 @@ public static class TrackerManager {
 #endif
 
     public static IEnumerator UpdateTrackers() {
+        /*
         Debug.Log("Yo");
          
         while (true) {
@@ -182,7 +183,7 @@ public static class TrackerManager {
                         Debug.Log("Updater Y: " + tracker.Value.TrackerSettings.boundingBox.y);
                             OpenCVForUnity.CoreModule.Rect rect = null;
 #if ENABLE_WINMD_SUPPORT
-                    rect = tracker.Value.UpdateTracker(tracker.Value.TrackerSettings.boundingBox, CameraFrameReader.GenerateCVMat(AppCommandCenter.CameraFrameReader.LastFrame.mediaFrameReference));
+                    rect = tracker.Value.UpdateTracker(tracker.Value.TrackerSettings.boundingBox, MediaCaptureManager.GenerateCVMat(AppCommandCenter.MediaCaptureManager.LastFrame.mediaFrameReference));
 #endif
                             if (rect == null) {
                                 tracker.Value.Updated = false;
@@ -225,7 +226,8 @@ public static class TrackerManager {
          
 
         }
-
+        */
+        yield return new WaitForEndOfFrame();
     }
 
 

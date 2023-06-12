@@ -37,16 +37,16 @@ public static class MLManager
 
     public static async Task<bool> ToggleLiveDetection() {
 
-        APIManager.CreateWebSocketLiveDetection(APIManager.FrameFullInference, DetectionType.Person, FaceDetectionManager.ProcessResults);
+        //APIManager.CreateWebSocketLiveDetection(APIManager.FrameFullInference, DetectionType.Person, FaceDetectionCVManager.ProcessResults);
 
 
 #if ENABLE_WINMD_SUPPORT
 
-        await FaceDetectionManager.Initialize();
+        //await FaceDetectionManager.Initialize();
 
 #endif
 
-        //AppCommandCenter.CameraFrameReader.FrameArrived += CameraServiceOnFrameArrivedSync;
+        //AppCommandCenter.MediaCaptureManager.FrameArrived += CameraServiceOnFrameArrivedSync;
         Debug.Log("Back");
         return APIManager.wsFrameInference != null;
 
@@ -59,7 +59,7 @@ public static class MLManager
 
 
 #if ENABLE_WINMD_SUPPORT
-        //var lastFrame = AppCommandCenter.CameraFrameReader.LastFrame;
+        //var lastFrame = AppCommandCenter.MediaCaptureManager.LastFrame;
 
 
 
@@ -111,7 +111,7 @@ public static class MLManager
             //Debug.Log("Test: " + results.detections[0].uuid);
             //TrackerManager.ToUpdate = false;
 
-            FaceDetectionManager.isAnalysingFrame = false;
+            //FaceDetectionCVManager.isAnalysingFrame = false;
 
             return;
 
