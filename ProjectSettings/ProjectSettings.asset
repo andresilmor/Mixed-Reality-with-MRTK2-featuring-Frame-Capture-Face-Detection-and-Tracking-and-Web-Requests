@@ -3,7 +3,7 @@
 --- !u!129 &1
 PlayerSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 23
+  serializedVersion: 24
   productGUID: 64452e3450feb2d4a89a9f6d6283f8a3
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: CareXR
-  productName: CareXR IS
+  productName: CareXR Med
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -202,8 +202,6 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 1757240611378375247, guid: a66648ca6d2551e47a2bb553fe5014f8, type: 2}
-  - {fileID: -6617678826438391476, guid: 22d5abde2cbdd27438134548302635f9, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -245,10 +243,10 @@ PlayerSettings:
   StripUnusedMeshComponents: 0
   VertexChannelCompressionMask: 4054
   iPhoneSdkVersion: 988
-  iOSTargetOSVersionString: 11.0
+  iOSTargetOSVersionString: 12.0
   tvOSSdkVersion: 0
   tvOSRequireExtendedGameController: 0
-  tvOSTargetOSVersionString: 11.0
+  tvOSTargetOSVersionString: 12.0
   uIPrerenderedIcon: 0
   uIRequiresPersistentWiFi: 0
   uIRequiresFullScreen: 1
@@ -552,7 +550,6 @@ PlayerSettings:
   switchReleaseVersion: 0
   switchDisplayVersion: 1.0.0
   switchStartupUserAccount: 0
-  switchTouchScreenUsage: 0
   switchSupportedLanguagesMask: 0
   switchLogoType: 0
   switchApplicationErrorCodeCategory: 
@@ -594,6 +591,7 @@ PlayerSettings:
   switchNativeFsCacheSize: 32
   switchIsHoldTypeHorizontal: 0
   switchSupportedNpadCount: 8
+  switchEnableTouchScreen: 1
   switchSocketConfigEnabled: 0
   switchTcpInitialSendBufferSize: 32
   switchTcpInitialReceiveBufferSize: 64
@@ -712,7 +710,20 @@ PlayerSettings:
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
-  managedStrippingLevel: {}
+  managedStrippingLevel:
+    EmbeddedLinux: 1
+    GameCoreScarlett: 1
+    GameCoreXboxOne: 1
+    Lumin: 1
+    Nintendo Switch: 1
+    PS4: 1
+    PS5: 1
+    Stadia: 1
+    WebGL: 1
+    Windows Store Apps: 1
+    XboxOne: 1
+    iPhone: 1
+    tvOS: 1
   incrementalIl2cppBuild: {}
   suppressCommonWarnings: 1
   allowUnsafeCode: 1
@@ -731,51 +742,51 @@ PlayerSettings:
   metroPackageVersion: 1.0.0.0
   metroCertificatePath: Assets\WSATestCertificate.pfx
   metroCertificatePassword: 
-  metroCertificateSubject: DefaultCompany
-  metroCertificateIssuer: DefaultCompany
-  metroCertificateNotAfter: 8027f65b40a9d901
+  metroCertificateSubject: CareXR
+  metroCertificateIssuer: CareXR
+  metroCertificateNotAfter: 00ad6e9cf8e5da01
   metroApplicationDescription: MR_M
   wsaImages:
-    65636: Assets/UnityProject/Sprites/Logos/App Logo/50x50.png
-    65661: Assets/UnityProject/Sprites/Logos/App Logo/63x63.png
-    65686: Assets/UnityProject/Sprites/Logos/App Logo/75x75.png
-    65736: Assets/UnityProject/Sprites/Logos/App Logo/100x100.png
-    65936: Assets/UnityProject/Sprites/Logos/App Logo/200x200.png
-    131172: Assets/UnityProject/Sprites/Logos/App Logo/620x300 1.png
-    131197: Assets/UnityProject/Sprites/Logos/App Logo/775x375.png
-    131222: Assets/UnityProject/Sprites/Logos/App Logo/930x450.png
-    131272: Assets/UnityProject/Sprites/Logos/App Logo/1240x600 1.png
-    131472: Assets/UnityProject/Sprites/Logos/App Logo/2480x1200.png
-    2031632: Assets/UnityProject/Sprites/Logos/App Logo/16x16.png
-    2031640: Assets/UnityProject/Sprites/Logos/App Logo/24x24.png
-    2031648: Assets/UnityProject/Sprites/Logos/App Logo/32x32.png
-    2031664: Assets/UnityProject/Sprites/Logos/App Logo/48x48.png
-    2031716: Assets/UnityProject/Sprites/Logos/App Logo/44x44.png
-    2031741: Assets/UnityProject/Sprites/Logos/App Logo/55x55.png
-    2031766: Assets/UnityProject/Sprites/Logos/App Logo/66x66.png
-    2031816: Assets/UnityProject/Sprites/Logos/App Logo/88x88.png
-    2031872: Assets/UnityProject/Sprites/Logos/App Logo/256x256.png
-    2032016: Assets/UnityProject/Sprites/Logos/App Logo/176x176.png
-    2097252: Assets/UnityProject/Sprites/Logos/App Logo/71x71.png
-    2097277: Assets/UnityProject/Sprites/Logos/App Logo/89x89.png
-    2097302: Assets/UnityProject/Sprites/Logos/App Logo/107x107.png
-    2097352: Assets/UnityProject/Sprites/Logos/App Logo/142x142.png
-    2097552: Assets/UnityProject/Sprites/Logos/App Logo/284x284.png
-    2162788: Assets/UnityProject/Sprites/Logos/App Logo/150x150.png
-    2162813: Assets/UnityProject/Sprites/Logos/App Logo/188x188.png
-    2162838: Assets/UnityProject/Sprites/Logos/App Logo/225x225.png
-    2162888: Assets/UnityProject/Sprites/Logos/App Logo/300x300.png
-    2163088: Assets/UnityProject/Sprites/Logos/App Logo/600x600.png
-    2228324: Assets/UnityProject/Sprites/Logos/App Logo/310x310.png
-    2228349: Assets/UnityProject/Sprites/Logos/App Logo/388x388.png
-    2228374: Assets/UnityProject/Sprites/Logos/App Logo/465x465.png
-    2228424: Assets/UnityProject/Sprites/Logos/App Logo/620x620.png
-    2228624: Assets/UnityProject/Sprites/Logos/App Logo/1240x1240.png
-    2293860: Assets/UnityProject/Sprites/Logos/App Logo/310x150.png
-    2293885: Assets/UnityProject/Sprites/Logos/App Logo/388x188.png
-    2293910: Assets/UnityProject/Sprites/Logos/App Logo/465x225.png
-    2293960: Assets/UnityProject/Sprites/Logos/App Logo/620x300.png
-    2294160: Assets/UnityProject/Sprites/Logos/App Logo/1240x600.png
+    65636: Assets/CareXR Med/Sprites/Logos/App Logo/50x50.png
+    65661: Assets/CareXR Med/Sprites/Logos/App Logo/63x63.png
+    65686: Assets/CareXR Med/Sprites/Logos/App Logo/75x75.png
+    65736: Assets/CareXR Med/Sprites/Logos/App Logo/100x100.png
+    65936: Assets/CareXR Med/Sprites/Logos/App Logo/200x200.png
+    131172: Assets/CareXR Med/Sprites/Logos/App Logo/620x300 1.png
+    131197: Assets/CareXR Med/Sprites/Logos/App Logo/775x375.png
+    131222: Assets/CareXR Med/Sprites/Logos/App Logo/930x450.png
+    131272: Assets/CareXR Med/Sprites/Logos/App Logo/1240x600 1.png
+    131472: Assets/CareXR Med/Sprites/Logos/App Logo/2480x1200.png
+    2031632: Assets/CareXR Med/Sprites/Logos/App Logo/16x16.png
+    2031640: Assets/CareXR Med/Sprites/Logos/App Logo/24x24.png
+    2031648: Assets/CareXR Med/Sprites/Logos/App Logo/32x32.png
+    2031664: Assets/CareXR Med/Sprites/Logos/App Logo/48x48.png
+    2031716: Assets/CareXR Med/Sprites/Logos/App Logo/44x44.png
+    2031741: Assets/CareXR Med/Sprites/Logos/App Logo/55x55.png
+    2031766: Assets/CareXR Med/Sprites/Logos/App Logo/66x66.png
+    2031816: Assets/CareXR Med/Sprites/Logos/App Logo/88x88.png
+    2031872: Assets/CareXR Med/Sprites/Logos/App Logo/256x256.png
+    2032016: Assets/CareXR Med/Sprites/Logos/App Logo/176x176.png
+    2097252: Assets/CareXR Med/Sprites/Logos/App Logo/71x71.png
+    2097277: Assets/CareXR Med/Sprites/Logos/App Logo/89x89.png
+    2097302: Assets/CareXR Med/Sprites/Logos/App Logo/107x107.png
+    2097352: Assets/CareXR Med/Sprites/Logos/App Logo/142x142.png
+    2097552: Assets/CareXR Med/Sprites/Logos/App Logo/284x284.png
+    2162788: Assets/CareXR Med/Sprites/Logos/App Logo/150x150.png
+    2162813: Assets/CareXR Med/Sprites/Logos/App Logo/188x188.png
+    2162838: Assets/CareXR Med/Sprites/Logos/App Logo/225x225.png
+    2162888: Assets/CareXR Med/Sprites/Logos/App Logo/300x300.png
+    2163088: Assets/CareXR Med/Sprites/Logos/App Logo/600x600.png
+    2228324: Assets/CareXR Med/Sprites/Logos/App Logo/310x310.png
+    2228349: Assets/CareXR Med/Sprites/Logos/App Logo/388x388.png
+    2228374: Assets/CareXR Med/Sprites/Logos/App Logo/465x465.png
+    2228424: Assets/CareXR Med/Sprites/Logos/App Logo/620x620.png
+    2228624: Assets/CareXR Med/Sprites/Logos/App Logo/1240x1240.png
+    2293860: Assets/CareXR Med/Sprites/Logos/App Logo/310x150.png
+    2293885: Assets/CareXR Med/Sprites/Logos/App Logo/388x188.png
+    2293910: Assets/CareXR Med/Sprites/Logos/App Logo/465x225.png
+    2293960: Assets/CareXR Med/Sprites/Logos/App Logo/620x300 1.png
+    2294160: Assets/CareXR Med/Sprites/Logos/App Logo/1240x600 1.png
   metroTileShortName: CareXR IS
   metroTileShowName: 0
   metroMediumTileShowName: 0
