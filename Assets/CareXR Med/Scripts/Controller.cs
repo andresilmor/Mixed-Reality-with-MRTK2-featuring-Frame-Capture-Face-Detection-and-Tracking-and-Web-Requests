@@ -182,7 +182,7 @@ public class Controller : MonoBehaviour {
 
 
     async private void MineField() {
-        AccountManager.LoginQR();
+        //AccountManager.LoginQR();
     }
 
     private static void StartApplication() {

@@ -65,7 +65,7 @@ public class FaceReconMenu : MonoBehaviour
                 do {
                     tentatives += 1;
 #if ENABLE_WINMD_SUPPORT
-                    getLatestFrameTask = MediaCaptureManager.GetLatestFrame(async (object sender, FrameArrivedEventArgs e) => FaceDetectionManager.OneShotFaceRecon(sender, e));
+                    getLatestFrameTask = MediaCaptureManager.GetLatestFrame(async (object sender, FrameArrivedEventArgs e) => FaceDetectionManager.OneShotFaceRecognition(sender, e));
 #endif
                     getLatestFrameTask.Wait();
 

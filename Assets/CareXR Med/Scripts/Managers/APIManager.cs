@@ -31,12 +31,12 @@ public static class APIManager {
     #region API Meta Data
 
     [Header("Protocols:")]
-    [SerializeField] static string _websocketProtocol = "ws://";
-    [SerializeField] static string _httpProtocol = "http://";
+    [SerializeField] static string _websocketProtocol = "wss://";
+    [SerializeField] static string _httpProtocol = "https://";
 
     [Header("API Address:")]
     //string address = "_websocketProtocol://192.168.1.238:8000";
-    [SerializeField] static string _ip = "34.244.43.25";
+    [SerializeField] static string _ip = "473b-193-136-194-58.ngrok-free.app";
     [SerializeField] static string _port = ""; //For when used with localhost server :8000
 
     [Header("Root Paths:")]
@@ -66,7 +66,9 @@ public static class APIManager {
     private const string _mlRoute = "/ml";
 
     private const string _frameFullInference = "/emotionFaceRecon";
+    private const string _frameFaceRecognition = "/face-recognition";
     public static string FrameFullInference { get { return _mlRoute + _frameFullInference; } }
+    public static string FrameFaceRecognition { get { return _mlRoute + _frameFaceRecognition; } }
 
     // QRCode Routes
     private const string _qrRoute = "/qr";

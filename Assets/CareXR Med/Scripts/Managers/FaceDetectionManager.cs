@@ -15,6 +15,7 @@ using static FaceDetectionCVManager;
 using UnityEngine.Analytics;
 using BestHTTP.WebSocket;
 using Debug = XRDebug;
+using Newtonsoft.Json.Linq;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.AI.MachineLearning;
@@ -143,30 +144,58 @@ public static class FaceDetectionManager {
 #endif
 
 
-    async public static void OneShotFaceRecon(object sender, FrameArrivedEventArgs args) {
-        Debug.Log("OneShotFaceRecon");
+    async public static void OneShotFaceRecognition(object sender, FrameArrivedEventArgs args) {
+        Debug.Log("OneShotFaceRecognition");
         Task thread = Task.Run(async () => {
             try {
                 Task<DetectedFaces> evaluateVideoFrameTask = null;
-                Debug.Log("OneShotFaceRecon A");
+                Debug.Log("OneShotFaceRecognition A");
                 DetectedFaces result = new DetectedFaces();
-                Debug.Log("OneShotFaceRecon B");
+                Debug.Log("OneShotFaceRecognition B");
 #if ENABLE_WINMD_SUPPORT
-                Debug.Log("OneShotFaceRecon C");
+                Debug.Log("OneShotFaceRecognition C");
                 evaluateVideoFrameTask = FaceDetectionManager.EvaluateVideoFrameAsync(args.Frame.Bitmap);
                 
-                Debug.Log("OneShotFaceRecon D");
+                Debug.Log("OneShotFaceRecognition D");
                 evaluateVideoFrameTask.Wait();
 #endif
 
-                Debug.Log("OneShotFaceRecon E");
+                Debug.Log("OneShotFaceRecognition E");
                 result = evaluateVideoFrameTask.Result;
 
                 if (result.Faces.Length > 0) {
-                    Debug.Log("OneShotFaceRecon F");
+                    //dfasdasd
+                    if (APIManager.GetWebSocket(APIManager.FrameFaceRecognition) == null || !APIManager.GetWebSocket(APIManager.FrameFaceRecognition).IsOpen) {
+                        APIManager.CreateWebSocketConnection(APIManager.FrameFaceRecognition, onOpen: async (WebSocket ws) => {
 #if ENABLE_WINMD_SUPPORT
-                    FaceDetectionManager.RGBDetectionToWorldspace(result, args.Frame);
+                        FaceDetectionManager.RGBDetectionToWorldspace(result, args.Frame);
+
+                        try {
+                            byte[] byteArray = await Parser.ToByteArray(args.Frame.Bitmap);
+                            ProtoImage request = new ProtoImage();
+                            request.image = byteArray;
+
+                            Debug.Log("Sending");
+                          
+                            APIManager.GetWebSocket(APIManager.FrameFaceRecognition).Send(Parser.ProtoSerialize<ProtoImage>(request));
+                            Debug.Log("Sended");
+
+                        } catch (Exception ex) {
+                            Debug.Log(ex.Message);
+                        }
 #endif
+
+                        }).Open();
+
+                    } else {
+                        Debug.Log("Not null?");
+
+                    }
+
+                    
+
+                    Debug.Log("OneShotFaceRecognition F");
+
 
                   /*
                     APIManager.CreateWebSocketConnection(APIManager.FrameFullInference,

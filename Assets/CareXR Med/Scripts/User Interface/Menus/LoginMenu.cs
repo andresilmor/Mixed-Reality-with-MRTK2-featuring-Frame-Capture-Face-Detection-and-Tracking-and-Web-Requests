@@ -171,6 +171,8 @@ public class LoginMenu : MonoBehaviour
             _loginText.text = "Validating...";
             ValidatingLogin = true;
 
+            Debug.Log("(_loginBtn) Login: " + _emailText.text + " | " + _passwordText.text);
+
             AccountManager.LoginWithCredentials(_emailText.text, _passwordText.text);
 
         });

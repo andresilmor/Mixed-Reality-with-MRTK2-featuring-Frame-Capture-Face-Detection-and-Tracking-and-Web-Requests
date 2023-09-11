@@ -198,7 +198,7 @@ public static class AccountManager {
     async public static void LoginWithCredentials(string email, string password) {
         if (requesting)
             return;
-
+        Debug.Log("Login: " + email + " | " + password);
         requesting = true;
         await ValidateLogin(email, password);
 
