@@ -182,7 +182,33 @@ public class Controller : MonoBehaviour {
 
 
     async private void MineField() {
-        //AccountManager.LoginQR();
+        /*
+        APIManager.CreateWebSocketConnection(APIManager.FrameFaceRecognition, null, null, (WebSocket ws) => {
+
+
+            ProtoImage request = new ProtoImage();
+            Debug.Log("AnalyseFrame 3");
+            request.image = null;
+            Debug.Log("AnalyseFrame 4");
+
+            Debug.Log("AnalyseFrame 4.1");
+            using (var memoryStream = new System.IO.MemoryStream()) {
+
+                Debug.Log("AnalyseFrame 4.2");
+                ProtoBuf.Serializer.Serialize(memoryStream, request);
+
+                Debug.Log("AnalyseFrame 4.3");
+
+                byte[] message = memoryStream.ToArray();
+                Debug.Log("AnalyseFrame 4.4");
+
+
+                APIManager.GetWebSocket(APIManager.FrameFaceRecognition).Send(message);
+
+                Debug.Log("AnalyseFrame 4.5 ");
+
+            }
+        }).Open();*/
     }
 
     private static void StartApplication() {

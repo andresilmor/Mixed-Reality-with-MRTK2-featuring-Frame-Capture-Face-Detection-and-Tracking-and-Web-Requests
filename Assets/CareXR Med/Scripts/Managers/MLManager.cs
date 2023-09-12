@@ -17,6 +17,7 @@ using OpenCVForUnity.ImgprocModule;
 using UnityEngine.Experimental.GlobalIllumination;
 using System.IO;
 using UnityEngine.XR.ARSubsystems;
+using System.Collections;
 
 #if ENABLE_WINMD_SUPPORT
 using Windows.Foundation;
@@ -55,14 +56,54 @@ public static class MLManager
 
     public static async void AnalyseFrame(CameraFrame cameraFrame) {
         //XRDebug.DrawFieldView();
-        //Debug.Log("Starting analyse");
-
+        Debug.Log("Starting analyse");
 
 #if ENABLE_WINMD_SUPPORT
+try
+            {
+             Debug.Log("AnalyseFrame 1");
+//byte[] byteArray = await Parser.ToByteArray(cameraFrame.Bitmap);
+             Debug.Log("AnalyseFrame 2");
+                        
+                   byte[] byteArray = await Parser.ToByteArray(cameraFrame.Bitmap);
+                     
+                       
+                        //ProtoImage request = new ProtoImage();
+                        Debug.Log("AnalyseFrame 3");
+                        //request.image = null;
+                        Debug.Log("AnalyseFrame 4");
+
+                        Debug.Log("AnalyseFrame 4.1");
+                        //using (var memoryStream = new System.IO.MemoryStream()) {
+                        
+                        Debug.Log("AnalyseFrame --- 4.2");
+                            //ProtoBuf.Serializer.Serialize(memoryStream, request);
+                            
+                        Debug.Log("AnalyseFrame 4.3");
+                        
+                        //byte[] message = memoryStream.ToArray();
+                        Debug.Log("AnalyseFrame 4.4");
+
+
+                        APIManager.GetWebSocket(APIManager.FrameFaceRecognition).Send(Convert.ToBase64String(byteArray));
+                            
+                        Debug.Log("AnalyseFrame 4.5 ");
+
+                        
+                        //}
+
+                        
+                        Debug.Log("AnalyseFrame 5");
+                        }
+            catch (Exception ex)
+            {
+            Debug.Log("AnalyseFrame ERROR");
+                Debug.Log(ex.Message);
+            }
         //var lastFrame = Controller.MediaCaptureManager.LastFrame;
 
 
-
+        /*
         if (cameraFrame.MediaFrameReference != null)
         {
             try
@@ -81,7 +122,7 @@ public static class MLManager
                         ProtoImage request = new ProtoImage();
                         request.image = byteArray;
                         
-                        APIManager.GetWebSocket(APIManager.FrameFullInference).Send(Parser.ProtoSerialize<ProtoImage>(request));
+                        APIManager.GetWebSocket(APIManager.FrameFaceRecognition).Send(Parser.ProtoSerialize<ProtoImage>(request));
 
                     }
                     else
@@ -95,7 +136,7 @@ public static class MLManager
         }
         else
         { Debug.Log("lastFrame.mediaFrameReference = null"); 
-        }
+        }*/
 #endif
 
     }

@@ -166,10 +166,12 @@ public static class FaceDetectionManager {
                 if (result.Faces.Length > 0) {
                     //dfasdasd
                     if (APIManager.GetWebSocket(APIManager.FrameFaceRecognition) == null || !APIManager.GetWebSocket(APIManager.FrameFaceRecognition).IsOpen) {
-                        APIManager.CreateWebSocketConnection(APIManager.FrameFaceRecognition, onOpen: async (WebSocket ws) => {
-#if ENABLE_WINMD_SUPPORT
-                        FaceDetectionManager.RGBDetectionToWorldspace(result, args.Frame);
+                        APIManager.CreateWebSocketConnection(APIManager.FrameFaceRecognition, null, null,  (WebSocket ws) => {
 
+                             MLManager.AnalyseFrame(args.Frame);
+#if ENABLE_WINMD_SUPPORT
+                            FaceDetectionManager.RGBDetectionToWorldspace(result, args.Frame);
+/*
                         try {
                             byte[] byteArray = await Parser.ToByteArray(args.Frame.Bitmap);
                             ProtoImage request = new ProtoImage();
@@ -182,7 +184,7 @@ public static class FaceDetectionManager {
 
                         } catch (Exception ex) {
                             Debug.Log(ex.Message);
-                        }
+                        }*/
 #endif
 
                         }).Open();

@@ -42,8 +42,11 @@ public static class Parser {
     }
 
     public static Byte[] ProtoSerialize<T>(T record) where T : class {
+        Debug.Log("ProtoSerialize 1");
         using var stream = new MemoryStream();
+        Debug.Log("ProtoSerialize 2");
         ProtoBuf.Serializer.Serialize(stream, record);
+        Debug.Log("ProtoSerialize 3");
         return stream.ToArray();
 
     }
