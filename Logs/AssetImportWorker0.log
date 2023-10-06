@@ -15,7 +15,7 @@ D:/PC/Desktop/IP/Rep/MR_M
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-60438
+62556
 Successfully changed project path to: D:/PC/Desktop/IP/Rep/MR_M
 D:/PC/Desktop/IP/Rep/MR_M
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,12 +47,12 @@ D:/PC/Desktop/IP/Rep/MR_M
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [14420] Host "[IP] 172.17.2.216 [Port] 0 [Flags] 2 [Guid] 4177066243 [EditorId] 4177066243 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [13704] Host "[IP] 172.17.2.220 [Port] 0 [Flags] 2 [Guid] 3370500973 [EditorId] 3370500973 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [14420] Host "[IP] 172.17.2.216 [Port] 0 [Flags] 2 [Guid] 4177066243 [EditorId] 4177066243 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [13704] Host "[IP] 172.17.2.220 [Port] 0 [Flags] 2 [Guid] 3370500973 [EditorId] 3370500973 [Version] 1048832 [Id] WindowsEditor(7,GreenHealth) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 1257.91 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 185.71 ms.
+Refreshing native plugins compatible for Editor in 121.31 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 3.95 ms.
 Initialize engine version: 2021.3.27f1 (ca3ffb99bcc6)
 [Subsystems] Discovering subsystems at path C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.27f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path D:/PC/Desktop/IP/Rep/MR_M/Assets
@@ -67,47 +67,157 @@ Initialize mono
 Mono path[0] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.27f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.27f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.27f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56540
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56568
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.27f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.27f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
 Register platform support module: C:/Program Files (x86)/ProjetoIntegrado_Multimedia_AndreMoreira/Unity Editors/2021.3.27f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll
-Registered in 0.008963 seconds.
+Registered in 0.009265 seconds.
 Native extension for UWP target not found
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 289 ms
-Refreshing native plugins compatible for Editor in 77.20 ms, found 26 plugins.
-Preloading 1 native plugins for Editor in 0.03 ms.
+Android Extension - Scanning For ADB Devices 195 ms
+Refreshing native plugins compatible for Editor in 76.62 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.04 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.254 seconds
+- Completed reload, in  0.803 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1255ms)
-		BeginReloadAssembly (154ms)
+	ReloadAssembly (803ms)
+		BeginReloadAssembly (78ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (893ms)
-			LoadAssemblies (152ms)
+		EndReloadAssembly (635ms)
+			LoadAssemblies (76ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (239ms)
+			SetupTypeCache (94ms)
 			ReleaseScriptCaches (0ms)
 			RebuildScriptCaches (23ms)
-			SetupLoadedEditorAssemblies (581ms)
+			SetupLoadedEditorAssemblies (467ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (378ms)
+				InitializePlatformSupportModulesInManaged (284ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (77ms)
 				BeforeProcessingInitializeOnLoad (1ms)
 				ProcessInitializeOnLoadAttributes (69ms)
-				ProcessInitializeOnLoadMethodAttributes (55ms)
+				ProcessInitializeOnLoadMethodAttributes (36ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.020368 seconds.
+Registered in 0.018573 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for UWP target not found
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Refreshing native plugins compatible for Editor in 77.29 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+DisplayProgressbar: Restoring NuGet Packages
+Added DLL directory D:\PC\Desktop\IP\Rep\MR_M\Assets\Packages\Microsoft.VCRTForwarders.140.1.0.7\Unity\x64 to the user search path.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+InitVCRTForwarders:.cctor () (at Assets/Packages/Microsoft.VCRTForwarders.140.1.0.7/Unity/Editor/InitVCRTForwarders.cs:53)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/Packages/Microsoft.VCRTForwarders.140.1.0.7/Unity/Editor/InitVCRTForwarders.cs Line: 53)
+
+Package Manager log level set to [2]
+Added DLL directory D:\PC\Desktop\IP\Rep\MR_M\Assets\Packages\Microsoft.MixedReality.QR.0.5.3037\Unity\x64 to the user search path.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Microsoft.MixedReality.QR.Init:.cctor () (at Assets/Packages/Microsoft.MixedReality.QR.0.5.3037/Unity/Editor/Microsoft.MixedReality.QR.Init.cs:60)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.Type[])
+
+(Filename: Assets/Packages/Microsoft.MixedReality.QR.0.5.3037/Unity/Editor/Microsoft.MixedReality.QR.Init.cs Line: 60)
+
+[XR] [MROpenXR][Info   ][11:36:55.411891][tid:3588] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][11:36:55.411891][tid:3588] MeshProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][11:36:55.411950][tid:3588] InputProvider_RegisterLifecycleProvider
+[XR] [MROpenXR][Info   ][11:36:55.411950][tid:3588] InputProvider_RegisterLifecycleProvider
+[XR] Error loading subsystem: Display (1) (header mismatch?)
+[XR] [MROpenXR][Info   ][11:36:55.413110][tid:3588] OnPluginStarted UnityVersion=2021.3.27f1 OpenXRPluginVersion=1.7.0 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
+[XR] [MROpenXR][Info   ][11:36:55.413110][tid:3588] OnPluginStarted UnityVersion=2021.3.27f1 OpenXRPluginVersion=1.7.0 MROpenXRPluginVersion=1.8.0.0 PartA_PrivTags=33554432
+Mono: successfully reloaded assembly
+- Completed reload, in  1.451 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1452ms)
+		BeginReloadAssembly (106ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (15ms)
+		EndReloadAssembly (1253ms)
+			LoadAssemblies (97ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (264ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (71ms)
+			SetupLoadedEditorAssemblies (771ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (19ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (77ms)
+				BeforeProcessingInitializeOnLoad (105ms)
+				ProcessInitializeOnLoadAttributes (504ms)
+				ProcessInitializeOnLoadMethodAttributes (56ms)
+				AfterProcessingInitializeOnLoad (10ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (4ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 2.06 ms, found 26 plugins.
+Preloading 1 native plugins for Editor in 0.03 ms.
+Unloading 6790 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 257 unused Assets / (175.5 KB). Loaded Objects now: 7110.
+Memory consumption went from 272.4 MB to 272.2 MB.
+Total: 3.977400 ms (FindLiveObjects: 0.475500 ms CreateObjectMapping: 0.520600 ms MarkObjects: 2.794700 ms  DeleteObjects: 0.185900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 614147.242855 seconds.
+  path: Assets/CareXR Med/Data Container/Circle Buttons Material.asset
+  artifactKey: Guid(0a79fea7e32dfd04688cc0769861605c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/CareXR Med/Data Container/Circle Buttons Material.asset using Guid(0a79fea7e32dfd04688cc0769861605c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2b2d587223cd0edb781ee0057155439') in 0.055492 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 149.616057 seconds.
+  path: Assets/CareXR Med/Scripts/Scriptable Objects/GraphicUserInterfaceScriptableObject.cs
+  artifactKey: Guid(8c2ac8c6c2b9ed8428cb73aae4965493) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/CareXR Med/Scripts/Scriptable Objects/GraphicUserInterfaceScriptableObject.cs using Guid(8c2ac8c6c2b9ed8428cb73aae4965493) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1419673693e619214df031e9812717ed') in 0.240542 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 46.099550 seconds.
+  path: Assets/CareXR Med/Scripts/Scriptable Objects/ButtonVisualMaterialScriptableObject.cs
+  artifactKey: Guid(e1c06081a0566694e887dd77e2e28d9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/CareXR Med/Scripts/Scriptable Objects/ButtonVisualMaterialScriptableObject.cs using Guid(e1c06081a0566694e887dd77e2e28d9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21d6cd95de1804f66f57d3bcfda685f6') in 0.018200 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.486104 seconds.
+  path: Assets/CareXR Med/Scripts/Scriptable Objects/EmotionsListScriptableObject.cs
+  artifactKey: Guid(99f5eda0ec17f2646a204012e6bb1442) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/CareXR Med/Scripts/Scriptable Objects/EmotionsListScriptableObject.cs using Guid(99f5eda0ec17f2646a204012e6bb1442) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '748557fed428b22552a66d29b5e310ad') in 0.011560 seconds 
